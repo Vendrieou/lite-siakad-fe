@@ -1,12 +1,21 @@
 {
-  "name": "vite-react",
-  "version": "0.0.0",
+  "name": "lite-siakad-fe",
+  "version": "1.0.0",
   "scripts": {
     "dev": "cross-env BROWSER=chrome vite",
     "build": "vite build",
     "serve": "vite preview",
     "start": "npm run dev"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vendrieou/lite-siakad-fe.git"
+  },
+  "keywords": [
+    "Siakad"
+  ],
+  "author": "Vendrie",
+  "license": "MIT",
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@ant-design/pro-form": "^1.19.1",

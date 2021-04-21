@@ -9,7 +9,7 @@ import routes from './config/routes';
 
 // https://vitejs.dev/config/
 export default {
-  base: '/vite-react/',
+  base: '/',
   plugins: [
     reactRefresh(),
     tsconfigPaths(),
