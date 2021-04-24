@@ -29,7 +29,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
   const title = getPageTitle({
     pathname: location.pathname,
     breadcrumb,
-    title: 'Vite React',
+    title: 'Lite Siakad',
     ...props,
   });
 
@@ -48,12 +48,11 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
                 <img
                   alt='logo'
                   className={styles.logo}
-                  src='https://github.com/vitjs/vit/raw/master/icons/logo.svg'
+                  src='../../static/logo/logoTIME.png'
                 />
-                <span className={styles.title}>Vite React</span>
+                <span className={styles.title}>Lite Siakad</span>
               </Link>
             </div>
-            <div className={styles.desc}>🚀 Use Vite + React like a Pro!</div>
           </div>
           {children}
         </div>

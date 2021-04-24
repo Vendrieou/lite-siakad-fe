@@ -1,6 +1,11 @@
 export default [
   {
     path: '/',
+    name: 'Landing',
+    component: './pages/Landing',
+  },
+  {
+    path: '/',
     component: './layouts/BlankLayout',
     routes: [
       {
@@ -8,7 +13,7 @@ export default [
         component: './layouts/UserLayout',
         routes: [
           {
-            name: '登录',
+            name: 'Login',
             path: '/user/login',
             component: './pages/User/Login',
           },
@@ -22,14 +27,14 @@ export default [
             path: '/',
             component: './layouts/BasicLayout',
             routes: [
-              {
-                path: '/',
-                redirect: '/welcome',
-              },
+              // {
+              //   path: '/',
+              //   redirect: '/welcome',
+              // },
               {
                 path: '/welcome',
                 icon: 'smile',
-                name: '欢迎页',
+                name: 'Dashboard',
                 component: './pages/Welcome',
               },
               {
