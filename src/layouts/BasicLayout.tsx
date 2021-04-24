@@ -11,6 +11,7 @@ import { history, Link, useLocation } from '@vitjs/runtime';
 import RightContent from '@/container/GlobalHeader/RightContent';
 import GlobalFooter from '@/container/GlobalFooter';
 import defaultSettings from '../../config/defaultSettings';
+import Logo from 'static/logo/logoTIME.png'
 
 const loginPath = '/user/login';
 
@@ -23,7 +24,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   return (
     <ProLayout
-      logo='https://github.com/vitjs/vit/raw/master/icons/logo.svg'
+      // logo='https://github.com/vitjs/vit/raw/master/icons/logo.svg'
+      logo={Logo}
       {...props}
       onPageChange={() => {
         // 如果没有登录，重定向到 login
@@ -60,7 +62,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       }}
       footerRender={() => <GlobalFooter />}
       // waterMarkProps={{
-      //   content: 'Vite React',
+      //   content: 'Lite Siakad',
       //   fontColor: 'rgba(24,144,255,0.15)',
       // }}
       {...defaultSettings}

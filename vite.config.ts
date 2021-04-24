@@ -1,13 +1,13 @@
-// import * as path from 'path';
+import * as path from 'path';
 import { UserConfig } from 'vite';
 import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import vitApp from '@vitjs/vit';
-
 import routes from './config/routes';
 
-// https://vitejs.dev/config/
+const projectRootDir = path.resolve(__dirname);
+
 export default {
   base: '/',
   plugins: [
@@ -36,6 +36,7 @@ export default {
   },
   resolve: {
     alias: [
+      { find: 'static', replacement: path.resolve(projectRootDir, 'static') },
       // { find: '@', replacement: path.resolve(__dirname, 'src') },
       // fix less import by: @import ~
       // https://github.com/vitejs/vite/issues/2185#issuecomment-784637827
