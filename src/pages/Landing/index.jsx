@@ -4,13 +4,13 @@ import Content from './Content'
 import Footer from './Footer'
 
 const Landing = () => {
-    return (
-        <Layout>
-            <Header />
-            <Content />
-            <Footer />
-        </Layout>
-    )
+  return (
+    <Layout>
+      <Header />
+      <Content />
+      <Footer />
+    </Layout>
+  )
 }
 
 export default Landing
