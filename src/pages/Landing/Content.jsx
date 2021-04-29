@@ -8,6 +8,8 @@ import {
   ContainerOutlined
 } from '@ant-design/icons'
 import Kegiatan from './Kegiatan'
+import Berita from './Berita'
+import Profile from './Profile'
 
 const { Content } = Layout
 
@@ -90,8 +92,10 @@ const ContentContainer = () => {
               )
             })}
           </Row>
+          <Kegiatan />
+          <Berita />
+          <Profile />
         </div>
-        <Kegiatan />
       </Content>
     </>
   )
