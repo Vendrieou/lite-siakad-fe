@@ -36,8 +36,9 @@ export default {
   },
   resolve: {
     alias: [
-      { find: 'static', replacement: path.resolve(projectRootDir, 'static') },
+      { find: 'src', replacement: path.resolve(projectRootDir, 'src') },
       { find: 'components', replacement: path.resolve(projectRootDir, 'src/components') },
+      { find: 'static', replacement: path.resolve(projectRootDir, 'static') },
       // { find: '@', replacement: path.resolve(__dirname, 'src') },
       // fix less import by: @import ~
       // https://github.com/vitejs/vite/issues/2185#issuecomment-784637827
