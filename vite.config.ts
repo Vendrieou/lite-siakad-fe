@@ -50,7 +50,7 @@ export default {
     },
     preprocessorOptions: {
       less: {
-        // modifyVars: { 'primary-color': '#13c2c2' },
+        modifyVars: { 'primary-color': '#08466D' },
         javascriptEnabled: true,
       },
     },
