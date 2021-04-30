@@ -8,6 +8,7 @@ import Form from './Form'
 
 const { Title, Paragraph, Text } = Typography
 const { Content } = Layout
+const ListItem = List.Item
 
 const Register = () => {
   return (
@@ -17,8 +18,8 @@ const Register = () => {
         <div style={{ margin: '1em 0' }}>
           <MenuContainer />
         </div>
-        <Row justify="space-around">
-          <Col>
+        <Row justify="center">
+          <Col style={{ marginRight: '1em' }}>
             <Card title={<Title level={3} className={styles.title}>PENDAFTARAN ONLINE</Title>} headStyle={{ color: '#08466D' }}>
               <Form />
             </Card>
@@ -42,7 +43,7 @@ const Register = () => {
                   }
                 ]}
                 renderItem={item => (
-                  <List.Item>
+                  <ListItem>
                     <Paragraph>
                       <Text strong>
                         {item.title}
@@ -50,7 +51,7 @@ const Register = () => {
                       <br />
                       {item.description}
                     </Paragraph>
-                  </List.Item>
+                  </ListItem>
                 )}
               />
             </Card>

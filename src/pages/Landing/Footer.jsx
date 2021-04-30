@@ -4,6 +4,7 @@ import styles from './Footer.module.less'
 
 const { Footer } = Layout
 const { Title, Paragraph, Text } = Typography
+const ListItem = List.Item 
 
 const style = { padding: '8px 0' }
 
@@ -28,7 +29,7 @@ const FooterContainer = () => {
                     '6. JOHAN : 0852-6123-2018'
                   ]}
                   renderItem={item => (
-                    <List.Item>{item}</List.Item>
+                    <ListItem>{item}</ListItem>
                   )}
                 />
               </div>
@@ -57,7 +58,7 @@ const FooterContainer = () => {
                     }
                   ]}
                   renderItem={item => (
-                    <List.Item>
+                    <ListItem>
                       <Paragraph>
                         <Text strong>
                           {item.kampus}
@@ -67,7 +68,7 @@ const FooterContainer = () => {
                         <br />
                         {item.phone}
                       </Paragraph>
-                    </List.Item>
+                    </ListItem>
                   )}
                 />
               </div>
@@ -105,7 +106,7 @@ const FooterContainer = () => {
                     }
                   ]}
                   renderItem={item => (
-                    <List.Item>
+                    <ListItem>
                       <Paragraph>
                         <Text strong>
                           {item.title}
@@ -115,7 +116,7 @@ const FooterContainer = () => {
                           <p>{item.url}</p>
                           : <a href={item.url}>{item.url}</a>}
                       </Paragraph>
-                    </List.Item>
+                    </ListItem>
                   )}
                 />
               </div>

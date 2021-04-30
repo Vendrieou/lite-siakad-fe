@@ -7,6 +7,7 @@ import {
   TeamOutlined,
   ContainerOutlined
 } from '@ant-design/icons'
+import { Link } from '@vitjs/runtime'
 
 const { Text } = Typography
 
@@ -16,48 +17,50 @@ const Menu = () => {
       {[
         {
           title: 'Mahasiswa Baru',
-          link: '',
+          path: '/mahasiswa/register',
           icon: <FileTextOutlined style={{ fontSize: 60 }} />
         },
         {
           title: 'Portal Mahasiswa',
-          link: '',
+          path: '',
           icon: <MessageOutlined style={{ fontSize: 60 }} />
 
         },
         {
           title: 'Kalender Akademik',
-          link: '',
+          path: '',
           icon: <CalendarOutlined style={{ fontSize: 60 }} />
         },
         {
           title: 'Hubungi Kami',
-          link: '',
+          path: '',
           icon: <PhoneOutlined style={{ fontSize: 60 }} />
 
         },
         {
           title: 'Lowongan Kerja',
-          link: '',
+          path: '',
           icon: <ContainerOutlined style={{ fontSize: 60 }} />
 
         },
         {
           title: 'Ikatan Alumni',
-          link: '',
+          path: '',
           icon: <TeamOutlined style={{ fontSize: 60 }} />
         }
       ].map((item, i) => {
         return (
           <Col key={i}>
-            <Card bodyStyle={{ padding: '0.5em 24px' }} style={{ margin: '0.5em', width: 150 }}>
-              <Row justify="center">
-                {item.icon}
-              </Row>
-              <Row justify="center" style={{ marginTop: '1em', textAlign: 'center' }}>
-                <Text strong style={{ fontSize: 18 }}>{item.title}</Text>
-              </Row>
-            </Card>
+            <Link to={item.path}>
+              <Card bodyStyle={{ padding: '0.5em 24px' }} style={{ margin: '0.5em', width: 150 }}>
+                <Row justify="center">
+                  {item.icon}
+                </Row>
+                <Row justify="center" style={{ marginTop: '1em', textAlign: 'center' }}>
+                  <Text strong style={{ fontSize: 18 }}>{item.title}</Text>
+                </Row>
+              </Card>
+            </Link>
           </Col>
         )
       })}

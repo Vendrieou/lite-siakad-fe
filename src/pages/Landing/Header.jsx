@@ -3,37 +3,37 @@ import { DownOutlined, SearchOutlined } from '@ant-design/icons'
 import logoTIME from 'static/logo/logoTIME.png'
 import styles from './Header.module.less'
 
-const { Item } = Menu
+const MenuItem = Menu.Item
 const { Header } = Layout
 
 const menuProfilDropdown = () => {
   return (
     <Menu>
-      <Item key="Sejarah">Sejarah Singkat</Item>
-      <Item key="Visi">Visi, Misi dan Tujuan</Item>
-      <Item key="Lambang">Lambang</Item>
+      <MenuItem key="Sejarah">Sejarah Singkat</MenuItem>
+      <MenuItem key="Visi">Visi, Misi dan Tujuan</MenuItem>
+      <MenuItem key="Lambang">Lambang</MenuItem>
     </Menu>
   )
 }
 
-const HeaderItem = () => {
+const HeaderMenuItem = () => {
   return (
     <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']} selectable={false}>
-      <Item key="home">Home</Item>
-      <Item key="profil">
+      <MenuItem key="home">Home</MenuItem>
+      <MenuItem key="profil">
         <Dropdown overlay={menuProfilDropdown}>
           <a className="profil" onClick={e => e.preventDefault()}>
             Profil <DownOutlined />
           </a>
         </Dropdown>
-      </Item>
-      <Item key="penelitian">Penelitian</Item>
-      <Item key="perpustakaan">Perpustakaan</Item>
-      <Item key="lowongan">Lowongan Kerja</Item>
-      <Item key="hubungi">Hubungi Kami</Item>
-      <Item key="search">
+      </MenuItem>
+      <MenuItem key="penelitian">Penelitian</MenuItem>
+      <MenuItem key="perpustakaan">Perpustakaan</MenuItem>
+      <MenuItem key="lowongan">Lowongan Kerja</MenuItem>
+      <MenuItem key="hubungi">Hubungi Kami</MenuItem>
+      <MenuItem key="search">
         <SearchOutlined />
-      </Item>
+      </MenuItem>
     </Menu>
   )
 }
@@ -48,7 +48,7 @@ const HeaderContainer = () => {
           </h1>
         </a>
         <div style={{ float: 'right' }}>
-          <HeaderItem />
+          <HeaderMenuItem />
         </div>
       </Header>
     </>
