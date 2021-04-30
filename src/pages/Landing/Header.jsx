@@ -1,5 +1,6 @@
 import { Layout, Menu, Dropdown } from 'antd'
 import { DownOutlined, SearchOutlined } from '@ant-design/icons'
+import logoTIME from 'static/logo/logoTIME.png'
 import styles from './Header.module.less'
 
 const { Item } = Menu
@@ -43,7 +44,7 @@ const HeaderContainer = () => {
       <Header className={styles.header}>
         <a href="/">
           <h1 style={{ display: "inline-block" }}>
-            <img src="static/logo/logoTIME.png" className={styles.logo} height="44" alt="logo" />
+            <img src={logoTIME} className={styles.logo} height="44" alt="logo" />
           </h1>
         </a>
         <div style={{ float: 'right' }}>
