@@ -5,6 +5,11 @@ export default [
     component: './pages/Landing',
   },
   {
+    path: '/mahasiswa/register',
+    name: 'RegisterMahasiswa',
+    component: './pages/Mahasiswa/Register',
+  },
+  {
     path: '/',
     component: './layouts/BlankLayout',
     routes: [

@@ -1,11 +1,16 @@
-import { Typography } from 'antd'
+import { Layout } from 'antd'
+import Header from './Header'
+import Content from './Content'
+import Footer from './Footer'
 
 const Landing = () => {
-    return (
-        <div>
-            <Typography.Text strong>LadingPage</Typography.Text>
-        </div>
-    )
+  return (
+    <Layout>
+      <Header />
+      <Content />
+      <Footer />
+    </Layout>
+  )
 }
 
 export default Landing

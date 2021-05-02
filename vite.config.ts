@@ -36,6 +36,8 @@ export default {
   },
   resolve: {
     alias: [
+      { find: 'src', replacement: path.resolve(projectRootDir, 'src') },
+      { find: 'components', replacement: path.resolve(projectRootDir, 'src/components') },
       { find: 'static', replacement: path.resolve(projectRootDir, 'static') },
       // { find: '@', replacement: path.resolve(__dirname, 'src') },
       // fix less import by: @import ~
@@ -49,7 +51,7 @@ export default {
     },
     preprocessorOptions: {
       less: {
-        // modifyVars: { 'primary-color': '#13c2c2' },
+        modifyVars: { 'primary-color': '#08466D' },
         javascriptEnabled: true,
       },
     },
