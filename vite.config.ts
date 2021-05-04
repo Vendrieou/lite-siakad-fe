@@ -37,6 +37,8 @@ export default {
   resolve: {
     alias: [
       { find: 'src', replacement: path.resolve(projectRootDir, 'src') },
+      { find: 'pages', replacement: path.resolve(projectRootDir, 'src/pages') },
+      { find: 'layouts', replacement: path.resolve(projectRootDir, 'src/layouts') },
       { find: 'components', replacement: path.resolve(projectRootDir, 'src/components') },
       { find: 'static', replacement: path.resolve(projectRootDir, 'static') },
       // { find: '@', replacement: path.resolve(__dirname, 'src') },
@@ -51,7 +53,11 @@ export default {
     },
     preprocessorOptions: {
       less: {
-        modifyVars: { 'primary-color': '#08466D' },
+        modifyVars: { 
+          'primary-color': '#08466D',
+          'primary-1': '#e6ecf0',
+          'info-color': '#1890ff'
+         },
         javascriptEnabled: true,
       },
     },
