@@ -3,34 +3,33 @@
  *
  * @see You can view component api by: https://github.com/ant-design/ant-design-pro-layout
  */
-import type { BasicLayoutProps as ProLayoutProps } from '@ant-design/pro-layout';
-import ProLayout from '@ant-design/pro-layout';
-import { HomeOutlined } from '@ant-design/icons';
-import { history, Link, useLocation } from '@vitjs/runtime';
+import type { BasicLayoutProps as ProLayoutProps } from '@ant-design/pro-layout'
+import ProLayout from '@ant-design/pro-layout'
+import { HomeOutlined } from '@ant-design/icons'
+import { history, Link, useLocation } from '@vitjs/runtime'
 
-import RightContent from '@/container/GlobalHeader/RightContent';
-import GlobalFooter from '@/container/GlobalFooter';
-import defaultSettings from '../../config/defaultSettings';
+import RightContent from '@/container/GlobalHeader/RightContent'
+import GlobalFooter from '@/container/GlobalFooter'
+import defaultSettings from '../../config/defaultSettings'
 import Logo from 'static/logo/logoTIME.png'
 
-const loginPath = '/user/login';
+const loginPath = '/user/login'
 
 export type BasicLayoutProps = {
   route: ProLayoutProps['route'];
 } & ProLayoutProps;
 
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <ProLayout
-      // logo='https://github.com/vitjs/vit/raw/master/icons/logo.svg'
       logo={Logo}
       {...props}
       onPageChange={() => {
-        // 如果没有登录，重定向到 login
+        // If you are not logged in, redirect to login
         if (localStorage.getItem('status') !== 'ok' && history.location.pathname !== loginPath) {
-          history.push(loginPath);
+          history.push(loginPath)
         }
       }}
       onMenuHeaderClick={() => history.push('/')}
@@ -40,25 +39,26 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           !menuItemProps.path ||
           location.pathname === menuItemProps.path
         ) {
-          return defaultDom;
+          return defaultDom
         }
-        return <Link to={menuItemProps.path}>{defaultDom}</Link>;
+        return <Link to={menuItemProps.path}>{defaultDom}</Link>
       }}
       rightContentRender={() => <RightContent />}
       breadcrumbRender={(routers = []) => [
         {
           path: '/',
-          breadcrumbName: (<HomeOutlined />) as any,
+          breadcrumbName: (<HomeOutlined />) as any
         },
-        ...routers,
+        ...routers
       ]}
       itemRender={(route, params, routes, paths) => {
-        const first = routes.indexOf(route) === 0;
+        const first = routes.indexOf(route) === 0
+        
         return first ? (
           <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
         ) : (
           <span>{route.breadcrumbName}</span>
-        );
+        )
       }}
       footerRender={() => <GlobalFooter />}
       // waterMarkProps={{
@@ -67,7 +67,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       // }}
       {...defaultSettings}
     />
-  );
-};
+  )
+}
 
-export default BasicLayout;
+export default BasicLayout
