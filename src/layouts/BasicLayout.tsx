@@ -24,7 +24,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   return (
     <ProLayout
-      // logo='https://github.com/vitjs/vit/raw/master/icons/logo.svg'
       logo={Logo}
       {...props}
       onPageChange={() => {
