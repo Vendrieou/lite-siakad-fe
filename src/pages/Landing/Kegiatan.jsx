@@ -1,5 +1,8 @@
 import { Card, Row, Col, Typography } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
+import kegiatan1 from 'static/img/kegiatan1.jpg'
+import kegiatan2 from 'static/img/kegiatan2.jpg'
+import kegiatan3 from 'static/img/kegiatan3.jpg'
 
 const { Title, Text } = Typography
 
@@ -21,17 +24,17 @@ const KegiatanContainer = () => {
             {
               title: 'Wisuda Tunggal Ke 16 Di Gelar Oleh STMIK TIME',
               link: '',
-              image: 'static/img/kegiatan1.jpg'
+              image: kegiatan1
             },
             {
               title: 'LOMBA DESAIN MASKOT TIME MULTISMART',
               link: '',
-              image: 'static/img/kegiatan2.jpg'
+              image: kegiatan2
             },
             {
               title: 'Workshop Design Sprint 2020 Akademik',
               link: '',
-              image: 'static/img/kegiatan3.jpg'
+              image: kegiatan3
             }
           ].map((item, i) => {
             return (
