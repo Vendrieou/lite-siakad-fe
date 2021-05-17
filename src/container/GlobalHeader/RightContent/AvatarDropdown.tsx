@@ -1,18 +1,18 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu } from 'antd';
-import { useConcent } from 'concent';
-import { history } from '@vitjs/runtime';
+import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+import { Avatar, Menu } from 'antd'
+import { useConcent } from 'concent'
+import { history } from '@vitjs/runtime'
 
-import HeaderDropdown from '@/components/HeaderDropdown';
-import styles from './index.module.less';
+import HeaderDropdown from '@/components/HeaderDropdown'
+import styles from './index.module.less'
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
-  const { dispatch } = useConcent('login');
-  const { state } = useConcent('me');
+  const { dispatch } = useConcent('login')
+  const { state } = useConcent('me')
 
   const onMenuClick = (event: {
     key: React.Key;
@@ -20,15 +20,15 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     item: React.ReactInstance;
     domEvent: React.MouseEvent<HTMLElement>;
   }) => {
-    const { key } = event;
+    const { key } = event
 
     if (key === 'logout') {
-      dispatch?.('logout');
-      return;
+      dispatch?.('logout')
+      return
     }
 
-    history.push(`/account/${key}`);
-  };
+    history.push(`/account/${key}`)
+  }
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
@@ -50,7 +50,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         退出登录
       </Menu.Item>
     </Menu>
-  );
+  )
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
@@ -58,7 +58,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
         <span className={`${styles.name} anticon`}>{state.name}</span>
       </span>
     </HeaderDropdown>
-  );
-};
+  )
+}
 
-export default AvatarDropdown;
+export default AvatarDropdown

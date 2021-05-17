@@ -1,8 +1,8 @@
-import { Redirect, Route } from 'umi';
+import { Redirect, Route } from 'umi'
 
-import React from 'react';
-import Authorized from './Authorized';
-import type { IAuthorityType } from './CheckPermissions';
+import React from 'react'
+import Authorized from './Authorized'
+import type { IAuthorityType } from './CheckPermissions'
 
 type AuthorizedRouteProps = {
   currentAuthority: string;
@@ -28,6 +28,6 @@ const AuthorizedRoute: React.SFC<AuthorizedRouteProps> = ({
       render={(props: any) => (Component ? <Component {...props} /> : render(props))}
     />
   </Authorized>
-);
+)
 
-export default AuthorizedRoute;
+export default AuthorizedRoute

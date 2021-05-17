@@ -1,19 +1,19 @@
-import { Col, Row, Card } from 'antd';
-import { MailOutlined, HomeOutlined } from '@ant-design/icons';
-import { useConcent } from 'concent';
+import { Col, Row, Card } from 'antd'
+import { MailOutlined, HomeOutlined } from '@ant-design/icons'
+import { useConcent } from 'concent'
 
-import ComingSoon from '@/components/ComingSoon';
-import styles from './index.module.less';
+import ComingSoon from '@/components/ComingSoon'
+import styles from './index.module.less'
 
-export default function AccountCenter() {
-  const { state: me } = useConcent('me');
+export default function AccountCenter () {
+  const { state: me } = useConcent('me')
 
   const renderUserInfo = () => (
     <div className={styles.detail}>
       <p>
         <MailOutlined
           style={{
-            marginRight: 8,
+            marginRight: 8
           }}
         />
         {me.email}
@@ -21,13 +21,13 @@ export default function AccountCenter() {
       <p>
         <HomeOutlined
           style={{
-            marginRight: 8,
+            marginRight: 8
           }}
         />
         {me.address}
       </p>
     </div>
-  );
+  )
 
   return (
     <Row gutter={24}>
@@ -47,5 +47,5 @@ export default function AccountCenter() {
         <ComingSoon />
       </Col>
     </Row>
-  );
+  )
 }

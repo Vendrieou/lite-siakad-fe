@@ -1,5 +1,5 @@
 const Layout: React.FC = ({ children }) => {
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default Layout;
+export default Layout

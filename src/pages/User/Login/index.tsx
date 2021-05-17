@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Alert, Space, message, Tabs } from 'antd';
+import { useState } from 'react'
+import { Alert, Space, message, Tabs } from 'antd'
 import {
   AlipayCircleOutlined,
   LockOutlined,
@@ -7,44 +7,44 @@ import {
   MobileOutlined,
   TaobaoCircleOutlined,
   UserOutlined,
-  WeiboCircleOutlined,
-} from '@ant-design/icons';
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+  WeiboCircleOutlined
+} from '@ant-design/icons'
+import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form'
 
-import { useC2ModConn } from '@/services/concent';
-import { getFakeCaptcha } from '@/services/login';
-import type { LoginParamsType } from '@/services/login';
+import { useC2ModConn } from '@/services/concent'
+import { getFakeCaptcha } from '@/services/login'
+import type { LoginParamsType } from '@/services/login'
 
-import styles from './index.module.less';
+import styles from './index.module.less'
 
 const LoginMessage: React.FC<{
   content: string;
 }> = ({ content }) => (
   <Alert
     style={{
-      marginBottom: 24,
+      marginBottom: 24
     }}
     message={content}
     type='error'
     showIcon
   />
-);
+)
 
 const Login: React.FC = () => {
-  const { state, connectedState, mr } = useC2ModConn('login', ['loading']);
+  const { state, connectedState, mr } = useC2ModConn('login', ['loading'])
 
-  const submitting = connectedState.loading['login/login'];
-  const [type, setType] = useState<string>('account');
+  const submitting = connectedState.loading['login/login']
+  const [type, setType] = useState<string>('account')
 
   const handleSubmit = (values: LoginParamsType) => {
-    mr.login({ ...values, type });
-  };
+    mr.login({ ...values, type })
+  }
 
   return (
     <div className={styles.main}>
       <ProForm
         initialValues={{
-          autoLogin: true,
+          autoLogin: true
         }}
         submitter={{
           render: (_, dom) => dom.pop(),
@@ -52,13 +52,13 @@ const Login: React.FC = () => {
             loading: submitting,
             size: 'large',
             style: {
-              width: '100%',
-            },
-          },
+              width: '100%'
+            }
+          }
         }}
         onFinish={(values) => {
-          handleSubmit(values as LoginParamsType);
-          return Promise.resolve();
+          handleSubmit(values as LoginParamsType)
+          return Promise.resolve()
         }}
       >
         <Tabs activeKey={type} onChange={setType}>
@@ -75,28 +75,28 @@ const Login: React.FC = () => {
               name='userName'
               fieldProps={{
                 size: 'large',
-                prefix: <UserOutlined className={styles.prefixIcon} />,
+                prefix: <UserOutlined className={styles.prefixIcon} />
               }}
               placeholder='用户名: admin or user'
               rules={[
                 {
                   required: true,
-                  message: '请输入用户名!',
-                },
+                  message: '请输入用户名!'
+                }
               ]}
             />
             <ProFormText.Password
               name='password'
               fieldProps={{
                 size: 'large',
-                prefix: <LockOutlined className={styles.prefixIcon} />,
+                prefix: <LockOutlined className={styles.prefixIcon} />
               }}
               placeholder='密码: vite-react'
               rules={[
                 {
                   required: true,
-                  message: '请输入密码！',
-                },
+                  message: '请输入密码！'
+                }
               ]}
             />
           </>
@@ -110,56 +110,56 @@ const Login: React.FC = () => {
             <ProFormText
               fieldProps={{
                 size: 'large',
-                prefix: <MobileOutlined className={styles.prefixIcon} />,
+                prefix: <MobileOutlined className={styles.prefixIcon} />
               }}
               name='mobile'
               placeholder='手机号'
               rules={[
                 {
                   required: true,
-                  message: '请输入手机号！',
+                  message: '请输入手机号！'
                 },
                 {
                   pattern: /^1\d{10}$/,
-                  message: '手机号格式错误！',
-                },
+                  message: '手机号格式错误！'
+                }
               ]}
             />
             <ProFormCaptcha
               fieldProps={{
                 size: 'large',
-                prefix: <MailOutlined className={styles.prefixIcon} />,
+                prefix: <MailOutlined className={styles.prefixIcon} />
               }}
               captchaProps={{
-                size: 'large',
+                size: 'large'
               }}
               placeholder='请输入验证码'
               captchaTextRender={(timing, count) => {
                 if (timing) {
-                  return `${count} '获取验证码'`;
+                  return `${count} '获取验证码'`
                 }
-                return '获取验证码';
+                return '获取验证码'
               }}
               name='captcha'
               rules={[
                 {
                   required: true,
-                  message: '请输入验证码！',
-                },
+                  message: '请输入验证码！'
+                }
               ]}
               onGetCaptcha={async (mobile) => {
-                const result = await getFakeCaptcha(mobile);
+                const result = await getFakeCaptcha(mobile)
                 if (result === false) {
-                  return;
+                  return
                 }
-                message.success('获取验证码成功！验证码为：1234');
+                message.success('获取验证码成功！验证码为：1234')
               }}
             />
           </>
         )}
         <div
           style={{
-            marginBottom: 24,
+            marginBottom: 24
           }}
         >
           <ProFormCheckbox noStyle name='autoLogin'>
@@ -167,7 +167,7 @@ const Login: React.FC = () => {
           </ProFormCheckbox>
           <a
             style={{
-              float: 'right',
+              float: 'right'
             }}
           >
             忘记密码
@@ -181,7 +181,7 @@ const Login: React.FC = () => {
         <WeiboCircleOutlined className={styles.icon} />
       </Space>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

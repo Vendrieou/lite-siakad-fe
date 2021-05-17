@@ -1,5 +1,5 @@
-import { Button, Result } from 'antd';
-import { history } from '@vitjs/runtime';
+import { Button, Result } from 'antd'
+import { history } from '@vitjs/runtime'
 
 const NoFoundPage: React.FC = () => (
   <Result
@@ -12,6 +12,6 @@ const NoFoundPage: React.FC = () => (
       </Button>
     }
   />
-);
+)
 
-export default NoFoundPage;
+export default NoFoundPage

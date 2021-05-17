@@ -1,10 +1,10 @@
-import type { MenuDataItem } from '@ant-design/pro-layout';
-import { getMenuData, getPageTitle } from '@ant-design/pro-layout';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import { Link } from '@vitjs/runtime';
+import type { MenuDataItem } from '@ant-design/pro-layout'
+import { getMenuData, getPageTitle } from '@ant-design/pro-layout'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { Link } from '@vitjs/runtime'
 
-import GlobalFooter from '@/container/GlobalFooter';
-import styles from './UserLayout.module.less';
+import GlobalFooter from '@/container/GlobalFooter'
+import styles from './UserLayout.module.less'
 
 export type UserLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
@@ -17,21 +17,21 @@ export type UserLayoutProps = {
 const UserLayout: React.FC<UserLayoutProps> = (props) => {
   const {
     route = {
-      routes: [],
+      routes: []
     },
     children,
     location = {
-      pathname: '',
-    },
-  } = props;
-  const { routes = [] } = route;
-  const { breadcrumb } = getMenuData(routes);
+      pathname: ''
+    }
+  } = props
+  const { routes = [] } = route
+  const { breadcrumb } = getMenuData(routes)
   const title = getPageTitle({
     pathname: location.pathname,
     breadcrumb,
     title: 'Lite Siakad',
-    ...props,
-  });
+    ...props
+  })
 
   return (
     <HelmetProvider>
@@ -59,7 +59,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
         <GlobalFooter />
       </div>
     </HelmetProvider>
-  );
-};
+  )
+}
 
-export default UserLayout;
+export default UserLayout
