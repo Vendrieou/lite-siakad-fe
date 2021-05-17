@@ -1,6 +1,6 @@
 // ref: https://github.com/ant-design/ant-design-pro/blob/master/src/services/login.ts
 
-import request from '@/utils/request';
+import request from '@/utils/request'
 
 export type LoginParamsType = {
   userName: string;
@@ -9,13 +9,13 @@ export type LoginParamsType = {
   captcha: string;
 };
 
-export async function fakeAccountLogin(params: LoginParamsType) {
+export async function fakeAccountLogin (params: LoginParamsType) {
   return request('/api/login/account', {
     method: 'POST',
-    data: params,
-  });
+    data: params
+  })
 }
 
-export async function getFakeCaptcha(mobile: string) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+export async function getFakeCaptcha (mobile: string) {
+  return request(`/api/login/captcha?mobile=${mobile}`)
 }

@@ -10,8 +10,8 @@ import type {
   SettingsType,
   ComputedValType,
   SetupFn,
-  MultiComputed,
-} from 'concent';
+  MultiComputed
+} from 'concent'
 import {
   useConcent,
   reducer,
@@ -19,21 +19,21 @@ import {
   getGlobalState as getGst,
   emit,
   getComputed,
-  cst,
-} from 'concent';
+  cst
+} from 'concent'
 
-import type { CtxM, CtxMConn, CtxConn, Modules, RootRd, RootState, RootCu } from '../types/store';
-import type { EvMap } from '../types/eventMap';
+import type { CtxM, CtxMConn, CtxConn, Modules, RootRd, RootState, RootCu } from '../types/store'
+import type { EvMap } from '../types/eventMap'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-function noop(...args: any[]) {}
+function noop (...args: any[]) {}
 
-function priBuildCallParams(
+function priBuildCallParams (
   moduleName: string,
   connect: Modules[],
   options?: Options<any, any, any, any, any, any>,
 ) {
-  const targetOptions = options || {};
+  const targetOptions = options || {}
   const {
     setup,
     tag,
@@ -42,8 +42,8 @@ function priBuildCallParams(
     cuDesc,
     passCuDesc = true,
     props = {},
-    ccClassKey,
-  } = targetOptions;
+    ccClassKey
+  } = targetOptions
   const regOpt = {
     module: moduleName,
     connect,
@@ -52,10 +52,10 @@ function priBuildCallParams(
     tag,
     extra,
     staticExtra,
-    cuDesc: null as any,
-  };
-  if (passCuDesc) regOpt.cuDesc = cuDesc;
-  return { regOpt, ccClassKey };
+    cuDesc: null as any
+  }
+  if (passCuDesc) regOpt.cuDesc = cuDesc
+  return { regOpt, ccClassKey }
 }
 
 /**
@@ -64,22 +64,22 @@ function priBuildCallParams(
  * @param callerParams
  * @param actionCtx
  */
-export async function callTarget(
+export async function callTarget (
   callerParams: ReducerCallerParams | [IReducerFn, any],
   actionCtx: IActionCtxBase,
 ) {
   try {
     /** 支持 reducer 文件里内部调用 actionCtx.dispatch(loading, [targetFn, payload]) */
     if (Array.isArray(callerParams)) {
-      const [fn, payload] = callerParams;
-      await actionCtx.dispatch(fn, payload);
+      const [fn, payload] = callerParams
+      await actionCtx.dispatch(fn, payload)
     } else {
-      const { fnName, payload, renderKey, delay } = callerParams;
-      await actionCtx.dispatch(fnName, payload, renderKey, delay);
+      const { fnName, payload, renderKey, delay } = callerParams
+      await actionCtx.dispatch(fnName, payload, renderKey, delay)
     }
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log('callTarget error:', err.message);
+    console.log('callTarget error:', err.message)
   }
 }
 
@@ -158,8 +158,8 @@ export function useC2Mod<
   Extra extends IAnyObj,
   StaticExtra extends any,
   Mp extends ValidMapProps
->(moduleName: M, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
-  const { regOpt, ccClassKey } = priBuildCallParams(moduleName, [], options);
+> (moduleName: M, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
+  const { regOpt, ccClassKey } = priBuildCallParams(moduleName, [], options)
   type Ctx = CtxM<
     P,
     M,
@@ -167,7 +167,7 @@ export function useC2Mod<
     ComputedValType<CuDesc>,
     [Extra, StaticExtra, ReturnType<Mp>]
   >;
-  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey);
+  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
 }
 
 /** 属于某个模块，连接多个模块 */
@@ -180,8 +180,8 @@ export function useC2ModConn<
   Extra extends IAnyObj,
   StaticExtra extends any,
   Mp extends ValidMapProps
->(moduleName: M, connect: Conn, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
-  const { regOpt, ccClassKey } = priBuildCallParams(moduleName, connect, options);
+> (moduleName: M, connect: Conn, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
+  const { regOpt, ccClassKey } = priBuildCallParams(moduleName, connect, options)
   type Ctx = CtxMConn<
     P,
     M,
@@ -190,7 +190,7 @@ export function useC2ModConn<
     ComputedValType<CuDesc>,
     [Extra, StaticExtra, ReturnType<Mp>]
   >;
-  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey);
+  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
 }
 
 /** 连接多个模块 */
@@ -202,8 +202,8 @@ export function useC2Conn<
   Extra extends IAnyObj,
   StaticExtra extends any,
   Mp extends ValidMapProps
->(connect: Conn, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
-  const { regOpt, ccClassKey } = priBuildCallParams(cst.MODULE_DEFAULT, connect, options);
+> (connect: Conn, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>) {
+  const { regOpt, ccClassKey } = priBuildCallParams(cst.MODULE_DEFAULT, connect, options)
   type Ctx = CtxConn<
     P,
     Conn[number],
@@ -211,7 +211,7 @@ export function useC2Conn<
     ComputedValType<CuDesc>,
     [Extra, StaticExtra, ReturnType<Mp>]
   >;
-  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey);
+  return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
 }
 
 /**
@@ -227,9 +227,9 @@ export function useSetup<
   Extra extends IAnyObj,
   StaticExtra extends any,
   Mp extends ValidMapProps
->(setup: T, options?: OptionsBase<P, CuDesc, Extra, StaticExtra, Mp>) {
-  const mergedOptions = { setup, ...options };
-  const { regOpt, ccClassKey } = priBuildCallParams(cst.MODULE_DEFAULT, [], mergedOptions);
+> (setup: T, options?: OptionsBase<P, CuDesc, Extra, StaticExtra, Mp>) {
+  const mergedOptions = { setup, ...options }
+  const { regOpt, ccClassKey } = priBuildCallParams(cst.MODULE_DEFAULT, [], mergedOptions)
   type Ctx = CtxM<
     P,
     MODULE_DEFAULT,
@@ -237,8 +237,8 @@ export function useSetup<
     ComputedValType<CuDesc>,
     [Extra, StaticExtra, ReturnType<Mp>]
   >;
-  const { settings } = useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey);
-  return settings;
+  const { settings } = useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
+  return settings
 }
 
 /**
@@ -254,8 +254,8 @@ export function typeCtxM<
   Extra extends IAnyObj,
   StaticExtra extends any,
   Mp extends ValidMapProps
->(moduleName: M, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>, ctx?: any) {
-  noop(moduleName, options);
+> (moduleName: M, options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>, ctx?: any) {
+  noop(moduleName, options)
   type Ctx = CtxM<
     P,
     M,
@@ -263,7 +263,7 @@ export function typeCtxM<
     ComputedValType<CuDesc>,
     [Extra, StaticExtra, ReturnType<Mp>]
   >;
-  return (ctx || {}) as Ctx;
+  return (ctx || {}) as Ctx
 }
 
 /**
@@ -286,7 +286,7 @@ export function typeCtxM<
  * }
  * --------------------------------------------------------------
  */
-export function makeUseC2Mod<M extends Modules>(moduleName: M) {
+export function makeUseC2Mod<M extends Modules> (moduleName: M) {
   return {
     /** 需要传入的 setup 函数 */
     useC2Mod: <
@@ -299,7 +299,7 @@ export function makeUseC2Mod<M extends Modules>(moduleName: M) {
     >(
       options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>,
     ) => {
-      const { regOpt, ccClassKey } = priBuildCallParams(moduleName, [], options);
+      const { regOpt, ccClassKey } = priBuildCallParams(moduleName, [], options)
       type Ctx = CtxM<
         P,
         M,
@@ -307,49 +307,49 @@ export function makeUseC2Mod<M extends Modules>(moduleName: M) {
         ComputedValType<CuDesc>,
         [Extra, StaticExtra, ReturnType<Mp>]
       >;
-      return useConcent<P, Ctx>(regOpt, ccClassKey);
+      return useConcent<P, Ctx>(regOpt, ccClassKey)
     },
     /** 推导 setup 函数的 ctx 参数类型 */
     typeCtx: (ctx: ICtxBase) => {
-      return ctx as CtxM<Record<string, unknown>, M>;
-    },
-  };
+      return ctx as CtxM<Record<string, unknown>, M>
+    }
+  }
 }
 
-export const ccReducer = (reducer as unknown) as RootRd;
+export const ccReducer = (reducer as unknown) as RootRd
 
 /**
  * 获取 global 模块的状态
  * 在已拥有 concent model 上下文、action 上下文的地方，
  * 推荐直接获取，代替调用此函数，因为直接获取数据时组件并不会订阅数据变化
  */
-export function getGlobalState() {
-  const globalState = getGst<RootState>();
-  return globalState;
+export function getGlobalState () {
+  const globalState = getGst<RootState>()
+  return globalState
 }
 
 /**
  * 获取整个根状态
  * 注意直接获取数据时组件并不会订阅数据变化
  */
-export function getRootState() {
-  const rootState = getSt() as RootState;
-  return rootState;
+export function getRootState () {
+  const rootState = getSt() as RootState
+  return rootState
 }
 
 /**
  * 获取目标模块状态
  * 注意直接获取数据时组件并不会订阅数据变化
  */
-export function getModelState<T extends Modules>(modelName: T) {
-  const modelState = getSt(modelName) as RootState[T];
-  return modelState;
+export function getModelState<T extends Modules> (modelName: T) {
+  const modelState = getSt(modelName) as RootState[T]
+  return modelState
 }
 
 /** 获取目标模块状态 */
-export function getModelComputed<T extends Modules>(modelName: T) {
-  const modelComputed = getComputed(modelName) as RootCu[T];
-  return modelComputed;
+export function getModelComputed<T extends Modules> (modelName: T) {
+  const modelComputed = getComputed(modelName) as RootCu[T]
+  return modelComputed
 }
 
 type EvKeys = keyof EvMap;
@@ -360,8 +360,8 @@ type EvKeys = keyof EvMap;
  * @param eventName - 事件名
  * @param args
  */
-export function ccEmit<E extends EvKeys, T extends EvMap[E]>(eventName: E, ...args: T) {
-  emit(eventName, ...args);
+export function ccEmit<E extends EvKeys, T extends EvMap[E]> (eventName: E, ...args: T) {
+  emit(eventName, ...args)
 }
 
 /**
@@ -370,8 +370,8 @@ export function ccEmit<E extends EvKeys, T extends EvMap[E]>(eventName: E, ...ar
  * @param eventDesc - [eventName, id]
  * @param args
  */
-export function ccEmitId<E extends EvKeys, T extends EvMap[E]>(eventDesc: [E, string], ...args: T) {
-  emit(eventDesc, ...args);
+export function ccEmitId<E extends EvKeys, T extends EvMap[E]> (eventDesc: [E, string], ...args: T) {
+  emit(eventDesc, ...args)
 }
 
 type OnFn = <E extends EvKeys>(eventName: E, cb: (...args: EvMap[E]) => void) => void;
@@ -387,8 +387,8 @@ type OnFn = <E extends EvKeys>(eventName: E, cb: (...args: EvMap[E]) => void) =>
  *   })
  * }
  */
-export function ctxOn(ctx: ICtxBase) {
-  return ctx.on as OnFn;
+export function ctxOn (ctx: ICtxBase) {
+  return ctx.on as OnFn
 }
 
 type OnIdFn = <E extends EvKeys>(eventDesc: [E, string], cb: (...args: EvMap[E]) => void) => void;
@@ -398,6 +398,6 @@ type OnIdFn = <E extends EvKeys>(eventDesc: [E, string], cb: (...args: EvMap[E])
  *
  * @param ctx
  */
-export function ctxOnId(ctx: ICtxBase) {
-  return ctx.on as OnIdFn;
+export function ctxOnId (ctx: ICtxBase) {
+  return ctx.on as OnIdFn
 }

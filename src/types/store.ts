@@ -9,9 +9,9 @@ import type {
   GetRootReducer,
   GetRootComputed,
   GetRootReducerCaller,
-  GetRootReducerGhost,
-} from 'concent';
-import type { Models } from './mods';
+  GetRootReducerGhost
+} from 'concent'
+import type { Models } from './mods'
 
 export type RootState = GetRootState<Models>;
 

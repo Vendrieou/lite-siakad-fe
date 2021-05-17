@@ -1,6 +1,6 @@
-import { defineModule } from 'concent';
+import { defineModule } from 'concent'
 
-import { queryMe } from '@/services/me';
+import { queryMe } from '@/services/me'
 
 export interface Me {
   address?: string;
@@ -15,10 +15,10 @@ const Model = defineModule({
 
   reducer: {
     fetchMe: async () => {
-      const response = await queryMe();
-      return response.data;
-    },
-  },
-});
+      const response = await queryMe()
+      return response.data
+    }
+  }
+})
 
-export default Model;
+export default Model
