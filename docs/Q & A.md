@@ -1,20 +1,20 @@
 # Q & A
 
-## 启动时自动打开浏览器
+## Automatically open the browser at startup
 
-vite@&#8203;2.0.1 之前配置 `server.open: true` 不能自动打开浏览器，2.0.2 之后可通过配置 `BROWSER` 环境变量启动浏览器。详情参考 [vitejs/vite#2159](https://github.com/vitejs/vite/issues/2159)。
+vite@&#8203; Before 2.0.1, the browser cannot be opened automatically by configuring `server.open: true`. After 2.0.2, the browser can be started by configuring the `BROWSER` environment variable. For details, refer to [vitejs/vite#2159](https://github.com/vitejs/vite/issues/2159).
 
-## Vite 下如何使用 antd
+## How to use antd under Vite
 
-根据[官方文档](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD)的说明，在 webpack 下需要用到 [`babel-plugin-import`](https://github.com/ant-design/babel-plugin-import) 插件，而在 Vite 下对应的需要使用 [vite-plugin-imp](https://github.com/onebay/vite-plugin-imp) 插件。值得注意的是：
+According to [official document](https://ant.design/docs/react/getting-started-cn#%E6%8C%89%E9%9C%80%E5%8A%A0%E8%BD%BD) Note that the [`babel-plugin-import`](https://github.com/ant-design/babel-plugin-import) plug-in is required under webpack, and the corresponding [vite-plugin] is required under Vite -imp](https://github.com/onebay/vite-plugin-imp) plugin. It is worth noting that:
 
-### 直接使用 lib/\*_/_.less 文件
+### Use lib/\*_/_.less files directly
 
 ```js
 vitePluginImp({
   libList: [
     {
-      libName: 'antd',
+      libName:'antd',
       style: (name) => `antd/lib/${name}/style/index.less`,
       // style: (name) => [`antd/lib/style/index.less`, `antd/lib/${name}/style/index.less`],
     },
@@ -22,34 +22,34 @@ vitePluginImp({
 });
 ```
 
-该配置在使用组件时可能需要单独引入 `antd/lib/style/index`，且组件的样式依赖未引入，比如在 List 组件不能正常使用 loading 属性，因为没有引入 Spin 组件的样式。且已知在使用 Col, Row 组件时，不存在 `antd/lib/col/style/index.less` 和 `antd/lib/row/style/index.less`，故此法可用性太低。
+This configuration may need to introduce `antd/lib/style/index` separately when using the component, and the style dependency of the component is not introduced. For example, the loading attribute cannot be used normally in the List component because the Spin component style is not introduced. And it is known that when using Col, Row components, there are no `antd/lib/col/style/index.less` and `antd/lib/row/style/index.less`, so the usability of this method is too low.
 
-### 使用 lib/\*/style/index.js
+### Use lib/\*/style/index.js
 
 ```js
 vitePluginImp({
   libList: [
     {
-      libName: 'antd',
+      libName:'antd',
       style: (name) => `antd/lib/${name}/style`,
     },
   ],
 });
 ```
 
-运行时报错 `Uncaught ReferenceError: require is not defined`，因为 `antd/lib/${name}/style/index.js` 中使用了 require 引入依赖，但是不能被浏览器识别。
+The runtime error `Uncaught ReferenceError: require is not defined`, because `antd/lib/${name}/style/index.js` uses require to introduce dependencies, but it cannot be recognized by the browser.
 
-### 最终方案
+### final plan
 
 ```js
 vitePluginImp({
   libList: [
     {
-      libName: 'antd',
+      libName:'antd',
       style: (name) => `antd/es/${name}/style`,
     },
   ],
 });
 ```
 
-es/\*/style/index.js 中使用 import 引入依赖，能被浏览器执行，且样式依赖的问题也从内部得到了解决。
+es/\*/style/index.js uses import to introduce dependencies, which can be executed by the browser, and the problem of style dependencies is solved internally.

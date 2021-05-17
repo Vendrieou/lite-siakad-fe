@@ -39,7 +39,7 @@ export type AC<M extends Modules, FullState extends IAnyObj = RootState[M]> = IA
 // util types based on Ctx
 // ********************************
 
-// 从左到右: Extra, StaticExtra, Mapped
+// From left to right: Extra, StaticExtra, Mapped
 type OtherTypes = [any] | [any, any] | [any, any, any];
 
 /** belong one module.  CtxM<P, M, Se, RefCu> */

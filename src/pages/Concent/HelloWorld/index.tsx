@@ -5,8 +5,9 @@ import { PageContainer } from '@ant-design/pro-layout'
 
 @register('counter')
 class DemoCls extends Component<any, { num: number }> {
-  // 此时 setState 提交的状态触发自己重渲染
-  // 同时也会触发其他同样属于 counter 模块的实例且消费了具体数据的实例重渲染
+  // At this time, the state submitted by setState triggers its own re-rendering
+  // At the same time, it will also trigger the re-rendering of other instances 
+  // that also belong to the counter module and consume specific data
   inc = () => this.setState({ num: this.state.num + 1 });
 
   render () {

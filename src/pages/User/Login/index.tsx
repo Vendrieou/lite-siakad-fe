@@ -62,12 +62,12 @@ const Login: React.FC = () => {
         }}
       >
         <Tabs activeKey={type} onChange={setType}>
-          <Tabs.TabPane key='account' tab='账户密码登录' />
-          <Tabs.TabPane key='mobile' tab='手机号登录' />
+          <Tabs.TabPane key='account' tab='Account password login' />
+          <Tabs.TabPane key='mobile' tab='Mobile phone number login' />
         </Tabs>
 
         {state.status === 'error' && state.type === 'account' && !submitting && (
-          <LoginMessage content='账户或密码错误（admin/vite-react)' />
+          <LoginMessage content='Incorrect account or password (admin/vite-react)' />
         )}
         {type === 'account' && (
           <>
@@ -77,11 +77,11 @@ const Login: React.FC = () => {
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />
               }}
-              placeholder='用户名: admin or user'
+              placeholder='username: admin or user'
               rules={[
                 {
                   required: true,
-                  message: '请输入用户名!'
+                  message: 'please enter user name!'
                 }
               ]}
             />
@@ -91,11 +91,11 @@ const Login: React.FC = () => {
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />
               }}
-              placeholder='密码: vite-react'
+              placeholder='password: vite-react'
               rules={[
                 {
                   required: true,
-                  message: '请输入密码！'
+                  message: 'Please enter the password!'
                 }
               ]}
             />
@@ -103,7 +103,7 @@ const Login: React.FC = () => {
         )}
 
         {state.status === 'error' && state.type === 'mobile' && !submitting && (
-          <LoginMessage content='验证码错误' />
+          <LoginMessage content='Verification code error' />
         )}
         {type === 'mobile' && (
           <>
@@ -113,15 +113,15 @@ const Login: React.FC = () => {
                 prefix: <MobileOutlined className={styles.prefixIcon} />
               }}
               name='mobile'
-              placeholder='手机号'
+              placeholder='phone number'
               rules={[
                 {
                   required: true,
-                  message: '请输入手机号！'
+                  message: 'Please enter phone number!'
                 },
                 {
                   pattern: /^1\d{10}$/,
-                  message: '手机号格式错误！'
+                  message: 'Malformed phone number!'
                 }
               ]}
             />
@@ -133,18 +133,18 @@ const Login: React.FC = () => {
               captchaProps={{
                 size: 'large'
               }}
-              placeholder='请输入验证码'
+              placeholder='please enter verification code'
               captchaTextRender={(timing, count) => {
                 if (timing) {
-                  return `${count} '获取验证码'`
+                  return `${count} 'get verification code'`
                 }
-                return '获取验证码'
+                return 'get verification code'
               }}
               name='captcha'
               rules={[
                 {
                   required: true,
-                  message: '请输入验证码！'
+                  message: 'please enter verification code!'
                 }
               ]}
               onGetCaptcha={async (mobile) => {
@@ -152,7 +152,7 @@ const Login: React.FC = () => {
                 if (result === false) {
                   return
                 }
-                message.success('获取验证码成功！验证码为：1234')
+                message.success('Get the verification code successfully! The verification code is: 1234')
               }}
             />
           </>
@@ -163,19 +163,19 @@ const Login: React.FC = () => {
           }}
         >
           <ProFormCheckbox noStyle name='autoLogin'>
-            自动登录
+            automatic log-in
           </ProFormCheckbox>
           <a
             style={{
               float: 'right'
             }}
           >
-            忘记密码
+            Forgot password
           </a>
         </div>
       </ProForm>
       <Space className={styles.other}>
-        <div>其他登录方式</div>
+        <div>Other login methods</div>
         <AlipayCircleOutlined className={styles.icon} />
         <TaobaoCircleOutlined className={styles.icon} />
         <WeiboCircleOutlined className={styles.icon} />

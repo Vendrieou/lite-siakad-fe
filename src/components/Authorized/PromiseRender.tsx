@@ -28,7 +28,7 @@ export default class PromiseRender<T, K> extends React.Component<
 
   shouldComponentUpdate = (
     nextProps: PromiseRenderProps<T, K>,
-    nextState: PromiseRenderState,
+    nextState: PromiseRenderState
   ): boolean => {
     const { component } = this.state
     if (!isEqual(nextProps, this.props)) {
@@ -61,7 +61,7 @@ export default class PromiseRender<T, K> extends React.Component<
   // Authorized  render is already instantiated, children is no instantiated
   // Secured is not instantiated
   checkIsInstantiation = (
-    target: React.ReactNode | React.ComponentClass,
+    target: React.ReactNode | React.ComponentClass
   ): React.FunctionComponent => {
     if (isComponentClass(target)) {
       const Target = target as React.ComponentClass

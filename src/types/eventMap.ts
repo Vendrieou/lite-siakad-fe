@@ -1,8 +1,8 @@
-// 推荐将事件名统一维护在 configs某处
+// It is recommended to maintain the event name uniformly in configs somewhere
 // import * as ev from 'configs/constant/event';
 
 /**
- * 管理所有事件名对应参数类型的 mappedType
+ * Manage all event names corresponding to parameter types mappedType
  */
 export interface EvMap {
   'someEvent': [number, string],

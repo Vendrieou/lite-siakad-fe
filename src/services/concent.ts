@@ -1,4 +1,4 @@
-// concent 相关的一些公共封装函数
+// concent Some related public wrapper functions
 
 import type {
   ReducerCallerParams,
@@ -31,7 +31,7 @@ function noop (...args: any[]) {}
 function priBuildCallParams (
   moduleName: string,
   connect: Modules[],
-  options?: Options<any, any, any, any, any, any>,
+  options?: Options<any, any, any, any, any, any>
 ) {
   const targetOptions = options || {}
   const {
@@ -59,17 +59,17 @@ function priBuildCallParams (
 }
 
 /**
- * 调用目标函数，用于对接 reducer 里的 ghost函数
+ * Call the target function, used to dock the ghost function in the reducer
  *
  * @param callerParams
  * @param actionCtx
  */
 export async function callTarget (
   callerParams: ReducerCallerParams | [IReducerFn, any],
-  actionCtx: IActionCtxBase,
+  actionCtx: IActionCtxBase
 ) {
   try {
-    /** 支持 reducer 文件里内部调用 actionCtx.dispatch(loading, [targetFn, payload]) */
+    /** Support internal call actionCtx.dispatch(loading, [targetFn, payload]) in reducer file */
     if (Array.isArray(callerParams)) {
       const [fn, payload] = callerParams
       await actionCtx.dispatch(fn, payload)
@@ -101,16 +101,17 @@ export interface OptionsBase<
   ccClassKey?: string;
   extra?: Extra;
   staticExtra?: StaticExtra;
-  /** 一个遗留的参数，对接 useConcent 的 mapProps，每一轮渲染都会调用，返回结果可通过 ctx.mapped 拿到 */
+  /** A legacy parameter, docked with useConcent's mapProps, it will be called
+   *  every round of rendering, and the returned result can be obtained through ctx.mapped */
   mapProps?: Mp;
   cuDesc?: CuDesc;
   /**
-   * 是否透传 cuSpec 给 useConcent 函数，默认为true，
-   * 表示需要透传，此时用户不需要再setup函数体内调用 ctx.computed(cuSpec)
-   * 如果用户设置 passCuSpec 为 false，表示传入 cuSpec 仅为了方便推导出 refComputed 类型，但不透传 cuSpec 给 useConcent 函数
-   * 注意此时用户需要在 setup 函数体内调用 ctx.computed(cuSpec) 来完成示例计算函数的定义，
-   * 否则 refComputed 里拿不到真正的计算结果
-   */
+    * Whether to pass cuSpec transparently to the useConcent function, the default is true,
+    * Indicates that transparent transmission is required. At this time, the user does not need to call ctx.computed(cuSpec) in the setup function body
+    * If the user sets passCuSpec to false, it means that cuSpec is passed in for the convenience of deriving the refComputed type, but cuSpec is not transparently passed to the useConcent function
+    * Note that at this time, the user needs to call ctx.computed(cuSpec) in the setup function body to complete the definition of the example calculation function.
+    * Otherwise, the real calculation result will not be available in refComputed
+  */
   passCuDesc?: boolean;
 }
 export interface Options<
@@ -125,13 +126,13 @@ export interface Options<
 }
 
 /**
- * 属于某个模块
+ * Belongs to a module
  * use the target model context you want by passing a module name
- * 如需要全局任意地方可通过 useC2Mod('xx') 导出 xx 模块上下文来使用，
- * 需要在 src/models/index.js 显式的导出该模块
+ * If you need to use it globally and anywhere, you can use useC2Mod('xx') to export the xx module context.，
+ * The module needs to be explicitly exported in src/models/index.js
  *
  * -----------------------[Code example]-----------------------
- * // models/index.ts 里导出
+ * // models/index.ts Export
  * import somePageModel from 'pages/SomePage/model';
  * import someCompModel from 'components/SomeComp/model';
  *
@@ -139,7 +140,7 @@ export interface Options<
  *
  * export default allModels;
  *
- * // 某些组件里使用
+ * // Used in some components
  * import { useC2Mod } from 'services/concent';
  *
  * function DemoComp(){
@@ -148,7 +149,7 @@ export interface Options<
  * }
  * --------------------------------------------------------------
  * @param moduleName
- * @param options {Options} - 可选参数，见 Options 定义
+ * @param options {Options} - Optional parameters, see 'Options' definition
  */
 export function useC2Mod<
   M extends Modules,
@@ -170,7 +171,7 @@ export function useC2Mod<
   return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
 }
 
-/** 属于某个模块，连接多个模块 */
+/** Belong to a certain module, connect multiple modules */
 export function useC2ModConn<
   M extends Modules,
   Conn extends Modules[],
@@ -193,7 +194,7 @@ export function useC2ModConn<
   return useConcent<Record<string, unknown>, Ctx>(regOpt, ccClassKey)
 }
 
-/** 连接多个模块 */
+/** Connect multiple modules */
 export function useC2Conn<
   Conn extends Modules[],
   Setup extends ValidSetup,
@@ -215,7 +216,7 @@ export function useC2Conn<
 }
 
 /**
- * 适用于不属于任何模块，只是设置 setup 函数的场景
+ * Suitable for scenarios that do not belong to any module, but only set the setup function
  *
  * @param setup
  * @param options - see OptionsBase
@@ -242,9 +243,9 @@ export function useSetup<
 }
 
 /**
- * 为属于某个模块的 ctx 标记类型, 通常使用在 class 成员变量上 和 setup 函数体内
- * 在 class 组件成员变量使用时不需要传递第三位参数 ctx，组件实例化时会由 concent 注入并替换
- * 在 setup 函数里使用时，可直接传入已经创建好的 ctx
+ * Is the ctx mark type belonging to a certain module, usually used in class member variables and in the body of the setup function
+ * No need to pass the third parameter ctx when using the class component member variable, it will be injected and replaced by concent when the component is instantiated
+ * When used in the setup function, you can directly pass in the created ctx
  */
 export function typeCtxM<
   M extends Modules,
@@ -267,8 +268,8 @@ export function typeCtxM<
 }
 
 /**
- * useC2Mod 的工厂函数，返回钩子函数的同时，也提供了帮助推导 setup 函数的 ctx 参数类型的辅助函数
- * 注意! 此工厂函数仅适用于 setup 函数 ctx 参数不需要感知 props, extra 类型时，方可使用
+ * The factory function of useC2Mod, while returning the hook function, also provides an auxiliary function to help derive the ctx parameter type of the setup function
+ * Note! This factory function is only applicable to the setup function. The ctx parameter does not need to be aware of props and extra types before it can be used
  *
  * @param moduleName
  * @param options
@@ -288,7 +289,7 @@ export function typeCtxM<
  */
 export function makeUseC2Mod<M extends Modules> (moduleName: M) {
   return {
-    /** 需要传入的 setup 函数 */
+    /** The setup function that needs to be passed in */
     useC2Mod: <
       Setup extends ValidSetup,
       P extends IAnyObj,
@@ -297,7 +298,7 @@ export function makeUseC2Mod<M extends Modules> (moduleName: M) {
       StaticExtra extends any,
       Mp extends ValidMapProps
     >(
-      options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>,
+      options?: Options<P, Setup, CuDesc, Extra, StaticExtra, Mp>
     ) => {
       const { regOpt, ccClassKey } = priBuildCallParams(moduleName, [], options)
       type Ctx = CtxM<
@@ -309,7 +310,7 @@ export function makeUseC2Mod<M extends Modules> (moduleName: M) {
       >;
       return useConcent<P, Ctx>(regOpt, ccClassKey)
     },
-    /** 推导 setup 函数的 ctx 参数类型 */
+    /** Derive the ctx parameter type of the setup function */
     typeCtx: (ctx: ICtxBase) => {
       return ctx as CtxM<Record<string, unknown>, M>
     }
@@ -319,9 +320,9 @@ export function makeUseC2Mod<M extends Modules> (moduleName: M) {
 export const ccReducer = (reducer as unknown) as RootRd
 
 /**
- * 获取 global 模块的状态
- * 在已拥有 concent model 上下文、action 上下文的地方，
- * 推荐直接获取，代替调用此函数，因为直接获取数据时组件并不会订阅数据变化
+ * Get the status of the global module
+ * Where there is already a concent model context and an action context,
+ * It is recommended to get it directly instead of calling this function, because the component will not subscribe to data changes when getting the data directly
  */
 export function getGlobalState () {
   const globalState = getGst<RootState>()
@@ -329,8 +330,8 @@ export function getGlobalState () {
 }
 
 /**
- * 获取整个根状态
- * 注意直接获取数据时组件并不会订阅数据变化
+ * Get the entire root state
+ * Note that the component will not subscribe to data changes when the data is directly obtained
  */
 export function getRootState () {
   const rootState = getSt() as RootState
@@ -338,15 +339,15 @@ export function getRootState () {
 }
 
 /**
- * 获取目标模块状态
- * 注意直接获取数据时组件并不会订阅数据变化
+ * Get the status of the target module
+ * Note that the component will not subscribe to data changes when the data is directly obtained
  */
 export function getModelState<T extends Modules> (modelName: T) {
   const modelState = getSt(modelName) as RootState[T]
   return modelState
 }
 
-/** 获取目标模块状态 */
+/** Get target module status */
 export function getModelComputed<T extends Modules> (modelName: T) {
   const modelComputed = getComputed(modelName) as RootCu[T]
   return modelComputed
@@ -355,9 +356,9 @@ export function getModelComputed<T extends Modules> (modelName: T) {
 type EvKeys = keyof EvMap;
 
 /**
- * 发射事件
+ * Launch event
  *
- * @param eventName - 事件名
+ * @param eventName - Event name
  * @param args
  */
 export function ccEmit<E extends EvKeys, T extends EvMap[E]> (eventName: E, ...args: T) {
@@ -365,7 +366,7 @@ export function ccEmit<E extends EvKeys, T extends EvMap[E]> (eventName: E, ...a
 }
 
 /**
- * 携带id的发射事件
+ * Launch event carrying id
  *
  * @param eventDesc - [eventName, id]
  * @param args
@@ -377,15 +378,15 @@ export function ccEmitId<E extends EvKeys, T extends EvMap[E]> (eventDesc: [E, s
 type OnFn = <E extends EvKeys>(eventName: E, cb: (...args: EvMap[E]) => void) => void;
 
 /**
- * 配合 EvMap，为 ctx.on 装配类型
- * 外部调用时传入具体的事件名就推导出 cb 函数的参数列表类型
+ * With EvMap, it is ctx.on assembly type
+ * Passing in the specific event name when calling externally will deduce the parameter list type of the cb function
  *
  * function setup(ctx: Ctx){
- *   const on = ctxOn(ctx);
- *   on('xxx',(a, b)=>{
- *    // 此处 ts 能感知 a、b 的具体类型
- *   })
- * }
+ * const on = ctxOn(ctx);
+ * on('xxx',(a, b)=>{
+ * // Here ts can perceive the specific types of a and b
+ * })
+ *}
  */
 export function ctxOn (ctx: ICtxBase) {
   return ctx.on as OnFn
@@ -394,7 +395,7 @@ export function ctxOn (ctx: ICtxBase) {
 type OnIdFn = <E extends EvKeys>(eventDesc: [E, string], cb: (...args: EvMap[E]) => void) => void;
 
 /**
- * 可以携带 id 的 ctx.on
+ * Ctx.on that can carry id
  *
  * @param ctx
  */

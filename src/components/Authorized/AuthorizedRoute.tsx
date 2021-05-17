@@ -7,6 +7,7 @@ import type { IAuthorityType } from './CheckPermissions'
 type AuthorizedRouteProps = {
   currentAuthority: string;
   component: React.ComponentClass<any, any>;
+  // eslint-disable-next-line no-unused-vars
   render: (props: any) => React.ReactNode;
   redirectPath: string;
   authority: IAuthorityType;

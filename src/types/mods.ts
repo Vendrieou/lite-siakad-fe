@@ -1,12 +1,12 @@
-// concent的所有模块
+// all modules of concent
 
-// 由 run 接口集中化配置
+// Centralized configuration by the run interface
 import models from '../models'
 
 type loginRdKeys = keyof typeof models.login.reducer;
 type meRdKeys = keyof typeof models.me.reducer;
 
-// 利用模板字符串生成新的 keys，辅助生成 loading 模块的 key 描述
+// Use the template string to generate new keys to assist in generating the key description of the loading module
 const loadingStatePart1 = { login: false } as { [key in `login/${loginRdKeys}`]: false } & {
   login: false;
 }

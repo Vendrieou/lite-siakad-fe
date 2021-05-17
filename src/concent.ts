@@ -6,13 +6,13 @@ import allModels from './models'
 run(
   {
     counter: {
-      // 声明一个名为'counter'的模块
-      state: { num: 1, numBig: 100 } // 定义状态
+      // Declare a name'counter'Module
+      state: { num: 1, numBig: 100 } // Define the state
     },
     ...allModels
   },
   {
-    // 配置loading插件
+    // Configure loading plugin
     plugins: [loadingPlugin]
-  },
+  }
 )
