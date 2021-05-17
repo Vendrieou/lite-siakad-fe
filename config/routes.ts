@@ -1,3 +1,5 @@
+import AdminDashboardRouter from './router/Admin/Dashboard/AdminDashboardRouter'
+import AdminLoginRouter from './router/Admin/Login/AdminLoginRouter'
 import ProdiRouter from './router/Admin/Prodi/ProdiRouter'
 
 export default [
@@ -26,25 +28,27 @@ export default [
           },
         ],
       },
+      AdminLoginRouter,
       {
-        path: '/',
+        path: '/admin',
         component: './layouts/SecurityLayout',
         routes: [
           {
-            path: '/',
+            path: '/admin',
             component: './layouts/BasicLayout',
             routes: [
-              // {
-              //   path: '/',
-              //   redirect: '/welcome',
-              // },
               {
-                path: '/welcome',
-                icon: 'dashboard',
-                name: 'Dashboard',
-                component: './pages/Welcome',
+                path: '/admin',
+                redirect: '/admin/dashboard',
               },
+              AdminDashboardRouter,
               ProdiRouter,
+              // {
+              //   path: '/welcome',
+              //   icon: 'dashboard',
+              //   name: 'welcome',
+              //   component: './pages/Welcome',
+              // },
               // {
               //   path: '/concent',
               //   icon: 'bulb',

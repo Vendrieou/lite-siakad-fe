@@ -13,7 +13,7 @@ import GlobalFooter from '@/container/GlobalFooter'
 import defaultSettings from '../../config/defaultSettings'
 import Logo from 'static/logo/logoTIME.png'
 
-const loginPath = '/user/login'
+const loginPath = '/admin/login'
 
 export type BasicLayoutProps = {
   route: ProLayoutProps['route'];
