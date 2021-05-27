@@ -6,15 +6,15 @@ export default [
     method: 'post',
     timeout: 240,
     response: ({ body }) => {
-      const { password, userName, type } = body;
-      if (password === 'vite-react' && userName === 'admin') {
+      const { password, username, type } = body;
+      if (password === 'vite-react' && username === 'admin') {
         return {
           status: 'ok',
           type,
           authority: 'admin',
         };
       }
-      if (password === 'vite-react' && userName === 'user') {
+      if (password === 'vite-react' && username === 'user') {
         return {
           status: 'ok',
           type,

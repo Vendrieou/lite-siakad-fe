@@ -41,7 +41,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
       </Helmet>
 
       <div className={styles.container}>
-        <div className={styles.content}>
+        <div>
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to='/'>
