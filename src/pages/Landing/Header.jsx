@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { Menu, Dropdown, Drawer, Button, Input } from 'antd'
 import { DownOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import logoTIME from 'static/logo/logoTIME.png'
-import styles from './Header.module.less'
+// import styles from './Header.module.less'
+import styles from './Header.module.css'
 
 const MenuItem = Menu.Item
 const InputSearch = Input.Search
