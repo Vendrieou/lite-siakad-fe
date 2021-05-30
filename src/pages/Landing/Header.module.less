@@ -1,0 +1,128 @@
+.logo {
+  height: 45px;
+}
+
+.header {
+  background-color: #ffffff;
+}
+
+.menuBar {
+  display: grid;
+  grid-auto-flow: column;
+  box-shadow: 0 10px 20px rgb(8 70 109 / 20%), 0 6px 6px rgb(0 0 0 / 0%);
+  padding: 0 2em;
+  overflow: auto;
+}
+
+
+.logo {
+  margin-top: 0.2em;
+  float: left;
+}
+
+.logo a {
+  display: inline-block;
+  font-size: 20px;
+  padding: 20px;
+  text-transform: capitalize;
+}
+
+.menuCon {
+  display: grid;
+  grid-auto-flow: column;
+  margin-top: 0.5em;
+}
+
+.menuCon .ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.menuCon .rightMenu ul {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: end;
+}
+
+.barsMenu {
+  float: right;
+  height: 32px;
+  padding: 6px;
+  margin-top: 8px;
+  display: none;
+  background: none;
+}
+
+.barsBtn {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: #08466D;
+  position: relative;
+}
+
+.barsBtn:after,
+.barsBtn:before {
+  content: attr(x);
+  width: 20px;
+  position: absolute;
+  top: -6px;
+  left: 0;
+  height: 2px;
+  background: #08466D;
+}
+
+.barsBtn:after {
+  top: auto;
+  bottom: -6px;
+}
+
+.ant-drawer-body {
+  padding: 0;
+}
+
+.barsMenu>span {
+  display: block;
+}
+
+.ant-drawer-body .ant-menu-horizontal>.ant-menu-item,
+.ant-drawer-body .ant-menu-horizontal>.ant-menu-submenu {
+  display: inline-block;
+  width: 100%;
+}
+
+.ant-drawer-body .ant-menu-horizontal {
+  border-bottom: none;
+}
+
+.ant-drawer-body .ant-menu-horizontal>.ant-menu-item:hover {
+  border-bottom-color: transparent;
+}
+
+@media (max-width: 767px) {
+  .menuBar {
+    padding: 10px 20px;
+  }
+  
+  .barsMenu {
+    width: fit-content;
+    display: inline-block;
+  }
+
+  .menuCon {
+    margin-top: 0;
+    justify-content: end
+  }
+  .leftMenu,
+  .rightMenu {
+    display: none;
+  }
+
+  .logo {
+    margin-top: 0;
+  }
+
+  .menuCon .ant-menu-item,
+  .menuCon .ant-menu-submenu-title {
+    padding: 1px 20px;
+  }
+}
