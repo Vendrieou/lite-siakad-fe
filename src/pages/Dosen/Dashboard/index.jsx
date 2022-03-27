@@ -6,7 +6,7 @@ const {Text} = Typography
 const DosenDashboardContainer = () => {
   return (
     <PageContainer>
-      <Text>DosenDashboardContainer.</Text>
+      <Text>DosenDashboardContainer</Text>
     </PageContainer>
   )
 }

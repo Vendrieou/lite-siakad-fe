@@ -6,32 +6,41 @@ export default [
     method: 'post',
     timeout: 240,
     response: ({ body }) => {
-      const { password, username, type } = body;
-      if (password === 'vite-react' && username === 'admin') {
+      const { password, email, type } = body;
+      if (password === 'vite-react' && email === 'admin') {
         return {
-          status: 'ok',
-          type,
-          authority: 'admin',
+          data: {
+            status: 'ok',
+            type,
+            authority: 'admin',
+            token: 'eye45',
+          }
         };
       }
-      if (password === 'vite-react' && username === 'user') {
+      if (password === 'vite-react' && email === 'user') {
         return {
-          status: 'ok',
-          type,
-          authority: 'user',
+          data: {
+            status: 'ok',
+            type,
+            authority: 'user',
+          }
         };
       }
       if (type === 'mobile') {
         return {
-          status: 'ok',
-          type,
-          authority: 'admin',
+          data: {
+            status: 'ok',
+            type,
+            authority: 'admin',
+          }
         };
       }
       return {
-        status: 'error',
-        type,
-        authority: 'guest',
+        data: {
+          status: 'error',
+          type,
+          authority: 'guest',
+        }
       };
     },
   },
