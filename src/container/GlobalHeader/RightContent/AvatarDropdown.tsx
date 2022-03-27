@@ -4,6 +4,7 @@ import { useConcent } from 'concent'
 import { history } from '@vitjs/runtime'
 
 import HeaderDropdown from '@/components/HeaderDropdown'
+import EmptyPerson from 'static/assets/empty-state/person.png'
 import styles from './index.module.less'
 
 export type GlobalHeaderRightProps = {
@@ -12,7 +13,7 @@ export type GlobalHeaderRightProps = {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { dispatch } = useConcent('login')
-  const { state } = useConcent('me')
+  const { state } = useConcent('authStore')
 
   const onMenuClick = (event: {
     key: React.Key;
@@ -27,23 +28,23 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       return
     }
 
-    history.push(`/account/${key}`)
+    history.push(`/admin/settings/${key}`)
   }
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
       {menu && (
-        <Menu.Item key='center'>
+        <Menu.Item key='profile'>
           <UserOutlined />
-          center
+          Profile
         </Menu.Item>
       )}
-      {menu && (
-        <Menu.Item key='settings'>
+      {/* {menu && (
+        <Menu.Item key='profile'>
           <SettingOutlined />
           settings
         </Menu.Item>
-      )}
+      )} */}
       {menu && <Menu.Divider />}
       <Menu.Item key='logout'>
         <LogoutOutlined />
@@ -54,8 +55,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size='small' className={styles.avatar} src={state.avatar} alt='avatar' />
-        <span className={`${styles.name} anticon`}>{state.name}</span>
+        <Avatar size='small' className={styles.avatar} src={state.currentItem.image ? state.currentItem.image : EmptyPerson} alt='avatar' />
+        <span className={`${styles.name} anticon`}>{state.currentItem.name}</span>
       </span>
     </HeaderDropdown>
   )

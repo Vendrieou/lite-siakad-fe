@@ -3,15 +3,15 @@ import { history, Redirect, useLocation } from '@vitjs/runtime'
 import { stringify } from 'querystring'
 import cookie from 'js-cookie'
 
-import PageLoading from '@/components/PageLoading'
+import PageLoading from 'components/PageLoading'
 
 
 export const loggedin = async ({ token, path }) => {
   cookie.set('token', token, { expires: 1 })
   if (path) {
-    Router.push(path)
+    history.push(path)
   } else {
-    Router.push('/')
+    history.push('/')
   }
 }
 
@@ -47,6 +47,6 @@ const Admin = ({ children }) => {
 }
 
 export {
-  User,
+  // User,
   Admin
 }

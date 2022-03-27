@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react'
 import { Menu, Dropdown, Drawer, Button, Input } from 'antd'
 import { DownOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import logoTIME from 'static/logo/logoTIME.png'
-// import styles from './Header.module.less'
-import styles from './Header.module.css'
+import styles from './Header.module.less'
 
 const MenuItem = Menu.Item
 const InputSearch = Input.Search
@@ -79,13 +78,14 @@ const HeaderContainer = () => {
             <div className={styles.rightMenu}>
               <RightMenu />
             </div>
-            <Button
-              className={styles.barsMenu}
-              type="text"
-              onClick={() => setVisible(true)}
-            >
-              <span className={styles.barsBtn}></span>
-            </Button>
+            <div className={styles.barsMenu}>
+              <Button
+                type="text"
+                onClick={() => setVisible(true)}
+              >
+                <span className={styles.barsBtn}></span>
+              </Button>
+            </div>
             <Drawer
               title="Menu"
               placement="right"

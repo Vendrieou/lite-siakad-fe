@@ -10,8 +10,9 @@ import { history, Link, useLocation } from '@vitjs/runtime'
 
 import RightContent from '@/container/GlobalHeader/RightContent'
 import GlobalFooter from '@/container/GlobalFooter'
+import { cookieGet } from '@/utils/storage'
+
 import defaultSettings from '../../config/defaultSettings'
-import Logo from 'static/logo/logoTIME.png'
 
 const loginPath = '/admin/login'
 
@@ -24,14 +25,19 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   return (
     <ProLayout
-      logo={Logo}
+      // logo={Logo}
       {...props}
-      onPageChange={() => {
-        // If you are not logged in, redirect to login
-        if (localStorage.getItem('status') !== 'ok' && history.location.pathname !== loginPath) {
-          history.push(loginPath)
-        }
-      }}
+      // onPageChange={async () => {
+      //   // If you are not logged in, redirect to login
+      //   // if (localStorage.getItem('status') !== 'ok' && history.location.pathname !== loginPath) {
+      //   // if (typeof status !== 'string' && history.location.pathname !== loginPath) {
+
+
+      //   if (await cookieGet('status') !== 'ok' && history.location.pathname !== loginPath) {
+      //     history.push(loginPath)
+      //   } 
+
+      // }}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
@@ -46,25 +52,40 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       rightContentRender={() => <RightContent />}
       breadcrumbRender={(routers = []) => [
         {
-          path: '/',
+          // path: '/',
+          path: '/admin/dashboard',
           breadcrumbName: (<HomeOutlined />) as any
         },
         ...routers
       ]}
       itemRender={(route, params, routes, paths) => {
-        const first = routes.indexOf(route) === 0
-        
-        return first ? (
-          <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
-        ) : (
-          <span>{route.breadcrumbName}</span>
+        return (
+          <Link to={route.path}>
+            <span>{route.breadcrumbName}</span>
+          </Link>
         )
+        // const first = routes.indexOf(route) === 0
+        // return first ? (
+        //   <Link to={paths.join('/admin/dashboard')}>{route.breadcrumbName}</Link>
+        // ) : (
+        //   <Link to={route.path}>
+        //     <span>{route.breadcrumbName}</span>
+        //   </Link>
+        // )
       }}
       footerRender={() => <GlobalFooter />}
       // waterMarkProps={{
-      //   content: 'Lite Siakad',
+      //   content: 'Rotary Club Medan Deli',
       //   fontColor: 'rgba(24,144,255,0.15)',
       // }}
+      menuHeaderRender={(logo, title) => (
+        <>
+          {logo}
+          <div>
+            {title}
+          </div>
+        </>
+      )}
       {...defaultSettings}
     />
   )
