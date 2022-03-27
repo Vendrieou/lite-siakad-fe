@@ -41,16 +41,16 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
       </Helmet>
 
       <div className={styles.container}>
-        <div>
+        <div className={styles.content}>
           <div className={styles.top}>
             <div className={styles.header}>
               <Link to='/'>
-                <img
+                {/* <img
                   alt='logo'
                   className={styles.logo}
-                  src='../../static/logo/logoTIME.png'
-                />
-                <span className={styles.title}>Lite Siakad</span>
+                  src={Logo}
+                /> */}
+                <span className={styles.title}>STMIK TIME</span>
               </Link>
             </div>
           </div>

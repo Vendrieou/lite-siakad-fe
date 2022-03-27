@@ -1,8 +1,13 @@
 // ref: https://github.com/ant-design/ant-design-pro/blob/master/src/utils/request.ts
 
 /** Request Network request tool more detailed api Documentation: https://github.com/umijs/umi-request */
-import { extend } from 'umi-request'
+import umiRequest, { extend } from 'umi-request'
+// import { extend } from 'umi-request'
 import { notification } from 'antd'
+import { history } from '@vitjs/runtime'
+import { getUserToken } from './storage'
+import config from './config'
+
 
 const codeMessage: Record<number, string> = {
   200: 'The server successfully returned the requested data.',
@@ -24,28 +29,145 @@ const codeMessage: Record<number, string> = {
 
 /** Exception handler */
 const errorHandler = (error: { response: Response }): Response => {
-  const { response } = error
-  if (response && response.status) {
-    const errorText = codeMessage[response.status] || response.statusText
-    const { status, url } = response
+  const res = error.response
+  if (res && res.status) {
+    const errorText = codeMessage[res.status] || res.statusText
+    const { status, url } = res
 
     notification.error({
       message: `Request error ${status}: ${url}`,
       description: errorText
     })
-  } else if (!response) {
+  } else if (!res) {
     notification.error({
       description: 'Your network is abnormal and cannot connect to the server',
       message: 'Network abnormal'
     })
   }
-  return response
+  return res
 }
 
 /** Configure the default parameters of the request */
-const request = extend({
-  errorHandler, // default error handling
-  credentials:'include' // Does the default request bring cookies?
-})
+// const request = extend({
+//   // prefix: '',
+//   // headers: {
+//   //   'Content-Type': 'application/json',
+//   //   'Authorization': `Bearer ${token}`
+//   // },
+//   errorHandler, // default error handling
+//   credentials:'include' // Does the default request bring cookies?
+// })
+
+const request = async ({
+  fullUrl = false,
+  url = '',
+  data = {},
+  auth = false,
+  headers = {
+    'Content-Type': 'application/json'
+  },
+  params = {},
+  type = 'json',
+  method = ''
+}) => {
+  const useUrl = (fullUrl ? url : `${config.APIURL}${url}`)
+  const token = await getUserToken()
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+
+  switch (type) {
+    case 'json': {
+      headers = {
+        'Content-Type': 'application/json'
+      }
+      break
+    }
+    case 'form-data': {
+      headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      break
+    }
+    default:
+  }
+
+  if (typeof token === 'string') {
+    if ((!token && auth) || (typeof token === 'object' && auth)) {
+      history.push({
+        pathname: '/auth/login'
+      })
+      return {
+        success: false,
+        message: 'Unauthenticated'
+      }
+    }
+  }
+
+  if (token) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
+  let response = {}
+
+  try {
+    switch (method) {
+      case 'get': {
+        response = await umiRequest.get(`${useUrl}`, { data, params, headers })
+        break
+      }
+      case 'post': {
+        response = await umiRequest.post(`${useUrl}`, { data, params, headers })
+        break
+      }
+      case 'put': {
+        response = await umiRequest.put(`${useUrl}`, { data, params, headers })
+        break
+      }
+      case 'delete': {
+        response = await umiRequest.delete(`${useUrl}`, { data, params, headers })
+        break
+      }
+      default:
+    }
+    extend({
+      errorHandler,
+      credentials:'include'
+    })
+
+    return Promise.resolve({
+      success: true,
+      ...response
+    })
+  } catch (error) {
+    const { response } = error
+    let msg
+    let dat
+    let statusCode
+    let detailData = ''
+    if (response && response instanceof Object) {
+      const { data, statusText } = response
+      statusCode = response.status
+      const { detail } = data
+      detailData = detail
+      msg = data.message || statusText
+      dat = {
+        ...data
+      } || {}
+    } else {
+      statusCode = 600
+      if (Object.prototype.hasOwnProperty.call(error, 'message')) {
+        msg = error.message || 'Network Error'
+      } else {
+        msg = error
+      }
+    }
+    return {
+      success: false,
+      detail: detailData,
+      statusCode,
+      message: msg,
+      data: dat
+    }
+  }
+}
 
 export default request

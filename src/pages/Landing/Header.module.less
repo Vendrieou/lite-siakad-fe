@@ -4,6 +4,8 @@
 
 .header {
   background-color: #ffffff;
+  height: 65px;
+  border-bottom: 2px solid transparent;
 }
 
 .menuBar {
@@ -16,7 +18,7 @@
 
 
 .logo {
-  margin-top: 0.2em;
+  margin-top: 0.3em;
   float: left;
 }
 
@@ -30,7 +32,7 @@
 .menuCon {
   display: grid;
   grid-auto-flow: column;
-  margin-top: 0.5em;
+  margin-top: 1em;
 }
 
 .menuCon .ant-menu-horizontal {
@@ -46,7 +48,6 @@
 .barsMenu {
   float: right;
   height: 32px;
-  padding: 6px;
   margin-top: 8px;
   display: none;
   background: none;
@@ -112,6 +113,8 @@
     margin-top: 0;
     justify-content: end
   }
+  
+
   .leftMenu,
   .rightMenu {
     display: none;
@@ -125,4 +128,5 @@
   .menuCon .ant-menu-submenu-title {
     padding: 1px 20px;
   }
+
 }
