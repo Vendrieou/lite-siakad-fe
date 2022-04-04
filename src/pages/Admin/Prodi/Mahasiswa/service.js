@@ -1,25 +1,32 @@
-import request from 'umi-request'
-
 export async function queryRule (params) {
-  return request('/api/rule', {
-    params
-  })
+  return request(
+    {
+      url: '/api/rule',
+      params,
+      method: 'get'
+    })
 }
 export async function removeRule (params) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: { ...params, method: 'delete' }
-  })
+  return request(
+    {
+      url: '/api/rule',
+      params,
+      method: 'delete'
+    })
 }
 export async function addRule (params) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: { ...params, method: 'post' }
-  })
+  return request(
+    {
+      url: '/api/rule',
+      params,
+      method: 'post'
+    })
 }
 export async function updateRule (params) {
-  return request('/api/rule', {
-    method: 'POST',
-    data: { ...params, method: 'update' }
-  })
+  return request(
+    {
+      url: '/api/rule',
+      params,
+      method: 'put'
+    })
 }
