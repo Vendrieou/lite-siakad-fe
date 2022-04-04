@@ -1,19 +1,15 @@
-import request from 'umi-request'
+import request from '@/utils/request'
 import config, { apiImage } from '@/utils/config'
-import { getUserToken } from '@/utils/storage'
 
 const { APIUPLOAD } = config
 
 // User
-const apiUpload = async (type = 'products', data) => {
-  const token = await getUserToken()
-
+const apiUpload = async (type = 'products', data: any) => {
   return request(
-    `${APIUPLOAD}${apiImage}/${type}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
+      url: `${APIUPLOAD}${apiImage}/${type}`,
+      fullUrl: true,
+      auth: true,
       data,
       method: 'post'
     })
