@@ -3,6 +3,7 @@ import MahasiswaDashboardRouter from './router/Mahasiswa/Dashboard/MahasiswaDash
 import DosenDashboardRouter from './router/Dosen/Dashboard/DosenDashboardRouter'
 import LoginRouter from './router/Auth/LoginRouter'
 import ProdiRouter from './router/Admin/Prodi/ProdiRouter'
+import BeritaRouter from './router/Admin/Berita/BeritaRouter'
 import SettingsRouter from './router/Admin/Settings/SettingsRouter'
 
 export default [
@@ -87,6 +88,7 @@ export default [
                   },
                   AdminDashboardRouter,
                   ProdiRouter,
+                  BeritaRouter,
                   SettingsRouter,
                   // {
                   //   path: '/welcome',

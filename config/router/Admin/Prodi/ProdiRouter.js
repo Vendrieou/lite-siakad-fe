@@ -42,6 +42,7 @@ const ProdiRouter =
         path: '/admin/prodi/jurusan/new',
         name: 'Create Jurusan',
         component: 'pages/Admin/Prodi/Jurusan/New',
+        hideInMenu: true
       },
       {
         path: '/admin/prodi/jurusan/:id',

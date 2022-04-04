@@ -7,6 +7,7 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/newsCategoryService'
+// @ts-ignore
 import { set, get } from 'utils/storage'
 
 const module = defineModule({

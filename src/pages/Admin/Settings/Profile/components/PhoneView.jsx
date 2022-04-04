@@ -28,6 +28,7 @@ const PhoneView = (props) => {
           }
         }}
         value={values[1]}
+       
       />
     </div>
   )

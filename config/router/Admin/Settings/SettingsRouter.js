@@ -13,11 +13,6 @@ const SettingsRouter =
       path: '/admin/settings/profile',
       name: 'Profile',
       component: 'pages/Admin/Settings/Profile',
-    },
-    {
-      path: '/admin/settings/general',
-      name: 'General',
-      component: 'pages/Admin/Settings/General',
     }
   ]
 }
