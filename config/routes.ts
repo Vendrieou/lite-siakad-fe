@@ -1,6 +1,7 @@
 import AdminDashboardRouter from './router/Admin/Dashboard/AdminDashboardRouter'
 import MahasiswaDashboardRouter from './router/Mahasiswa/Dashboard/MahasiswaDashboardRouter'
 import DosenDashboardRouter from './router/Dosen/Dashboard/DosenDashboardRouter'
+import SampleRouter from './router/Dosen/Sample/SampleRouter'
 import LoginRouter from './router/Auth/LoginRouter'
 import ProdiRouter from './router/Admin/Prodi/ProdiRouter'
 import BeritaRouter from './router/Admin/Berita/BeritaRouter'
@@ -70,6 +71,7 @@ export default [
                     redirect: '/dosen/dashboard',
                   },
                   DosenDashboardRouter,
+                  SampleRouter
                 ]
               },
             ],

@@ -3,7 +3,7 @@ import authStore from './authStore'
 import me from './me'
 import newsStore from './newsStore'
 import newsCategoryStore from './newsCategoryStore'
-// import krsStore from './krsStore'
+import krsStore from './krsStore'
 // import pengajuanKrsStore from './pengajuanKrsStore'
 // import khsStore from './khsStore'
 // import matkulStore from './matkulStore'
@@ -23,8 +23,8 @@ export default {
   me,
   newsStore,
   authStore,
-  newsCategoryStore
-  // krsStore,
+  newsCategoryStore,
+  krsStore,
   // khsStore,
   // matkulStore,
   // kontenMatkulStore,

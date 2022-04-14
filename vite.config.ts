@@ -49,15 +49,19 @@ export default ({ mode }) => {
       }),
       vitApp({
         routes,
-        dynamicImport: {
-          loading: './components/PageLoading',
-        },
+        dynamicImport: {},
+        //   loading: './components/PageLoading',
+        // },
         exportStatic: {},
         // mock: { productionEnabled: true },
       }),
     ],
     server: {
-      port: Number(process.env.PORT_HTTP)
+      port: Number(process.env.PORT_HTTP),
+      // watch: {
+      //   usePolling: true,
+      //   useFsEvents: true,
+      // }
     },
     resolve: {
       alias: [
@@ -91,6 +95,7 @@ export default ({ mode }) => {
       },
     },
     build: {
+      watch: {},
       rollupOptions: {
         output: {
           manualChunks: {
