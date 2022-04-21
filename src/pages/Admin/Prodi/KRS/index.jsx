@@ -148,6 +148,10 @@ const ProdiKRSContainer = () => {
     }
   }
 
+  const onCreate = () => {
+    console.log('create');
+  }
+
   const FormCreateProps = {
     onCreate
   }
@@ -159,13 +163,14 @@ const ProdiKRSContainer = () => {
   
   return (
     <PageContainer
-    content={(
-      <Tabs activeKey={type} onChange={setType}>
-        <Tabs.TabPane key="export" tab="Export" />
-        <Tabs.TabPane key="list" tab="List" />
-        <Tabs.TabPane key="ajukrs" tab="List Pengajuan KRS" />
-      </Tabs>
-    )}>
+      content={(
+        <Tabs defaultActiveKey={type} onChange={setType}>
+          <Tabs.TabPane key="export" tab="Export" />
+          <Tabs.TabPane key="list" tab="List" />
+          <Tabs.TabPane key="ajukrs" tab="List Pengajuan KRS" />
+        </Tabs>
+    )}
+    >
     {type === 'export' && <Export />}
     {type === 'ajukrs' && <Ajukrs />}
     {type === 'list' && (

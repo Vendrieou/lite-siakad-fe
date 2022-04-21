@@ -43,7 +43,9 @@ const FormCreate = ({ onCreate }) => {
     data.image3 = data.image3 && data.image3.length > 0 ? data.image3[0].originFileObj : null
     data.image4 = data.image4 && data.image4.length > 0 ? data.image4[0].originFileObj : null
     data.image5 = data.image5 && data.image5.length > 0 ? data.image5[0].originFileObj : null
-    onCreate(data)
+    if (onCreate) { 
+      onCreate(data)
+    }
   }
 
   const getBase64 = file => {
