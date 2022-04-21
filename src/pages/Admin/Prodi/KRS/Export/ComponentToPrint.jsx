@@ -79,140 +79,104 @@ const assignData = {
 class ComponentToPrint extends React.PureComponent {
   render() {
     return (
-      <div className={styles.wrapper}>
-        <div className={styles.parent}>
-          <div>
-              <img
-                src={logoTIME}
-                alt="logoTime166519861"
-              />
+      <div>
+        <div className={styles['group24566519768']}>
+          <div className={styles['group24466519770']}>
+
+          <span className={styles['text065']}>
+              <Title level={5} style={{ margin: 0 }}>Nama : {assignData.name}</Title>
+              <Title level={5} style={{ margin: 0 }}>NIM : {assignData.nim}</Title>
+              <Title level={5} style={{ margin: 0 }}>Program Studi : {assignData.programStudi}</Title>
+              <Title level={5} style={{ margin: 0 }}>Semester : {assignData.semester}</Title>
+            </span>
+            <Title level={5} style={{ margin: 0 }} className={styles['text073']}>Kelas : {assignData.kelas}</Title>
+            <span className={styles['text074']}>
+              <span>
+                SEKOLAH TINGGI MANAJEMEN INFORMATIKA &amp; KOMPUTER - TIME
+              </span>
+              <br></br>
+              <span>Jl. Merbabu No. 32 AA - BB. Telp 061 - 4561932, 4533676</span>
+              <br></br>
+              <Title>KARTU RENCANA STUDI</Title>
+              <br></br>
+              <span>TA. {assignData.tahunAjaran}</span>
+            </span>
+            <img
+              src={logoTIME}
+              alt="logoTime166519861"
+              className={styles['image15']}
+            />
+            <Table dataSource={data} columns={columns} pagination={false} className={styles['groupTable']} />
           </div>
-          <div className={clsx(styles.header, styles.textCenter)}>
-            <Title level={5} style={{ margin: 0 }}>
-              SEKOLAH TINGGI MANAJEMEN INFORMATIKA &amp; KOMPUTER - TIME
-            </Title>
-            <br></br>
-            <Title level={5} style={{ margin: 0 }}>Jl. Merbabu No. 32 AA - BB. Telp 061 - 4561932, 4533676</Title>
-            <br></br>
-            <Title>KARTU RENCANA STUDI</Title>
-            <Title level={5} style={{ margin: 0 }}>TA. {assignData.tahunAjaran}</Title>
-          </div>
-          <div />
-          <div className={styles.div1}>
-            <Title level={5} style={{ margin: 0 }}>Nama : {assignData.name}</Title>
-            <Title level={5} style={{ margin: 0 }}>NIM : {assignData.nim}</Title>
-            <Title level={5} style={{ margin: 0 }}>Program Studi : {assignData.programStudi}</Title>
-            <Title level={5} style={{ margin: 0 }}>Semester : {assignData.semester}</Title>
-          </div>
-          <div className={styles.textEnd}>
-            <Title level={5} style={{ margin: 0 }}>Kelas : {assignData.kelas}</Title>
-          </div>
-          <div />
-          <div className={styles.div2}>
-            <Table dataSource={data} columns={columns} pagination={false} scroll={{ x: false }} />
+          <div className={styles['group24366519862']}>
+            <span className={styles['text082']}>
+              <span>Medan, {dateTimeToFull(new Date())}</span>
+              <p>Mahasiswa</p>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span>{`(${assignData.name})`}</span>
+            </span>
+            <span className={styles['text104']}>
+              <span>Disetujui</span>
+              <p>Dosen Wali</p>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span>{`(${assignData.dosenWali})`}</span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+            </span>
+            <span className={styles['text130']}>
+              <span>Diketahui</span>
+              <p>Ka. Prodi</p>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span></span>
+              <br></br>
+              <span>{`(${assignData.kaProdi})`}</span>
+            </span>
           </div>
         </div>
       </div>
     )
-    // return (
-    //   <div>
-    //     <div className={styles['group24566519768']}>
-    //       <div className={styles['group24466519770']}>
-
-    //       <span className={styles['text065']}>
-    //           <Title level={5} style={{ margin: 0 }}>Nama : {assignData.name}</Title>
-    //           <Title level={5} style={{ margin: 0 }}>NIM : {assignData.nim}</Title>
-    //           <Title level={5} style={{ margin: 0 }}>Program Studi : {assignData.programStudi}</Title>
-    //           <Title level={5} style={{ margin: 0 }}>Semester : {assignData.semester}</Title>
-    //         </span>
-    //         <Title level={5} style={{ margin: 0 }} className={styles['text073']}>Kelas : {assignData.kelas}</Title>
-    //         <span className={styles['text074']}>
-    //           <span>
-    //             SEKOLAH TINGGI MANAJEMEN INFORMATIKA &amp; KOMPUTER - TIME
-    //           </span>
-    //           <br></br>
-    //           <span>Jl. Merbabu No. 32 AA - BB. Telp 061 - 4561932, 4533676</span>
-    //           <br></br>
-    //           <Title>KARTU RENCANA STUDI</Title>
-    //           <br></br>
-    //           <span>TA. {assignData.tahunAjaran}</span>
-    //         </span>
-    //         <img
-    //           src={logoTIME}
-    //           alt="logoTime166519861"
-    //           className={styles['image15']}
-    //         />
-    //         <Table dataSource={data} columns={columns} pagination={false} className={styles['groupTable']} />
-    //       </div>
-    //       <div className={styles['group24366519862']}>
-    //         <span className={styles['text082']}>
-    //           <span>Medan, {dateTimeToFull(new Date())}</span>
-    //           <p>Mahasiswa</p>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span>{`(${assignData.name})`}</span>
-    //         </span>
-    //         <span className={styles['text104']}>
-    //           <span>Disetujui</span>
-    //           <p>Dosen Wali</p>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span>{`(${assignData.dosenWali})`}</span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //         </span>
-    //         <span className={styles['text130']}>
-    //           <span>Diketahui</span>
-    //           <p>Ka. Prodi</p>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span></span>
-    //           <br></br>
-    //           <span>{`(${assignData.kaProdi})`}</span>
-    //         </span>
-    //       </div>
-    //     </div>
-    //   </div>
-    // )
   }
 }
 
