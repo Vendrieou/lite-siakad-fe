@@ -57,7 +57,7 @@ export default ({ mode }) => {
       }),
     ],
     server: {
-      port: Number(process.env.PORT_HTTP),
+      port: 8080,
       // watch: {
       //   usePolling: true,
       //   useFsEvents: true,

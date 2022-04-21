@@ -13,7 +13,7 @@ const defaultData = [
         namaTugas: 'Tugas 01',
         nilai: 100,
         nim: '1844001',
-        tugasId: 1,
+        tugasId: 1
       },
       {
         idMatkul: 1,
@@ -21,15 +21,15 @@ const defaultData = [
         namaTugas: 'Tugas 02',
         nilai: 80,
         mnim: '1844001',
-        tugasId: 2,
-      },
-    ],
+        tugasId: 2
+      }
+    ]
   },
   {
     id: 2,
     nim: '1844002',
     children: []
-  },
+  }
 ]
 
 const loopDataSourceFilter = (data, id) => {
@@ -39,7 +39,7 @@ const loopDataSourceFilter = (data, id) => {
         if (item.children) {
           const newChildren = loopDataSourceFilter(item.children, id)
           return Object.assign(Object.assign({}, item), {
-            children: newChildren.length > 0 ? newChildren : undefined,
+            children: newChildren.length > 0 ? newChildren : undefined
           })
         }
         return item
@@ -49,7 +49,7 @@ const loopDataSourceFilter = (data, id) => {
     .filter(Boolean)
 }
 
-export default () => {
+const Sample = () => {
   const [editableKeys, setEditableRowKeys] = useState(() =>
     defaultData.map((item) => item.id),
   )
@@ -57,20 +57,20 @@ export default () => {
   const columns = [
     {
       title: 'nim',
-      dataIndex: 'nim',
+      dataIndex: 'nim'
     },
     {
       title: 'tugasId',
-      dataIndex: 'tugasId',
+      dataIndex: 'tugasId'
     },
     {
       title: 'namaTugas',
-      dataIndex: 'namaTugas',
+      dataIndex: 'namaTugas'
     },
     {
       title: 'nilai',
-      dataIndex: 'nilai',
-    },
+      dataIndex: 'nilai'
+    }
 
     // {
     //   title: '活动名称',
@@ -108,10 +108,10 @@ export default () => {
     <>
       <EditableProTable
         expandable={{
-          defaultExpandAllRows: true,
+          defaultExpandAllRows: true
         }}
         scroll={{
-          x: 960,
+          x: 960
         }}
         rowKey='id'
         headerTitle='List'
@@ -132,15 +132,15 @@ export default () => {
             console.log(rowKey, data, row)
           },
           actionRender: (row, config, defaultDoms) => {
-            return [defaultDoms.delete];
+            return [defaultDoms.delete]
           },
           onValuesChange: (record, recordList) => {
-            setDataSource(recordList);
+            setDataSource(recordList)
           },
           onChange: (e) =>{
-            console.log('e', e);
+            console.log('e', e)
             setEditableRowKeys(e)
-          },
+          }
         }}
       />
 
@@ -149,8 +149,8 @@ export default () => {
         ignoreFormItem
         fieldProps={{
           style: {
-            width: '100%',
-          },
+            width: '100%'
+          }
         }}
         mode='read'
         valueType='jsonCode'
@@ -159,3 +159,5 @@ export default () => {
     </>
   )
 }
+
+export default Sample
