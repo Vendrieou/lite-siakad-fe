@@ -1,4 +1,4 @@
-import { Typography, Table, Card} from 'antd'
+import { Typography, Table, Card } from 'antd'
 import logoTIME from 'static/logo/bwLogoTIME.png'
 import { dateTimeToFull } from 'utils/time'
 
@@ -42,40 +42,12 @@ const columns = [
   }
 ]
 
-const data = [
-  {
-    key: '1',
-    kodeMK: 'TI 2639',
-    matkul: 'PRAKTIKUM STATISTIKA',
-    sks: 1,
-    semester: 6,
-    kelas: 'TI C 18',
-    namaDosen: 'EMMA ROSINTA, S.SI, S.KOM, M.KOM'
-  },
-  {
-    key: '2',
-    kodeMK: 'TI 2639',
-    matkul: 'PRAKTIKUM 3D MODELING',
-    sks: 1,
-    semester: 6,
-    kelas: 'TI C 18',
-    namaDosen: 'JOHANNES TERANG KITA PERANGIN ANGIN'
-  }
-]
-
-const assignData = {
-  kaProdi: 'Robert, M.KOM',
-  name: 'VENDRIE YULMAN',
-  nim: '1844017',
-  kelas: 'TI C 18',
-  tahunAjaran: '2021 - 2022',
-  programStudi: 'TI',
-  semester: '6',
-  dosenWali: 'Didik Aryanto'
-}
-
 class ComponentToPrint extends React.PureComponent {
   render () {
+    const {
+      data,
+      assignData
+    } = this.props
     return (
       <Card>
         <table>

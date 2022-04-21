@@ -58,13 +58,52 @@ const KRSPrint = () => {
     }
   }, [onBeforeGetContentResolve.current, text])
 
+
+  const data = [
+    {
+      key: '1',
+      kodeMK: 'TI 2639',
+      matkul: 'PRAKTIKUM STATISTIKA',
+      sks: 1,
+      semester: 6,
+      kelas: 'TI C 18',
+      namaDosen: 'EMMA ROSINTA, S.SI, S.KOM, M.KOM'
+    },
+    {
+      key: '2',
+      kodeMK: 'TI 2639',
+      matkul: 'PRAKTIKUM 3D MODELING',
+      sks: 1,
+      semester: 6,
+      kelas: 'TI C 18',
+      namaDosen: 'JOHANNES TERANG KITA PERANGIN ANGIN'
+    }
+  ]
+
+  const assignData = {
+    kaProdi: 'Robert, M.KOM',
+    name: 'VENDRIE YULMAN',
+    nim: '1844017',
+    kelas: 'TI C 18',
+    tahunAjaran: '2021 - 2022',
+    programStudi: 'TI',
+    semester: '6',
+    dosenWali: 'Didik Aryanto'
+  }
+
+  const PrintProps = {
+    data,
+    assignData,
+    text
+  }
+
   return (
     <div>
       {loading && <p className='indicator'>onBeforeGetContent: Loading...</p>}
       <Button type="danger" onClick={handlePrint}>
         Print
       </Button>
-      <ComponentToPrint ref={componentRef} text={text} />
+      <ComponentToPrint ref={componentRef} {...PrintProps} />
     </div>
   )
 }
