@@ -3,9 +3,10 @@ import { Modal } from 'antd'
 import ProForm, {
   ProFormText,
   ProFormUploadButton,
-  ProFormSelect,
-  ProFormTextArea
+  ProFormSelect
+  // ProFormTextArea
 } from '@ant-design/pro-form'
+import Editor from 'components/Form/Editor'
 // import { useConcent } from 'concent'
 
 const FormCreate = ({ 
@@ -40,6 +41,7 @@ const FormCreate = ({
     let data = {
       ...values
     }
+    console.log('data',data)
     data.image = data.image && data.image.length > 0 ? data.image[0].originFileObj : null
     onCreate(data)
   }
@@ -113,7 +115,7 @@ const FormCreate = ({
         params={{}}
       >
         <ProFormUploadButton
-          rules={[{ required: true, message: 'Enter image' }]}
+          rules={[{ required: false, message: 'Enter image' }]}
           name="image"
           label="image"
           max={1}
@@ -123,15 +125,19 @@ const FormCreate = ({
             listType: 'picture-card',
             onPreview: handlePreview
           }}
+          action={undefined}
         />
-        <ProFormText width="md" name="title" label="Nama Berita" placeholder="" rules={[{ required: true, message: 'Masukkan Nama Berita' }]} />
-        <ProFormTextArea width="md" name="content" label="Content" placeholder="" rules={[{ required: true, message: 'Masukkan Content' }]} />
+        <ProFormText width="md" name="title" label="Nama Berita" placeholder="" rules={[{ required: false, message: 'Masukkan Nama Berita' }]} />
+        {/* <ProFormTextArea width="md" name="content" label="Content" placeholder="" rules={[{ required: false, message: 'Masukkan Content' }]} /> */}
+        <ProForm.Item width="md" name="content" label="Content">
+          <Editor />
+        </ProForm.Item>
         <ProFormSelect
           options={optionCategory}
           width="md"
           name="newsCategoryId"
           label="Category"
-          rules={[{ required: true, message: 'Masukkan kategori berita' }]}
+          rules={[{ required: false, message: 'Masukkan kategori berita' }]}
         />
         <ProFormSelect
           options={[
@@ -155,7 +161,7 @@ const FormCreate = ({
           width="md"
           name="status"
           label="status"
-          rules={[{ required: true, message: 'Enter status' }]}
+          rules={[{ required: false, message: 'Enter status' }]}
         />
       </ProForm>
     </>
