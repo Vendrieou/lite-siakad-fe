@@ -24,7 +24,7 @@ export default {
   newsStore,
   authStore,
   newsCategoryStore,
-  krsStore,
+  krsStore
   // khsStore,
   // matkulStore,
   // kontenMatkulStore,

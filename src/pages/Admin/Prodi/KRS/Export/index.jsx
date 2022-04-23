@@ -3,7 +3,7 @@ import ProForm, {
   ProFormSelect,
   ProFormText
 } from '@ant-design/pro-form'
-
+import { useConcent } from 'concent'
 import KRSPrint from './KRSPrint'
 
 const MenuFilter = () => {
@@ -60,7 +60,8 @@ const MenuFilter = () => {
 }
 
 const Export = ({ isAjuKrs = true }) => {
-  const list = []
+  const { state } = useConcent('krsStore')
+  const { list } = state
   return (
     <>
       <MenuFilter />
@@ -69,6 +70,8 @@ const Export = ({ isAjuKrs = true }) => {
         <Button type="primary" onClick={() => AjuKrs()}>Aju KRS</Button>
         : null}
       <br />
+      <KRSPrint />
+
       {list && list.length > 0 ?
         <KRSPrint />
         : null}
