@@ -7,7 +7,6 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/krsService'
-import { uploadImage } from '@/utils/imageUploadAction'
 
 const module = defineModule({
   state: {
@@ -55,9 +54,6 @@ const module = defineModule({
     },
     create: async (payload: any, moduleState, actionCtx) => {
       try {
-        if (payload && payload.image) {
-          payload.image = await uploadImage('news', payload.image)
-        }
         const response = await apiPost(payload)
         if (response.success) {
           message.success(response?.meta?.message)

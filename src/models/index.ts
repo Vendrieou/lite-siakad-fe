@@ -4,6 +4,7 @@ import me from './me'
 import newsStore from './newsStore'
 import newsCategoryStore from './newsCategoryStore'
 import krsStore from './krsStore'
+import userStore from './userStore'
 // import pengajuanKrsStore from './pengajuanKrsStore'
 // import khsStore from './khsStore'
 // import matkulStore from './matkulStore'
@@ -21,6 +22,7 @@ import krsStore from './krsStore'
 export default {
   login,
   me,
+  userStore,
   newsStore,
   authStore,
   newsCategoryStore,

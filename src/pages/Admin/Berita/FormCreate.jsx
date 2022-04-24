@@ -9,11 +9,12 @@ import ProForm, {
 import Editor from 'components/Form/Editor'
 // import { useConcent } from 'concent'
 
-const FormCreate = ({ 
+const FormCreate = ({
   onCreate,
   localNewsCategory
 }) => {
   // const [modalTableUser, setModalTableUser] = useState(true)
+  const [editorValue, setEditorValue] = useState('')
   const [preview, setPreview] = useState({
     image: '',
     title: '',
@@ -28,8 +29,8 @@ const FormCreate = ({
     ? localNewsCategory
       .filter(filtered => filtered.status === 'enable')
       .map(item => {
-        if(item.id) {
-          return { 
+        if (item.id) {
+          return {
             value: item.id,
             label: item.name
           }
@@ -41,7 +42,7 @@ const FormCreate = ({
     let data = {
       ...values
     }
-    console.log('data',data)
+    console.log('data', data)
     data.image = data.image && data.image.length > 0 ? data.image[0].originFileObj : null
     onCreate(data)
   }
@@ -130,8 +131,9 @@ const FormCreate = ({
         <ProFormText width="md" name="title" label="Nama Berita" placeholder="" rules={[{ required: false, message: 'Masukkan Nama Berita' }]} />
         {/* <ProFormTextArea width="md" name="content" label="Content" placeholder="" rules={[{ required: false, message: 'Masukkan Content' }]} /> */}
         <ProForm.Item width="md" name="content" label="Content">
-          <Editor />
-        </ProForm.Item>
+          <Editor onChange={(e) => setEditorValue(e)} />
+        </ProForm.Item>      
+        <div dangerouslySetInnerHTML={{ __html: editorValue}} />
         <ProFormSelect
           options={optionCategory}
           width="md"

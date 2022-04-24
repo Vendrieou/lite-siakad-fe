@@ -4,8 +4,8 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
-// import CreateForm from 'components/Form/CreateForm'
-// import FormCreate from './FormCreate'
+import CreateForm from 'components/Form/CreateForm'
+import FormCreate from './FormCreate'
 // import FormCreateTemplateKrs from './FormCreateTemplateKrs'
 // import FormEdit from './FormEdit'
 import Export from './Export'
@@ -49,7 +49,7 @@ const ProdiKRSContainer = () => {
             message: 'Wajib'
           }
         ]
-      },
+      }
     },
     {
       title: 'Nama',
@@ -62,7 +62,7 @@ const ProdiKRSContainer = () => {
             message: 'Wajib'
           }
         ]
-      },
+      }
     },
     {
       title: 'Semester',
@@ -75,7 +75,7 @@ const ProdiKRSContainer = () => {
             message: 'Wajib'
           }
         ]
-      },
+      }
     },
     {
       // nama dosen
@@ -148,8 +148,12 @@ const ProdiKRSContainer = () => {
     }
   }
 
-  const onCreate = () => {
-    console.log('create');
+  const onCreate = async (data) => {
+    console.log('data', data)
+    // const response = await mr.create(data)
+    // if (response.success) {
+    handleModalVisible(false)
+    // }
   }
 
   const FormCreateProps = {
@@ -169,45 +173,45 @@ const ProdiKRSContainer = () => {
           <Tabs.TabPane key="list" tab="List" />
           <Tabs.TabPane key="ajukrs" tab="List Pengajuan KRS" />
         </Tabs>
-    )}
+      )}
     >
-    {type === 'export' && <Export />}
-    {type === 'ajukrs' && <Ajukrs />}
-    {type === 'list' && (
-      <ProTable
-        headerTitle="List KRS"
-        actionRef={actionRef}
-        rowKey="id"
-        toolBarRender={() => [
+      {type === 'export' && <Export />}
+      {type === 'ajukrs' && <Ajukrs />}
+      {type === 'list' && (
+        <ProTable
+          headerTitle="List KRS"
+          actionRef={actionRef}
+          rowKey="id"
+          toolBarRender={() => [
             <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
               <PlusOutlined /> Add With Template
             </Button>,
             <Button type="primary" onClick={() => handleModalVisible(true)}>
               <PlusOutlined /> Tambah KRS
             </Button>
-        ]}
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.name || '',
-            page: params.current || ''
+          ]}
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.name || '',
+              page: params.current || ''
             // status: params.status
-          })
-        }}
-        columns={columns}
-        {...initData}
-      />
-    )}
+            })
+          }}
+          columns={columns}
+          {...initData}
+        />
+      )}
 
       {/* create data template KRS tab "list" */}
-      {/* <CreateForm
+      <CreateForm
         maskClosable={false}
         width={800}
         title="Tambah KRS"
         onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
       >
         <FormCreate {...FormCreateProps} />
-      </CreateForm> */}
+      </CreateForm>
 
       {/* create data template KRS tab "list" */}
       {/* <CreateForm
@@ -229,7 +233,7 @@ const ProdiKRSContainer = () => {
       >
         <FormEdit {...FormEditProps} />
       </CreateForm> */}
-  </PageContainer>
+    </PageContainer>
   )
 }
 

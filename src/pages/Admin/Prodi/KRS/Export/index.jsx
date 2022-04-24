@@ -1,5 +1,6 @@
 import { Card, Button } from 'antd'
 import ProForm, {
+  ProFormGroup,
   ProFormSelect,
   ProFormText
 } from '@ant-design/pro-form'
@@ -25,35 +26,37 @@ const MenuFilter = () => {
           console.log('submit')
         }}
       >
-        <ProFormSelect
-          options={ProdiOption}
-          width="md"
-          name="prodi"
-          label="Pilih Program Studi"
-        />
-        <ProFormText width="md" name="title" label="Cari Mahasiswa" placeholder="" rules={[{ required: true, message: 'Masukkan Nama Mahasiswa' }]} />
-        <ProFormSelect
-          options={[
-            
-          ]}
-          width="md"
-          name="semester"
-          label="Pilih Kelas"
-        />
-        <ProFormSelect
-          options={[
-            { value: 1, label: 1 },
-            { value: 2, label: 2 },
-            { value: 3, label: 3 },
-            { value: 4, label: 4 },
-            { value: 5, label: 5 },
-            { value: 6, label: 6 },
-            { value: 7, label: 7 }
-          ]}
-          width="md"
-          name="semester"
-          label="Pilih Semester"
-        />
+        <ProFormGroup label="Filter">
+          <ProFormSelect
+            options={ProdiOption}
+            width="sm"
+            name="prodi"
+            label="Pilih Program Studi"
+          />
+          <ProFormText width="sm" name="title" label="Cari Mahasiswa" placeholder="" rules={[{ required: true, message: 'Masukkan Nama Mahasiswa' }]} />
+          <ProFormSelect
+            options={[
+              
+            ]}
+            width="sm"
+            name="semester"
+            label="Pilih Kelas"
+          />
+          <ProFormSelect
+            options={[
+              { value: 1, label: 1 },
+              { value: 2, label: 2 },
+              { value: 3, label: 3 },
+              { value: 4, label: 4 },
+              { value: 5, label: 5 },
+              { value: 6, label: 6 },
+              { value: 7, label: 7 }
+            ]}
+            width="sm"
+            name="semester"
+            label="Pilih Semester"
+          />
+        </ProFormGroup>
       </ProForm>
     </Card>
   )
