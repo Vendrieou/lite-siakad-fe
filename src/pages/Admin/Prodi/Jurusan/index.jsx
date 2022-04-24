@@ -154,7 +154,7 @@ const ProdiJurusanContainer = () => {
           </Button>
         </FooterToolbar>
       )}
-      <CreateForm width={840} title="Tambah Dosen" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+      <CreateForm width={840} title="Tambah Jurusan" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
         <ProTable
           onSubmit={async (value) => {
             console.log('value', value)
@@ -180,7 +180,7 @@ const ProdiJurusanContainer = () => {
         height="100%"
         visible={!!row}
         bodyStyle={{ padding: '2em' }}
-        title={`Edit Data Dosen ${row?.namaJurusan}`}
+        title={`Edit Data Jurusan: ${row?.namaJurusan}`}
         mask={false}
         maskClosable={false}
         onClose={() => setRow(undefined)}
