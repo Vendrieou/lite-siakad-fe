@@ -9,7 +9,7 @@ const columns = [
     title: 'Kode MK',
     dataIndex: 'kodeMK',
     key: 'kodeMk',
-    width: 210
+    width: 350
   },
   {
     title: 'Mata Kuliah',
@@ -22,21 +22,21 @@ const columns = [
     dataIndex: 'kredit',
     key: 'kredit',
     align: 'center',
-    width: 200
+    width: 400
   },
   {
     title: 'NILAI (N)',
     dataIndex: 'nilai',
     key: 'nilai',
     align: 'center',
-    width: 200
+    width: 400
   },
   {
     title: '(K x N)',
     dataIndex: 'kxn',
     key: 'kxn',
     align: 'center',
-    width: 200
+    width: 400
   },
   {
     title: 'KETERANGAN',
@@ -56,12 +56,11 @@ class ComponentToPrint extends React.PureComponent {
       <Card>
         <table>
           <tr>
-            <th align="left" style={{ display: 'flex', justifyContent: 'space-around' }}>
+            <th align="left" style={{ display: 'grid', 'grid-template-columns': '50px 1fr', 'grid-template-rows': '1fr' }}>
               <div>
                 <img src={logoTIME} alt="logoTime" />
               </div>
-              <div>
-
+              <div style={{ textAlign: 'center' }}>
                 <span>
                   SEKOLAH TINGGI MANAJEMEN INFORMATIKA &amp; KOMPUTER - TIME
                 </span>
@@ -74,7 +73,7 @@ class ComponentToPrint extends React.PureComponent {
             </th>
           </tr>
           <tr>
-            <td align="left" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <td style={{ display: 'grid', 'grid-template-columns': '1.5fr 1fr', 'grid-template-rows': '1fr' }}>
               <div>
                 <Title level={5} style={{ margin: 0 }}>NIM : {assignData.nim}</Title>
                 <Title level={5} style={{ margin: 0 }}>NAMA : {assignData.name}</Title>
@@ -114,16 +113,19 @@ class ComponentToPrint extends React.PureComponent {
           </tr>
           <br /><br />
           <tr>
-            <td>
-              <Title level={5} style={{ margin: 0 }}>Medan, {dateTimeToFull(new Date())}</Title>
-              <Title level={5} style={{ margin: 0 }}>Dibuat oleh</Title>
-              <Title level={5} style={{ margin: 0 }}>Ketua Program Studi</Title><br /><br /><br /><br /><br /><br />
-              <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaProdi})`}</Title>
-            </td>
-            <td>
-              <Title level={5} style={{ margin: 0 }}>Diketahui oleh,</Title>
-              <Title level={5} style={{ margin: 0 }}>Pembantu Ketua I</Title><br /><br /><br /><br /><br /><br />
-              <Title level={5} style={{ margin: 0 }}>{`(${assignData.puket})`}</Title>
+            <td style={{ display: 'grid', 'grid-template-columns': '2fr 1fr', 'grid-template-rows': '1fr' }}>
+              <div>
+                <Title level={5} style={{ margin: 0 }}>Medan, {dateTimeToFull(new Date())}</Title>
+                <Title level={5} style={{ margin: 0 }}>Dibuat oleh</Title>
+                <Title level={5} style={{ margin: 0 }}>Ketua Program Studi</Title><br /><br /><br /><br /><br /><br />
+                <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaProdi})`}</Title>
+              </div>
+              <div>
+                <br />
+                <Title level={5} style={{ margin: 0 }}>Diketahui oleh,</Title>
+                <Title level={5} style={{ margin: 0 }}>Pembantu Ketua I</Title><br /><br /><br /><br /><br /><br />
+                <Title level={5} style={{ margin: 0 }}>{`(${assignData.puket})`}</Title>
+              </div>
             </td>
           </tr>
         </table>
