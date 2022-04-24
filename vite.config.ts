@@ -103,8 +103,8 @@ export default ({ mode }) => {
         },
       },
     },
-    esbuild: {
-      jsxInject: "import * as React from 'react'",
-    },
+    // esbuild: {
+    //   jsxInject: "import * as React from 'react'",
+    // },
   })
 }

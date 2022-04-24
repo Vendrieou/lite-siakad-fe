@@ -1,3 +1,4 @@
+import React from 'react'
 import { Typography, Table, Card } from 'antd'
 import logoTIME from 'static/logo/bwLogoTIME.png'
 import { dateTimeToFull } from 'utils/time'

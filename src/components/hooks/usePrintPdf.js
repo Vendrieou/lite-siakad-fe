@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { useReactToPrint } from 'react-to-print'
 
 const usePrintPdf = ({ documentTitle }) => {

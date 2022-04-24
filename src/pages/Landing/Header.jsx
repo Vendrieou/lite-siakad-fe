@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Menu, Dropdown, Drawer, Button, Input } from 'antd'
 import { DownOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons'
 import logoTIME from 'static/logo/logoTIME.png'
@@ -83,7 +83,7 @@ const HeaderContainer = () => {
                 type="text"
                 onClick={() => setVisible(true)}
               >
-                <span className={styles.barsBtn}></span>
+                <span className={styles.barsBtn} />
               </Button>
             </div>
             <Drawer

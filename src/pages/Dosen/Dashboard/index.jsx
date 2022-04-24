@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { PageContainer } from '@ant-design/pro-layout'
 import { EditableProTable } from '@ant-design/pro-table'
 import { ProFormField } from '@ant-design/pro-form'
@@ -11,7 +11,7 @@ const defaultData = new Array(20).fill(1).map((_, index) => {
     title: `Title ${index}`,
     decs: 'Kegiatan ini sangat menyenangkan',
     state: 'open',
-    created_at: '2020-05-26T09:42:56Z',
+    created_at: '2020-05-26T09:42:56Z'
   }
 })
 
@@ -28,24 +28,24 @@ const DosenDashboardContainer = () => {
           {
             required: true,
             whitespace: true,
-            message: 'required',
+            message: 'required'
           },
           {
             message: 'harus berisi angka',
-            pattern: /[0-9]/,
+            pattern: /[0-9]/
           },
           {
             max: 16,
             whitespace: true,
-            message: 'Hingga 16 bit',
+            message: 'Hingga 16 bit'
           },
           {
             min: 6,
             whitespace: true,
-            message: 'minimal 6 digit',
-          },
-        ],
-      },
+            message: 'minimal 6 digit'
+          }
+        ]
+      }
     },
     {
       title: 'Negara',
@@ -56,17 +56,17 @@ const DosenDashboardContainer = () => {
         all: { text: 'default', status: 'Default' },
         open: {
           text: 'error',
-          status: 'Error',
+          status: 'Error'
         },
         closed: {
           text: 'success',
-          status: 'Success',
-        },
-      },
+          status: 'Success'
+        }
+      }
     },
     {
       title: 'deskripsi',
-      dataIndex: 'decs',
+      dataIndex: 'decs'
     }
     // {
     //   title: 'action',
@@ -85,7 +85,7 @@ const DosenDashboardContainer = () => {
         columns={columns}
         rowKey='id'
         scroll={{
-          x: 960,
+          x: 960
         }}
         value={dataSource}
         onChange={setDataSource}
@@ -119,7 +119,7 @@ const DosenDashboardContainer = () => {
             console.log('record: ', record)
             setDataSource(recordList)
           },
-          onChange: setEditableRowKeys,
+          onChange: setEditableRowKeys
         }}
       />
       {/* <ProCard title="Data tabel" headerBordered collapsible defaultCollapsed> */}
@@ -127,8 +127,8 @@ const DosenDashboardContainer = () => {
         ignoreFormItem
         fieldProps={{
           style: {
-            width: '100%',
-          },
+            width: '100%'
+          }
         }}
         mode='read'
         valueType='jsonCode'
