@@ -58,7 +58,7 @@ const FormMahasiswaLogin: React.FC = () => {
           }
         }}
         onFinish={(values) => {
-          handleSubmit(values as LoginParamsType)
+          handleSubmit(values as MahasiswaLoginParamsType)
           return Promise.resolve()
         }}
       >

@@ -58,7 +58,7 @@ const FormDosenLogin: React.FC = () => {
           }
         }}
         onFinish={(values) => {
-          handleSubmit(values as LoginParamsType)
+          handleSubmit(values as DosenLoginParamsType)
           return Promise.resolve()
         }}
       >
