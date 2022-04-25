@@ -1,4 +1,5 @@
 import AdminDashboardRouter from './router/Admin/Dashboard/AdminDashboardRouter'
+import AdminLoginRouter from './router/Admin/Login/AdminLoginRouter'
 // import SampleRouter from './router/Dosen/Sample/SampleRouter'
 import LoginRouter from './router/Auth/LoginRouter'
 import ProdiRouter from './router/Admin/Prodi/ProdiRouter'
@@ -47,6 +48,7 @@ export default [
           },
          
           LoginRouter,
+          AdminLoginRouter,
           {
             path: '/mahasiswa',
             component: './layouts/SecurityLayout',

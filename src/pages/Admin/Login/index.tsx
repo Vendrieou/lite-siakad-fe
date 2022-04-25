@@ -8,7 +8,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form'
 import UserLayout from 'src/layouts/UserLayout'
 
 import { useC2ModConn } from '@/services/concent'
-import type { LoginParamsType } from '@/services/login'
+import type { AdminLoginParamsType } from '@/services/login'
 
 import styles from './index.module.less'
 
@@ -30,7 +30,9 @@ const Login: React.FC = () => {
 
   const submitting = connectedState.loading['login/login']
 
-  const handleSubmit = (values: LoginParamsType) => {
+  const handleSubmit = (values: AdminLoginParamsType) => {
+    values.admin = 1
+    values.role = 'admin'
     mr.login({ ...values, type: 'account' })
   }
 

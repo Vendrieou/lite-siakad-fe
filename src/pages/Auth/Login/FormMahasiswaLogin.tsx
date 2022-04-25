@@ -6,7 +6,7 @@ import {
 } from '@ant-design/icons'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { useC2ModConn } from '@/services/concent'
-// import type { LoginParamsType } from '@/services/login'
+import type { MahasiswaLoginParamsType } from '@/services/login'
 
 const LoginMessage: React.FC<{
   content: string;
@@ -26,7 +26,7 @@ const FormMahasiswaLogin: React.FC = () => {
 
   const submitting = connectedState.loading['login/login']
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values: MahasiswaLoginParamsType) => {
     values.role = 'mahasiswa'
     mr.login({ ...values, type: 'account' })
   }
