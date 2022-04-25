@@ -6,7 +6,7 @@ import {
   apiPost,
   apiUpdate,
   apiDelete
-} from '@/services/krsService'
+} from '@/services/pengajuanKrsService'
 
 const module = defineModule({
   state: {
