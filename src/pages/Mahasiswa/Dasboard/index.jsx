@@ -6,7 +6,7 @@ const { Text } = Typography
 const MahasiwaDashboardContainer = () => {
   return (
     <PageContainer>
-      <Text>MahasiwaDashboardContainer</Text>
+      <Text>.</Text>
     </PageContainer>
   )
 }

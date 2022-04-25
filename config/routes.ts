@@ -1,11 +1,17 @@
 import AdminDashboardRouter from './router/Admin/Dashboard/AdminDashboardRouter'
-import MahasiswaDashboardRouter from './router/Mahasiswa/Dashboard/MahasiswaDashboardRouter'
-import DosenDashboardRouter from './router/Dosen/Dashboard/DosenDashboardRouter'
-import SampleRouter from './router/Dosen/Sample/SampleRouter'
+// import SampleRouter from './router/Dosen/Sample/SampleRouter'
 import LoginRouter from './router/Auth/LoginRouter'
 import ProdiRouter from './router/Admin/Prodi/ProdiRouter'
 import BeritaRouter from './router/Admin/Berita/BeritaRouter'
 import SettingsRouter from './router/Admin/Settings/SettingsRouter'
+// Mahasiswa
+import MahasiswaDashboardRouter from './router/Mahasiswa/Dashboard/MahasiswaDashboardRouter'
+// import MahasiswaRouter from './router/Mahasiswa/MahasiswaRouter'
+// import MahasiswaSettingsRouter from './router/Mahasiswa/Settings/SettingsRouter'
+// Dosen
+import DosenDashboardRouter from './router/Dosen/Dashboard/DosenDashboardRouter'
+// import DosenRouter from './router/Dosen/DosenRouter'
+// import DosenSettingsRouter from './router/Dosen/Settings/SettingsRouter'
 
 export default [
   {
@@ -54,6 +60,8 @@ export default [
                     redirect: '/mahasiswa/dashboard',
                   },
                   MahasiswaDashboardRouter,
+                  // MahasiswaRouter,
+                  // MahasiswaSettingsRouter
                 ]
               },
             ],
@@ -71,7 +79,9 @@ export default [
                     redirect: '/dosen/dashboard',
                   },
                   DosenDashboardRouter,
-                  SampleRouter
+                  // DosenRouter,
+                  // DosenSettingsRouter
+                  // SampleRouter
                 ]
               },
             ],
