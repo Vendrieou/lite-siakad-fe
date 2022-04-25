@@ -10,7 +10,7 @@ import MahasiswaDashboardRouter from './router/Mahasiswa/Dashboard/MahasiswaDash
 // import MahasiswaSettingsRouter from './router/Mahasiswa/Settings/SettingsRouter'
 // Dosen
 import DosenDashboardRouter from './router/Dosen/Dashboard/DosenDashboardRouter'
-// import DosenRouter from './router/Dosen/DosenRouter'
+import DosenRouter from './router/Dosen/DosenRouter'
 // import DosenSettingsRouter from './router/Dosen/Settings/SettingsRouter'
 
 export default [
@@ -79,7 +79,7 @@ export default [
                     redirect: '/dosen/dashboard',
                   },
                   DosenDashboardRouter,
-                  // DosenRouter,
+                  DosenRouter,
                   // DosenSettingsRouter
                   // SampleRouter
                 ]

@@ -11,12 +11,13 @@ const ProdiRouter =
     {
       path: '/dosen/mata-kuliah',
       name: 'Mata Kuliah',
-      component: 'pages/Dosen/MataKuliah/Kelas',
+      component: 'pages/Dosen/MataKuliah',
     },
     {
       path: '/dosen/mata-kuliah/:id',
       name: 'Mata Kuliah',
       component: 'pages/Dosen/MataKuliah/Detail',
+      hideInMenu: true
     },
     {
       path: '/dosen/berita',
