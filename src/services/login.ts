@@ -9,7 +9,7 @@ export type LoginParamsType = {
 }
 
 export type AdminLoginParamsType = {
-  username: string;
+  nama: string;
   admin: number;
   role: string;
   password: string;

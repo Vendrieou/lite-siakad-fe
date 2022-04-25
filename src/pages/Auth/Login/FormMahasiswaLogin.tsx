@@ -68,7 +68,6 @@ const FormMahasiswaLogin: React.FC = () => {
         <>
           <ProFormText
             name='nim'
-            // name='username'
             fieldProps={{
               size: 'large',
               prefix: <UserOutlined />

@@ -62,20 +62,20 @@ const Login: React.FC = () => {
           }}
         >
           {state.status === 'error' && state.type === 'account' && !submitting && (
-            <LoginMessage content='Incorrect account or password' />
+            <LoginMessage content='Incorrect nama or password' />
           )}
           <>
             <ProFormText
-              name='username'
+              name='nama'
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />
               }}
-              placeholder='username'
+              placeholder='nama'
               rules={[
                 {
                   required: true,
-                  message: 'please enter user name!'
+                  message: 'please enter nama!'
                 }
               ]}
             />

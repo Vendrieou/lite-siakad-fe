@@ -31,7 +31,7 @@ const FormEdit = ({
     active: false
   })
 
-  const { mr, state } = useConcent('pemintaStore')
+  const { mr, state } = useConcent('KRSStore')
   const { currentItem: row } = state
   const role = cookieGet('role')
 
@@ -153,7 +153,7 @@ const FormEdit = ({
         onCancel={() => setModalVerification({ active: false })}
         onOk={() => onSave(modalVerification.data)}
       >
-        <p>{`Anda akan menyimpan data peminta: ${row?.userName}`}</p>
+        <p>{`Anda akan menyimpan data KRS: ${row?.userName}`}</p>
       </Modal>
       <Modal
         title="Simpan Validasi Penerimaan Barang"
@@ -227,7 +227,7 @@ const FormEdit = ({
         initialValues={{
           id: row?.id,
           userId: row?.userId,
-          userName: row?.userName,
+          nama: row?.nama,
           userImage: row?.userImage,
           userEmail: row?.userEmail,
           userPhone: row?.userPhone,
@@ -246,7 +246,7 @@ const FormEdit = ({
           <Col xs={8}>
             <ProFormText readonly="readonly" name="id" label="ID" placeholder="" />
             <ProFormText readonly="readonly" name="userId" label="userId" placeholder="" />
-            <ProFormText readonly="readonly" name="userName" label="userName" placeholder="" />
+            <ProFormText readonly="readonly" name="nama" label="nama" placeholder="" />
             <ProFormText readonly="readonly" name="userEmail" label="userEmail" placeholder="" />
             <ProFormText readonly="readonly" name="userPhone" label="userPhone" placeholder="" />
           </Col>

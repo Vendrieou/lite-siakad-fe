@@ -68,7 +68,6 @@ const FormDosenLogin: React.FC = () => {
         <>
           <ProFormText
             name="nip"
-            // name='username'
             fieldProps={{
               size: 'large',
               prefix: <UserOutlined />
