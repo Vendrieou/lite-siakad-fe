@@ -3,18 +3,6 @@ import {
   apiNews
 } from '@/utils/config'
 
-export type NewsParamsType = {
-  id: number;
-  image: string;
-  title: string;
-  content: string;
-  status: string;
-  createdBy: number;
-  createdAt: Date;
-  deletedBy: number;
-  deletedAt: Date;
-}
-
 const apiGet = async (params: any) => {
   return request({
     url: `${apiNews}`,

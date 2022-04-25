@@ -1,11 +1,11 @@
 import request from '@/utils/request'
 import {
-  apiNews
+  apiNilai
 } from '@/utils/config'
 
 const apiGet = async (params: any) => {
   return request({
-    url: `${apiNews}/category`,
+    url: `${apiNilai}`,
     method: 'get',
     params
   })
@@ -13,14 +13,14 @@ const apiGet = async (params: any) => {
 
 const apiGetById = async (id: number) => {
   return request({
-    url: `${apiNews}/category/${id}`,
+    url: `${apiNilai}/${id}`,
     method: 'get'
   })
 }
 
 const apiPost = async (data: any) => {
   return request({
-    url: `${apiNews}/category`,
+    url: `${apiNilai}`,
     method: 'post',
     data
   })
@@ -28,7 +28,7 @@ const apiPost = async (data: any) => {
 
 const apiUpdate = async (data: any) => {
   return request({
-    url: `${apiNews}/category/${data.id}`,
+    url: `${apiNilai}/${data.id}`,
     method: 'put',
     data
   })
@@ -36,7 +36,7 @@ const apiUpdate = async (data: any) => {
 
 const apiDelete = async (id: number) => {
   return request({
-    url: `${apiNews}/category/${id}`,
+    url: `${apiNilai}/${id}`,
     method: 'delete'
   })
 }
