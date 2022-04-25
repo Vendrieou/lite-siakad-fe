@@ -109,6 +109,14 @@ class ComponentToPrint extends React.PureComponent {
                     </Table.Summary.Cell>
                   </Table.Summary.Row>
                 )}
+                footer={(currentData) => {
+                  let jumlahKxn = currentData.map(item => item.kredit).reduce((prev, curr) => prev + curr, 0)
+                  let jumlahKredit = currentData.map(item => item.kxn).reduce((prev, curr) => prev + curr, 0)
+                  let ipValue = jumlahKxn / jumlahKredit
+                  return (
+                    <Text className="IP">{`IP: ${ipValue.toFixed(2)}`}</Text>
+                  )
+                }}
               />
             </td>
           </tr>
