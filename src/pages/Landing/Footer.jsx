@@ -1,3 +1,4 @@
+import React from 'react'
 import { Layout, Row, Col, Typography, List } from 'antd'
 import GlobalFooter from 'src/container/GlobalFooter'
 import styles from './Footer.module.less'

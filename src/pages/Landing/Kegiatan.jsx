@@ -1,3 +1,4 @@
+import React from 'react'
 import { Card, Row, Col, Typography } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import kegiatan1 from 'static/img/kegiatan1.jpg'

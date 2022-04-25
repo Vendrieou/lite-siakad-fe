@@ -1,3 +1,4 @@
+import React from 'react'
 import { Layout, Row, Col, List, Card } from 'antd'
 import { Typography } from 'antd'
 import Footer from 'src/pages/Landing/Footer'

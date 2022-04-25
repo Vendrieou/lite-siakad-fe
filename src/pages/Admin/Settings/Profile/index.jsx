@@ -1,3 +1,4 @@
+import React from 'react'
 import { GridContent } from '@ant-design/pro-layout'
 import { Menu, Typography } from 'antd'
 import BaseView from './components/base'

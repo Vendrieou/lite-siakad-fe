@@ -1,3 +1,4 @@
+import React from 'react'
 import { Row, Col, Typography } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
 import Youtube from 'react-youtube'

@@ -1,4 +1,4 @@
-
+import React from 'react'
 import { Typography, Row, Col } from 'antd'
 import { ProFormSwitch } from '@ant-design/pro-form'
 import styles from './FormEdit.module.less'

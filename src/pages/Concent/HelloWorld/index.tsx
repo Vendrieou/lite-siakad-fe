@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { register, useConcent } from 'concent'
 import { Card } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'

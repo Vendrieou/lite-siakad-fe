@@ -1,3 +1,4 @@
+import React from 'react'
 import { useParams } from '@vitjs/runtime'
 
 const DetailJurusanContainer = () => {

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Layout, Carousel } from 'antd'
 import Kegiatan from './Kegiatan'
 import Berita from './Berita'
