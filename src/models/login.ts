@@ -4,13 +4,14 @@ import { history } from '@vitjs/runtime'
 import { stringify } from 'querystring'
 
 import {
-  // apiLogin,
-  fakeAccountLogin
+  apiLogin,
+  // fakeAccountLogin
 } from '@/services/login'
-import { get } from '@/utils/storage'
+// import { get } from '@/utils/storage'
 import { isContainAdminRole } from '@/utils/variable'
 import { loggedin } from '@/layouts/Auth'
 import { cookieSet, cookieRemove, set } from '@/utils/storage'
+import cookie from 'js-cookie'
 
 const module = defineModule({
   state: {
@@ -21,21 +22,21 @@ const module = defineModule({
 
   reducer: {
     login: async (payload: any, moduleState, actionCtx) => {
-      let role = get('role')
+      // let role = get('role')
+      const { role } = payload
       try {
-        // const response = await apiLogin(payload)
-        const response = await fakeAccountLogin(payload)
+        const response = await apiLogin(payload)
+        // const response = await fakeAccountLogin(payload)
+        // actionCtx.dispatch(module.reducer.changeLoginStatus, { status: 'ok', type: 'account', authority: 'admin' })
         console.log('response',response)
-        
-        actionCtx.dispatch(module.reducer.changeLoginStatus, { status: 'ok', type: 'account', authority: 'admin' })
 
         if (response.success) {
           if (response?.data?.token) {
             set('status', 'ok')
-            loggedin({ token: response?.data?.token, path: '/admin' })
+            // loggedin({ token: response?.data?.token, path: '/admin' })
             message.success('🎉 🎉 🎉  login successful!')
-            cookieSet('role', 'admin')
-
+            cookie.set('token', response?.data?.token, { expires: 1 })
+            cookie.set('role', role)
             moduleState.message = response?.meta?.message
             if (await isContainAdminRole(role)) {
               history.push('/admin/dashboard')
@@ -44,7 +45,6 @@ const module = defineModule({
             } else if (await role === 'dosen') {
               history.push('/dosen/dashboard')
             }
-            history.push('/admin/dashboard')
           }
         }
       } catch (error) {
