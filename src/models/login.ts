@@ -4,13 +4,13 @@ import { history } from '@vitjs/runtime'
 import { stringify } from 'querystring'
 
 import {
-  apiLogin,
+  apiLogin
   // fakeAccountLogin
 } from '@/services/login'
 // import { get } from '@/utils/storage'
 import { isContainAdminRole } from '@/utils/variable'
-import { loggedin } from '@/layouts/Auth'
-import { cookieSet, cookieRemove, set } from '@/utils/storage'
+// import { loggedin } from '@/layouts/Auth'
+import { cookieRemove, set } from '@/utils/storage'
 import cookie from 'js-cookie'
 
 const module = defineModule({
@@ -21,7 +21,7 @@ const module = defineModule({
   },
 
   reducer: {
-    login: async (payload: any, moduleState, actionCtx) => {
+    login: async (payload: any, moduleState) => {
       // let role = get('role')
       const { role } = payload
       try {
