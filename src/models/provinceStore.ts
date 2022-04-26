@@ -48,7 +48,7 @@ const module = defineModule({
         message.error(error)
       }
     },
-        SUCCESS: (payload: any) => {
+    SUCCESS: (payload: any) => {
       return {
         meta: payload?.meta
       }

@@ -10,7 +10,7 @@ import {
 // import { get } from '@/utils/storage'
 import { isContainAdminRole } from '@/utils/variable'
 // import { loggedin } from '@/layouts/Auth'
-import { cookieRemove, set } from '@/utils/storage'
+import { cookieRemove, cookieGet, set } from '@/utils/storage'
 import cookie from 'js-cookie'
 
 const module = defineModule({
@@ -40,9 +40,9 @@ const module = defineModule({
             moduleState.message = response?.meta?.message
             if (await isContainAdminRole(role)) {
               history.push('/admin/dashboard')
-            } else if (await role === 'user') {
+            } else if (role === 'mahasiswa') {
               history.push('/mahasiswa/dashboard')
-            } else if (await role === 'dosen') {
+            } else if (role === 'dosen') {
               history.push('/dosen/dashboard')
             }
           }
@@ -54,15 +54,17 @@ const module = defineModule({
     logout: () => {
       localStorage.removeItem('status')
       cookieRemove('token')
-      cookieRemove('role')
+      const role = cookieGet('role')
       if (window.location.pathname !== '/login') {
         history.replace({
-          pathname: '/login',
+          pathname: role === 'admin' ? '/admin/login' : '/login',
           search: stringify({
-            redirect: window.location.href
+            redirect: window.location.href,
+            role
           })
         })
       }
+      cookieRemove('role')
     },
 
     changeLoginStatus (payload: any) {

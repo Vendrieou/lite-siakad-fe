@@ -46,7 +46,7 @@ export const SET_DEFAULT_REGIONAL = async (value: { storeId: number; cityName: s
   await set('@regional', regional)
 }
 
-export const isContainAdminRole = (role: string | Promise<any>) => {
+export const isContainAdminRole = async (role: string | Promise<any>) => {
   if (typeof role === 'string') {
     let isVerified = ADMIN_ROLE.filter(filtered => filtered === role)
     return isVerified.length
