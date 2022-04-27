@@ -7,7 +7,8 @@ const apiGet = async (params: any) => {
   return request({
     url: `${apiJurusan}`,
     method: 'get',
-    params
+    params,
+    auth: true
   })
 }
 

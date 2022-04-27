@@ -1,32 +1,22 @@
 import React, { useState, useRef } from 'react'
 import { Button, message, Drawer, Modal } from 'antd'
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
+import { PageContainer } from '@ant-design/pro-layout'
+import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { history } from '@vitjs/runtime'
-// import { addRule, removeRule } from './service'
 import FormEdit from './FormEdit'
 
 const { confirm } = Modal
 
-const tableListDataSource = []
-
-for (let i = 0; i < 2; i += 1) {
-  tableListDataSource.push({
-    key: i,
-    No: i+1,
-    namaJurusan: i === 1 ? 'TEKNOLOGI INFORMASI' : 'SISTEM INFORMASI',
-    kodeJurusan: i === 1 ? 'TI' : 'SI'
-  })
-}
-
 const ProdiJurusanContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
+  const { state, mr } = useConcent('jurusanStore')
+  const { list } = state
 
   const [row, setRow] = useState()
-  const [selectedRowsState, setSelectedRows] = useState([])
 
   const onMessageSuccess = () => message.success('Berhasil delete jurusan')
 
@@ -79,6 +69,15 @@ const ProdiJurusanContainer = () => {
       }
     },
     {
+      title: 'status',
+      dataIndex: 'status',
+      tip: '',
+      valueEnum: {
+        publish: { text: 'Publish', status: 'publish' },
+        draft: { text: 'Draft', status: 'draft' }
+      }
+    },
+    {
       title: 'Action',
       tableStyle: { textAlign: 'center' },
       hideInForm: true,
@@ -92,9 +91,58 @@ const ProdiJurusanContainer = () => {
     }
   ]
 
+  const onCreate = async (data) => {
+    const response = await mr.create(data)
+    if (response.success) {
+      handleModalVisible(false)
+    }
+  }
+
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
+
+  const handleSubmit = async (values) => {
+    const data ={ 
+      ...values,
+      image: values.image || '',
+      name: values.name,
+      status: values.status
+    }
+    onCreate(data)
+  }
+
+  const onSave = (data) => {
+    handleSubmit(data)
+    setModalVerification({ active: false })
+  }
+
   const FormEditProps = {
     setRow,
     row
+  }
+
+  const initData = {
+    search: {
+      layout: 'vertical',
+      defaultCollapsed: true
+    },
+    pagination: {
+      show: true,
+      pageSize: 10,
+      current: 1,
+      total: 100000
+    },
+    options: {
+      reload: () => {
+        mr.get({ page: 1 })
+      },
+      show: false,
+      density: false,
+      fullScreen: false,
+      setting: false
+    }
   }
 
   return (
@@ -103,13 +151,13 @@ const ProdiJurusanContainer = () => {
         headerTitle="List Jurusan"
         actionRef={actionRef}
         rowKey="key"
-        request={() => {
-          return Promise.resolve({
-            data: tableListDataSource,
-            success: true
+        dataSource={list && list.length ? list : []}
+        request={(params) => {
+          mr.get({
+            q: params.name,
+            page: params.current
           })
         }}
-
         search={{
           labelWidth: 120
         }}
@@ -118,60 +166,28 @@ const ProdiJurusanContainer = () => {
             <PlusOutlined /> Buat Baru
           </Button>
         ]}
-        // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
         columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => setSelectedRows(selectedRows)
-        }}
+        {...initData}
       />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              Choose{' '}
-              <a
-                style={{
-                  fontWeight: 600
-                }}
-              >
-                {selectedRowsState.length}
-              </a>{' '}
-              Item&nbsp;&nbsp;
-              <span>
-                Total number of service calls {selectedRowsState.reduce((pre, item) => pre + item.kodeJurusan, 0)} Thousand
-              </span>
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState)
-              setSelectedRows([])
-              actionRef.current?.reloadAndRest?.()
-            }}
-          >
-            Batch Deletion
-          </Button>
-        </FooterToolbar>
-      )}
       <CreateForm width={840} title="Tambah Jurusan" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <ProTable
-          onSubmit={async (value) => {
-            console.log('value', value)
-            // const success = await handleAdd(value)
-
-            // if (success) {
-            //   handleModalVisible(false)
-
-            //   if (actionRef.current) {
-            //     actionRef.current.reload()
-            //   }
-            // }
-          }}
-          rowKey="key"
-          type="form"
-          columns={columns}
-        />
+        <>
+          <Modal
+            title="Simpan"
+            visible={modalVerification.active}
+            onCancel={() => setModalVerification({ active: false })}
+            onOk={() => onSave(modalVerification.data)}
+          >
+            <p>Anda akan menyimpan data</p>
+          </Modal>
+          <ProTable
+            onSubmit={async (values) => {
+              setModalVerification({ data: values, active: true })
+            }}
+            rowKey="key"
+            type="form"
+            columns={columns}
+          />
+        </>
       </CreateForm>
 
       {/* edit data drawer */}
