@@ -212,4 +212,4 @@ const ProdiJurusanContainer = () => {
   )
 }
 
-export default withAuth-(ProdiJurusanContainer)
+export default withAuth(ProdiJurusanContainer)
