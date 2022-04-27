@@ -38,6 +38,13 @@ const ProdiJurusanContainer = () => {
 
   const columns = [
     {
+      title: 'ID',
+      dataIndex: 'id',
+      hideInTable: true,
+      hideInForm: true,
+      hideInSearch: true,
+    },
+    {
       title: 'Nama Jurusan',
       dataIndex: 'name',
       tip: '',

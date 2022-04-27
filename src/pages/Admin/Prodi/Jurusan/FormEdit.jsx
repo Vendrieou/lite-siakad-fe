@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, message } from 'antd'
+import { useConcent } from 'concent'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
 import styles from './FormEdit.module.less'
@@ -8,38 +9,40 @@ const FormEdit = ({
   setRow,
   row
 }) => {
-  const [modalVerification, setModalVerification] = useState(false)
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
+  const { mr } = useConcent('jurusanStore')
 
-  const editMahasiswa = (data) => {
-    message.success(`Berhasil edit jurusan ${data}`)
+  const handleSubmit = (values) => {
+    mr.update(values)
   }
 
   const onSave = (data) => {
     console.log('values data', data)
-    editMahasiswa(data)
+    handleSubmit(data)
     setModalVerification(false)
     setRow(undefined)
   }
 
   const initialValues = {
-    namaJurusan: row?.namaDosen,
-    kodeJurusan: row?.kodeJurusan
+    ...row
   }
 
   return (
     <>
       <Modal
         title="Simpan"
-        visible={modalVerification}
-        onCancel={() => setModalVerification(false)}
-        onOk={() => onSave(row?.namaDosen)}
+        visible={modalVerification.active}
+        onCancel={() => setModalVerification({ active: false })}
+        onOk={() => onSave(modalVerification.data)}
       >
-        <p>{`Anda akan menyimpan data ${row?.namaDosen}`}</p>
+        <p>{`Anda akan menyimpan data ${modalVerification.data?.name}`}</p>
       </Modal>
       <ProForm
         onFinish={async (values) => {
-          console.log('values finish', values)
-          message.success('success')
+          setModalVerification({ data: values, active: true })
         }}
         initialValues={initialValues}
         params={{}}
@@ -55,7 +58,8 @@ const FormEdit = ({
       >
         <div className={styles.container}>
           <div>
-            <ProFormText width="md" name="namaJurusan" label="NAMA JURUSAN" placeholder="Masukkan nama jurusan" />
+            <ProFormText width="md" name="id" label="ID" disabled />
+            <ProFormText width="md" name="name" label="NAMA JURUSAN" placeholder="Masukkan nama jurusan" />
             <ProFormText width="md" name="kodeJurusan" label="KODE JURUSAN" placeholder="Masukkan kode jurusan" />
           </div>
         </div>
