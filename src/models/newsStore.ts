@@ -134,11 +134,11 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState) => {
-      dispatch(module.reducer.get)
-    }
-  }
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState) => {
+  //     dispatch(module.reducer.get)
+  //   }
+  // }
 })
 
 export default module

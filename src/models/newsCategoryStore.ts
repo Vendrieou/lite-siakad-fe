@@ -129,16 +129,16 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState, actionCtx) => {
-      let isListCategory = get('listNewsCategory')
-      if (!isListCategory) {
-        dispatch(module.reducer.get, { page: 1 })
-      } else {
-        dispatch(module.reducer.RECEIVE, { data: JSON.parse(isListCategory) })
-      }
-    }
-  }
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState, actionCtx) => {
+  //     let isListCategory = get('listNewsCategory')
+  //     if (!isListCategory) {
+  //       dispatch(module.reducer.get, { page: 1 })
+  //     } else {
+  //       dispatch(module.reducer.RECEIVE, { data: JSON.parse(isListCategory) })
+  //     }
+  //   }
+  // }
 })
 
 export default module

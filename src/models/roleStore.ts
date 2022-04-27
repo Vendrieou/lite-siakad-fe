@@ -128,15 +128,15 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState) => {
-      let isListRole = get('listRole')
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState) => {
+  //     let isListRole = get('listRole')
       
-      if(!isListRole || window.location.pathname === '/admin/manage-user/role') {
-        dispatch(module.reducer.get)
-      }
-    }
-  }
+  //     if(!isListRole || window.location.pathname === '/admin/manage-user/role') {
+  //       dispatch(module.reducer.get)
+  //     }
+  //   }
+  // }
 })
 
 export default module
