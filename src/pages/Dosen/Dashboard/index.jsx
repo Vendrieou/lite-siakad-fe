@@ -1,4 +1,5 @@
 import React from 'react'
+import withAuth from 'components/Authorized/auth'
 
 const DosenDashboardContainer = () => {
   return (
@@ -6,7 +7,7 @@ const DosenDashboardContainer = () => {
   )
 }
 
-export default DosenDashboardContainer
+export default withAuth(DosenDashboardContainer)
 
 // import React, { useState } from 'react'
 // import { PageContainer } from '@ant-design/pro-layout'

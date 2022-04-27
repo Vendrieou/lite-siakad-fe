@@ -62,7 +62,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       breadcrumbRender={(routers = []) => [
         {
           // path: '/',
-          path: role === 'admin' ? '/admin/dashboard' : role === 'dosen' ? '/dosen/dashboard' : role === 'mahasiswa' ? '/admin/dashboard' : '/',
+          path: role === 'admin' ? '/admin/dashboard' : role === 'dosen' ? '/dosen/dashboard' : role === 'mahasiswa' ? '/mahasiswa/dashboard' : '/',
           breadcrumbName: (<HomeOutlined />) as any
         },
         ...routers
