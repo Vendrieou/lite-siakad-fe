@@ -27,6 +27,7 @@ const FormEdit = ({
   }
 
   const initialValues = {
+    ...row,
     gelarDepan: row?.gelarDepan,
     namaDosen: row?.namaDosen,
     gelarBelakang: row?.gelarBelakang,
@@ -74,6 +75,7 @@ const FormEdit = ({
       >
         <div className={styles.container}>
           <div>
+            <ProFormText width="md" name="id" label="ID" disabled />
             <ProFormText width="md" name="gelarDepan" label="GELAR DEPAN" placeholder="Masukkan gelar depan" />
             <ProFormText width="md" name="nama" label="NAMA" placeholder="Masukkan nama" />
             <ProFormText width="md" name="gelarBelakang" label="GELAR BELAKANG" placeholder="Masukkan gelar belakang" />

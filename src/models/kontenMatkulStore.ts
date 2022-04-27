@@ -86,6 +86,8 @@ const module = defineModule({
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, payload)
           actionCtx.dispatch(module.reducer.get)
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)

@@ -20,7 +20,6 @@ const FormEdit = ({
   }
 
   const onSave = (data) => {
-    console.log('values data', data)
     handleSubmit(data)
     setModalVerification(false)
     setRow(undefined)

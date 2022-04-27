@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react'
-import { Button, message, Drawer, Modal } from 'antd'
+import { Button, Drawer, Modal } from 'antd'
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { useConcent } from 'concent'
 import withAuth from 'components/Authorized/auth'
 import CreateForm from 'components/Form/CreateForm'
 // import { addRule, removeRule } from './service'
@@ -30,25 +31,30 @@ const ProdiDosenContainer = () => {
 
   const [row, setRow] = useState()
   const [selectedRowsState, setSelectedRows] = useState([])
+  const { mr, state }= useConcent('dosenStore')
+  const { list } = state
 
-  const onMessageSuccess = () => message.success('Berhasil delete dosen')
-
-  const showDeleteConfirm = () => {
+  const showDeleteConfirm = (entity) => {
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Are you sure delete this data?',
       icon: <ExclamationCircleOutlined />,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk: () => {
-        console.log('OK delete')
-        // onDelete()
-        onMessageSuccess()
+        mr.delete(entity)
       }
     })
   }
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      hideInTable: true,
+      hideInForm: true,
+      hideInSearch: true,
+    },
     {
       title: 'NIP',
       dataIndex: 'NIP',
@@ -146,8 +152,10 @@ const ProdiDosenContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => showDeleteConfirm()} danger>delete</Button>
-      ]
+        <Button type="text" key="2" onClick={() => {
+          let page = document.getElementsByClassName("ant-pagination-item-active")
+          showDeleteConfirm({ ...entity, page: page[0].title })
+        }} danger>delete</Button>      ]
     }
   ]
 
@@ -162,13 +170,7 @@ const ProdiDosenContainer = () => {
         headerTitle="List Dosen"
         actionRef={actionRef}
         rowKey="key"
-        request={() => {
-          return Promise.resolve({
-            data: tableListDataSource,
-            success: true
-          })
-        }}
-
+        dataSource={list && list.length ? list : []}
         search={{
           labelWidth: 120
         }}

@@ -21,7 +21,7 @@ const KategoriBeritaContainer = () => {
 
   const showDeleteConfirm = (entity) => {
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Are you sure delete this data?',
       icon: <ExclamationCircleOutlined />,
       okText: 'Yes',
       okType: 'danger',
@@ -36,20 +36,9 @@ const KategoriBeritaContainer = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      hideInSearch: true,
-      tip: '',
+      hideInTable: true,
       hideInForm: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
+      hideInSearch: true,
     },
     {
       title: 'Nama Kategori',
@@ -91,8 +80,10 @@ const KategoriBeritaContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => showDeleteConfirm(entity)} danger>delete</Button>
-      ]
+        <Button type="text" key="2" onClick={() => {
+          let page = document.getElementsByClassName("ant-pagination-item-active")
+          showDeleteConfirm({ ...entity, page: page[0].title })
+        }} danger>delete</Button>      ]
     }
   ]
 

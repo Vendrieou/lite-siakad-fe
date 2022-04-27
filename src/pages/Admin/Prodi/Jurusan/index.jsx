@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Button, message, Drawer, Modal } from 'antd'
+import { Button, Drawer, Modal } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
@@ -19,19 +19,15 @@ const ProdiJurusanContainer = () => {
 
   const [row, setRow] = useState()
 
-  const onMessageSuccess = () => message.success('Berhasil delete jurusan')
-
-  const showDeleteConfirm = () => {
+  const showDeleteConfirm = (entity) => {
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Are you sure delete this data?',
       icon: <ExclamationCircleOutlined />,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk: () => {
-        console.log('OK delete')
-        // onDelete()
-        onMessageSuccess()
+        mr.delete(entity)
       }
     })
   }
@@ -95,7 +91,10 @@ const ProdiJurusanContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => showDeleteConfirm()} danger>delete</Button>
+        <Button type="text" key="2" onClick={() => {
+          let page = document.getElementsByClassName("ant-pagination-item-active")
+          showDeleteConfirm({ ...entity, page: page[0].title })
+        }} danger>delete</Button>
       ]
     }
   ]

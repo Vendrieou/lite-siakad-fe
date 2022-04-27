@@ -20,7 +20,7 @@ const MataKuliahDosen = () => {
 
   // const showDeleteTemplateConfirm = (entity) => {
   //   confirm({
-  //     title: 'Are you sure to archive this task?',
+  //     title: 'Are you sure to archive this data?',
   //     icon: <ExclamationCircleOutlined />,
   //     okText: 'Yes',
   //     okType: 'danger',
@@ -35,16 +35,9 @@ const MataKuliahDosen = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      tip: '',
+      hideInTable: true,
+      hideInForm: true,
       hideInSearch: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
     },
     {
       title: 'NIM',

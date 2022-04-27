@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Button, message, Drawer, Modal, Typography } from 'antd'
+import { Button, Drawer, Modal } from 'antd'
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
@@ -11,19 +11,6 @@ import FormEdit from './FormEdit'
 
 const { confirm } = Modal
 
-const tableListDataSource = []
-
-for (let i = 0; i < 2; i += 1) {
-  tableListDataSource.push({
-    key: i,
-    NIM: `${1844000 + i}`,
-    namaMahasiswa: `Jaya Suprana ${i}`,
-    prodi: 'TI',
-    gender: 'laki-laki',
-    tahunAngkatan: 'TI18',
-    alamat: 'jl merbabu no 100'
-  })
-}
 
 
 const ProdiMahasiswaContainer = () => {
@@ -35,24 +22,27 @@ const ProdiMahasiswaContainer = () => {
   const [row, setRow] = useState()
   const [selectedRowsState, setSelectedRows] = useState([])
 
-  const onMessageSuccess = () => message.success('Berhasil delete mahasiswa')
-
-  const showDeleteConfirm = () => {
+  const showDeleteConfirm = (entity) => {
     confirm({
-      title: 'Are you sure delete this task?',
+      title: 'Are you sure delete this data?',
       icon: <ExclamationCircleOutlined />,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk: () => {
-        console.log('OK delete')
-        // onDelete()
-        onMessageSuccess()
+        mr.delete(entity)
       }
     })
   }
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      hideInTable: true,
+      hideInForm: true,
+      hideInSearch: true,
+    },
     {
       title: 'NIM',
       dataIndex: 'NIM',
@@ -151,8 +141,10 @@ const ProdiMahasiswaContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => showDeleteConfirm()} danger>delete</Button>
-      ]
+        <Button type="text" key="2" onClick={() => {
+          let page = document.getElementsByClassName("ant-pagination-item-active")
+          showDeleteConfirm({ ...entity, page: page[0].title })
+        }} danger>delete</Button>      ]
     }
   ]
 

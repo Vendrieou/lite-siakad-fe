@@ -18,7 +18,7 @@ const ManageUserAdminContainer = memo(() => {
   const actionRef = useRef()
   const [row, setRow] = useState()
 
-  useConcent('roleStore')
+  // useConcent('roleStore')
 
   const { mr } = useConcent('userStore')
   const { mr: mrAdmin, state } = useConcent('userAdminStore')
@@ -41,19 +41,9 @@ const ManageUserAdminContainer = memo(() => {
     {
       title: 'ID',
       dataIndex: 'id',
-      tip: '',
+      hideInTable: true,
+      hideInForm: true,
       hideInSearch: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
     },
     {
       title: 'First Name',

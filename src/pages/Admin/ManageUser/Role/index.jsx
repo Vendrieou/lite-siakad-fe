@@ -36,20 +36,9 @@ const ManageUserRoleContainer = memo(() => {
     {
       title: 'ID',
       dataIndex: 'id',
+      hideInTable: true,
       hideInForm: true,
       hideInSearch: true,
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
     },
     {
       title: 'Role Name',
@@ -75,8 +64,10 @@ const ManageUserRoleContainer = memo(() => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => showDeleteConfirm(entity)} danger>delete</Button>
-      ]
+        <Button type="text" key="2" onClick={() => {
+          let page = document.getElementsByClassName("ant-pagination-item-active")
+          showDeleteConfirm({ ...entity, page: page[0].title })
+        }} danger>delete</Button>      ]
     }
   ]
 
