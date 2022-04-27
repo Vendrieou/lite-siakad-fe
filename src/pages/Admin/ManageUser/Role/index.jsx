@@ -121,6 +121,7 @@ const ManageUserRoleContainer = memo(() => {
       />
       {/* create data drawer */}
       <CreateForm
+        keyboard={false}
         maskClosable={false}
         width={840}
         title="Tambah Role"
@@ -131,7 +132,7 @@ const ManageUserRoleContainer = memo(() => {
       </CreateForm>
 
       {/* edit data drawer */}
-      <CreateForm maskClosable={false} width={840} title={`Edit Data Role ${row?.id}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+      <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Role ${row?.id}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
         <FormEdit {...FormEditProps} />
       </CreateForm>
     </PageContainer>

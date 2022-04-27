@@ -149,6 +149,7 @@ const KategoriBeritaContainer = () => {
       />
       {/* create data drawer */}
       <CreateForm width={800}
+        keyboard={false}
         maskClosable={false}
         title="Tambah Kategori"
         onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}

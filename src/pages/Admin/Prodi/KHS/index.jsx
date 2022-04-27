@@ -206,6 +206,7 @@ const ProdiKHSContainer = () => {
 
       {/* create data template KRS tab "list" */}
       {/* <CreateForm
+        keyboard={false}
         maskClosable={false}
         width={800}
         title="Add With Template KRS"
@@ -216,6 +217,7 @@ const ProdiKHSContainer = () => {
 
       {/* edit data template KRS tab "list" */}
       {/* <CreateForm
+        keyboard={false}
         maskClosable={false}
         width={840}
         title={`Edit data template KRS ${row?.name}`}

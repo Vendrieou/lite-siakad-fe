@@ -174,6 +174,7 @@ const BeritaContainer = memo(() => {
       />
       {/* create data drawer */}
       <CreateForm
+        keyboard={false}
         maskClosable={false}
         width={800}
         title="Tambah Berita"
@@ -182,7 +183,7 @@ const BeritaContainer = memo(() => {
         <FormCreate {...FormCreateProps} />
       </CreateForm>
       {/* edit data drawer */}
-      <CreateForm maskClosable={false} width={840} title={`Edit Data Berita: ${row?.title}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+      <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Berita: ${row?.title}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
         <FormEdit {...FormEditProps} />
       </CreateForm>
     </PageContainer>

@@ -200,6 +200,7 @@ const ManageUserAdminContainer = memo(() => {
       {/* create data drawer */}
       <CreateForm 
         width={800}
+        keyboard={false}
         maskClosable={false}
         title="Tambah Admin"
         onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
@@ -207,7 +208,7 @@ const ManageUserAdminContainer = memo(() => {
         <FormCreate {...FormCreateProps} />
       </CreateForm>
       {/* edit data drawer */}
-      <CreateForm maskClosable={false} width={840} title={`Edit Data Admin ${row?.firstName} ${row?.lastName}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+      <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Admin ${row?.firstName} ${row?.lastName}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
         <FormEdit {...FormEditProps} />
       </CreateForm>
     </PageContainer>

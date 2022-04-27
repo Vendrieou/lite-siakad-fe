@@ -213,7 +213,7 @@ const ProdiDosenContainer = () => {
           </Button>
         </FooterToolbar>
       )}
-      <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+      <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} keyboard={false} modalVisible={createModalVisible}>
         <ProTable
           onSubmit={async (value) => {
             console.log('value', value)

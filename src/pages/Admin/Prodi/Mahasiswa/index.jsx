@@ -219,6 +219,7 @@ const ProdiMahasiswaContainer = () => {
         width={840} 
         title={`Edit Data Mahasiswa ${row?.nama}`} 
         onCancel={() => setRow(undefined)}
+        keyboard={false}
         maskClosable={false}
         modalVisible={!!row}
       >
