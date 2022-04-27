@@ -39,18 +39,22 @@ const ProdiRouter =
         component: 'pages/Admin/Prodi/Jurusan',
       },
       {
-        path: '/admin/prodi/jurusan/new',
-        name: 'Create Jurusan',
-        component: 'pages/Admin/Prodi/Jurusan/New',
-        hideInMenu: true
-      },
-      {
         path: '/admin/prodi/jurusan/:id',
         name: 'Detail Jurusan',
         hideInMenu: true,
         component: 'pages/Admin/Prodi/Jurusan/Detail',
-      },   
-
+      },
+      {
+        path: '/admin/prodi/sekolah',
+        name: 'Sekolah',
+        component: 'pages/Admin/Prodi/Sekolah'
+      }
+      // {
+      //   path: '/admin/prodi/jurusan/new',
+      //   name: 'Create Jurusan',
+      //   component: 'pages/Admin/Prodi/Jurusan/New',
+      //   hideInMenu: true
+      // },
       // {
       //   path: '/admin/prodi/dashboard',
       //   name: 'Dashboard Prodi',
