@@ -57,6 +57,7 @@ const ProdiJurusanContainer = () => {
       title: 'Kode Jurusan',
       dataIndex: 'kodeJurusan',
       tip: '',
+      hideInSearch: true,
       formItemProps: {
         rules: [
           {
