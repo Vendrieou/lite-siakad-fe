@@ -7,6 +7,7 @@ import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import withAuth from 'components/Authorized/auth'
 import CreateForm from '../../../../components/Form/CreateForm'
 // import UpdateForm from './components/UpdateForm'
+import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
 
 const { confirm } = Modal
@@ -17,19 +18,6 @@ const ProdiMahasiswaContainer = () => {
   const { state, mr } = useConcent('mahasiswaStore')
   const { list } = state
   const [row, setRow] = useState()
-
-  const showDeleteConfirm = (entity) => {
-    confirm({
-      title: 'Are you sure delete this data?',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: () => {
-        mr.delete(entity)
-      }
-    })
-  }
 
   const columns = [
     {
@@ -148,37 +136,6 @@ const ProdiMahasiswaContainer = () => {
       ]
     }
   ]
-  
-  const onCreate = async (data) => {
-    const response = await mr.create(data)
-    if (response.success) {
-      handleModalVisible(false)
-    }
-  }
-
-  const [modalVerification, setModalVerification] = useState({
-    data: {},
-    active: false
-  })
-
-  const handleSubmit = async (values) => {
-    const data ={ 
-      ...values,
-      name: values.name,
-      status: values.status
-    }
-    onCreate(data)
-  }
-
-  const onSave = (data) => {
-    handleSubmit(data)
-    setModalVerification({ active: false })
-  }
-
-  const FormEditProps = {
-    setRow,
-    row
-  }
 
   const initData = {
     search: {
@@ -200,6 +157,32 @@ const ProdiMahasiswaContainer = () => {
       fullScreen: false,
       setting: false
     }
+  }
+  
+  const showDeleteConfirm = (entity) => {
+    confirm({
+      title: 'Are you sure delete this data?',
+      icon: <ExclamationCircleOutlined />,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: () => {
+        mr.delete(entity)
+      }
+    })
+  }
+
+  const onCreate = async (data) => {
+    const response = await mr.create(data)
+    if (response?.success) {
+      handleModalVisible(false)
+    }
+  }
+
+  const FormCreateProps = { onCreate }
+  const FormEditProps = {
+    setRow,
+    row    
   }
 
   return (
@@ -226,44 +209,23 @@ const ProdiMahasiswaContainer = () => {
         columns={columns}
         {...initData}
       />
-      <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <>
-          <Modal
-            title="Simpan"
-            visible={modalVerification.active}
-            onCancel={() => setModalVerification({ active: false })}
-            onOk={() => onSave(modalVerification.data)}
-          >
-            <p>Anda akan menyimpan data</p>
-          </Modal>
-          <ProTable
-            onSubmit={async (values) => {
-              setModalVerification({ data: values, active: true })
-            }}
-            rowKey="key"
-            type="form"
-            columns={columns}
-          />
-        </>
+      {/* form create data */}
+      <CreateForm width={'100%'} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <FormCreate {...FormCreateProps} />
       </CreateForm>
-
-      {/* edit data drawer */}
-      <Drawer
-        width="50%"
-        height="100%"
-        visible={!!row}
-        bodyStyle={{ padding: '2em' }}
-        title={`Edit Data Mahasiswa ${row?.nama}`}
-        mask={false}
+ 
+      {/* form edit data */}
+      <CreateForm
+        width={840} 
+        title={`Edit Data Mahasiswa ${row?.nama}`} 
+        onCancel={() => setRow(undefined)}
         maskClosable={false}
-        onClose={() => setRow(undefined)}
-        keyboard={false}
-        placement="top"
+        modalVisible={!!row}
       >
         {row?.namaMahasiswa && (
           <FormEdit {...FormEditProps} />
         )}
-      </Drawer>
+      </CreateForm>
     </PageContainer>
   )
 }

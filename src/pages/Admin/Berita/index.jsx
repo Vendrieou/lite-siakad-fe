@@ -20,19 +20,6 @@ const BeritaContainer = memo(() => {
   const { mr, state } = useConcent({ module: 'newsStore' })
   const { list } = state
 
-  const showDeleteConfirm = () => {
-    confirm({
-      title: 'Are you sure delete this data?',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: (entity) => {
-        mr.delete(entity)
-      }
-    })
-  }
-
   const columns = [
     {
       title: 'ID',
@@ -126,6 +113,19 @@ const BeritaContainer = memo(() => {
       fullScreen: false,
       setting: false
     }
+  }
+
+  const showDeleteConfirm = () => {
+    confirm({
+      title: 'Are you sure delete this data?',
+      icon: <ExclamationCircleOutlined />,
+      okText: 'Yes',
+      okType: 'danger',
+      cancelText: 'No',
+      onOk: (entity) => {
+        mr.delete(entity)
+      }
+    })
   }
 
   const getNewsCategory = localStorage.getItem('listNewsCategory')
