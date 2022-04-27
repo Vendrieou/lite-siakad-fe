@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Modal, message } from 'antd'
+import { Modal } from 'antd'
+import { useConcent } from 'concent'
 import ProForm, {
   ProFormText,
   ProFormTextArea,
@@ -13,14 +14,18 @@ const FormEdit = ({
   setRow,
   row
 }) => {
-  const [modalVerification, setModalVerification] = useState(false)
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
+  const { mr } = useConcent('mahasiswaStore')
 
-  const editMahasiswa = (data) => {
-    message.success(`Berhasil edit mahasiswa ${data}`)
+  const handleSubmit = (values) => {
+    mr.update(values)
   }
 
   const onSave = (data) => {
-    editMahasiswa(data)
+    handleSubmit(data)
     setModalVerification(false)
     setRow(undefined)
   }
@@ -85,8 +90,7 @@ const FormEdit = ({
       <ProForm
         style={{ display: 'flex' }}
         onFinish={async (values) => {
-          console.log(values)
-          message.success('success')
+          setModalVerification({ data: values, active: true })
         }}
         initialValues={initialValues}
         params={{}}

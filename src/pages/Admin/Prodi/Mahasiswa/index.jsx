@@ -1,26 +1,22 @@
 import React, { useState, useRef } from 'react'
 import { Button, Drawer, Modal } from 'antd'
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
+import { useConcent } from 'concent'
+import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-// import { DrawerForm } from '@ant-design/pro-form'
 import withAuth from 'components/Authorized/auth'
 import CreateForm from '../../../../components/Form/CreateForm'
-import UpdateForm from './components/UpdateForm'
+// import UpdateForm from './components/UpdateForm'
 import FormEdit from './FormEdit'
 
 const { confirm } = Modal
 
-
-
 const ProdiMahasiswaContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
-  const [updateModalVisible, handleUpdateModalVisible] = useState(false)
-  const [stepFormValues, setStepFormValues] = useState({})
   const actionRef = useRef()
-
+  const { state, mr } = useConcent('mahasiswaStore')
+  const { list } = state
   const [row, setRow] = useState()
-  const [selectedRowsState, setSelectedRows] = useState([])
 
   const showDeleteConfirm = (entity) => {
     confirm({
@@ -41,7 +37,7 @@ const ProdiMahasiswaContainer = () => {
       dataIndex: 'id',
       hideInTable: true,
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'NIM',
@@ -62,7 +58,7 @@ const ProdiMahasiswaContainer = () => {
     {
       title: 'Nama Mahasiswa',
       dataIndex: 'namaMahasiswa',
-      tip: '',
+      hideInSearch: true,
       formItemProps: {
         rules: [
           {
@@ -79,6 +75,7 @@ const ProdiMahasiswaContainer = () => {
       title: 'Pilih Program Studi',
       dataIndex: 'prodi',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         0: {
           text: 'TI',
@@ -93,6 +90,7 @@ const ProdiMahasiswaContainer = () => {
     {
       title: 'Gender',
       dataIndex: 'gender',
+      hideInSearch: true,
       hideInForm: true,
       valueEnum: {
         0: {
@@ -108,6 +106,7 @@ const ProdiMahasiswaContainer = () => {
     {
       title: 'Tahun Angkatan',
       dataIndex: 'tahunAngkatan',
+      hideInSearch: true,
       valueEnum: {
         0: {
           text: '2017',
@@ -130,7 +129,8 @@ const ProdiMahasiswaContainer = () => {
     {
       title: 'Alamat',
       dataIndex: 'alamat',
-      valueType: 'textarea'
+      valueType: 'textarea',
+      hideInSearch: true,
     },
     {
       title: 'Action',
@@ -144,9 +144,36 @@ const ProdiMahasiswaContainer = () => {
         <Button type="text" key="2" onClick={() => {
           let page = document.getElementsByClassName("ant-pagination-item-active")
           showDeleteConfirm({ ...entity, page: page[0].title })
-        }} danger>delete</Button>      ]
+        }} danger>delete</Button>
+      ]
     }
   ]
+  
+  const onCreate = async (data) => {
+    const response = await mr.create(data)
+    if (response.success) {
+      handleModalVisible(false)
+    }
+  }
+
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
+
+  const handleSubmit = async (values) => {
+    const data ={ 
+      ...values,
+      name: values.name,
+      status: values.status
+    }
+    onCreate(data)
+  }
+
+  const onSave = (data) => {
+    handleSubmit(data)
+    setModalVerification({ active: false })
+  }
 
   const FormEditProps = {
     setRow,
@@ -154,36 +181,40 @@ const ProdiMahasiswaContainer = () => {
   }
 
   const initData = {
+    search: {
+      layout: 'vertical',
+      defaultCollapsed: true
+    },
     pagination: {
       show: true,
       pageSize: 10,
       current: 1,
-      total: 50
-      // onChange: (page) => {
-      //   mrAdmin.get({ page })
-      // }
+      total: 100000
     },
     options: {
-      show: true,
-      density: true,
-      setting: true
+      reload: () => {
+        mr.get({ page: 1 })
+      },
+      show: false,
+      density: false,
+      fullScreen: false,
+      setting: false
     }
   }
 
   return (
     <PageContainer>
       <ProTable
-        {...initData}
         headerTitle="List Mahasiswa"
         actionRef={actionRef}
         rowKey="key"
-        request={() => {
-          return Promise.resolve({
-            data: tableListDataSource,
-            success: true
+        dataSource={list && list.length ? list : []}
+        request={(params) => {
+          mr.get({
+            q: params.NIM,
+            page: params.current
           })
         }}
-
         search={{
           labelWidth: 120
         }}
@@ -192,97 +223,37 @@ const ProdiMahasiswaContainer = () => {
             <PlusOutlined /> Buat Baru
           </Button>
         ]}
-        // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
         columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => setSelectedRows(selectedRows)
-        }}
+        {...initData}
       />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              Choose{' '}
-              <a
-                style={{
-                  fontWeight: 600
-                }}
-              >
-                {selectedRowsState.length}
-              </a>{' '}
-              Item&nbsp;&nbsp;
-              <span>
-                Total number of service calls {selectedRowsState.reduce((pre, item) => pre + item.NIM, 0)} Thousand
-              </span>
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState)
-              setSelectedRows([])
-              actionRef.current?.reloadAndRest?.()
-            }}
-          >
-            Batch Deletion
-          </Button>
-          {/* <Button type="primary">Batch Approval</Button> */}
-        </FooterToolbar>
-      )}
       <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <ProTable
-          // span={5}
-          // column={window.innerWidth > 360 ? 3 : 1}
-          onSubmit={async (value) => {
-            const success = await handleAdd(value)
-
-            if (success) {
-              handleModalVisible(false)
-
-              if (actionRef.current) {
-                actionRef.current.reload()
-              }
-            }
-          }}
-          rowKey="key"
-          type="form"
-          columns={columns}
-        />
+        <>
+          <Modal
+            title="Simpan"
+            visible={modalVerification.active}
+            onCancel={() => setModalVerification({ active: false })}
+            onOk={() => onSave(modalVerification.data)}
+          >
+            <p>Anda akan menyimpan data</p>
+          </Modal>
+          <ProTable
+            onSubmit={async (values) => {
+              setModalVerification({ data: values, active: true })
+            }}
+            rowKey="key"
+            type="form"
+            columns={columns}
+          />
+        </>
       </CreateForm>
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
-          onSubmit={async (value) => {
-            const success = await handleUpdate(value)
-
-            if (success) {
-              handleUpdateModalVisible(false)
-              setStepFormValues({})
-
-              if (actionRef.current) {
-                actionRef.current.reload()
-              }
-            }
-          }}
-          onCancel={() => {
-            handleUpdateModalVisible(false)
-            setStepFormValues({})
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
-        />
-      ) : null}
 
       {/* edit data drawer */}
       <Drawer
         width="50%"
         height="100%"
         visible={!!row}
-        // onClose={() => setRow(null)}
-        bodyStyle={{
-          padding: '2em'
-        }}
-        title={`Edit Data Mahasiswa ${row?.namaMahasiswa}`}
-        // closable={false}
+        bodyStyle={{ padding: '2em' }}
+        title={`Edit Data Mahasiswa ${row?.nama}`}
         mask={false}
         maskClosable={false}
         onClose={() => setRow(undefined)}
@@ -296,13 +267,5 @@ const ProdiMahasiswaContainer = () => {
     </PageContainer>
   )
 }
-// const {Text} = Typography
 
-// const ProdiMahasiswaContainer = () => {
-//   return (
-//     <PageContainer>
-//       <Text>ProdiMahasiswaContainer</Text>
-//     </PageContainer>
-//   )
-// }
 export default withAuth(ProdiMahasiswaContainer)

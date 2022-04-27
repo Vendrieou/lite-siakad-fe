@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Modal, message } from 'antd'
+import { Modal } from 'antd'
 import { useConcent } from 'concent'
 import ProForm, { ProFormText } from '@ant-design/pro-form'
 import { FooterToolbar } from '@ant-design/pro-layout'
