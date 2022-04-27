@@ -5,8 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import withAuth from 'components/Authorized/auth'
-import CreateForm from '../../../../components/Form/CreateForm'
-// import UpdateForm from './components/UpdateForm'
+import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
 
@@ -60,24 +59,24 @@ const ProdiMahasiswaContainer = () => {
       }
     },
     {
-      title: 'Pilih Program Studi',
+      title: 'Program Studi',
       dataIndex: 'prodi',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
         0: {
-          text: 'TI',
-          status: 'Default'
+          text: 'TEKNOLOGI INFORMASI',
+          status: 'TI'
         },
         1: {
-          text: 'SI',
-          status: 'Processing'
+          text: 'SISTEM INFORMASI',
+          status: 'SI'
         }
       }
     },
     {
       title: 'Gender',
-      dataIndex: 'gender',
+      dataIndex: 'jenisKelamin',
       hideInSearch: true,
       hideInForm: true,
       valueEnum: {
