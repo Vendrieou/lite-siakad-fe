@@ -1,4 +1,5 @@
 import React from 'react'
+import withAuth from 'components/Authorized/auth'
 
 const MahasiswaKRS = () => {
   return (
@@ -8,4 +9,4 @@ const MahasiswaKRS = () => {
   )
 }
 
-export default MahasiswaKRS
+export default withAuth(MahasiswaKRS)

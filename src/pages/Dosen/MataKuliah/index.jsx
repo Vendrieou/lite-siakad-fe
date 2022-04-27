@@ -5,6 +5,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
+import withAuth from 'components/Authorized/auth'
 import FormCreatePencocokan from './FormCreate'
 
 const MataKuliahDosen = () => {
@@ -237,4 +238,4 @@ const MataKuliahDosen = () => {
   )
 }
 
-export default MataKuliahDosen
+export default withAuth(MataKuliahDosen)

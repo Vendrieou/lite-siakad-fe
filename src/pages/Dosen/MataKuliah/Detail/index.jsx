@@ -1,5 +1,5 @@
 import React from 'react'
-
+import withAuth from 'components/Authorized/auth'
 const Detail = () => {
   return (
     <div>
@@ -8,4 +8,4 @@ const Detail = () => {
   )
 }
 
-export default Detail
+export default withAuth(Detail)

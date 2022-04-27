@@ -6,6 +6,7 @@ import ProForm, {
   ProFormDigit,
   ProFormSelect
 } from '@ant-design/pro-form'
+import withAuth from 'components/Authorized/auth'
 import { useConcent } from 'concent'
 
 const AutoCompleteOption = AutoComplete.Option
@@ -149,4 +150,4 @@ const FormCreatePencocokan = ({ onCreate }) => {
   )
 }
 
-export default FormCreatePencocokan
+export default withAuth(FormCreatePencocokan)

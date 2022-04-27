@@ -3,6 +3,7 @@ import { Button, message, Drawer, Modal } from 'antd'
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import withAuth from 'components/Authorized/auth'
 import CreateForm from 'components/Form/CreateForm'
 // import { addRule, removeRule } from './service'
 import FormEdit from './FormEdit'
@@ -253,4 +254,4 @@ const ProdiDosenContainer = () => {
   )
 }
 
-export default ProdiDosenContainer
+export default withAuth(ProdiDosenContainer)

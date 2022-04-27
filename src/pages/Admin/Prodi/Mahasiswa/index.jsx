@@ -4,7 +4,7 @@ import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 // import { DrawerForm } from '@ant-design/pro-form'
-
+import withAuth from 'components/Authorized/auth'
 import CreateForm from '../../../../components/Form/CreateForm'
 import UpdateForm from './components/UpdateForm'
 import FormEdit from './FormEdit'
@@ -313,4 +313,4 @@ const ProdiMahasiswaContainer = () => {
 //     </PageContainer>
 //   )
 // }
-export default ProdiMahasiswaContainer
+export default withAuth(ProdiMahasiswaContainer)

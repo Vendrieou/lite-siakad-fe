@@ -4,7 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
-
+import withAuth from 'components/Authorized/auth'
 import CreateForm from 'components/Form/CreateForm'
 import FormEdit from './FormEdit'
 import FormCreate from './FormCreate'
@@ -172,4 +172,4 @@ const KategoriBeritaContainer = () => {
   )
 }
 
-export default KategoriBeritaContainer
+export default withAuth(KategoriBeritaContainer)

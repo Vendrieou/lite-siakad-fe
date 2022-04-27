@@ -11,7 +11,7 @@ const MahasiswaRouter =
     {
       path: '/mahasiswa/dashboard',
       name: 'Dashboard',
-      component: 'pages/Mahasiswa',
+      component: 'pages/Mahasiswa/Dashboard',
     },
     {
       path: '/mahasiswa/mata-kuliah',

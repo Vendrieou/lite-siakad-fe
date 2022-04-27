@@ -4,6 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
+import withAuth from 'components/Authorized/auth'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
@@ -147,4 +148,4 @@ const ManageUserRoleContainer = memo(() => {
 }
 )
 
-export default ManageUserRoleContainer
+export default withAuth(ManageUserRoleContainer)

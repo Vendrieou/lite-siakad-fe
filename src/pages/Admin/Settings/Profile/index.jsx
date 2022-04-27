@@ -1,6 +1,7 @@
 import React from 'react'
 import { GridContent } from '@ant-design/pro-layout'
 import { Menu, Typography } from 'antd'
+import withAuth from 'components/Authorized/auth'
 import BaseView from './components/base'
 import SecurityView from './components/security'
 import styles from './style.module.less'
@@ -62,4 +63,4 @@ const SettingsProfileContainer = () => {
   )
 }
 
-export default SettingsProfileContainer
+export default withAuth(SettingsProfileContainer)

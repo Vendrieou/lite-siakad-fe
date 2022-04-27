@@ -1,6 +1,7 @@
 import React from 'react'
 import { Typography } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
+import withAuth from 'components/Authorized/auth'
 
 const {Text} = Typography
 
@@ -12,5 +13,5 @@ const ProdiMataKuliahContainer = () => {
   )
 }
 
-export default ProdiMataKuliahContainer
+export default withAuth(ProdiMataKuliahContainer)
 

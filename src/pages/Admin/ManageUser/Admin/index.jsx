@@ -6,6 +6,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined } from '@ant-design/icons'
 //  ExclamationCircleOutlined
 import { useConcent } from 'concent'
+import withAuth from 'components/Authorized/auth'
 import CreateForm from 'components/Form/CreateForm'
 import FormEdit from './FormEdit'
 import FormCreate from './FormCreate'
@@ -223,4 +224,4 @@ const ManageUserAdminContainer = memo(() => {
   )
 })
 
-export default ManageUserAdminContainer
+export default withAuth(ManageUserAdminContainer)

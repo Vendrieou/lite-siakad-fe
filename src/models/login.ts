@@ -28,7 +28,6 @@ const module = defineModule({
         const response = await apiLogin(payload)
         // const response = await fakeAccountLogin(payload)
         // actionCtx.dispatch(module.reducer.changeLoginStatus, { status: 'ok', type: 'account', authority: 'admin' })
-        console.log('response',response)
 
         if (response.success) {
           if (response?.data?.token) {

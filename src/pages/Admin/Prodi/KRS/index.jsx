@@ -5,6 +5,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
 import CreateForm from 'components/Form/CreateForm'
+import withAuth from 'components/Authorized/auth'
 import FormCreate from './FormCreate'
 // import FormCreateTemplateKrs from './FormCreateTemplateKrs'
 // import FormEdit from './FormEdit'
@@ -237,5 +238,5 @@ const ProdiKRSContainer = () => {
   )
 }
 
-export default ProdiKRSContainer
+export default withAuth(ProdiKRSContainer)
 

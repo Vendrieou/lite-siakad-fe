@@ -5,6 +5,7 @@ import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
+import withAuth from 'components/Authorized/auth'
 import { history } from '@vitjs/runtime'
 import FormEdit from './FormEdit'
 
@@ -211,4 +212,4 @@ const ProdiJurusanContainer = () => {
   )
 }
 
-export default ProdiJurusanContainer
+export default withAuth-(ProdiJurusanContainer)
