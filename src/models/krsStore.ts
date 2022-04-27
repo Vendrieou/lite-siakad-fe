@@ -27,6 +27,7 @@ const module = defineModule({
   reducer: {
     get: async (payload: any, moduleState, actionCtx) => {
       const data = {
+        ...payload,
         q: payload?.q || '',
         page: payload?.page || 1
       }
