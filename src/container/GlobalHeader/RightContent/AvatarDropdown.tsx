@@ -6,6 +6,7 @@ import { history } from '@vitjs/runtime'
 import HeaderDropdown from '@/components/HeaderDropdown'
 import EmptyPerson from 'static/assets/empty-state/person.png'
 import styles from './index.module.less'
+import { cookieGet } from '@/utils/storage'
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -27,8 +28,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       dispatch?.('logout')
       return
     }
-
-    history.push(`/admin/settings/${key}`)
+    let role = cookieGet('role')
+    if (role === 'admin') {
+      history.push(`/admin/settings/${key}`)
+    } else if (role === 'dosen') {
+      history.push(`/dosen/settings/${key}`)
+    } else if (role === 'mahasiswa') {
+      history.push(`/mahasiswa/settings/${key}`)
+    }
   }
 
   const menuHeaderDropdown = (

@@ -14,7 +14,9 @@ import { cookieGet } from '@/utils/storage'
 
 import defaultSettings from '../../config/defaultSettings'
 
-const loginPath = '/admin/login'
+const adminLoginPath = '/admin/login'
+const loginPath = '/login'
+let role = cookieGet('role')
 
 export type BasicLayoutProps = {
   route: ProLayoutProps['route'];
@@ -27,17 +29,24 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     <ProLayout
       // logo={Logo}
       {...props}
-      // onPageChange={async () => {
-      //   // If you are not logged in, redirect to login
-      //   // if (localStorage.getItem('status') !== 'ok' && history.location.pathname !== loginPath) {
-      //   // if (typeof status !== 'string' && history.location.pathname !== loginPath) {
+      onPageChange={async () => {
+        // If you are not logged in, redirect to login
+        // if (localStorage.getItem('status') !== 'ok' && history.location.pathname !== loginPath) {
+        // if (typeof status !== 'string' && history.location.pathname !== loginPath) {
 
+        // if (await cookieGet('status') !== 'ok' && history.location.pathname !== loginPath) {
+        let token = cookieGet('token')
+        if (typeof token === 'string') {
+          if (!token) {
+            if (role === 'admin') {
+              history.push(adminLoginPath)
+            } else {
+              history.push(loginPath)
+            }
+          }
+        }
 
-      //   if (await cookieGet('status') !== 'ok' && history.location.pathname !== loginPath) {
-      //     history.push(loginPath)
-      //   } 
-
-      // }}
+      }}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
@@ -53,7 +62,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       breadcrumbRender={(routers = []) => [
         {
           // path: '/',
-          path: '/admin/dashboard',
+          path: role === 'admin' ? '/admin/dashboard' : role === 'dosen' ? '/dosen/dashboard' : role === 'mahasiswa' ? '/admin/dashboard' : '/',
           breadcrumbName: (<HomeOutlined />) as any
         },
         ...routers
