@@ -39,7 +39,7 @@ const ProdiJurusanContainer = () => {
   const columns = [
     {
       title: 'Nama Jurusan',
-      dataIndex: 'namaJurusan',
+      dataIndex: 'name',
       tip: '',
       formItemProps: {
         rules: [
@@ -69,15 +69,15 @@ const ProdiJurusanContainer = () => {
         return <a onClick={() => setRow(entity)}>{dom}</a>
       }
     },
-    {
-      title: 'status',
-      dataIndex: 'status',
-      tip: '',
-      valueEnum: {
-        publish: { text: 'Publish', status: 'publish' },
-        draft: { text: 'Draft', status: 'draft' }
-      }
-    },
+    // {
+    //   title: 'status',
+    //   dataIndex: 'status',
+    //   tip: '',
+    //   valueEnum: {
+    //     publish: { text: 'Publish', status: 'publish' },
+    //     draft: { text: 'Draft', status: 'draft' }
+    //   }
+    // },
     {
       title: 'Action',
       tableStyle: { textAlign: 'center' },
@@ -107,7 +107,6 @@ const ProdiJurusanContainer = () => {
   const handleSubmit = async (values) => {
     const data ={ 
       ...values,
-      image: values.image || '',
       name: values.name,
       status: values.status
     }
@@ -197,14 +196,14 @@ const ProdiJurusanContainer = () => {
         height="100%"
         visible={!!row}
         bodyStyle={{ padding: '2em' }}
-        title={`Edit Data Jurusan: ${row?.namaJurusan}`}
+        title={`Edit Data Jurusan: ${row?.name}`}
         mask={false}
         maskClosable={false}
         onClose={() => setRow(undefined)}
         keyboard={false}
         placement="top"
       >
-        {row?.namaJurusan && (
+        {row?.name && (
           <FormEdit {...FormEditProps} />
         )}
       </Drawer>
