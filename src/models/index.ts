@@ -18,6 +18,7 @@ import dosenStore from './dosenStore'
 import mahasiswaStore from './mahasiswaStore'
 import provinceStore from './provinceStore'
 import cityStore from './cityStore'
+import jurusanStore from './jurusanStore'
 
 export default {
   login,
@@ -39,5 +40,6 @@ export default {
   dosenStore,
   mahasiswaStore,
   provinceStore,
-  cityStore
+  cityStore,
+  jurusanStore
 }
