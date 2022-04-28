@@ -29,7 +29,6 @@ const ProdiSekolahContainer = () => {
     {
       title: 'Nama Sekolah',
       dataIndex: 'nama',
-      hideInSearch: true,
       formItemProps: {
         rules: [
           {
@@ -61,16 +60,32 @@ const ProdiSekolahContainer = () => {
       hideInSearch: true
     },
     {
-      title: 'Kota',
+      title: 'KotaId',
       dataIndex: 'cityId',
       hideInForm: true,
-      hideInSearch: true
+      hideInSearch: true,
+      hideInTable: true
+    },
+    {
+      title: 'ProvinsiId',
+      dataIndex: 'provinceId',
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable: true
+    },
+    {
+      title: 'Kota',
+      dataIndex: 'city',
+      hideInForm: true,
+      hideInSearch: true,
+      render: item => item.name
     },
     {
       title: 'Provinsi',
-      dataIndex: 'provinceId',
+      dataIndex: 'province',
       hideInForm: true,
-      hideInSearch: true
+      hideInSearch: true,
+      render: item => item.name
     },
     {
       title: 'Alamat',
@@ -153,7 +168,7 @@ const ProdiSekolahContainer = () => {
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({
-              q: params.NIM,
+              q: params.nama,
               page: params.current
             })
           }}
@@ -169,7 +184,7 @@ const ProdiSekolahContainer = () => {
           {...initData}
         />
         {/* form create data */}
-        <CreateForm width={'100%'} title="Tambah Sekolah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <CreateForm width={650} title="Tambah Sekolah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
           <FormCreate {...FormCreateProps} />
         </CreateForm>
   

@@ -19,7 +19,8 @@ const apiGet = async (params: any) => {
   return request({
     url: `${apiNews}`,
     method: 'get',
-    params
+    params,
+    auth: true
   })
 }
 
