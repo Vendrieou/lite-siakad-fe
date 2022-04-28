@@ -4,7 +4,7 @@ import {
   LockOutlined,
   UserOutlined
 } from '@ant-design/icons'
-import ProForm, { ProFormText } from '@ant-design/pro-form'
+import { ProFormText, LoginForm } from '@ant-design/pro-form'
 import UserLayout from 'src/layouts/UserLayout'
 
 import { useC2ModConn } from '@/services/concent'
@@ -39,7 +39,7 @@ const Login: React.FC = () => {
   return (
     <UserLayout>
       <div className={styles.main}>
-        <ProForm
+        <LoginForm
           initialValues={{
             autoLogin: true
           }}
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
               ]}
             />
           </>
-        </ProForm>
+        </LoginForm>
       </div>
     </UserLayout>
   )
