@@ -1,17 +1,19 @@
 import React from 'react'
 import { Typography } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const {Text} = Typography
 
 const ReportBeritaContainer = () => {
   return (
-    <PageContainer>
-      <Text>ReportBeritaContainer</Text>
-    </PageContainer>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <Text>ReportBeritaContainer</Text>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(ReportBeritaContainer)
+export default ReportBeritaContainer
 

@@ -6,7 +6,7 @@ import ProForm, {
   ProFormDigit,
   ProFormSelect
 } from '@ant-design/pro-form'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import { useConcent } from 'concent'
 
 const AutoCompleteOption = AutoComplete.Option
@@ -65,7 +65,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
   }, [onGetUser])
 
   return (
-    <>
+    <PrivateRoute access={['dosen']}>
       <Modal
         title="Simpan"
         visible={modalVerification.active}
@@ -146,8 +146,8 @@ const FormCreatePencocokan = ({ onCreate }) => {
           ]}
         />
       </ProForm>
-    </>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(FormCreatePencocokan)
+export default FormCreatePencocokan

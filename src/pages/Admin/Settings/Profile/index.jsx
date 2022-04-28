@@ -1,7 +1,7 @@
 import React from 'react'
 import { GridContent } from '@ant-design/pro-layout'
 import { Menu, Typography } from 'antd'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import BaseView from './components/base'
 import SecurityView from './components/security'
 import styles from './style.module.less'
@@ -43,24 +43,26 @@ const SettingsProfileContainer = () => {
   }
 
   return (
-    <GridContent>
-      <div className={styles.main} ref={main}>
-        <div className={styles.leftMenu}>
-          <Menu mode={window.innerWidth > 768 ? 'inline' : 'horizontal'} selectedKeys={[selectKey]} onClick={({ key }) => onSelectKey(key)}>
-            {getMenu()}
-          </Menu>
-        </div>
-        <div className={styles.right}>
-          <div className={styles.title}>
-            <Title level={4}>
-              {getRightTitle()}
-            </Title>
+    <PrivateRoute access={['admin']}>
+      <GridContent>
+        <div className={styles.main} ref={main}>
+          <div className={styles.leftMenu}>
+            <Menu mode={window.innerWidth > 768 ? 'inline' : 'horizontal'} selectedKeys={[selectKey]} onClick={({ key }) => onSelectKey(key)}>
+              {getMenu()}
+            </Menu>
           </div>
-          {renderChildren()}
+          <div className={styles.right}>
+            <div className={styles.title}>
+              <Title level={4}>
+                {getRightTitle()}
+              </Title>
+            </div>
+            {renderChildren()}
+          </div>
         </div>
-      </div>
-    </GridContent>
+      </GridContent>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(SettingsProfileContainer)
+export default SettingsProfileContainer

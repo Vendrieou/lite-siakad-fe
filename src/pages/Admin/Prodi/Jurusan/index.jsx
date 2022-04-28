@@ -5,7 +5,7 @@ import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import { history } from '@vitjs/runtime'
 import FormEdit from './FormEdit'
 
@@ -153,69 +153,71 @@ const ProdiJurusanContainer = () => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Jurusan"
-        actionRef={actionRef}
-        rowKey="key"
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.name,
-            page: params.current
-          })
-        }}
-        search={{
-          labelWidth: 120
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        columns={columns}
-        {...initData}
-      />
-      <CreateForm width={840} title="Tambah Jurusan" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-        <>
-          <Modal
-            title="Simpan"
-            visible={modalVerification.active}
-            onCancel={() => setModalVerification({ active: false })}
-            onOk={() => onSave(modalVerification.data)}
-          >
-            <p>Anda akan menyimpan data</p>
-          </Modal>
-          <ProTable
-            onSubmit={async (values) => {
-              setModalVerification({ data: values, active: true })
-            }}
-            rowKey="key"
-            type="form"
-            columns={columns}
-          />
-        </>
-      </CreateForm>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Jurusan"
+          actionRef={actionRef}
+          rowKey="key"
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.name,
+              page: params.current
+            })
+          }}
+          search={{
+            labelWidth: 120
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          columns={columns}
+          {...initData}
+        />
+        <CreateForm width={840} title="Tambah Jurusan" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+          <>
+            <Modal
+              title="Simpan"
+              visible={modalVerification.active}
+              onCancel={() => setModalVerification({ active: false })}
+              onOk={() => onSave(modalVerification.data)}
+            >
+              <p>Anda akan menyimpan data</p>
+            </Modal>
+            <ProTable
+              onSubmit={async (values) => {
+                setModalVerification({ data: values, active: true })
+              }}
+              rowKey="key"
+              type="form"
+              columns={columns}
+            />
+          </>
+        </CreateForm>
 
-      {/* edit data drawer */}
-      <Drawer
-        width="50%"
-        height="100%"
-        visible={!!row}
-        bodyStyle={{ padding: '2em' }}
-        title={`Edit Data Jurusan: ${row?.name}`}
-        mask={false}
-        maskClosable={false}
-        onClose={() => setRow(undefined)}
-        keyboard={false}
-        placement="top"
-      >
-        {row?.name && (
-          <FormEdit {...FormEditProps} />
-        )}
-      </Drawer>
-    </PageContainer>
+        {/* edit data drawer */}
+        <Drawer
+          width="50%"
+          height="100%"
+          visible={!!row}
+          bodyStyle={{ padding: '2em' }}
+          title={`Edit Data Jurusan: ${row?.name}`}
+          mask={false}
+          maskClosable={false}
+          onClose={() => setRow(undefined)}
+          keyboard={false}
+          placement="top"
+        >
+          {row?.name && (
+            <FormEdit {...FormEditProps} />
+          )}
+        </Drawer>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(ProdiJurusanContainer)
+export default ProdiJurusanContainer

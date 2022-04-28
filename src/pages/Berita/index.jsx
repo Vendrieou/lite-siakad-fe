@@ -1,5 +1,4 @@
 import React from 'react'
-import withAuth from 'components/Authorized/auth'
 
 const Berita = () => {
   return (
@@ -9,4 +8,4 @@ const Berita = () => {
   )
 }
 
-export default withAuth(Berita)
+export default Berita

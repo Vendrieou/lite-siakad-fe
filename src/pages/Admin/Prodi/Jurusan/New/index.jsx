@@ -1,12 +1,14 @@
 import React from 'react'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const NewJurusanContainer = () => {
   return (
+    <PrivateRoute access={['admin']}>
     <div>
       NewJurusanContainer
     </div>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(NewJurusanContainer)
+export default NewJurusanContainer

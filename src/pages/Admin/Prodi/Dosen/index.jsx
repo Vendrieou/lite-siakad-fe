@@ -4,7 +4,7 @@ import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 // import { addRule, removeRule } from './service'
 import FormEdit from './FormEdit'
@@ -165,95 +165,97 @@ const ProdiDosenContainer = () => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Dosen"
-        actionRef={actionRef}
-        rowKey="key"
-        dataSource={list && list.length ? list : []}
-        search={{
-          labelWidth: 120
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
-        columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => setSelectedRows(selectedRows)
-        }}
-      />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              Choose{' '}
-              <a
-                style={{
-                  fontWeight: 600
-                }}
-              >
-                {selectedRowsState.length}
-              </a>{' '}
-              Item&nbsp;&nbsp;
-              <span>
-                Total number of service calls {selectedRowsState.reduce((pre, item) => pre + item.NIP, 0)} Thousand
-              </span>
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState)
-              setSelectedRows([])
-              actionRef.current?.reloadAndRest?.()
-            }}
-          >
-            Batch Deletion
-          </Button>
-        </FooterToolbar>
-      )}
-      <CreateForm width={840} title="Tambah Dosen" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
         <ProTable
-          onSubmit={async (value) => {
-            console.log('value', value)
-            // const success = await handleAdd(value)
-
-            // if (success) {
-            //   handleModalVisible(false)
-
-            //   if (actionRef.current) {
-            //     actionRef.current.reload()
-            //   }
-            // }
-          }}
+          headerTitle="List Dosen"
+          actionRef={actionRef}
           rowKey="key"
-          type="form"
+          dataSource={list && list.length ? list : []}
+          search={{
+            labelWidth: 120
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
           columns={columns}
+          rowSelection={{
+            onChange: (_, selectedRows) => setSelectedRows(selectedRows)
+          }}
         />
-      </CreateForm>
-
-      {/* edit data drawer */}
-      <Drawer
-        width="50%"
-        height="100%"
-        visible={!!row}
-        bodyStyle={{ padding: '2em' }}
-        title={`Edit Data Dosen ${row?.namaDosen}`}
-        mask={false}
-        maskClosable={false}
-        onClose={() => setRow(undefined)}
-        keyboard={false}
-        placement="top"
-      >
-        {row?.namaDosen && (
-          <FormEdit {...FormEditProps} />
+        {selectedRowsState?.length > 0 && (
+          <FooterToolbar
+            extra={
+              <div>
+                Choose{' '}
+                <a
+                  style={{
+                    fontWeight: 600
+                  }}
+                >
+                  {selectedRowsState.length}
+                </a>{' '}
+                Item&nbsp;&nbsp;
+                <span>
+                  Total number of service calls {selectedRowsState.reduce((pre, item) => pre + item.NIP, 0)} Thousand
+                </span>
+              </div>
+            }
+          >
+            <Button
+              onClick={async () => {
+                await handleRemove(selectedRowsState)
+                setSelectedRows([])
+                actionRef.current?.reloadAndRest?.()
+              }}
+            >
+              Batch Deletion
+            </Button>
+          </FooterToolbar>
         )}
-      </Drawer>
-    </PageContainer>
+        <CreateForm width={840} title="Tambah Dosen" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+          <ProTable
+            onSubmit={async (value) => {
+              console.log('value', value)
+              // const success = await handleAdd(value)
+
+              // if (success) {
+              //   handleModalVisible(false)
+
+              //   if (actionRef.current) {
+              //     actionRef.current.reload()
+              //   }
+              // }
+            }}
+            rowKey="key"
+            type="form"
+            columns={columns}
+          />
+        </CreateForm>
+
+        {/* edit data drawer */}
+        <Drawer
+          width="50%"
+          height="100%"
+          visible={!!row}
+          bodyStyle={{ padding: '2em' }}
+          title={`Edit Data Dosen ${row?.namaDosen}`}
+          mask={false}
+          maskClosable={false}
+          onClose={() => setRow(undefined)}
+          keyboard={false}
+          placement="top"
+        >
+          {row?.namaDosen && (
+            <FormEdit {...FormEditProps} />
+          )}
+        </Drawer>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(ProdiDosenContainer)
+export default ProdiDosenContainer

@@ -5,7 +5,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import FormCreatePencocokan from './FormCreate'
 
 const MataKuliahDosen = () => {
@@ -187,7 +187,7 @@ const MataKuliahDosen = () => {
   }
 
   return (
-    <>
+    <PrivateRoute access={['dosen']}>
       <ProTable
         headerTitle="List KRS"
         actionRef={actionRef}
@@ -227,8 +227,8 @@ const MataKuliahDosen = () => {
       >
         <FormCreatePencocokan {...FormPencocokanProps} />
       </CreateForm>
-    </>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(MataKuliahDosen)
+export default MataKuliahDosen

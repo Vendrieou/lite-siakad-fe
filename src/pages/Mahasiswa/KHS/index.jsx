@@ -1,12 +1,14 @@
 import React from 'react'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const MahasiswaKHS = () => {
   return (
-    <div>
-      MahasiswaKHS
-    </div>
+    <PrivateRoute access={['mahasiswa']}>
+      <div>
+        MahasiswaKHS
+      </div>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(MahasiswaKHS)
+export default MahasiswaKHS

@@ -4,7 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
@@ -99,45 +99,47 @@ const ManageUserRoleContainer = memo(() => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Role"
-        actionRef={actionRef}
-        rowKey="id"
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.userRole,
-            page: params.current
-          })
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        columns={columns}
-        {...initData}
-      />
-      {/* create data drawer */}
-      <CreateForm
-        keyboard={false}
-        maskClosable={false}
-        width={840}
-        title="Tambah Role"
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
-      >
-        <FormCreate onCancel={() => handleModalVisible(false)} />
-      </CreateForm>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Role"
+          actionRef={actionRef}
+          rowKey="id"
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.userRole,
+              page: params.current
+            })
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          columns={columns}
+          {...initData}
+        />
+        {/* create data drawer */}
+        <CreateForm
+          keyboard={false}
+          maskClosable={false}
+          width={840}
+          title="Tambah Role"
+          onCancel={() => handleModalVisible(false)}
+          modalVisible={createModalVisible}
+        >
+          <FormCreate onCancel={() => handleModalVisible(false)} />
+        </CreateForm>
 
-      {/* edit data drawer */}
-      <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Role ${row?.id}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
-        <FormEdit {...FormEditProps} />
-      </CreateForm>
-    </PageContainer>
-  )
-}
+        {/* edit data drawer */}
+        <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Role ${row?.id}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+          <FormEdit {...FormEditProps} />
+        </CreateForm>
+      </PageContainer>
+    </PrivateRoute>
+    )
+  }
 )
 
-export default withAuth(ManageUserRoleContainer)
+export default ManageUserRoleContainer

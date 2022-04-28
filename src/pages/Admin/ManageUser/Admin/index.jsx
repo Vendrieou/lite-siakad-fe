@@ -6,7 +6,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined } from '@ant-design/icons'
 //  ExclamationCircleOutlined
 import { useConcent } from 'concent'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 import FormEdit from './FormEdit'
 import FormCreate from './FormCreate'
@@ -176,43 +176,45 @@ const ManageUserAdminContainer = memo(() => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Admin"
-        actionRef={actionRef}
-        rowKey="id"
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mrAdmin.get({
-            q: params.firstName || params.lastName || params.email,
-            page: params.current,
-            role: params.role
-          })
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        columns={columns}
-        {...initData}
-      />
-      {/* create data drawer */}
-      <CreateForm 
-        width={800}
-        keyboard={false}
-        maskClosable={false}
-        title="Tambah Admin"
-        onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
-      >
-        <FormCreate {...FormCreateProps} />
-      </CreateForm>
-      {/* edit data drawer */}
-      <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Admin ${row?.firstName} ${row?.lastName}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
-        <FormEdit {...FormEditProps} />
-      </CreateForm>
-    </PageContainer>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Admin"
+          actionRef={actionRef}
+          rowKey="id"
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mrAdmin.get({
+              q: params.firstName || params.lastName || params.email,
+              page: params.current,
+              role: params.role
+            })
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          columns={columns}
+          {...initData}
+        />
+        {/* create data drawer */}
+        <CreateForm 
+          width={800}
+          keyboard={false}
+          maskClosable={false}
+          title="Tambah Admin"
+          onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
+        >
+          <FormCreate {...FormCreateProps} />
+        </CreateForm>
+        {/* edit data drawer */}
+        <CreateForm keyboard={false} maskClosable={false} width={840} title={`Edit Data Admin ${row?.firstName} ${row?.lastName}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+          <FormEdit {...FormEditProps} />
+        </CreateForm>
+      </PageContainer>
+    </PrivateRoute>
   )
 })
 
-export default withAuth(ManageUserAdminContainer)
+export default ManageUserAdminContainer

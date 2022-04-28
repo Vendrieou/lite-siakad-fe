@@ -1,11 +1,14 @@
 import React from 'react'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
+
 const Detail = () => {
   return (
-    <div>
-      Matkul Detail
-    </div>
+    <PrivateRoute access={['dosen']}>
+      <div>
+        Matkul Detail
+      </div>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(Detail)
+export default Detail

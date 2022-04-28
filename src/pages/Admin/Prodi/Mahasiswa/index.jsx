@@ -4,7 +4,7 @@ import { useConcent } from 'concent'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
@@ -185,49 +185,51 @@ const ProdiMahasiswaContainer = () => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Mahasiswa"
-        actionRef={actionRef}
-        rowKey="key"
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.NIM,
-            page: params.current
-          })
-        }}
-        search={{
-          labelWidth: 120
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        columns={columns}
-        {...initData}
-      />
-      {/* form create data */}
-      <CreateForm width={'100%'} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
-        <FormCreate {...FormCreateProps} />
-      </CreateForm>
- 
-      {/* form edit data */}
-      <CreateForm
-        width={840} 
-        title={`Edit Data Mahasiswa ${row?.nama}`} 
-        onCancel={() => setRow(undefined)}
-        keyboard={false}
-        maskClosable={false}
-        modalVisible={!!row}
-      >
-        {row?.namaMahasiswa && (
-          <FormEdit {...FormEditProps} />
-        )}
-      </CreateForm>
-    </PageContainer>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Mahasiswa"
+          actionRef={actionRef}
+          rowKey="key"
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.NIM,
+              page: params.current
+            })
+          }}
+          search={{
+            labelWidth: 120
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          columns={columns}
+          {...initData}
+        />
+        {/* form create data */}
+        <CreateForm width={'100%'} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+          <FormCreate {...FormCreateProps} />
+        </CreateForm>
+  
+        {/* form edit data */}
+        <CreateForm
+          width={840}
+          title={`Edit Data Mahasiswa ${row?.nama}`} 
+          onCancel={() => setRow(undefined)}
+          keyboard={false}
+          maskClosable={false}
+          modalVisible={!!row}
+        >
+          {row?.namaMahasiswa && (
+            <FormEdit {...FormEditProps} />
+          )}
+        </CreateForm>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(ProdiMahasiswaContainer)
+export default ProdiMahasiswaContainer

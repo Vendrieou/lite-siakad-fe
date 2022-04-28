@@ -4,7 +4,7 @@ import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 import FormEdit from './FormEdit'
 import FormCreate from './FormCreate'
@@ -126,42 +126,44 @@ const KategoriBeritaContainer = () => {
   }
 
   return (
-    <PageContainer>
-      <ProTable
-        headerTitle="List Kategori"
-        actionRef={actionRef}
-        rowKey="id"
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.name,
-            page: params.current,
-            status: params.status
-          })
-        }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
-        columns={columns}
-        {...initData}
-      />
-      {/* create data drawer */}
-      <CreateForm width={800}
-        keyboard={false}
-        maskClosable={false}
-        title="Tambah Kategori"
-        onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
-      >
-        <FormCreate {...FormCreateProps} />
-      </CreateForm>
-      {/* edit data drawer */}
-      <CreateForm maskClosable={false} width={840} title={`Edit Data Kategori ${row?.name}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
-        <FormEdit {...FormEditProps} />
-      </CreateForm>
-    </PageContainer>
+    <PrivateRoute access={['admin']}>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Kategori"
+          actionRef={actionRef}
+          rowKey="id"
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.name,
+              page: params.current,
+              status: params.status
+            })
+          }}
+          toolBarRender={() => [
+            <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <PlusOutlined /> Buat Baru
+            </Button>
+          ]}
+          columns={columns}
+          {...initData}
+        />
+        {/* create data drawer */}
+        <CreateForm width={800}
+          keyboard={false}
+          maskClosable={false}
+          title="Tambah Kategori"
+          onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
+        >
+          <FormCreate {...FormCreateProps} />
+        </CreateForm>
+        {/* edit data drawer */}
+        <CreateForm maskClosable={false} width={840} title={`Edit Data Kategori ${row?.name}`} onCancel={() => setRow(undefined)} modalVisible={!!row}>
+          <FormEdit {...FormEditProps} />
+        </CreateForm>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(KategoriBeritaContainer)
+export default KategoriBeritaContainer

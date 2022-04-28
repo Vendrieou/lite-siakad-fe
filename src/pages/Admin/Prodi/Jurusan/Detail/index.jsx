@@ -1,14 +1,16 @@
 import React from 'react'
 import { useParams } from '@vitjs/runtime'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const DetailJurusanContainer = () => {
   const { id } = useParams()
   return (
-    <div>
-      DetailJurusanContainer: {id}
-    </div>
+    <PrivateRoute access={['admin']}>
+      <div>
+        DetailJurusanContainer: {id}
+      </div>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(DetailJurusanContainer)
+export default DetailJurusanContainer

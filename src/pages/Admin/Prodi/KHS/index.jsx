@@ -5,7 +5,7 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
 import CreateForm from 'components/Form/CreateForm'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 import FormCreate from './FormCreate'
 // import FormCreateTemplateKrs from './FormCreateTemplateKrs'
 // import FormEdit from './FormEdit'
@@ -159,76 +159,78 @@ const ProdiKHSContainer = () => {
   }
   
   return (
-    <PageContainer
-      content={(
-        <Tabs defaultActiveKey={type} onChange={setType}>
-          <Tabs.TabPane key="export" tab="Export" />
-          <Tabs.TabPane key="list" tab="List" />
-        </Tabs>
-      )}
-    >
-      {type === 'export' && <Export />}
-      {type === 'list' && (
-        <ProTable
-          headerTitle="List KRS"
-          actionRef={actionRef}
-          rowKey="id"
-          toolBarRender={() => [
-            <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
-              <PlusOutlined /> Add With Template
-            </Button>,
-            <Button type="primary" onClick={() => handleModalVisible(true)}>
-              <PlusOutlined /> Tambah KRS
-            </Button>
-          ]}
-          dataSource={list && list.length ? list : []}
-          request={(params) => {
-            mr.get({
-              q: params.name || '',
-              page: params.current || ''
-            // status: params.status
-            })
-          }}
-          columns={columns}
-          {...initData}
-        />
-      )}
-
-      {/* create data template KRS tab "list" */}
-      <CreateForm
-        maskClosable={false}
-        width={800}
-        title="Tambah KRS"
-        onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
+    <PrivateRoute access={['admin']}>
+      <PageContainer
+        content={(
+          <Tabs defaultActiveKey={type} onChange={setType}>
+            <Tabs.TabPane key="export" tab="Export" />
+            <Tabs.TabPane key="list" tab="List" />
+          </Tabs>
+        )}
       >
-        <FormCreate {...FormCreateProps} />
-      </CreateForm>
+        {type === 'export' && <Export />}
+        {type === 'list' && (
+          <ProTable
+            headerTitle="List KRS"
+            actionRef={actionRef}
+            rowKey="id"
+            toolBarRender={() => [
+              <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
+                <PlusOutlined /> Add With Template
+              </Button>,
+              <Button type="primary" onClick={() => handleModalVisible(true)}>
+                <PlusOutlined /> Tambah KRS
+              </Button>
+            ]}
+            dataSource={list && list.length ? list : []}
+            request={(params) => {
+              mr.get({
+                q: params.name || '',
+                page: params.current || ''
+              // status: params.status
+              })
+            }}
+            columns={columns}
+            {...initData}
+          />
+        )}
 
-      {/* create data template KRS tab "list" */}
-      {/* <CreateForm
-        keyboard={false}
-        maskClosable={false}
-        width={800}
-        title="Add With Template KRS"
-        onCancel={() => templateKrsModalVisible(false)} modalVisible={createModalVisible}
-      >
-        <FormCreateTemplateKrs {...FormCreateProps} />
-      </CreateForm> */}
+        {/* create data template KRS tab "list" */}
+        <CreateForm
+          maskClosable={false}
+          width={800}
+          title="Tambah KRS"
+          onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
+        >
+          <FormCreate {...FormCreateProps} />
+        </CreateForm>
 
-      {/* edit data template KRS tab "list" */}
-      {/* <CreateForm
-        keyboard={false}
-        maskClosable={false}
-        width={840}
-        title={`Edit data template KRS ${row?.name}`}
-        onCancel={() => setRow(undefined)}
-        modalVisible={!!row}
-      >
-        <FormEdit {...FormEditProps} />
-      </CreateForm> */}
-    </PageContainer>
+        {/* create data template KRS tab "list" */}
+        {/* <CreateForm
+          keyboard={false}
+          maskClosable={false}
+          width={800}
+          title="Add With Template KRS"
+          onCancel={() => templateKrsModalVisible(false)} modalVisible={createModalVisible}
+        >
+          <FormCreateTemplateKrs {...FormCreateProps} />
+        </CreateForm> */}
+
+        {/* edit data template KRS tab "list" */}
+        {/* <CreateForm
+          keyboard={false}
+          maskClosable={false}
+          width={840}
+          title={`Edit data template KRS ${row?.name}`}
+          onCancel={() => setRow(undefined)}
+          modalVisible={!!row}
+        >
+          <FormEdit {...FormEditProps} />
+        </CreateForm> */}
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(ProdiKHSContainer)
+export default ProdiKHSContainer
 
