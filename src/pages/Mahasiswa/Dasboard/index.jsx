@@ -1,16 +1,18 @@
 import React from 'react'
 import { Typography } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const { Text } = Typography
 
 const MahasiwaDashboardContainer = () => {
   return (
-    <PageContainer>
-      <Text>.</Text>
-    </PageContainer>
+    <PrivateRoute access={['mahasiswa']}>
+      <PageContainer>
+        <Text>.</Text>
+      </PageContainer>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(MahasiwaDashboardContainer)
+export default MahasiwaDashboardContainer

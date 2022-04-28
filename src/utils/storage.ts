@@ -17,6 +17,10 @@ const getUserToken = () => {
   return token
 }
 
+const getUserRole = () => {
+  return cookie.get('role') || 'guest' 
+}
+
 const get = async (key: string) => {
   let data = [] as any
   try {
@@ -66,6 +70,7 @@ const getCityName = async () => {
 
 export {
   getUserToken,
+  getUserRole,
   cookieSet,
   cookieGet,
   cookieRemove,

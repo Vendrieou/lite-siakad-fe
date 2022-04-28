@@ -1,10 +1,12 @@
 import React from 'react'
-import withAuth from 'components/Authorized/auth'
+import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const DosenDashboardContainer = () => {
   return (
-    <>.</>
+    <PrivateRoute access={['dosen']}>
+      <>.</>
+    </PrivateRoute>
   )
 }
 
-export default withAuth(DosenDashboardContainer)({ access: ['dosen'] })
+export default DosenDashboardContainer
