@@ -15,7 +15,8 @@ const apiGet = async (params: any) => {
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiJurusan}/${id}`,
-    method: 'get'
+    method: 'get',
+    auth: true
   })
 }
 
@@ -23,7 +24,8 @@ const apiPost = async (data: any) => {
   return request({
     url: `${apiJurusan}`,
     method: 'post',
-    data
+    data,
+    auth: true
   })
 }
 
@@ -31,14 +33,16 @@ const apiUpdate = async (data: any) => {
   return request({
     url: `${apiJurusan}/${data.id}`,
     method: 'put',
-    data
+    data,
+    auth: true
   })
 }
 
 const apiDelete = async (id: number) => {
   return request({
     url: `${apiJurusan}/${id}`,
-    method: 'delete'
+    method: 'delete',
+    auth: true
   })
 }
 

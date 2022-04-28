@@ -27,7 +27,8 @@ const apiGet = async (params: any) => {
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiNews}/${id}`,
-    method: 'get'
+    method: 'get',
+    auth: true
   })
 }
 
@@ -35,7 +36,8 @@ const apiPost = async (data: any) => {
   return request({
     url: `${apiNews}`,
     method: 'post',
-    data
+    data,
+    auth: true
   })
 }
 
@@ -43,14 +45,16 @@ const apiUpdate = async (data: any) => {
   return request({
     url: `${apiNews}/${data.id}`,
     method: 'put',
-    data
+    data,
+    auth: true
   })
 }
 
 const apiDelete = async (id: number) => {
   return request({
     url: `${apiNews}/${id}`,
-    method: 'delete'
+    method: 'delete',
+    auth: true
   })
 }
 

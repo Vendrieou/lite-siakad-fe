@@ -7,14 +7,16 @@ const apiGet = async (params: any) => {
   return request({
     url: `${apiNilai}`,
     method: 'get',
-    params
+    params,
+    auth: true
   })
 }
 
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiNilai}/${id}`,
-    method: 'get'
+    method: 'get',
+    auth: true
   })
 }
 
@@ -22,7 +24,8 @@ const apiPost = async (data: any) => {
   return request({
     url: `${apiNilai}`,
     method: 'post',
-    data
+    data,
+    auth: true
   })
 }
 
@@ -30,14 +33,16 @@ const apiUpdate = async (data: any) => {
   return request({
     url: `${apiNilai}/${data.id}`,
     method: 'put',
-    data
+    data,
+    auth: true
   })
 }
 
 const apiDelete = async (id: number) => {
   return request({
     url: `${apiNilai}/${id}`,
-    method: 'delete'
+    method: 'delete',
+    auth: true
   })
 }
 
