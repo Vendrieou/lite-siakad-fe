@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { Button, Drawer, Modal } from 'antd'
+import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
@@ -14,7 +14,7 @@ const { confirm } = Modal
 const ProdiSekolahContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
-  const { state, mr } = useConcent('mahasiswaStore')
+  const { state, mr } = useConcent('sekolahStore')
   const { list } = state
   const [row, setRow] = useState()
 
@@ -27,24 +27,8 @@ const ProdiSekolahContainer = () => {
       hideInSearch: true
     },
     {
-      title: 'NIM',
-      dataIndex: 'NIM',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
-    },
-    {
-      title: 'Nama Mahasiswa',
-      dataIndex: 'namaMahasiswa',
+      title: 'Nama Sekolah',
+      dataIndex: 'nama',
       hideInSearch: true,
       formItemProps: {
         rules: [
@@ -59,59 +43,34 @@ const ProdiSekolahContainer = () => {
       }
     },
     {
-      title: 'Program Studi',
-      dataIndex: 'prodi',
+      title: 'No. Telp',
+      dataIndex: 'noTelp',
       hideInForm: true,
-      hideInSearch: true,
-      valueEnum: {
-        0: {
-          text: 'TEKNOLOGI INFORMASI',
-          status: 'TI'
-        },
-        1: {
-          text: 'SISTEM INFORMASI',
-          status: 'SI'
-        }
-      }
+      hideInSearch: true
     },
     {
-      title: 'Gender',
-      dataIndex: 'jenisKelamin',
-      hideInSearch: true,
+      title: 'Email',
+      dataIndex: 'email',
       hideInForm: true,
-      valueEnum: {
-        0: {
-          text: 'Perempuan',
-          status: 'female'
-        },
-        1: {
-          text: 'Laki-laki',
-          status: 'male'
-        }
-      }
+      hideInSearch: true
     },
     {
-      title: 'Tahun Angkatan',
-      dataIndex: 'tahunAngkatan',
-      hideInSearch: true,
-      valueEnum: {
-        0: {
-          text: '2017',
-          status: '2017'
-        },
-        1: {
-          text: '2018',
-          status: '2018'
-        },
-        2: {
-          text: '2019',
-          status: '2019'
-        },
-        3: {
-          text: '2020',
-          status: '2020'
-        }
-      }
+      title: 'Keterangan',
+      dataIndex: 'keterangan',
+      hideInForm: true,
+      hideInSearch: true
+    },
+    {
+      title: 'Kota',
+      dataIndex: 'cityId',
+      hideInForm: true,
+      hideInSearch: true
+    },
+    {
+      title: 'Provinsi',
+      dataIndex: 'provinceId',
+      hideInForm: true,
+      hideInSearch: true
     },
     {
       title: 'Alamat',
@@ -188,7 +147,7 @@ const ProdiSekolahContainer = () => {
     <PrivateRoute access={['admin']}>
       <PageContainer>
         <ProTable
-          headerTitle="Mata Kuliah"
+          headerTitle="List Sekolah"
           actionRef={actionRef}
           rowKey="key"
           dataSource={list && list.length ? list : []}
@@ -210,20 +169,20 @@ const ProdiSekolahContainer = () => {
           {...initData}
         />
         {/* form create data */}
-        <CreateForm width={'100%'} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <CreateForm width={'100%'} title="Tambah Sekolah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
           <FormCreate {...FormCreateProps} />
         </CreateForm>
   
         {/* form edit data */}
         <CreateForm
           width={840}
-          title={`Edit Data Mahasiswa ${row?.nama}`} 
+          title={`Edit Data Sekolah ${row?.nama}`} 
           onCancel={() => setRow(undefined)}
           keyboard={false}
           maskClosable={false}
           modalVisible={!!row}
         >
-          {row?.namaMahasiswa && (
+          {row?.nama && (
             <FormEdit {...FormEditProps} />
           )}
         </CreateForm>
