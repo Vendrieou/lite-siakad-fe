@@ -1,5 +1,10 @@
 import { set } from '@/utils/storage'
 
+export const CLIENT_ROLE = [
+  'dosen',
+  'mahasiswa'
+]
+
 export const ADMIN_ROLE = [
   'admin',
   'kaprodi',

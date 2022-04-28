@@ -7,4 +7,4 @@ const DosenDashboardContainer = () => {
   )
 }
 
-export default withAuth(DosenDashboardContainer)
+export default withAuth(DosenDashboardContainer)({ access: ['dosen'] })

@@ -1,19 +1,26 @@
+import React from 'react'
+import type { ReactChild, ReactFragment, ReactPortal } from 'react'
 import { Redirect } from '@vitjs/runtime'
-import React, { ReactChild, ReactFragment, ReactPortal } from 'react';
 import { cookieGet, getUserToken } from '@/utils/storage'
-let currentRole = cookieGet('role')
+import { CLIENT_ROLE, ADMIN_ROLE } from '@/utils/variable'
+// import LoginPageContainer from '@/pages/403'
+import LoginPageContainer from '@/pages/404'
+
+let currentRole: string = cookieGet('role') as string
 let token = getUserToken()
 
 const withAuth = (Component: any) => (props: { children: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }) => {
-  if (token) {
-      return <Component {...props} />
-    // return <div>{props.children}</div>;
+  let grantAccess = props?.access && props?.access.length > 0 ? props?.access.includes(currentRole) : false
+  
+  if (token && grantAccess) {
+    return <Component {...props} />
   } else {
-    if (currentRole === 'admin') {
-        return <Redirect to="/admin/login" />;
-    } else {
-        return <Redirect to="/login" />;
+    if (ADMIN_ROLE?.includes(currentRole)) {
+      return <Redirect to="/admin/login" />
+    } else if (CLIENT_ROLE?.includes(currentRole)) {
+      return <Redirect to="/login" />
     }
+    return <LoginPageContainer />
   }
 }
 
