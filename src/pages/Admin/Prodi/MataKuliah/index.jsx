@@ -14,7 +14,7 @@ const { confirm } = Modal
 const ProdiMataKuliahContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
-  const { state, mr } = useConcent('mahasiswaStore')
+  const { state, mr } = useConcent('matkulStore')
   const { list } = state
   const [row, setRow] = useState()
 
@@ -26,99 +26,22 @@ const ProdiMataKuliahContainer = () => {
       hideInForm: true,
       hideInSearch: true
     },
-    {
-      title: 'NIM',
-      dataIndex: 'NIM',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
-    },
-    {
-      title: 'Nama Mahasiswa',
-      dataIndex: 'namaMahasiswa',
-      hideInSearch: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
-    },
-    {
-      title: 'Program Studi',
-      dataIndex: 'prodi',
-      hideInForm: true,
-      hideInSearch: true,
-      valueEnum: {
-        0: {
-          text: 'TEKNOLOGI INFORMASI',
-          status: 'TI'
-        },
-        1: {
-          text: 'SISTEM INFORMASI',
-          status: 'SI'
-        }
-      }
-    },
-    {
-      title: 'Gender',
-      dataIndex: 'jenisKelamin',
-      hideInSearch: true,
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: 'Perempuan',
-          status: 'female'
-        },
-        1: {
-          text: 'Laki-laki',
-          status: 'male'
-        }
-      }
-    },
-    {
-      title: 'Tahun Angkatan',
-      dataIndex: 'tahunAngkatan',
-      hideInSearch: true,
-      valueEnum: {
-        0: {
-          text: '2017',
-          status: '2017'
-        },
-        1: {
-          text: '2018',
-          status: '2018'
-        },
-        2: {
-          text: '2019',
-          status: '2019'
-        },
-        3: {
-          text: '2020',
-          status: '2020'
-        }
-      }
-    },
-    {
-      title: 'Alamat',
-      dataIndex: 'alamat',
-      valueType: 'textarea',
-      hideInSearch: true,
-    },
+    // { title: 'idKodeAbsensi', dataIndex: 'idKodeAbsensi', hideInForm: true, hideInSearch: true },
+    // { title: 'idMahasiswa', dataIndex: 'idMahasiswa', hideInForm: true, hideInSearch: true },
+    // { title: 'idAbsensi', dataIndex: 'idAbsensi', hideInForm: true, hideInSearch: true },
+    // { title: 'idKonten', dataIndex: 'idKonten', hideInForm: true, hideInSearch: true },
+    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'sks', dataIndex: 'sks', hideInForm: true, hideInSearch: true },
+    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
+    { title: 'idKelas', dataIndex: 'idKelas', hideInForm: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
+    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
+    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
+    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
+    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
+    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true },
     {
       title: 'Action',
       tableStyle: { textAlign: 'center' },
@@ -188,13 +111,13 @@ const ProdiMataKuliahContainer = () => {
     <PrivateRoute access={['admin']}>
       <PageContainer>
         <ProTable
-          headerTitle="Mata Kuliah"
+          headerTitle="List Mata Kuliah"
           actionRef={actionRef}
           rowKey="key"
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({
-              q: params.NIM,
+              q: params.nama,
               page: params.current
             })
           }}
@@ -210,20 +133,20 @@ const ProdiMataKuliahContainer = () => {
           {...initData}
         />
         {/* form create data */}
-        <CreateForm width={'100%'} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <CreateForm width={650} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
           <FormCreate {...FormCreateProps} />
         </CreateForm>
   
         {/* form edit data */}
         <CreateForm
           width={840}
-          title={`Edit Data Mahasiswa ${row?.nama}`} 
+          title={`Edit Data Mata Kuliah ${row?.nama}`} 
           onCancel={() => setRow(undefined)}
           keyboard={false}
           maskClosable={false}
           modalVisible={!!row}
         >
-          {row?.namaMahasiswa && (
+          {row?.nama && (
             <FormEdit {...FormEditProps} />
           )}
         </CreateForm>

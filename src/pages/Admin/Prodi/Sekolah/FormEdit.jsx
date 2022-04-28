@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Modal, AutoComplete } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormTextArea,
-  // ProFormUploadButton,
+  ProFormTextArea
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
 
@@ -17,7 +16,7 @@ const FormEdit = ({
     data: {},
     active: false
   })
-  const { mr } = useConcent('mahasiswaStore')
+  const { mr } = useConcent('sekolahStore')
   const { state: stateProvince } = useConcent('provinceStore')
   const { state: stateCity, mr: mrCity } = useConcent('cityStore')
 
@@ -94,14 +93,14 @@ const FormEdit = ({
             id: newValuesCity[0].id,
             name: newValuesCity[0].name
           }
-          setModalVerification({ data: values, active: true })
+          setModalVerification({ data: values, active: !modalVerification .active})
         }}
         initialValues={initialValues}
         params={{}}
       >
-        {/* <ProFormText name="idSekolah" label="id" disabled /> */}
+        <ProFormText name="id" label="id" disabled />
         {/* preview sekolah */}
-        <ProFormText name="nama" label="NAMA SEKOLAH SMU/SMK/STM" placeholder="Masukkan SMU/SMK/STM" rules={[{ required: true, message: 'required!' }]} />
+        <ProFormText name="nama" label="NAMA SEKOLAH SMU/SMK/STM" bordere="false" placeholder="Masukkan SMU/SMK/STM" rules={[{ required: true, message: 'required!' }]} />
         <ProFormText name="jurusan" label="JURUSAN SEKOLAH SMU/SMK/STM" placeholder="Masukkan jurusan" />
         <ProFormText name="email" label="EMAIL SEKOLAH" placeholder="Masukkan email" />
         <ProFormTextArea name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan alamat" rules={[{ required: true, message: 'required!' }]} />
@@ -145,6 +144,9 @@ const FormEdit = ({
             ))}
           </AutoComplete>
         </ProForm.Item>
+        <ProFormText name="provinceId" label="provinceId" placeholder="Masukkan provinceId" disabled />
+        <ProFormText name="cityId" label="cityId" placeholder="Masukkan cityId" disabled />
+
       </ProForm>
     </>
   )
