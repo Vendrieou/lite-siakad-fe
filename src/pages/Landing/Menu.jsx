@@ -8,7 +8,8 @@ import {
   TeamOutlined,
   ContainerOutlined
 } from '@ant-design/icons'
-import { Link } from '@vitjs/runtime'
+// import { Link } from '@vitjs/runtime'
+import { Link } from '@tanstack/react-location'
 
 const { Text } = Typography
 

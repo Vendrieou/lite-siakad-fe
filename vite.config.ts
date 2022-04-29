@@ -1,10 +1,11 @@
 import * as path from 'path';
 import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+// import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import vitApp from '@vitjs/vit';
-import routes from './config/routes';
+// import vitApp from '@vitjs/vit';
+// import routes from './config/routes';
 
 const projectRootDir = path.resolve(__dirname);
 
@@ -35,7 +36,21 @@ export default ({ mode }) => {
       'process.env.PROD_APIHOSTIMAGE':JSON.stringify(process.env.PROD_APIHOSTIMAGE),
     },
     plugins: [
-      react(),
+      // react({
+      //   babel: {
+      //     plugins: [
+      //       ['@babel/plugin-proposal-decorators', { legacy: true }],
+      //       ['@babel/plugin-proposal-class-properties', { loose: false }],
+      //       // 'babel-plugin-transform-typescript-metadata',
+      //       // 'babel-plugin-parameter-decorator',
+      //       ['@babel/plugin-transform-react-jsx', { runtime: 'classic' }],
+      //     ]
+      //   },
+      // }),
+      react({
+        jsxRuntime: 'classic',
+      }),
+      // reactRefresh(),
       tsconfigPaths(),
       vitePluginImp({
         libList: [
@@ -45,14 +60,14 @@ export default ({ mode }) => {
           },
         ],
       }),
-      vitApp({
-        routes,
-        dynamicImport: {},
-        //   loading: './components/PageLoading',
-        // },
-        exportStatic: {},
-        // mock: { productionEnabled: true },
-      }),
+      // vitApp({
+      //   routes,
+      //   dynamicImport: {},
+      //   //   loading: './components/PageLoading',
+      //   // },
+      //   exportStatic: {},
+      //   // mock: { productionEnabled: true },
+      // }),
     ],
     server: {
       port: 8080,
@@ -93,7 +108,6 @@ export default ({ mode }) => {
       },
     },
     // build: {
-    //   watch: {},
     //   rollupOptions: {
     //     output: {
     //       manualChunks: {
@@ -103,7 +117,6 @@ export default ({ mode }) => {
     //   },
     // },
     // build: {
-    //   watch: {},
     //   rollupOptions: {
     //     output: {
     //       manualChunks: {
@@ -111,9 +124,6 @@ export default ({ mode }) => {
     //       },
     //     },
     //   },
-    // },
-    // esbuild: {
-    //   jsxInject: "import * as React from 'react'",
     // },
   })
 }

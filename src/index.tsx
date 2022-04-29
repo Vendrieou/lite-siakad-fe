@@ -3,26 +3,35 @@ import ReactDOM from 'react-dom'
 import {
   // Link,
   // MakeGenerics,
-  createHashHistory,
+  createBrowserHistory,
   Outlet,
   ReactLocation,
   Router
   // useMatch,
 } from '@tanstack/react-location'
 import Landing from '@/pages/Landing'
+import MhsRegister from '@/pages/Mahasiswa/Register'
+// import { router } from '@/router'
 
-const hashHistory = createHashHistory()
+const history = createBrowserHistory()
 
 const location = new ReactLocation({
-  history: hashHistory
+  history
 })
 const App = () => {
   return (
     <>
       <Router
         location={location}
+        // routes={router}
         routes={[
-          { path: "/", element: <Landing /> }
+          { path: "/", element: <Landing /> },
+          {
+            path: "mahasiswa",
+            children: [
+              { path: 'register', element: <MhsRegister /> }
+            ]
+          }
         ]}
       >
         <Outlet /> {/* Start rendering router matches */}
