@@ -2,6 +2,7 @@
 // import { useConcent } from 'concent'
 // import { Redirect, useLocation } from '@vitjs/runtime'
 // import { stringify } from 'querystring'
+import React from 'react'
 import { ConfigProvider } from 'antd'
 import enUSIntl from 'antd/lib/locale/en_US'
 // import PageLoading from '@/components/PageLoading'

@@ -1,3 +1,4 @@
+import React from 'react'
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Menu } from 'antd'
 import { useConcent } from 'concent'

@@ -42,7 +42,6 @@ export default ({ mode }) => {
           {
             libName: 'antd',
             style: (name) => `antd/es/${name}/style`,
-            // style: (name) => `antd/es/${name}/style/index.css`,
           },
         ],
       }),
@@ -93,16 +92,26 @@ export default ({ mode }) => {
         },
       },
     },
-    build: {
-      watch: {},
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'lodash-es': ['lodash-es', 'lodash'],
-          },
-        },
-      },
-    },
+    // build: {
+    //   watch: {},
+    //   rollupOptions: {
+    //     output: {
+    //       manualChunks: {
+    //         'react-venders': ['react', 'react-dom', '@vitjs/runtime'],
+    //       },
+    //     },
+    //   },
+    // },
+    // build: {
+    //   watch: {},
+    //   rollupOptions: {
+    //     output: {
+    //       manualChunks: {
+    //         'lodash-es': ['lodash-es', 'lodash'],
+    //       },
+    //     },
+    //   },
+    // },
     // esbuild: {
     //   jsxInject: "import * as React from 'react'",
     // },

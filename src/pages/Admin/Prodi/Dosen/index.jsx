@@ -53,7 +53,7 @@ const ProdiDosenContainer = () => {
       dataIndex: 'id',
       hideInTable: true,
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'NIP',

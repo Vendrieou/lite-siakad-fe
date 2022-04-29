@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Modal, /*AutoComplete*/ } from 'antd'
+import { Modal /*AutoComplete*/ } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea
   // ProFormUploadButton,
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
@@ -84,8 +84,8 @@ const FormEdit = ({
       <ProForm
         onFinish={async (values) => {
           let newValuesDosen = optionListDosen
-          .map(item => JSON.parse(item.value))
-          .filter(filtered => filtered.name === values.dosen)
+            .map(item => JSON.parse(item.value))
+            .filter(filtered => filtered.name === values.dosen)
 
           let newValuesKelas =  optionListKelas
             .map(item => JSON.parse(item.value))

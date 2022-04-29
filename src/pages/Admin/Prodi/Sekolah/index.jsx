@@ -91,7 +91,7 @@ const ProdiSekolahContainer = () => {
       title: 'Alamat',
       dataIndex: 'alamat',
       valueType: 'textarea',
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'Action',

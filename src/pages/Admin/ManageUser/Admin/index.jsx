@@ -43,7 +43,7 @@ const ManageUserAdminContainer = memo(() => {
       dataIndex: 'id',
       hideInTable: true,
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'First Name',

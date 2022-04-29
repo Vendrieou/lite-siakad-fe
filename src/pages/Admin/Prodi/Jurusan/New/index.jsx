@@ -4,9 +4,9 @@ import PrivateRoute from 'components/Authorized/PrivateRoute'
 const NewJurusanContainer = () => {
   return (
     <PrivateRoute access={['admin']}>
-    <div>
-      NewJurusanContainer
-    </div>
+      <div>
+        NewJurusanContainer
+      </div>
     </PrivateRoute>
   )
 }

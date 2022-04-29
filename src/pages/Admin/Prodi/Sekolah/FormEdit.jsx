@@ -79,8 +79,8 @@ const FormEdit = ({
       <ProForm
         onFinish={async (values) => {
           let newValuesProvince = optionListProvince
-          .map(item => JSON.parse(item.value))
-          .filter(filtered => filtered.name === values.province)
+            .map(item => JSON.parse(item.value))
+            .filter(filtered => filtered.name === values.province)
 
           let newValuesCity = optionListCity
             .map(item => JSON.parse(item.value))

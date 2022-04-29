@@ -38,7 +38,7 @@ const ManageUserRoleContainer = memo(() => {
       dataIndex: 'id',
       hideInTable: true,
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'Role Name',
@@ -138,8 +138,8 @@ const ManageUserRoleContainer = memo(() => {
         </CreateForm>
       </PageContainer>
     </PrivateRoute>
-    )
-  }
+  )
+}
 )
 
 export default ManageUserRoleContainer

@@ -4,7 +4,7 @@ import ProForm, {
   ProFormText,
   ProFormSelect,
   ProFormDatePicker,
-  ProFormTextArea,
+  ProFormTextArea
   // ProFormUploadButton,
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
@@ -21,7 +21,7 @@ const FormCreate = ({
   })
   const { state: stateProvince } = useConcent('provinceStore')
   const { state: stateCity, mr: mrCity } = useConcent('cityStore')
-// const [preview, setPreview] = useState({
+  // const [preview, setPreview] = useState({
   //   image: '',
   //   title: '',
   //   active: false
@@ -48,7 +48,7 @@ const FormCreate = ({
   //   })
   // }
   // const handleCancelPreview = () => setPreview(!preview.active)
- // const { mr } = useConcent('userStore')
+  // const { mr } = useConcent('userStore')
 
   // const onGetUser = () => {
   //   setModalTableUser(!modalTableUser)
@@ -71,7 +71,7 @@ const FormCreate = ({
     onCreate(data)
   }
   const onSave = (data) => {
-    console.log('data', data);
+    console.log('data', data)
     // handleSubmit(data)
     setModalVerification({ active: false })
   }
@@ -147,7 +147,7 @@ const FormCreate = ({
     diskon: 10,
     pembayaranCicilan: 45000,
     uangPendaftaran: 250000,
-    biayaLain: 200000,
+    biayaLain: 200000
   }
 
   return (

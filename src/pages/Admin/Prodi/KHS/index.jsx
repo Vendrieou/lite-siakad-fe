@@ -42,7 +42,7 @@ const ProdiKHSContainer = () => {
       dataIndex: 'id',
       hideInTable: true,
       hideInForm: true,
-      hideInSearch: true,
+      hideInSearch: true
     },
     {
       title: 'Nama',

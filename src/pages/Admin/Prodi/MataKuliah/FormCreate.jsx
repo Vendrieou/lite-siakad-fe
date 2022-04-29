@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Modal, AutoComplete } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormTextArea,
+  ProFormTextArea
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
 
@@ -84,8 +84,8 @@ const FormCreate = ({
       <ProForm
         onFinish={async (values) => {
           let newValuesProvince = optionListProvince
-          .map(item => JSON.parse(item.value))
-          .filter(filtered => filtered.name === values.province)
+            .map(item => JSON.parse(item.value))
+            .filter(filtered => filtered.name === values.province)
 
           let newValuesCity = optionListCity
             .map(item => JSON.parse(item.value))
@@ -103,52 +103,52 @@ const FormCreate = ({
         // initialValues={initialValues}
         params={{}}
       >
-          {/* <ProFormText name="idSekolah" label="id" disabled /> */}
-          {/* preview sekolah */}
-          <ProFormText name="nama" label="NAMA SEKOLAH SMU/SMK/STM" placeholder="Masukkan SMU/SMK/STM" rules={[{ required: true, message: 'required!' }]} />
-          <ProFormText name="jurusan" label="JURUSAN SEKOLAH SMU/SMK/STM" placeholder="Masukkan jurusan" />
-          <ProFormText name="email" label="EMAIL SEKOLAH" placeholder="Masukkan email" />
-          <ProFormTextArea name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan alamat" rules={[{ required: true, message: 'required!' }]} />
-          <ProFormTextArea name="keterangan" label="KETERANGAN" placeholder="Masukkan keterangan" />
-          <ProFormText name="kodePos" label="KODE POS" placeholder="Masukkan KODE POS" />
-          <ProFormText name="noTelp" label="Nomor Telp" placeholder="Masukkan Nomor Telp" />
-          <ProFormText name="noHp" label="Nomor Hp" placeholder="Masukkan Nomor Hp" />
-          <ProForm.Item
-            name="province"
-            label="PROVINSI"
-            rules={[{ required: true, message: 'Masukkan provinsi' }]}
+        {/* <ProFormText name="idSekolah" label="id" disabled /> */}
+        {/* preview sekolah */}
+        <ProFormText name="nama" label="NAMA SEKOLAH SMU/SMK/STM" placeholder="Masukkan SMU/SMK/STM" rules={[{ required: true, message: 'required!' }]} />
+        <ProFormText name="jurusan" label="JURUSAN SEKOLAH SMU/SMK/STM" placeholder="Masukkan jurusan" />
+        <ProFormText name="email" label="EMAIL SEKOLAH" placeholder="Masukkan email" />
+        <ProFormTextArea name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan alamat" rules={[{ required: true, message: 'required!' }]} />
+        <ProFormTextArea name="keterangan" label="KETERANGAN" placeholder="Masukkan keterangan" />
+        <ProFormText name="kodePos" label="KODE POS" placeholder="Masukkan KODE POS" />
+        <ProFormText name="noTelp" label="Nomor Telp" placeholder="Masukkan Nomor Telp" />
+        <ProFormText name="noHp" label="Nomor Hp" placeholder="Masukkan Nomor Hp" />
+        <ProForm.Item
+          name="province"
+          label="PROVINSI"
+          rules={[{ required: true, message: 'Masukkan provinsi' }]}
+        >
+          <AutoComplete
+            placeholder="Masukkan provinsi"
+            onSelect={(province) => onGetListCity(province)}
+            filterOption
+            allowClear
           >
-            <AutoComplete
-              placeholder="Masukkan provinsi"
-              onSelect={(province) => onGetListCity(province)}
-              filterOption
-              allowClear
-            >
-              {optionListProvince.map(item => (
-                <AutoCompleteOption key={item.value} value={item.label}>
-                  {item.label}
-                </AutoCompleteOption>
-              ))}
-            </AutoComplete>
-          </ProForm.Item>
-          <ProForm.Item
-            name="city"
-            label="KOTA"
-            rules={[{ required: true, message: 'Masukkan kota' }]}
+            {optionListProvince.map(item => (
+              <AutoCompleteOption key={item.value} value={item.label}>
+                {item.label}
+              </AutoCompleteOption>
+            ))}
+          </AutoComplete>
+        </ProForm.Item>
+        <ProForm.Item
+          name="city"
+          label="KOTA"
+          rules={[{ required: true, message: 'Masukkan kota' }]}
+        >
+          <AutoComplete
+            placeholder="Masukkan kota"
+            filterOption
+            allowClear
+            disabled={optionListCity && !optionListCity.length}
           >
-            <AutoComplete
-              placeholder="Masukkan kota"
-              filterOption
-              allowClear
-              disabled={optionListCity && !optionListCity.length}
-            >
-              {optionListCity.map(item => (
-                <AutoCompleteOption key={item.value} value={item.label}>
-                  {item.label}
-                </AutoCompleteOption>
-              ))}
-            </AutoComplete>
-          </ProForm.Item>
+            {optionListCity.map(item => (
+              <AutoCompleteOption key={item.value} value={item.label}>
+                {item.label}
+              </AutoCompleteOption>
+            ))}
+          </AutoComplete>
+        </ProForm.Item>
       </ProForm>
     </>
   )
