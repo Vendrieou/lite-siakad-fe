@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
 import { history } from '@vitjs/runtime'
-import { stringify } from 'querystring'
+// import { stringify } from 'querystring'
 
 import {
   apiLogin
@@ -57,10 +57,10 @@ const module = defineModule({
       if (window.location.pathname !== '/login') {
         history.replace({
           pathname: role === 'admin' ? '/admin/login' : '/login',
-          search: stringify({
-            redirect: window.location.href,
-            role
-          })
+          // search: stringify({
+          //   redirect: window.location.href,
+          //   role
+          // })
         })
       }
       cookieRemove('role')

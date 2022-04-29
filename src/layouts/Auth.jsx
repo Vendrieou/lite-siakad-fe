@@ -1,6 +1,6 @@
 // import { Redirect, useLocation } from '@vitjs/runtime'
 import { history, Redirect, useLocation } from '@vitjs/runtime'
-import { stringify } from 'querystring'
+// import { stringify } from 'querystring'
 import cookie from 'js-cookie'
 
 import PageLoading from 'components/PageLoading'
@@ -27,17 +27,21 @@ const Admin = ({ children }) => {
   // You can replace it to your authentication rule (such as check token exists)
   const token = cookie.get('token')
 
-  const queryString = stringify({
-    redirect: window.location.href
-  })
+  // const queryString = stringify({
+  //   redirect: window.location.href
+  // })
 
   if (!token) {
     return <PageLoading />
   }
 
   if (!token && location.pathname !== '/admin/login') {
-    return <Redirect to={`/admin/login?${queryString}`} />
+    return <Redirect to={`/admin/login?`} />
   }
+  
+  // if (!token && location.pathname !== '/admin/login') {
+  //   return <Redirect to={`/admin/login?${queryString}`} />
+  // }
   
   // if (token && location.pathname === '/admin/login') {
   //   return <Redirect to={`/admin/dashboard`} />
