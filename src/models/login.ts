@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
 // import { history } from '@vitjs/runtime'
-import { createBrowserHistory } from '@tanstack/react-location'
+import { Navigate } from '@tanstack/react-location'
 // import { stringify } from 'querystring'
 import {
   apiLogin
@@ -12,8 +12,6 @@ import { isContainAdminRole } from '@/utils/variable'
 // import { loggedin } from '@/layouts/Auth'
 import { cookieRemove, cookieGet, set } from '@/utils/storage'
 import cookie from 'js-cookie'
-
-const history = createBrowserHistory()
 
 const module = defineModule({
   state: {
@@ -40,11 +38,11 @@ const module = defineModule({
             cookie.set('role', role)
             moduleState.message = response?.meta?.message
             if (await isContainAdminRole(role)) {
-              history.push('/admin/dashboard')
+              Navigate({ to: '/admin/dashboard' })
             } else if (role === 'mahasiswa') {
-              history.push('/mahasiswa/dashboard')
+              Navigate({ to: '/mahasiswa/dashboard' })
             } else if (role === 'dosen') {
-              history.push('/dosen/dashboard')
+              Navigate({ to: '/dosen/dashboard' })
             }
           }
         }
@@ -57,15 +55,16 @@ const module = defineModule({
       cookieRemove('token')
       const role = cookieGet('role')
       if (window.location.pathname !== '/login') {
-        history.replace({
-          pathname: role === 'admin' ? '/admin/login' : '/login',
-          // search: stringify({
-          //   redirect: window.location.href,
-          //   role
-          // })
-        })
+        Navigate({ to: role === 'admin' ? '/admin/login' : '/login', replace: true})
+        // history.replace({
+        //   pathname: role === 'admin' ? '/admin/login' : '/login',
+        //   // search: stringify({
+        //   //   redirect: window.location.href,
+        //   //   role
+        //   // })
+        // })
       }
-      cookieRemove('role')
+      // cookieRemove('role')
     },
 
     changeLoginStatus (payload: any) {

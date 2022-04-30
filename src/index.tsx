@@ -9,6 +9,10 @@ import {
   Router
   // useMatch,
 } from '@tanstack/react-location'
+import MahasiswaLayout from '@/layouts/MahasiswaLayout'
+import DosenLayout from '@/layouts/DosenLayout'
+import AdminLayout from '@/layouts/AdminLayout'
+import Berita from '@/pages/Berita'
 import Landing from '@/pages/Landing'
 import Login from '@/pages/Auth/Login'
 import MahasiswaDasboard from '@/pages/Mahasiswa/Dasboard'
@@ -22,7 +26,15 @@ import AdminBerita from '@/pages/Admin/Berita'
 import AdminDashboard from '@/pages/Admin/Dashboard'
 import AdminLogin from '@/pages/Admin/Login'
 // import AdminManageUser from '@/pages/Admin/ManageUser'
-import AdminProdi from '@/pages/Admin/Prodi'
+import AdminProdiMataKuliah from  'pages/Admin/Prodi/MataKuliah'
+import AdminProdiKRS from  'pages/Admin/Prodi/KRS'
+import AdminProdiKHS from  'pages/Admin/Prodi/KHS'
+import AdminProdiMahasiswa from  'pages/Admin/Prodi/Mahasiswa'
+import AdminProdiDosen from  'pages/Admin/Prodi/Dosen'
+import AdminProdiJurusan from  'pages/Admin/Prodi/Jurusan'
+import AdminProdiJurusanDetail from  'pages/Admin/Prodi/Jurusan/Detail'
+import AdminProdiSekolah from  'pages/Admin/Prodi/Sekolah'
+import AdminSettingsProfile from  'pages/Admin/Settings/Profile'
 // import AdminSettings from '@/pages/Admin/Settings'
 import './concent'
 
@@ -31,40 +43,6 @@ const history = createBrowserHistory()
 const location = new ReactLocation({
   history
 })
-
-
-const routes = [
-  { path: '/', element: <Landing /> },
-  { path: '/login ', element: <Login /> },
-  // { 
-  //   path: "mahasiswa", 
-  //   children: [
-  //     { path: 'dasboard', element: <MahasiswaDasboard /> },
-  //     { path: 'register', element: <MahasiswaRegister /> },
-  //     { path: 'khs', element: <MahasiswaKHS /> },
-  //     { path: 'krs', element: <MahasiswaKRS /> },
-  //     { path: 'mata-kuliah', element: <MahasiswaMataKuliah /> },
-  //   ]
-  // },
-  // { 
-  //   path: "dosen", 
-  //   children: [
-  //     { path: 'dashboard', element: <DosenDashboard /> },
-  //     { path: 'mata-kuliah', element: <DosenMataKuliah /> },
-  //   ]
-  // },
-  // { 
-  //   path: "admin", 
-  //   children: [
-  //     { path: 'berita', element: <AdminBerita /> },
-  //     { path: 'dashboard', element: <AdminDashboard /> },
-  //     { path: 'login', element: <AdminLogin /> },
-  //     // { path: 'manageuser', element: <AdminManageUser /> },
-  //     { path: 'prodi', element: <AdminProdi /> },
-  //     // { path: 'settings', element: <AdminSettings /> },
-  //   ]
-  // },
-]
 
 const App = () => {
   return (
@@ -78,29 +56,43 @@ const App = () => {
           { 
             path: "mahasiswa", 
             children: [
-              { path: 'dashboard', element: <MahasiswaDasboard /> },
-              { path: 'register', element: <MahasiswaRegister /> },
-              { path: 'khs', element: <MahasiswaKHS /> },
-              { path: 'krs', element: <MahasiswaKRS /> },
-              { path: 'mata-kuliah', element: <MahasiswaMataKuliah /> },
+              { path: 'dashboard', element: <MahasiswaLayout><MahasiswaDasboard /></MahasiswaLayout> },
+              { path: 'register', element: <MahasiswaLayout><MahasiswaRegister /></MahasiswaLayout> },
+              { path: 'khs', element: <MahasiswaLayout><MahasiswaKHS /></MahasiswaLayout> },
+              { path: 'krs', element: <MahasiswaLayout><MahasiswaKRS /></MahasiswaLayout>},
+              { path: 'mata-kuliah', element: <MahasiswaLayout><MahasiswaMataKuliah /></MahasiswaLayout> },
+              { path: 'berita', element: <MahasiswaLayout><Berita /></MahasiswaLayout> },
             ]
           },
           { 
-            path: "dosen", 
+            path: "dosen",
             children: [
-              { path: 'dashboard', element: <DosenDashboard /> },
-              { path: 'mata-kuliah', element: <DosenMataKuliah /> },
+              { path: 'dashboard', element: <DosenLayout><DosenDashboard /></DosenLayout> },
+              { path: 'mata-kuliah', element: <DosenLayout><DosenMataKuliah /></DosenLayout> },
             ]
           },
           { 
-            path: "admin", 
+            path: "admin",
+            // element: <AdminLayout />,
             children: [
-              { path: 'berita', element: <AdminBerita /> },
-              { path: 'dashboard', element: <AdminDashboard /> },
+              { path: 'berita', element: <AdminLayout><AdminBerita /></AdminLayout> },
+              { path: 'dashboard', element: <AdminLayout><AdminDashboard /></AdminLayout> },
               { path: 'login', element: <AdminLogin /> },
-              // { path: 'manageuser', element: <AdminManageUser /> },
-              { path: 'prodi', element: <AdminProdi /> },
-              // { path: 'settings', element: <AdminSettings /> },
+              // { path: 'manageuser', element: <AdminLayout><AdminManageUser /></AdminLayout> },
+              { 
+                path: 'prodi',
+                children: [
+                  { path: 'mata-kuliah', element: <AdminLayout><AdminProdiMataKuliah /></AdminLayout> },
+                  { path: 'krs', element: <AdminLayout><AdminProdiKRS /></AdminLayout> },
+                  { path: 'khs', element: <AdminLayout><AdminProdiKHS /></AdminLayout> },
+                  { path: 'mahasiswa', element: <AdminLayout><AdminProdiMahasiswa /></AdminLayout> },
+                  { path: 'dosen', element: <AdminLayout><AdminProdiDosen /></AdminLayout> },
+                  { path: 'jurusan', element: <AdminLayout><AdminProdiJurusan /></AdminLayout> },
+                  { path: 'jurusan/:id', element: <AdminLayout><AdminProdiJurusanDetail /></AdminLayout> },
+                  { path: 'sekolah', element: <AdminLayout><AdminProdiSekolah /></AdminLayout> },
+                ]
+              },
+              { path: 'settings', element: <AdminLayout><AdminSettingsProfile /></AdminLayout> },
             ]
           },
         ]}

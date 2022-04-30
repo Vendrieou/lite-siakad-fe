@@ -8,7 +8,7 @@ import type { BasicLayoutProps as ProLayoutProps } from '@ant-design/pro-layout'
 import ProLayout from '@ant-design/pro-layout'
 import { HomeOutlined } from '@ant-design/icons'
 // import { history, Link, useLocation } from '@vitjs/runtimes'
-import { history, Link, useLocation } from '@tanstack/react-location'
+import { useNavigate, Link, useLocation } from '@tanstack/react-location'
 
 import RightContent from '@/container/GlobalHeader/RightContent'
 import GlobalFooter from '@/container/GlobalFooter'
@@ -26,6 +26,7 @@ export type BasicLayoutProps = {
 
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   const location = useLocation()
+  const navigate = useNavigate()
 
   return (
     <ProLayout
@@ -41,15 +42,15 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         if (typeof token === 'string') {
           if (!token) {
             if (role === 'admin') {
-              history.push(adminLoginPath)
+              navigate({ to:adminLoginPath })
             } else {
-              history.push(loginPath)
+              navigate({ to: loginPath })
             }
           }
         }
 
       }}
-      onMenuHeaderClick={() => history.push('/')}
+      onMenuHeaderClick={() => navigate({ to:'/' })}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
           menuItemProps.isUrl ||
