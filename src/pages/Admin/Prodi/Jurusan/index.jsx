@@ -6,9 +6,12 @@ import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
 import FormEdit from './FormEdit'
 
+const history = createBrowserHistory()
 const { confirm } = Modal
 
 const ProdiJurusanContainer = () => {

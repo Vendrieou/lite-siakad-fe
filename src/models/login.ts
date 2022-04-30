@@ -1,8 +1,8 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
 // import { stringify } from 'querystring'
-
 import {
   apiLogin
   // fakeAccountLogin
@@ -12,6 +12,8 @@ import { isContainAdminRole } from '@/utils/variable'
 // import { loggedin } from '@/layouts/Auth'
 import { cookieRemove, cookieGet, set } from '@/utils/storage'
 import cookie from 'js-cookie'
+
+const history = createBrowserHistory()
 
 const module = defineModule({
   state: {

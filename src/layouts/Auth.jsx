@@ -1,5 +1,6 @@
 // import { Redirect, useLocation } from '@vitjs/runtime'
-import { history, Redirect, useLocation } from '@vitjs/runtime'
+// import { history, Redirect, useLocation } from '@vitjs/runtime'
+import { history, Redirect, useLocation } from '@tanstack/react-location'
 // import { stringify } from 'querystring'
 import cookie from 'js-cookie'
 

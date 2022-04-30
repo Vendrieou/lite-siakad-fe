@@ -10,28 +10,99 @@ import {
   // useMatch,
 } from '@tanstack/react-location'
 import Landing from '@/pages/Landing'
-import MhsRegister from '@/pages/Mahasiswa/Register'
-// import { router } from '@/router'
+import Login from '@/pages/Auth/Login'
+import MahasiswaDasboard from '@/pages/Mahasiswa/Dasboard'
+import MahasiswaRegister from '@/pages/Mahasiswa/Register'
+import MahasiswaKHS from '@/pages/Mahasiswa/KHS'
+import MahasiswaKRS from '@/pages/Mahasiswa/KRS'
+import MahasiswaMataKuliah from '@/pages/Mahasiswa/MataKuliah'
+import DosenDashboard from '@/pages/Dosen/Dashboard'
+import DosenMataKuliah from '@/pages/Dosen/MataKuliah'
+import AdminBerita from '@/pages/Admin/Berita'
+import AdminDashboard from '@/pages/Admin/Dashboard'
+import AdminLogin from '@/pages/Admin/Login'
+// import AdminManageUser from '@/pages/Admin/ManageUser'
+import AdminProdi from '@/pages/Admin/Prodi'
+// import AdminSettings from '@/pages/Admin/Settings'
+import './concent'
 
 const history = createBrowserHistory()
 
 const location = new ReactLocation({
   history
 })
+
+
+const routes = [
+  { path: '/', element: <Landing /> },
+  { path: '/login ', element: <Login /> },
+  // { 
+  //   path: "mahasiswa", 
+  //   children: [
+  //     { path: 'dasboard', element: <MahasiswaDasboard /> },
+  //     { path: 'register', element: <MahasiswaRegister /> },
+  //     { path: 'khs', element: <MahasiswaKHS /> },
+  //     { path: 'krs', element: <MahasiswaKRS /> },
+  //     { path: 'mata-kuliah', element: <MahasiswaMataKuliah /> },
+  //   ]
+  // },
+  // { 
+  //   path: "dosen", 
+  //   children: [
+  //     { path: 'dashboard', element: <DosenDashboard /> },
+  //     { path: 'mata-kuliah', element: <DosenMataKuliah /> },
+  //   ]
+  // },
+  // { 
+  //   path: "admin", 
+  //   children: [
+  //     { path: 'berita', element: <AdminBerita /> },
+  //     { path: 'dashboard', element: <AdminDashboard /> },
+  //     { path: 'login', element: <AdminLogin /> },
+  //     // { path: 'manageuser', element: <AdminManageUser /> },
+  //     { path: 'prodi', element: <AdminProdi /> },
+  //     // { path: 'settings', element: <AdminSettings /> },
+  //   ]
+  // },
+]
+
 const App = () => {
   return (
     <>
       <Router
         location={location}
-        // routes={router}
+        // routes={routes}
         routes={[
           { path: "/", element: <Landing /> },
-          {
-            path: "mahasiswa",
+          { path: '/login', element: <Login /> },
+          { 
+            path: "mahasiswa", 
             children: [
-              { path: 'register', element: <MhsRegister /> }
+              { path: 'dashboard', element: <MahasiswaDasboard /> },
+              { path: 'register', element: <MahasiswaRegister /> },
+              { path: 'khs', element: <MahasiswaKHS /> },
+              { path: 'krs', element: <MahasiswaKRS /> },
+              { path: 'mata-kuliah', element: <MahasiswaMataKuliah /> },
             ]
-          }
+          },
+          { 
+            path: "dosen", 
+            children: [
+              { path: 'dashboard', element: <DosenDashboard /> },
+              { path: 'mata-kuliah', element: <DosenMataKuliah /> },
+            ]
+          },
+          { 
+            path: "admin", 
+            children: [
+              { path: 'berita', element: <AdminBerita /> },
+              { path: 'dashboard', element: <AdminDashboard /> },
+              { path: 'login', element: <AdminLogin /> },
+              // { path: 'manageuser', element: <AdminManageUser /> },
+              { path: 'prodi', element: <AdminProdi /> },
+              // { path: 'settings', element: <AdminSettings /> },
+            ]
+          },
         ]}
       >
         <Outlet /> {/* Start rendering router matches */}

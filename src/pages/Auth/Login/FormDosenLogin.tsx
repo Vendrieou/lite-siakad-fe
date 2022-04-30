@@ -44,19 +44,19 @@ const FormDosenLogin: React.FC = () => {
         initialValues={{
           autoLogin: true
         }}
-        submitter={{
-          searchConfig: {
-            submitText: 'Submit'
-          },
-          render: (_, dom) => dom.pop(),
-          submitButtonProps: {
-            loading: submitting,
-            size: 'large',
-            style: {
-              width: '100%'
-            }
-          }
-        }}
+        // submitter={{
+        //   searchConfig: {
+        //     submitText: 'Submit'
+        //   },
+        //   render: (_, dom) => dom.pop(),
+        //   submitButtonProps: {
+        //     loading: submitting,
+        //     size: 'large',
+        //     style: {
+        //       width: '100%'
+        //     }
+        //   }
+        // }}
         onFinish={(values) => {
           handleSubmit(values as DosenLoginParamsType)
           return Promise.resolve()

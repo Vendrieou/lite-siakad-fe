@@ -1,6 +1,7 @@
 import React from 'react'
 import type { ReactChild, ReactFragment, ReactPortal } from 'react'
-import { Redirect } from '@vitjs/runtime'
+// import { Link } from '@vitjs/runtime'
+import { Link } from '@tanstack/react-location'
 import { cookieGet, getUserToken } from '@/utils/storage'
 import { CLIENT_ROLE, ADMIN_ROLE } from '@/utils/variable'
 // import LoginPageContainer from '@/pages/403'
@@ -16,9 +17,9 @@ const withAuth = (Component: any) => (props: { children: boolean | ReactChild | 
     return <Component {...props} />
   } else {
     if (ADMIN_ROLE?.includes(currentRole)) {
-      return <Redirect to="/admin/login" />
+      return <Link to="/admin/login" />
     } else if (CLIENT_ROLE?.includes(currentRole)) {
-      return <Redirect to="/login" />
+      return <Link to="/login" />
     }
     return <LoginPageContainer />
   }

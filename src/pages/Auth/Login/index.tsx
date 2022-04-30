@@ -1,26 +1,32 @@
 import React, { useState } from 'react'
-import { useLocation } from '@vitjs/runtime'
+import { useMatch } from '@tanstack/react-location'
 import { Tabs } from 'antd'
 import UserLayout from 'src/layouts/UserLayout'
+import SecurityLayout from 'src/layouts/SecurityLayout'
 import styles from './index.module.less'
 import FormDosenLogin from './FormDosenLogin'
 import FormMahasiswaLogin from './FormMahasiswaLogin'
 
 const Login: React.FC = () => {
-  const { query } = useLocation()
-  const [type, setType] = useState(query?.role || 'mahasiswa')
+  const { params } = useMatch()
+  console.log('params',params);
+  
+  const [type, setType] = useState('mahasiswa')
+  // const [type, setType] = useState(params.query?.role || 'mahasiswa')
 
   return (
-    <UserLayout>
-      <div className={styles.main}>
-        <Tabs defaultActiveKey={type} onChange={setType}>
-          <Tabs.TabPane key="mahasiswa" tab="Login Mahasiswa" />
-          <Tabs.TabPane key="dosen" tab="Login Dosen" />
-        </Tabs>
-        {type === 'mahasiswa' && <FormMahasiswaLogin />}
-        {type === 'dosen' && <FormDosenLogin />}
-      </div>
-    </UserLayout>
+    <SecurityLayout>
+      <UserLayout>
+        <div className={styles.main}>
+          <Tabs defaultActiveKey={type} onChange={setType}>
+            <Tabs.TabPane key="mahasiswa" tab="Login Mahasiswa" />
+            <Tabs.TabPane key="dosen" tab="Login Dosen" />
+          </Tabs>
+          {type === 'mahasiswa' && <FormMahasiswaLogin />}
+          {type === 'dosen' && <FormDosenLogin />}
+        </div>
+      </UserLayout>
+    </SecurityLayout>
   )
 }
 

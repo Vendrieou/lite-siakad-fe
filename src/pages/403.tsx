@@ -1,10 +1,14 @@
 import React from 'react'
 import { Button, Result } from 'antd'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
 import { cookieGet } from '@/utils/storage'
 import { ADMIN_ROLE  } from '@/utils/variable'
 
 let currentRole: string = cookieGet('role') as string
+
+const history = createBrowserHistory()
 
 const toLoginPage: React.FC = () => {
   return (

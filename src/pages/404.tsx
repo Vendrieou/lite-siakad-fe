@@ -1,6 +1,9 @@
 import React from 'react'
 import { Button, Result } from 'antd'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
+const history = createBrowserHistory()
 
 const NoFoundPage: React.FC = () => (
   <Result

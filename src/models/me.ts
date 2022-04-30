@@ -1,5 +1,7 @@
 import { defineModule } from 'concent'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
 import { queryMe } from '@/services/me'
 import { get } from '@/utils/storage'
 import { isContainAdminRole } from '@/utils/variable'
@@ -11,6 +13,7 @@ export interface Me {
   name?: string;
   position?: string;
 }
+const history = createBrowserHistory()
 
 const Model = defineModule({
   state: { address: '', avatar: '', email: '', name: '', position: '' } as Me,

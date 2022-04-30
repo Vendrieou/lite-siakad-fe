@@ -1,10 +1,14 @@
 import { message } from 'antd'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
 import { defineModule } from 'concent'
 import { apiEditProfile, apiChangePassword } from '@/services/auth/profileService'
 import { queryMe } from '@/services/me'
 import { cookieGet } from '@/utils/storage'
 import { uploadImage } from '@/utils/imageUploadAction'
+
+const history = createBrowserHistory()
 
 const module = defineModule({
   state: {

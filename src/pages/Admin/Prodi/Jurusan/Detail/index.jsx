@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from '@vitjs/runtime'
+import { useParams } from '@tanstack/react-location'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 
 const DetailJurusanContainer = () => {
