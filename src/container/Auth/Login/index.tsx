@@ -9,11 +9,8 @@ import FormDosenLogin from './FormDosenLogin'
 import FormMahasiswaLogin from './FormMahasiswaLogin'
 
 const Login: React.FC = () => {
-  const { params } = useMatch()
-  console.log('params',params);
-  
-  const [type, setType] = useState('mahasiswa')
-  // const [type, setType] = useState(params.query?.role || 'mahasiswa')
+  const { search } = useMatch()  
+  const [type, setType] = useState(search?.role || 'mahasiswa')
 
   return (
     <SecurityLayout>
