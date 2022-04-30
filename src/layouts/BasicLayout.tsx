@@ -3,7 +3,7 @@
  *
  * @see You can view component api by: https://github.com/ant-design/ant-design-pro-layout
  */
-import React from 'react'
+// import React from 'react'
 import type { BasicLayoutProps as ProLayoutProps } from '@ant-design/pro-layout'
 import ProLayout from '@ant-design/pro-layout'
 import { HomeOutlined } from '@ant-design/icons'

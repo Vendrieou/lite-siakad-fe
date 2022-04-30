@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import { Button, Result } from 'antd'
 // import { history } from '@vitjs/runtime'
 import { createBrowserHistory } from '@tanstack/react-location'

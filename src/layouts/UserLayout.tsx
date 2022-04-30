@@ -1,10 +1,10 @@
-import React from 'react'
+// import React from 'react'
 import type { MenuDataItem } from '@ant-design/pro-layout'
 import { getMenuData, getPageTitle } from '@ant-design/pro-layout'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 // import { Link } from '@vitjs/runtime'
 import { Link } from '@tanstack/react-location'
-import GlobalFooter from '@/container/GlobalFooter'
+// import GlobalFooter from '@/container/GlobalFooter'
 import styles from './UserLayout.module.less'
 
 export type UserLayoutProps = {
@@ -57,7 +57,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
           </div>
           {children}
         </div>
-        <GlobalFooter />
+        {/* <GlobalFooter /> */}
       </div>
     </HelmetProvider>
   )

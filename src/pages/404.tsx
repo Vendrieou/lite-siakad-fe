@@ -1,21 +1,22 @@
-import React from 'react'
+// import React from 'react'
 import { Button, Result } from 'antd'
 // import { history } from '@vitjs/runtime'
-import { createBrowserHistory } from '@tanstack/react-location'
+import { useNavigate } from '@tanstack/react-location'
 
-const history = createBrowserHistory()
 
-const NoFoundPage: React.FC = () => (
+const NoFoundPage: React.FC = () =>{ 
+  const navigate = useNavigate()
+  return(
   <Result
     status='404'
     title='404'
     subTitle='Sorry, the page you visited does not exist.'
     extra={
-      <Button type='primary' onClick={() => history.push('/')}>
+      <Button type='primary' onClick={() => navigate({ to: '/' })}>
         Back Home
       </Button>
     }
   />
-)
+)}
 
 export default NoFoundPage
