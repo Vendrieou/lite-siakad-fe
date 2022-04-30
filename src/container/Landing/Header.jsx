@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import { Menu, Dropdown, Drawer, Button, Input } from 'antd'
 import { DownOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons'
-import logoTIME from 'static/logo/logoTIME.png'
+import logoTIME from 'static/logo/logo.webp'
 import styles from './Header.module.less'
 
 const MenuItem = Menu.Item
