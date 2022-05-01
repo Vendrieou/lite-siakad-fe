@@ -47,10 +47,10 @@ export default ({ mode }) => {
       //     ]
       //   },
       // }),
+      // reactRefresh(),
       react({
         jsxRuntime: 'classic',
       }),
-      // reactRefresh(),
       tsconfigPaths(),
       vitePluginImp({
         libList: [
@@ -62,10 +62,10 @@ export default ({ mode }) => {
       }),
       // vitApp({
       //   routes,
-      //   // dynamicImport: {},
-      //   dynamicImport: {
-      //     loading: './components/PageLoading',
-      //   },
+      //   dynamicImport: {},
+      //   // dynamicImport: {
+      //   //   loading: './components/PageLoading',
+      //   // },
       //   exportStatic: {},
       //   // mock: { productionEnabled: true },
       // }),
