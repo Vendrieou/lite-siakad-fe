@@ -16,6 +16,7 @@ const ProdiMahasiswaContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('mahasiswaStore')
+  const { mr: mrUser } = useConcent('userStore')
   const { list } = state
   const [row, setRow] = useState()
 
@@ -29,7 +30,7 @@ const ProdiMahasiswaContainer = () => {
     },
     {
       title: 'NIM',
-      dataIndex: 'NIM',
+      dataIndex: 'nim',
       tip: '',
       formItemProps: {
         rules: [
@@ -45,7 +46,7 @@ const ProdiMahasiswaContainer = () => {
     },
     {
       title: 'Nama Mahasiswa',
-      dataIndex: 'namaMahasiswa',
+      dataIndex: 'nama',
       hideInSearch: true,
       formItemProps: {
         rules: [
@@ -95,24 +96,6 @@ const ProdiMahasiswaContainer = () => {
       title: 'Tahun Angkatan',
       dataIndex: 'tahunAngkatan',
       hideInSearch: true,
-      valueEnum: {
-        0: {
-          text: '2017',
-          status: '2017'
-        },
-        1: {
-          text: '2018',
-          status: '2018'
-        },
-        2: {
-          text: '2019',
-          status: '2019'
-        },
-        3: {
-          text: '2020',
-          status: '2020'
-        }
-      }
     },
     {
       title: 'Alamat',
@@ -173,7 +156,7 @@ const ProdiMahasiswaContainer = () => {
   }
 
   const onCreate = async (data) => {
-    const response = await mr.create(data)
+    const response = await mrUser.create(data)
     if (response?.success) {
       handleModalVisible(false)
     }
@@ -195,7 +178,7 @@ const ProdiMahasiswaContainer = () => {
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({
-              q: params.NIM,
+              q: params.nim,
               page: params.current
             })
           }}

@@ -1,6 +1,6 @@
 // import React, { useState } from 'react'
 import { useState } from 'react'
-import { Modal, AutoComplete } from 'antd'
+import { Form, Modal, AutoComplete } from 'antd'
 import ProForm, {
   ProFormText,
   ProFormSelect,
@@ -16,12 +16,17 @@ const AutoCompleteOption = AutoComplete.Option
 const FormCreate = ({
   onCreate
 }) => {
+  const [form] = Form.useForm();
+  const [formValue, setFormValue] = useState({
+    idSekolah: null
+  })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
   })
   const { state: stateProvince } = useConcent('provinceStore')
   const { state: stateCity, mr: mrCity } = useConcent('cityStore')
+  const { state: stateSekolah } = useConcent('sekolahStore')
   // const [preview, setPreview] = useState({
   //   image: '',
   //   title: '',
@@ -57,31 +62,11 @@ const FormCreate = ({
   // }
   // const handleCancelModalTableUser = () => setModalTableUser(!modalTableUser)
 
-  const handleSubmit = async (values) => {
-    let city = values.city
-    let province = values.province
-    
-    let data = {
-      ...values,
-      cityId: city.id,
-      cityName: city.name,
-      provinceId: province.id,
-      provinceName: province.name
-    }
-    // data.image = data.image && data.image.length > 0 ? data.image[0].originFileObj : null
-    onCreate(data)
-  }
-  const onSave = (data) => {
-    console.log('data', data)
-    // handleSubmit(data)
-    setModalVerification({ active: false })
-  }
-
   const getListProvince = stateProvince.list
   const optionListProvince = getListProvince && getListProvince.length > 0 ? getListProvince.map((item) => {
     if (item.name) {
       return {
-        value: JSON.stringify(item),
+        value: item.id,
         label: item.name
       }
     }
@@ -92,8 +77,19 @@ const FormCreate = ({
   const optionListCity = getListCity && getListCity.length > 0 ? getListCity.map((item) => {
     if (item.name) {
       return {
-        value: JSON.stringify(item),
+        value: item.id,
         label: item.name
+      }
+    }
+    return []
+  }) : []
+
+  const getListSekolah = stateSekolah.list
+  const optionListSekolah = getListSekolah && getListSekolah.length > 0 ? getListSekolah.map((item) => {
+    if (item.nama) {
+      return {
+        value: item,
+        label: item.nama
       }
     }
     return []
@@ -134,12 +130,12 @@ const FormCreate = ({
     noHpOrgTua: '087868943320',
     pendidikanOrgTua: 'SMA',
     // BAG 3
-    asalSekolah: 'SMA SWASTA CINTA BUDAYA',
-    jurusan: 'IPA',
-    alamat: 'jl. AR HAKIM no 10',
-    kodePosSekolah: '20125',
-    kota: 'Medan',
-    provinsi: 'Sumatera Utara',
+    // asalSekolah: 'SMA SWASTA CINTA BUDAYA',
+    // jurusan: 'IPA',
+    // alamat: 'jl. AR HAKIM no 10',
+    // kodePosSekolah: '20125',
+    // kota: 'Medan',
+    // provinsi: 'Sumatera Utara',
     tahunLulus: 2022,
     noSTTB: 'STTB1001',
     tglSTTB: new Date(),
@@ -149,6 +145,31 @@ const FormCreate = ({
     pembayaranCicilan: 45000,
     uangPendaftaran: 250000,
     biayaLain: 200000
+  }
+  
+  const handleSubmit = async (values) => {
+    let data = {
+      ...values,
+      role: 'mahasiswa',
+      password: 123456
+    }
+    // data.image = data.image && data.image.length > 0 ? data.image[0].originFileObj : null
+    onCreate(data)
+  }
+  const onSave = (data) => {
+    handleSubmit(data)
+    setModalVerification({ active: false })
+  }
+
+  const onFillSekolahData = (data) => {
+    form.setFieldsValue({
+      asalSekolah: data.asalSekolah,
+      jurusanSekolah: data.jurusan,
+      alamat: data.alamat,
+      kodePosSekolah: data.kodePosSekolah,
+      kota: data.kota,
+      provinsi: data.provinsi
+    })
   }
 
   return (
@@ -170,8 +191,29 @@ const FormCreate = ({
         <img alt="preview" style={{ width: '100%' }} src={preview.image} />
       </Modal> */}
       <ProForm
+        form={form}
+        scrollToFirstError
         onFinish={async (values) => {
-          setModalVerification({ data: values, active: true })
+          // let newValuesProvince = optionListProvince
+          // .map(item => JSON.parse(item.value))
+          // .filter(filtered => filtered.name === values.province)
+
+          // let newValuesCity = optionListCity
+          //   .map(item => JSON.parse(item.value))
+          //   .filter(filtered => filtered.name === values.city)
+          // values.province = {
+          //   id: newValuesProvince[0].id,
+          //   name: newValuesProvince[0].name
+          // }
+          // values.city = {
+          //   id: newValuesCity[0].id,
+          //   name: newValuesCity[0].name
+          // }
+          const data = {
+            ...values,
+            idSekolah: formValue.idSekolah,
+          }
+          setModalVerification({ data, active: true })
         }}
         initialValues={initialValues}
         params={{}}
@@ -189,11 +231,11 @@ const FormCreate = ({
                 label="PROGRAM STUDI"
                 placeholder="Pilih prodi"
               />
-              <ProFormText width="sm" name="tahunAkademik" label="TAHUN AKADEMIK" placeholder="Masukkan tahun" />
+              <ProFormText width="sm" name="tahunAngkatan" label="TAHUN AKADEMIK" placeholder="Masukkan tahun" />
             </div>
             <h3>BAG 1</h3>
-            <ProFormText width="sm" name="nama" label="NAMA LENGKAP" placeholder="Masukkan nama" />
-            <ProFormText width="sm" name="nim" label="NIM" placeholder="Masukkan nim" />
+            <ProFormText width="sm" name="nama" label="NAMA LENGKAP" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama mahasiswa' }]} />
+            <ProFormText width="sm" name="nim" label="NIM" placeholder="Masukkan nim" rules={[{ required: true, message: 'Masukkan NIM' }]} />
             <ProFormText width="sm" name="tempat" label="TEMPAT" placeholder="Masukkan tempat" />
 
             <ProFormDatePicker width="sm" name="tanggalPendaftaran" label="TANGGAL PENDAFTARAN " placeholder="Masukkan tgl. pendaftaran" />
@@ -258,23 +300,50 @@ const FormCreate = ({
           </div>
           <div>
             <h3>BAG 3</h3>
-            <ProFormText width="sm" name="idSekolah" label="SEKOLAH" placeholder="cari sekolah" />
+            <ProForm.Item
+              width="sm" 
+              name="idSekolah" 
+              label="ASAL SMU/SMK/STM"
+              placeholder="cari sekolah" 
+              rules={[{ required: true, message: 'Masukkan sekolah' }]}
+            >
+              <AutoComplete
+                style={{ width: '100%' }}
+                placeholder="Masukkan sekolah"
+                onSelect={(value, param) => {
+                  onFillSekolahData(param.datasource.value)
+                  setFormValue({ idSekolah: param.datasource.value.id })
+                }}
+                filterOption
+                allowClear
+                disabled={optionListSekolah && !optionListSekolah.length}
+              >
+                {optionListSekolah.map(item => (
+                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
+                    {item.label}
+                  </AutoCompleteOption>
+                ))}
+              </AutoComplete>
+            </ProForm.Item>
             {/* preview sekolah */}
-            <ProFormText width="sm" name="asalSekolah" label="ASAL SMU/SMK/STM" placeholder="Masukkan SMU/SMK/STM" />
-            <ProFormText width="sm" name="jurusan" label="JURUSAN SMU/SMK/STM" placeholder="Masukkan jurusan" />
-            <ProFormTextArea width="sm" name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan" />
-            <ProFormText width="sm" name="kodePosSekolah" label="KODE POS" placeholder="Masukkan" />
+            <ProFormText width="sm" name="jurusanSekolah" label="JURUSAN SMU/SMK/STM" placeholder="Masukkan" disabled />
+            <ProFormTextArea width="sm" name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan" disabled />
+            <ProFormText width="sm" name="kodePosSekolah" label="KODE POS SMU/SMK/STM" placeholder="Masukkan" disabled />
             <ProForm.Item
               name="provinsi"
               label="PROVINSI"
-              rules={[{ required: true, message: 'Masukkan provinsi' }]}
+              // rules={[{ required: true, message: 'Masukkan provinsi' }]}
+              disabled
             >
               <AutoComplete
                 style={{ width: '100%' }}
                 placeholder="Masukkan provinsi"
-                onSelect={(province) => onGetListCity(province)}
+                onSelect={(province) => {
+                  onGetListCity(province)
+                }}
                 filterOption
                 allowClear
+                disabled
               >
                 {optionListProvince.map(item => (
                   <AutoCompleteOption key={item.value} value={item.label}>
@@ -286,7 +355,7 @@ const FormCreate = ({
             <ProForm.Item
               name="kota"
               label="KOTA"
-              rules={[{ required: true, message: 'Masukkan kota' }]}
+              // rules={[{ required: true, message: 'Masukkan kota' }]}
             >
               <AutoComplete
                 style={{ width: '100%' }}
@@ -294,6 +363,7 @@ const FormCreate = ({
                 filterOption
                 allowClear
                 disabled={optionListCity && !optionListCity.length}
+                disabled
               >
                 {optionListCity.map(item => (
                   <AutoCompleteOption key={item.value} value={item.label}>
