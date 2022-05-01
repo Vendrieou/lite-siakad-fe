@@ -12,42 +12,32 @@ const DosenLayout = ({ children }) => {
             {
               name: 'Dasboard',
               icon: <HomeOutlined />,
-              path: '/mahasiswa/dashboard',
+              path: '/dosen/dashboard',
               component: 'pages/Mahasiswa/Dasboard'
             },
             {
-              name: 'Mahasiswa',
+              name: 'Dosen',
               icon: <LaptopOutlined />,
-              path: '/mahasiswa',
+              path: '/dosen',
               routes: [
                 {
-                  path: '/mahasiswa/mata-kuliah',
+                  path: '/dosen/mata-kuliah',
                   name: 'Mata Kuliah',
-                  component: 'pages/Mahasiswa/MataKuliah',
+                  component: 'pages/Dosen/MataKuliah',
                 },
-                {
-                  path: '/mahasiswa/krs',
-                  name: 'KRS',
-                  component: 'pages/Mahasiswa/KRS',
-                },
-                {
-                  path: '/mahasiswa/khs',
-                  name: 'KHS',
-                  component: 'pages/Mahasiswa/KHS',
-                },
-                {
-                  path: '/mahasiswa/berita',
-                  name: 'Berita',
-                  component: 'pages/Berita',
-                }
+                // {
+                //   path: '/dosen/berita',
+                //   name: 'Berita',
+                //   component: 'pages/Berita',
+                // }
               ]
             },
-            {
-              name: 'Settings',
-              icon: <SettingOutlined />,
-              path: '/mahasiswa/settings',
-              // component: 'pages/Mahasiswa/Settings'
-            },
+            // {
+            //   name: 'Settings',
+            //   icon: <SettingOutlined />,
+            //   path: '/dosen/settings',
+            //   // component: 'pages/Dosen/Settings'
+            // },
           ]
         }}
         >
