@@ -1,5 +1,5 @@
 // import React, { useState } from 'react'
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { Modal, AutoComplete } from 'antd'
 import ProForm, {
   ProFormText,
@@ -13,6 +13,10 @@ const FormEdit = ({
   setRow,
   row
 }) => {
+  const [areaValue, setAreaValue] = useState({
+    city: { id: row.cityId , name: row.city.name },
+    province: { id: row.provinceId, name: row.province.name },
+  })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
@@ -35,7 +39,7 @@ const FormEdit = ({
   const optionListProvince = getListProvince && getListProvince.length > 0 ? getListProvince.map((item) => {
     if (item.name) {
       return {
-        value: JSON.stringify(item),
+        value: item.id,
         label: item.name
       }
     }
@@ -46,12 +50,15 @@ const FormEdit = ({
   const optionListCity = getListCity && getListCity.length > 0 ? getListCity.map((item) => {
     if (item.name) {
       return {
-        value: JSON.stringify(item),
+        value: item.id,
         label: item.name
       }
     }
     return []
   }) : []
+
+  // const onNewValuesProvince = async (values) => optionListProvince.map(item => item.label).filter(filtered => filtered.label === values.province)
+  // const onNewValuesCity = async (values) => optionListCity.map(item => item.label).filter(filtered => filtered.label === values.city)
 
   const onGetListCity = (province) => {
     mrCity.get({ q: province, pageSize: 100 })
@@ -79,20 +86,12 @@ const FormEdit = ({
       </Modal>
       <ProForm
         onFinish={async (values) => {
-          let newValuesProvince = optionListProvince
-            .map(item => JSON.parse(item.value))
-            .filter(filtered => filtered.name === values.province)
-
-          let newValuesCity = optionListCity
-            .map(item => JSON.parse(item.value))
-            .filter(filtered => filtered.name === values.city)
-          values.province = {
-            id: newValuesProvince[0].id,
-            name: newValuesProvince[0].name
-          }
-          values.city = {
-            id: newValuesCity[0].id,
-            name: newValuesCity[0].name
+          const data = {
+            ...values,
+            provinceId: areaValue.province.id,
+            provinceName: areaValue.province.name,
+            cityId: areaValue.city.id,
+            cityName: areaValue.city.name
           }
           setModalVerification({ data: values, active: !modalVerification .active})
         }}
@@ -116,7 +115,10 @@ const FormEdit = ({
         >
           <AutoComplete
             placeholder="Masukkan provinsi"
-            onSelect={(province) => onGetListCity(province)}
+            onSelect={(value, param) => {
+              setAreaValue({ ...areaValue, province: { id: param.key, name: value }})
+              onGetListCity(province)
+            }}
             filterOption
             allowClear
           >
@@ -134,6 +136,9 @@ const FormEdit = ({
         >
           <AutoComplete
             placeholder="Masukkan kota"
+            onSelect={(value, param) => {
+              setAreaValue({ ...areaValue, city: { id: param.key, name: value }})
+            }}
             filterOption
             allowClear
             disabled={optionListCity && !optionListCity.length}
@@ -145,12 +150,9 @@ const FormEdit = ({
             ))}
           </AutoComplete>
         </ProForm.Item>
-        <ProFormText name="provinceId" label="provinceId" placeholder="Masukkan provinceId" disabled />
-        <ProFormText name="cityId" label="cityId" placeholder="Masukkan cityId" disabled />
-
       </ProForm>
     </>
   )
 }
 
-export default FormEdit
+export default memo(FormEdit)

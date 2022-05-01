@@ -9,7 +9,7 @@ const AdminDashboardContainer = () => {
   return (
     <PrivateRoute access={['admin']}>
       <PageContainer>
-        <Text>AdminDashboardContainer</Text>
+        <Text>.</Text>
       </PageContainer>
     </PrivateRoute>
   )
