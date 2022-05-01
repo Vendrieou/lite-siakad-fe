@@ -1,9 +1,9 @@
-import React from 'react'
+// import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   // Link,
   // MakeGenerics,
-  createBrowserHistory,
+  // createBrowserHistory,
   Outlet,
   ReactLocation,
   Router
@@ -12,34 +12,35 @@ import {
 import MahasiswaLayout from '@/layouts/MahasiswaLayout'
 import DosenLayout from '@/layouts/DosenLayout'
 import AdminLayout from '@/layouts/AdminLayout'
-import Berita from '@/pages/Berita'
-import Landing from '@/pages/Landing'
-import Login from '@/pages/Auth/Login'
-import MahasiswaDasboard from '@/pages/Mahasiswa/Dasboard'
-import MahasiswaRegister from '@/pages/Mahasiswa/Register'
-import MahasiswaKHS from '@/pages/Mahasiswa/KHS'
-import MahasiswaKRS from '@/pages/Mahasiswa/KRS'
-import MahasiswaMataKuliah from '@/pages/Mahasiswa/MataKuliah'
-import DosenDashboard from '@/pages/Dosen/Dashboard'
-import DosenMataKuliah from '@/pages/Dosen/MataKuliah'
-import AdminBerita from '@/pages/Admin/Berita'
-import AdminDashboard from '@/pages/Admin/Dashboard'
-import AdminLogin from '@/pages/Admin/Login'
+import Berita from '@/container/Berita'
+import Landing from '@/container/Landing'
+import Login from '@/container/Auth/Login'
+import MahasiswaDasboard from '@/container/Mahasiswa/Dasboard'
+import MahasiswaRegister from '@/container/Mahasiswa/Register'
+import MahasiswaKHS from '@/container/Mahasiswa/KHS'
+import MahasiswaKRS from '@/container/Mahasiswa/KRS'
+import MahasiswaMataKuliah from '@/container/Mahasiswa/MataKuliah'
+import DosenDashboard from '@/container/Dosen/Dashboard'
+import DosenMataKuliah from '@/container/Dosen/MataKuliah'
+import AdminBerita from '@/container/Admin/Berita'
+import AdminDashboard from '@/container/Admin/Dashboard'
+import AdminLogin from '@/container/Admin/Login'
 
-import AdminProdiMataKuliah from '@/pages/Admin/Prodi/MataKuliah'
-import AdminProdiKRS from '@/pages/Admin/Prodi/KRS'
-import AdminProdiKHS from '@/pages/Admin/Prodi/KHS'
-import AdminProdiMahasiswa from '@/pages/Admin/Prodi/Mahasiswa'
-import AdminProdiDosen from '@/pages/Admin/Prodi/Dosen'
-import AdminProdiJurusan from '@/pages/Admin/Prodi/Jurusan'
-import AdminProdiJurusanDetail from '@/pages/Admin/Prodi/Jurusan/Detail'
-import AdminProdiSekolah from '@/pages/Admin/Prodi/Sekolah'
-import AdminSettingsProfile from '@/pages/Admin/Settings/Profile'
-// import AdminManageUser from '@/pages/Admin/ManageUser'
-// import AdminSettings from '@/pages/Admin/Settings'
+import AdminProdiMataKuliah from '@/container/Admin/Prodi/MataKuliah'
+import AdminProdiKRS from '@/container/Admin/Prodi/KRS'
+import AdminProdiKHS from '@/container/Admin/Prodi/KHS'
+import AdminProdiMahasiswa from '@/container/Admin/Prodi/Mahasiswa'
+import AdminProdiDosen from '@/container/Admin/Prodi/Dosen'
+import AdminProdiJurusan from '@/container/Admin/Prodi/Jurusan'
+import AdminProdiJurusanDetail from '@/container/Admin/Prodi/Jurusan/Detail'
+import AdminProdiSekolah from '@/container/Admin/Prodi/Sekolah'
+import AdminSettingsProfile from '@/container/Admin/Settings/Profile'
+// import AdminManageUser from '@/container/Admin/ManageUser'
+// import AdminSettings from '@/container/Admin/Settings'
+
+// import App from './root'
+import history from '@/utils/history'
 import './concent'
-
-const history = createBrowserHistory()
 
 const location = new ReactLocation({
   history
@@ -58,7 +59,7 @@ const App = () => {
             path: "mahasiswa", 
             children: [
               { path: 'dashboard', element: <MahasiswaLayout><MahasiswaDasboard /></MahasiswaLayout> },
-              { path: 'register', element: <MahasiswaLayout><MahasiswaRegister /></MahasiswaLayout> },
+              { path: 'register', element: <MahasiswaRegister />},
               { path: 'khs', element: <MahasiswaLayout><MahasiswaKHS /></MahasiswaLayout> },
               { path: 'krs', element: <MahasiswaLayout><MahasiswaKRS /></MahasiswaLayout>},
               { path: 'mata-kuliah', element: <MahasiswaLayout><MahasiswaMataKuliah /></MahasiswaLayout> },

@@ -1,7 +1,6 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
 // import { history } from '@vitjs/runtime'
-import { Navigate } from '@tanstack/react-location'
 // import { stringify } from 'querystring'
 import {
   apiLogin
@@ -12,6 +11,7 @@ import { isContainAdminRole } from '@/utils/variable'
 // import { loggedin } from '@/layouts/Auth'
 import { cookieRemove, cookieGet, set } from '@/utils/storage'
 import cookie from 'js-cookie'
+import history from '@/utils/history'
 
 const module = defineModule({
   state: {
@@ -37,12 +37,13 @@ const module = defineModule({
             cookie.set('token', response?.data?.token, { expires: 1 })
             cookie.set('role', role)
             moduleState.message = response?.meta?.message
-            if (await isContainAdminRole(role)) {
-              Navigate({ to: '/admin/dashboard' })
+
+            if (await isContainAdminRole(role)) { 
+              history.push('/admin/dashboard')
             } else if (role === 'mahasiswa') {
-              Navigate({ to: '/mahasiswa/dashboard' })
+              history.push('/mahasiswa/dashboard')
             } else if (role === 'dosen') {
-              Navigate({ to: '/dosen/dashboard' })
+              history.push('/dosen/dashboard')
             }
           }
         }
@@ -55,8 +56,8 @@ const module = defineModule({
       cookieRemove('token')
       const role = cookieGet('role')
       if (window.location.pathname !== '/login') {
-        Navigate({ to: role === 'admin' ? '/admin/login' : '/login', replace: true})
-        // history.replace({
+        history.push(role === 'admin' ? '/admin/login' : '/login')
+        // history.push({
         //   pathname: role === 'admin' ? '/admin/login' : '/login',
         //   // search: stringify({
         //   //   redirect: window.location.href,
