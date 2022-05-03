@@ -1,9 +1,11 @@
 // import React, { useState } from 'react'
 import { useState } from 'react'
-import { Modal, AutoComplete } from 'antd'
+import { Modal, AutoComplete, Row, Col } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormTextArea
+  ProFormTextArea,
+  ProFormDatePicker,
+  ProFormTimePicker
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
 
@@ -12,23 +14,22 @@ const AutoCompleteOption = AutoComplete.Option
 const FormCreate = ({
   onCreate
 }) => {
+  const [formValue, setFormValue] = useState({
+    idDosen: null,
+    idKelas: null
+  })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
   })
-  const { state: stateProvince } = useConcent('provinceStore')
-  const { state: stateCity, mr: mrCity } = useConcent('cityStore')
+  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
+  const { state: stateKelas, mr: mrKelas } = useConcent('kelasStore')
 
   const handleSubmit = async (values) => {
-    let city = values.city
-    let province = values.province
-    
     let data = {
       ...values,
-      cityId: city.id,
-      cityName: city.name,
-      provinceId: province.id,
-      provinceName: province.name
+      idDosen: formValue.idDosen,
+      idKelas: formValue.idKelas
     }
     onCreate(data)
   }
@@ -37,8 +38,8 @@ const FormCreate = ({
     setModalVerification({ active: false })
   }
 
-  const getListProvince = stateProvince.list
-  const optionListProvince = getListProvince && getListProvince.length > 0 ? getListProvince.map((item) => {
+  const getListDosen = stateDosen.list
+  const optionListDosen = getListDosen && getListDosen.length > 0 ? getListDosen.map((item) => {
     if (item.name) {
       return {
         value: JSON.stringify(item),
@@ -48,8 +49,8 @@ const FormCreate = ({
     return []
   }) : []
 
-  const getListCity = stateCity.list
-  const optionListCity = getListCity && getListCity.length > 0 ? getListCity.map((item) => {
+  const getListKelas = stateKelas.list
+  const optionListKelas = getListKelas && getListKelas.length > 0 ? getListKelas.map((item) => {
     if (item.name) {
       return {
         value: JSON.stringify(item),
@@ -59,8 +60,12 @@ const FormCreate = ({
     return []
   }) : []
 
-  const onGetListCity = (province) => {
-    mrCity.get({ q: province, pageSize: 100 })
+  const onGetListDosen = (province) => {
+    mrDosen.get({ q: province, pageSize: 100 })
+  }
+
+  const onGetListKelas = (province) => {
+    mrKelas.get({ q: province, pageSize: 100 })
   }
 
   // const initialValues = {
@@ -83,73 +88,81 @@ const FormCreate = ({
         <p>Anda akan menyimpan data</p>
       </Modal>
       <ProForm
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 18 }}
+        layout="horizontal"
         onFinish={async (values) => {
-          let newValuesProvince = optionListProvince
-            .map(item => JSON.parse(item.value))
-            .filter(filtered => filtered.name === values.province)
-
-          let newValuesCity = optionListCity
-            .map(item => JSON.parse(item.value))
-            .filter(filtered => filtered.name === values.city)
-          values.province = {
-            id: newValuesProvince[0].id,
-            name: newValuesProvince[0].name
-          }
-          values.city = {
-            id: newValuesCity[0].id,
-            name: newValuesCity[0].name
+          let newValuesKelas =  optionListKelas
+          .map(item => JSON.parse(item.value))
+          .filter(filtered => filtered.name === values.kelas)
+          
+          values.kelas = {
+            id: newValuesKelas[0].id,
+            name: newValuesKelas[0].name
           }
           setModalVerification({ data: values, active: true })
         }}
         // initialValues={initialValues}
         params={{}}
       >
-        {/* <ProFormText name="idSekolah" label="id" disabled /> */}
-        {/* preview sekolah */}
-        <ProFormText name="nama" label="NAMA SEKOLAH SMU/SMK/STM" placeholder="Masukkan SMU/SMK/STM" rules={[{ required: true, message: 'required!' }]} />
-        <ProFormText name="jurusan" label="JURUSAN SEKOLAH SMU/SMK/STM" placeholder="Masukkan jurusan" />
-        <ProFormText name="email" label="EMAIL SEKOLAH" placeholder="Masukkan email" />
-        <ProFormTextArea name="alamat" label="ALAMAT SMU/SMK/STM" placeholder="Masukkan alamat" rules={[{ required: true, message: 'required!' }]} />
-        <ProFormTextArea name="keterangan" label="KETERANGAN" placeholder="Masukkan keterangan" />
-        <ProFormText name="kodePos" label="KODE POS" placeholder="Masukkan KODE POS" />
-        <ProFormText name="noTelp" label="Nomor Telp" placeholder="Masukkan Nomor Telp" />
-        <ProFormText name="noHp" label="Nomor Hp" placeholder="Masukkan Nomor Hp" />
-        <ProForm.Item
-          name="province"
-          label="PROVINSI"
-          rules={[{ required: true, message: 'Masukkan provinsi' }]}
-        >
-          <AutoComplete
-            placeholder="Masukkan provinsi"
-            onSelect={(province) => onGetListCity(province)}
-            filterOption
-            allowClear
-          >
-            {optionListProvince.map(item => (
-              <AutoCompleteOption key={item.value} value={item.label}>
-                {item.label}
-              </AutoCompleteOption>
-            ))}
-          </AutoComplete>
-        </ProForm.Item>
-        <ProForm.Item
-          name="city"
-          label="KOTA"
-          rules={[{ required: true, message: 'Masukkan kota' }]}
-        >
-          <AutoComplete
-            placeholder="Masukkan kota"
-            filterOption
-            allowClear
-            disabled={optionListCity && !optionListCity.length}
-          >
-            {optionListCity.map(item => (
-              <AutoCompleteOption key={item.value} value={item.label}>
-                {item.label}
-              </AutoCompleteOption>
-            ))}
-          </AutoComplete>
-        </ProForm.Item>
+           <Row>
+          <Col span={12}>
+            <ProFormText width="md" name="kodeMatkul" label="kodeMatkul" placeholder="Masukkan kodeMatkul" />
+            <ProFormText width="md" name="nama" label="nama" placeholder="Masukkan nama" />
+            <ProFormText width="md" name="sks" label="sks" placeholder="Masukkan sks" />
+            <ProForm.Item
+              name="idDosen"
+              label="Dosen"
+              rules={[{ required: true, message: 'Masukkan nama dosen' }]}
+            >
+              <AutoComplete
+                placeholder="Masukkan nama dosen"
+                onSelect={(value) => {
+                  setFormValue({ idDosen: param.datasource.value.id })
+                  onGetListDosen(value)
+                }}
+                filterOption
+                allowClear
+              >
+                {optionListDosen.map(item => (
+                  <AutoCompleteOption key={item.value} value={item.label}>
+                    {item.label}
+                  </AutoCompleteOption>
+                ))}
+              </AutoComplete>
+            </ProForm.Item>
+            <ProFormText name="semester" label="semester" placeholder="Masukkan semester" />
+            <ProFormTextArea name="keterangan" label="keterangan" placeholder="Masukkan keterangan" />
+          </Col>
+          <Col span={12}>
+          <ProForm.Item
+              name="idKelas"
+              label="Kelas"
+              rules={[{ required: true, message: 'Masukkan nama kelas' }]}
+            >
+              <AutoComplete
+                placeholder="Masukkan nama kelas"
+                onSelect={(data) => {
+                  setFormValue({ idKelas: param.datasource.value.id })
+                  onGetListKelas(data)
+                }}
+                filterOption
+                allowClear
+              >
+                {optionListKelas.map(item => (
+                  <AutoCompleteOption key={item.value} value={item.label}>
+                    {item.label}
+                  </AutoCompleteOption>
+                ))}
+              </AutoComplete>
+            </ProForm.Item>
+            <ProFormDatePicker width="md" name="startDate" label="startDate" placeholder="Masukkan startDate" />
+            <ProFormTimePicker width="md" name="startTime" label="startTime" placeholder="Masukkan startTime" />
+            <ProFormDatePicker width="md" name="endDate" label="endDate" placeholder="Masukkan endDate" />
+            <ProFormTimePicker width="md" name="endTime" label="endTime" placeholder="Masukkan endTime" />
+            <ProFormText name="kodePresensi" label="Kode Presensi" placeholder="Masukkan kode presensi" />
+          </Col>
+        </Row>
       </ProForm>
     </>
   )

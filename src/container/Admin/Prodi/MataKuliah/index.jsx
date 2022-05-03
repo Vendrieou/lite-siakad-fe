@@ -32,10 +32,10 @@ const ProdiMataKuliahContainer = () => {
     // { title: 'idAbsensi', dataIndex: 'idAbsensi', hideInForm: true, hideInSearch: true },
     // { title: 'idKonten', dataIndex: 'idKonten', hideInForm: true, hideInSearch: true },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
     { title: 'sks', dataIndex: 'sks', hideInForm: true, hideInSearch: true },
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
-    { title: 'idKelas', dataIndex: 'idKelas', hideInForm: true },
+    { title: 'idKelas', dataIndex: 'idKelas', hideInForm: true, hideInSearch: true },
     { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
     { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
     { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
@@ -118,7 +118,7 @@ const ProdiMataKuliahContainer = () => {
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({
-              q: params.nama,
+              q: params.kodeMatkul,
               page: params.current
             })
           }}
@@ -134,7 +134,7 @@ const ProdiMataKuliahContainer = () => {
           {...initData}
         />
         {/* form create data */}
-        <CreateForm width={650} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
           <FormCreate {...FormCreateProps} />
         </CreateForm>
   
