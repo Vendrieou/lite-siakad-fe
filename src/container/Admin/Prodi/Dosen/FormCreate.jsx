@@ -150,9 +150,9 @@ const FormCreate = ({
       >
         <div className={styles.container}>
           <div>
-            <ProFormText width="md" name="gelarDepan" label="GELAR DEPAN" placeholder="Masukkan gelar depan" rules={[{ required: true, message: 'Masukkan gelar depan' }]} />
+            <ProFormText width="md" name="gelarDepan" label="GELAR DEPAN" placeholder="Masukkan gelar depan" />
             <ProFormText width="md" name="nama" label="NAMA LENGKAP" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} />
-            <ProFormText width="md" name="gelarBelakang" label="GELAR BELAKANG" placeholder="Masukkan gelar belakang" rules={[{ required: true, message: 'Masukkan gelar belakang' }]} />
+            <ProFormText width="md" name="gelarBelakang" label="GELAR BELAKANG" placeholder="Masukkan gelar belakang" />
             <ProFormText width="md" name="nip" label="NIP" placeholder="Masukkan nip" rules={[{ required: true, message: 'Masukkan nip' }]} />
             <ProFormText width="md" name="nidn" label="NIDN" placeholder="Masukkan nidn" rules={[{ required: true, message: 'Masukkan nidn' }]} />
             <ProFormText width="md" name="tempatLahir" label="TEMPAT LAHIR" placeholder="Masukkan tempat" />
