@@ -89,13 +89,18 @@ const module = defineModule({
       }
     },
     create: async (payload: any, moduleState, actionCtx) => {
+      let isGetApi = payload.getApi || true
       try {
         const response = await apiRegister(payload)
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, payload)
-          actionCtx.dispatch(module.reducer.get)
+          if (isGetApi) {
+            actionCtx.dispatch(module.reducer.get)
+          }
           return response
+        } else {
+          message.error(response.message)
         }
       } catch (error) {
         message.error(error)

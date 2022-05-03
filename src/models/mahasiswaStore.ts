@@ -26,6 +26,11 @@ const module = defineModule({
 
   reducer: {
     get: async (payload: any, moduleState, actionCtx) => {
+      // let query = {
+      //   role: 'mahasiswa',
+      //   relationship: 1
+      // }
+      // ...query,
       const data = {
         ...payload,
         q: payload?.q || '',

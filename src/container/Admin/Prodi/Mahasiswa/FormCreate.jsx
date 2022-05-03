@@ -151,7 +151,7 @@ const FormCreate = ({
     let data = {
       ...values,
       role: 'mahasiswa',
-      password: 123456
+      password: '123456'
     }
     // data.image = data.image && data.image.length > 0 ? data.image[0].originFileObj : null
     onCreate(data)

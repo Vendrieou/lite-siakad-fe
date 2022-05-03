@@ -22,6 +22,7 @@ const ProdiMahasiswaContainer = () => {
 
   const columns = [
     {
+      key: 'id',
       title: 'ID',
       dataIndex: 'id',
       hideInTable: true,
@@ -29,6 +30,7 @@ const ProdiMahasiswaContainer = () => {
       hideInSearch: true
     },
     {
+      key: 'nim',
       title: 'NIM',
       dataIndex: 'nim',
       tip: '',
@@ -39,12 +41,10 @@ const ProdiMahasiswaContainer = () => {
             message: 'Wajib'
           }
         ]
-      },
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
       }
     },
     {
+      key: 'nama',
       title: 'Nama Mahasiswa',
       dataIndex: 'nama',
       hideInSearch: true,
@@ -61,6 +61,7 @@ const ProdiMahasiswaContainer = () => {
       }
     },
     {
+      key: 'prodi',
       title: 'Program Studi',
       dataIndex: 'prodi',
       hideInForm: true,
@@ -77,6 +78,7 @@ const ProdiMahasiswaContainer = () => {
       }
     },
     {
+      key: 'jenisKelamin',
       title: 'Gender',
       dataIndex: 'jenisKelamin',
       hideInSearch: true,
@@ -95,11 +97,13 @@ const ProdiMahasiswaContainer = () => {
     {
       title: 'Tahun Angkatan',
       dataIndex: 'tahunAngkatan',
+      key: 'tahunAngkatan',
       hideInSearch: true,
     },
     {
       title: 'Alamat',
       dataIndex: 'alamat',
+      key: 'alamat',
       valueType: 'textarea',
       hideInSearch: true,
     },
@@ -156,8 +160,9 @@ const ProdiMahasiswaContainer = () => {
   }
 
   const onCreate = async (data) => {
-    const response = await mrUser.create(data)
+    const response = await mrUser.create({ ...data, getApi: false })
     if (response?.success) {
+      mr.get()
       handleModalVisible(false)
     }
   }
@@ -200,14 +205,14 @@ const ProdiMahasiswaContainer = () => {
   
         {/* form edit data */}
         <CreateForm
-          width={840}
+          width={'100%'}
           title={`Edit Data Mahasiswa ${row?.nama}`} 
           onCancel={() => setRow(undefined)}
           keyboard={false}
           maskClosable={false}
           modalVisible={!!row}
         >
-          {row?.namaMahasiswa && (
+          {row?.nama && (
             <FormEdit {...FormEditProps} />
           )}
         </CreateForm>
