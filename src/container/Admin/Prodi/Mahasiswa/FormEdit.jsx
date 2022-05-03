@@ -95,6 +95,7 @@ const FormEdit = ({
     mrCity.get({ q: province, pageSize: 100 })
   }
 
+  let sekolahFilterById = getListSekolah.length > 0 && getListSekolah.filter(item => item.id === row.idSekolah)[0]
   const initialValues = {
     ...row,
     // BAG 1
@@ -126,12 +127,13 @@ const FormEdit = ({
     noHpOrgTua: row?.noHpOrgTua,
     pendidikanOrgTua: row?.pendidikanOrgTua,
     // BAG 3
-    asalSekolah: row?.asalSekolah,
-    jurusan: row?.jurusan,
-    alamat: row?.alamat,
-    kodePosSekolah: row?.kodePosSekolah,
-    kota: row?.kota,
-    provinsi: row?.provinsi,
+    // asalSekolah: row?.asalSekolah,
+    idSekolah: row?.idSekolah && sekolahFilterById.nama,
+    jurusan: sekolahFilterById.jurusan,
+    alamat: sekolahFilterById.alamat,
+    kodePosSekolah: sekolahFilterById.kodePos,
+    kota: sekolahFilterById.city?.name,
+    provinsi: sekolahFilterById.province?.name,
     tahunLulus: row?.tahunLulus,
     noSTTB: row?.noSTTB,
     tglSTTB: row?.tglSTTB,
@@ -295,7 +297,7 @@ const FormEdit = ({
                 style={{ width: '100%' }}
                 placeholder="Masukkan sekolah"
                 onSelect={(value, param) => {
-                  // onFillSekolahData(param.datasource.value)
+                  onFillSekolahData(param.datasource.value)
                   setFormValue({ idSekolah: param.datasource.value.id })
                 }}
                 filterOption
