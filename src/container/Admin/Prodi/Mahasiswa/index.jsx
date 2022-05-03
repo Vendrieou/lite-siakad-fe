@@ -116,10 +116,10 @@ const ProdiMahasiswaContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => {
-          let page = document.getElementsByClassName("ant-pagination-item-active")
-          showDeleteConfirm({ ...entity, page: page[0].title })
-        }} danger>delete</Button>
+        // <Button type="text" key="2" onClick={() => {
+        //   let page = document.getElementsByClassName("ant-pagination-item-active")
+        //   showDeleteConfirm({ ...entity, page: page[0].title })
+        // }} danger>delete</Button>
       ]
     }
   ]
@@ -146,18 +146,18 @@ const ProdiMahasiswaContainer = () => {
     }
   }
   
-  const showDeleteConfirm = (entity) => {
-    confirm({
-      title: 'Are you sure delete this data?',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: () => {
-        mr.delete(entity)
-      }
-    })
-  }
+  // const showDeleteConfirm = (entity) => {
+  //   confirm({
+  //     title: 'Are you sure delete this data?',
+  //     icon: <ExclamationCircleOutlined />,
+  //     okText: 'Yes',
+  //     okType: 'danger',
+  //     cancelText: 'No',
+  //     onOk: () => {
+  //       mr.delete(entity)
+  //     }
+  //   })
+  // }
 
   const onCreate = async (data) => {
     const response = await mrUser.create({ ...data, getApi: false })
