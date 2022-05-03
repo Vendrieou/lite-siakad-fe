@@ -96,6 +96,7 @@ const FormEdit = ({
   }
 
   const initialValues = {
+    ...row,
     // BAG 1
     tanggalPendaftaran: row?.tanggalPendaftaran,
     kodeProgramStudi: row?.kodeProgramStudi,
@@ -150,6 +151,18 @@ const FormEdit = ({
     setModalVerification(false)
     setRow(undefined)
   }
+
+  const onFillSekolahData = (data) => {
+    form.setFieldsValue({
+      asalSekolah: data.asalSekolah,
+      jurusanSekolah: data.jurusan,
+      alamat: data.alamat,
+      kodePosSekolah: data.kodePosSekolah,
+      kota: data.kota,
+      provinsi: data.provinsi
+    })
+  }
+  
   return (
     <>
       <Modal
@@ -191,6 +204,7 @@ const FormEdit = ({
         <div className={styles.container}>
           <div>
             <div>
+              <ProFormText readonly="readonly" name="id" label="ID" disabled />
               <ProFormSelect
                 options={[
                   { value: 'TI', label: 'TEKNOLOGI INFORMASI (TI)' },
@@ -281,7 +295,7 @@ const FormEdit = ({
                 style={{ width: '100%' }}
                 placeholder="Masukkan sekolah"
                 onSelect={(value, param) => {
-                  onFillSekolahData(param.datasource.value)
+                  // onFillSekolahData(param.datasource.value)
                   setFormValue({ idSekolah: param.datasource.value.id })
                 }}
                 filterOption
