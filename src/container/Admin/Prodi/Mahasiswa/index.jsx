@@ -1,16 +1,17 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
-import { Button, Modal } from 'antd'
+import { Button } from 'antd'
 import { useConcent } from 'concent'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+// Modal, ExclamationCircleOutlined
+import { PlusOutlined } from '@ant-design/icons'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
 
-const { confirm } = Modal
+// const { confirm } = Modal
 
 const ProdiMahasiswaContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)

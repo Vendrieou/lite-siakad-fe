@@ -1,54 +1,34 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
-import { Button, Drawer, Modal } from 'antd'
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
-import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import { useConcent } from 'concent'
+import { PageContainer } from '@ant-design/pro-layout'
+import ProTable from '@ant-design/pro-table'
+// Modal, ExclamationCircleOutlined
+import { PlusOutlined } from '@ant-design/icons'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
-// import { addRule, removeRule } from './service'
+import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
 
-const { confirm } = Modal
-
-const tableListDataSource = []
-
-for (let i = 0; i < 2; i += 1) {
-  tableListDataSource.push({
-    key: i,
-    NIP: 1961837821,
-    namaDosen: `Toni Ria ${i}`,
-    gender: 'male',
-    email: 'example@gmail.com',
-    noHp: '0899299291',
-    prodi: 'TI'
-  })
-}
+// const { confirm } = Modal
 
 const ProdiDosenContainer = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
-
-  const [row, setRow] = useState()
-  const [selectedRowsState, setSelectedRows] = useState([])
-  const { mr, state }= useConcent('dosenStore')
+  const { state, mr } = useConcent('dosenStore')
+  const { mr: mrUser } = useConcent('userStore')
   const { list } = state
-
-  const showDeleteConfirm = (entity) => {
-    confirm({
-      title: 'Are you sure delete this data?',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: () => {
-        mr.delete(entity)
-      }
-    })
-  }
+  const [row, setRow] = useState()
 
   const columns = [
+    {
+      title: 'userId',
+      dataIndex: 'userId',
+      hideInTable: true,
+      hideInForm: true,
+      hideInSearch: true
+    },
     {
       title: 'ID',
       dataIndex: 'id',
@@ -58,7 +38,7 @@ const ProdiDosenContainer = () => {
     },
     {
       title: 'NIP',
-      dataIndex: 'NIP',
+      dataIndex: 'nip',
       tip: '',
       formItemProps: {
         rules: [
@@ -74,7 +54,8 @@ const ProdiDosenContainer = () => {
     },
     {
       title: 'Nama Dosen',
-      dataIndex: 'namaDosen',
+      dataIndex: 'nama',
+      hideInSearch: true,
       tip: '',
       formItemProps: {
         rules: [
@@ -91,6 +72,7 @@ const ProdiDosenContainer = () => {
     {
       title: 'Email',
       dataIndex: 'email',
+      hideInSearch: true,
       tip: '',
       formItemProps: {
         rules: [
@@ -104,6 +86,7 @@ const ProdiDosenContainer = () => {
     {
       title: 'No.HP',
       dataIndex: 'noHp',
+      hideInSearch: true,
       tip: '',
       formItemProps: {
         rules: [
@@ -115,9 +98,10 @@ const ProdiDosenContainer = () => {
       }
     },
     {
-      title: 'Gender',
-      dataIndex: 'gender',
+      title: 'Jenis Kelamin',
+      dataIndex: 'jenisKelamin',
       hideInForm: true,
+      hideInSearch: true,
       valueEnum: {
         0: {
           text: 'Perempuan',
@@ -130,21 +114,6 @@ const ProdiDosenContainer = () => {
       }
     },
     {
-      title: 'Pilih Program Studi',
-      dataIndex: 'prodi',
-      hideInForm: true,
-      valueEnum: {
-        0: {
-          text: 'TI',
-          status: 'Default'
-        },
-        1: {
-          text: 'SI',
-          status: 'Processing'
-        }
-      }
-    },
-    {
       title: 'Action',
       tableStyle: { textAlign: 'center' },
       hideInForm: true,
@@ -153,16 +122,61 @@ const ProdiDosenContainer = () => {
       valueType: 'option',
       render: (dom, entity) => [
         <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => {
-          let page = document.getElementsByClassName("ant-pagination-item-active")
-          showDeleteConfirm({ ...entity, page: page[0].title })
-        }} danger>delete</Button>      ]
+        // <Button type="text" key="2" onClick={() => {
+        //   let page = document.getElementsByClassName("ant-pagination-item-active")
+        //   showDeleteConfirm({ ...entity, page: page[0].title })
+        // }} danger>delete</Button>
+      ]
     }
   ]
 
+  const initData = {
+    search: {
+      layout: 'vertical',
+      defaultCollapsed: true
+    },
+    pagination: {
+      show: true,
+      pageSize: 10,
+      current: 1,
+      total: 100000
+    },
+    options: {
+      reload: () => {
+        mr.get({ page: 1 })
+      },
+      show: false,
+      density: false,
+      fullScreen: false,
+      setting: false
+    }
+  }
+  
+  // const showDeleteConfirm = (entity) => {
+  //   confirm({
+  //     title: 'Are you sure delete this data?',
+  //     icon: <ExclamationCircleOutlined />,
+  //     okText: 'Yes',
+  //     okType: 'danger',
+  //     cancelText: 'No',
+  //     onOk: () => {
+  //       mr.delete(entity)
+  //     }
+  //   })
+  // }
+
+  const onCreate = async (data) => {
+    const response = await mrUser.create({ ...data, getApi: false })
+    if (response?.success) {
+      mr.get()
+      handleModalVisible(false)
+    }
+  }
+
+  const FormCreateProps = { onCreate }
   const FormEditProps = {
     setRow,
-    row
+    row    
   }
 
   return (
@@ -173,6 +187,12 @@ const ProdiDosenContainer = () => {
           actionRef={actionRef}
           rowKey="key"
           dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.nip,
+              page: params.current
+            })
+          }}
           search={{
             labelWidth: 120
           }}
@@ -181,79 +201,27 @@ const ProdiDosenContainer = () => {
               <PlusOutlined /> Buat Baru
             </Button>
           ]}
-          // request={(params, sorter, filter) => queryRule({ ...params, sorter, filter })}
           columns={columns}
-          rowSelection={{
-            onChange: (_, selectedRows) => setSelectedRows(selectedRows)
-          }}
+          {...initData}
         />
-        {selectedRowsState?.length > 0 && (
-          <FooterToolbar
-            extra={
-              <div>
-                Choose{' '}
-                <a
-                  style={{
-                    fontWeight: 600
-                  }}
-                >
-                  {selectedRowsState.length}
-                </a>{' '}
-                Item&nbsp;&nbsp;
-                <span>
-                  Total number of service calls {selectedRowsState.reduce((pre, item) => pre + item.NIP, 0)} Thousand
-                </span>
-              </div>
-            }
-          >
-            <Button
-              onClick={async () => {
-                await handleRemove(selectedRowsState)
-                setSelectedRows([])
-                actionRef.current?.reloadAndRest?.()
-              }}
-            >
-              Batch Deletion
-            </Button>
-          </FooterToolbar>
-        )}
-        <CreateForm width={840} title="Tambah Dosen" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
-          <ProTable
-            onSubmit={async (value) => {
-              console.log('value', value)
-              // const success = await handleAdd(value)
-
-              // if (success) {
-              //   handleModalVisible(false)
-
-              //   if (actionRef.current) {
-              //     actionRef.current.reload()
-              //   }
-              // }
-            }}
-            rowKey="key"
-            type="form"
-            columns={columns}
-          />
+        {/* form create data */}
+        <CreateForm width={1076} title="Tambah Dosen" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+          <FormCreate {...FormCreateProps} />
         </CreateForm>
-
-        {/* edit data drawer */}
-        <Drawer
-          width="50%"
-          height="100%"
-          visible={!!row}
-          bodyStyle={{ padding: '2em' }}
-          title={`Edit Data Dosen ${row?.namaDosen}`}
-          mask={false}
-          maskClosable={false}
-          onClose={() => setRow(undefined)}
+  
+        {/* form edit data */}
+        <CreateForm
+          width={1076}
+          title={`Edit Data Dosen ${row?.nama}`} 
+          onCancel={() => setRow(undefined)}
           keyboard={false}
-          placement="top"
+          maskClosable={false}
+          modalVisible={!!row}
         >
-          {row?.namaDosen && (
+          {row?.nama && (
             <FormEdit {...FormEditProps} />
           )}
-        </Drawer>
+        </CreateForm>
       </PageContainer>
     </PrivateRoute>
   )

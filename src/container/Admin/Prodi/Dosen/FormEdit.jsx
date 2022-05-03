@@ -1,134 +1,192 @@
 // import React, { useState } from 'react'
 import { useState } from 'react'
-import { Modal, message } from 'antd'
+import { Modal } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormTextArea,
   ProFormSelect,
-  ProFormDatePicker
+  ProFormDatePicker,
+  ProFormTextArea,
+  // ProFormUploadButton,
 } from '@ant-design/pro-form'
-import { FooterToolbar } from '@ant-design/pro-layout'
+import { useConcent } from 'concent'
 import styles from './FormEdit.module.less'
 
 const FormEdit = ({
   setRow,
   row
 }) => {
-  const [modalVerification, setModalVerification] = useState(false)
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
+  const { mr } = useConcent('dosenStore')
 
-  const editMahasiswa = (data) => {
-    message.success(`Berhasil edit mahasiswa ${data}`)
-  }
+// const [preview, setPreview] = useState({
+  //   image: '',
+  //   title: '',
+  //   active: false
+  // })
+  
+// const getBase64 = file => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader()
+  //     reader.readAsDataURL(file)
+  //     reader.onload = () => resolve(reader.result)
+  //     reader.onerror = error => reject(error)
+  //   })
+  // }
 
-  const onSave = (data) => {
-    console.log('values data', data)
-    editMahasiswa(data)
-    setModalVerification(false)
-    setRow(undefined)
-  }
+  // const handlePreview = async file => {
+  //   if (!file.url && !file.preview) {
+  //     file.preview = await getBase64(file.originFileObj)
+  //   }
+
+  //   setPreview({
+  //     image: file.url || file.preview,
+  //     active: true,
+  //     title: file.name || file.url.substring(file.url.lastIndexOf('/') + 1)
+  //   })
+  // }
+  // const handleCancelPreview = () => setPreview(!preview.active)
 
   const initialValues = {
     ...row,
-    gelarDepan: row?.gelarDepan,
-    namaDosen: row?.namaDosen,
-    gelarBelakang: row?.gelarBelakang,
+    // BAG 1
+    tanggalPendaftaran: row?.tanggalPendaftaran,
+    kodeProgramStudi: row?.kodeProgramStudi,
+    noIjazah: row?.noIjazah,
+    // image: row?.image,
+    nama: row?.nama,
     nip: row?.nip,
-    nidn: row?.nidn,
-    agama: row?.agama,
     tempat: row?.tempat,
-    tglLahir: row?.tglLahir,
+    tanggalLahir: row?.tanggalLahir,
+    jenisKelamin: row?.jenisKelamin,
+    golDarah: row?.golDarah,
+    agama: row?.agama,
     statusNikah: row?.statusNikah,
-    gender: row?.gender,
     kewarganegaraan: row?.kewarganegaraan,
-    alamat: row?.alamat,
-    noHp: row?.noHp,
+    alamatMahasiswa: row?.alamatMahasiswa,
+    kodePos: row?.kodePos,
     noTelp: row?.noTelp,
-    email: row?.email,
-    password: row?.password
+    noHp: row?.noHp,
+    hobi: row?.hobi,
+    jumlahSaudara: row?.jumlahSaudara,
+    // BAG 2
+    namaBapak: row?.namaBapak,
+    namaIbu: row?.namaIbu,
+    pekerjaanOrgTua: row?.pekerjaanOrgTua,
+    alamatOrgTua: row?.alamatOrgTua,
+    noTelpOrgTua: row?.noTelpOrgTua,
+    noHpOrgTua: row?.noHpOrgTua,
+    pendidikanOrgTua: row?.pendidikanOrgTua,
+   
+  }
+  const handleSubmit = (values) => {
+    mr.update(values)
+  }
+
+  const onSave = (data) => {
+    handleSubmit(data)
+    setModalVerification(false)
+    setRow(undefined)
   }
 
   return (
     <>
       <Modal
         title="Simpan"
-        visible={modalVerification}
-        onCancel={() => setModalVerification(false)}
-        onOk={() => onSave(row?.namaDosen)}
+        visible={modalVerification.active}
+        onCancel={() => setModalVerification({ active: false })}
+        onOk={() => onSave(modalVerification.data)}
       >
-        <p>{`Anda akan menyimpan data ${row?.namaDosen}`}</p>
+        <p>{`Anda akan menyimpan data`}</p>
       </Modal>
       <ProForm
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 18 }}
+        layout="horizontal"
+        scrollToFirstError
         onFinish={async (values) => {
-          console.log('values finish', values)
-          message.success('success')
+          const data = {
+            ...values
+          }
+          setModalVerification({ data, active: true })
         }}
         initialValues={initialValues}
         params={{}}
-        submitter={{
-          resetButtonProps: {
-            style: {
-              // Hide the reset button
-              display: 'none'
-            }
-          },
-          render: (_, dom) => <FooterToolbar style={{ width: '100%' }}>{dom}</FooterToolbar>
-        }}
       >
-        <div className={styles.container}>
+       <div>
           <div>
-            <ProFormText width="md" name="id" label="ID" disabled />
-            <ProFormText width="md" name="gelarDepan" label="GELAR DEPAN" placeholder="Masukkan gelar depan" />
-            <ProFormText width="md" name="nama" label="NAMA" placeholder="Masukkan nama" />
-            <ProFormText width="md" name="gelarBelakang" label="GELAR BELAKANG" placeholder="Masukkan gelar belakang" />
-            <ProFormText width="md" name="nip" label="NIP" placeholder="Masukkan NIP" />
-            <ProFormText width="md" name="nidn" label="NIDN" placeholder="Masukkan NIDN" />
-            <ProFormSelect
-              options={[
-                { value: 'buddha', label: 'Buddha' },
-                { value: 'kristenProtestan', label: 'Kristen Protestan' },
-                { value: 'katolik', label: 'Katolik' },
-                { value: 'islam', label: 'Islam' },
-                { value: 'hindu', label: 'Hindu' },
-                { value: 'kongHuCu', label: 'Kong Hu Cu' }
-              ]}
-              width="sm"
-              name="agama"
-              label="AGAMA"
-              placeholder="Pilih agama"
-            />
-            <ProFormText width="md" name="tempat" label="TEMPAT" placeholder="Masukkan tempat lahir" />
-            <ProFormDatePicker width="md" name="tglLahir" label="TANGGAL LAHIR" placeholder="Masukkan tgl. lahir" />
+            <ProFormText readonly="readonly" name="id" label="ID" disabled />
+            <ProFormText readonly="readonly" name="userId" label="UID" disabled />
           </div>
-          <div>
-            <ProFormSelect
-              options={[
-                { value: 'belumKawin', label: 'Belum Kawin' },
-                { value: 'kawin', label: 'Kawin' },
-                { value: 'duda', label: 'Duda' },
-                { value: 'janda', label: 'Janda' }
-              ]}
-              width="sm"
-              name="statusNikah"
-              label="STATUS NIKAH"
-              placeholder="Pilih status"
-            />
-            <ProFormSelect
-              options={[
-                { value: 'female', label: 'Perempuan' },
-                { value: 'male', label: 'Laki-laki' }
-              ]}
-              width="sm"
-              name="gender"
-              label="JENIS KELAMIN"
-              placeholder="Pilih jenis kelamin"
-            />
-            <ProFormText width="md" name="kewarganegaraan" label="KEWARGANEGARAAN" placeholder="Masukkan kewarganegaraan" />
-            <ProFormTextArea width="md" name="alamat" label="ALAMAT" placeholder="Masukkan alamat" fieldProps={{ rows: 1 }} />
-            <ProFormText width="md" name="noHp" label="NO HP" placeholder="Masukkan no hp" />
-            <ProFormText width="md" name="noTelp" label="NO TELP" placeholder="Masukkan no telp" />
-            <ProFormText width="md" name="email" label="EMAIL" placeholder="Masukkan email" />
-            <ProFormText width="md" name="password" label="PASSWORD" placeholder="Masukkan password" />
+          <div className={styles.container}>
+            <div>
+              <ProFormText width="md" name="gelarDepan" label="GELAR DEPAN" placeholder="Masukkan gelar depan" rules={[{ required: true, message: 'Masukkan gelar depan' }]} />
+              <ProFormText width="md" name="nama" label="NAMA LENGKAP" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} />
+              <ProFormText width="md" name="gelarBelakang" label="GELAR BELAKANG" placeholder="Masukkan gelar belakang" rules={[{ required: true, message: 'Masukkan gelar belakang' }]} />
+              <ProFormText width="md" name="nip" label="NIP" placeholder="Masukkan nip" rules={[{ required: true, message: 'Masukkan nip' }]} />
+              <ProFormText width="md" name="nidn" label="NIDN" placeholder="Masukkan nidn" rules={[{ required: true, message: 'Masukkan nidn' }]} />
+              <ProFormText width="md" name="tempatLahir" label="TEMPAT LAHIR" placeholder="Masukkan tempat" />
+              <ProFormDatePicker width="md" name="tanggalLahir" label="TANGGAL LAHIR" placeholder="Masukkan tgl. lahir" />
+              <ProFormSelect
+                options={[
+                  { value: 'buddha', label: 'Buddha' },
+                  { value: 'kristenProtestan', label: 'Kristen Protestan' },
+                  { value: 'katolik', label: 'Katolik' },
+                  { value: 'islam', label: 'Islam' },
+                  { value: 'hindu', label: 'Hindu' },
+                  { value: 'kongHuCu', label: 'Kong Hu Cu' }
+                ]}
+                width="md"
+                name="agama"
+                label="AGAMA"
+                placeholder="Masukkan agama"
+              />
+            </div>
+              <div>
+                <ProFormSelect
+                  options={[
+                    { value: 'belumKawin', label: 'Belum Kawin' },
+                    { value: 'kawin', label: 'Kawin' },
+                    { value: 'duda', label: 'Duda' },
+                    { value: 'janda', label: 'Janda' }
+                  ]}
+                  width="md"
+                  name="statusNikah"
+                  label="STATUS NIKAH"
+                  placeholder="Masukkan status nikah"
+                />
+                <ProFormSelect
+                options={[
+                  { value: 0, label: 'Perempuan' },
+                  { value: 1, label: 'Laki-laki' }
+                ]}
+                width="md"
+                name="jenisKelamin"
+                label="JENIS KELAMIN"
+                placeholder="Masukkan jenis kelamin"
+              />
+                <ProFormText width="md" name="kewarganegaraan" label="KEWARGANEGARAAN" placeholder="Masukkan kewarganegaraan" />
+                <ProFormTextArea width="md" name="alamat" label="ALAMAT" placeholder="Masukkan alamat" />
+                <ProFormText width="md" name="noTelp" label="NO. TELEPON" placeholder="Masukkan noTelp" />
+                <ProFormText width="md" name="noHp" label="NO. HP" placeholder="Masukkan noHp" />
+                <ProFormText width="md" name="email" label="Email" placeholder="Masukkan email" />
+              </div>
           </div>
+          {/* <ProFormUploadButton
+            rules={[{ required: false, message: 'Enter image' }]}
+            name="image"
+            label="image"
+            max={1}
+            title="click to upload"
+            fieldProps={{
+              name: 'file',
+              listType: 'picture-card',
+              onPreview: handlePreview
+            }}
+            action={undefined}
+          /> */}
         </div>
       </ProForm>
     </>
