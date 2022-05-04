@@ -17,8 +17,7 @@ const FormEdit = ({
   row
 }) => {
   const [formValue, setFormValue] = useState({
-    idDosen: null,
-    idKelas: null
+    idDosen: row.idDosen || null
   })
   const [modalVerification, setModalVerification] = useState({
     data: {},
@@ -26,13 +25,11 @@ const FormEdit = ({
   })
   const { mr } = useConcent('matkulStore')
   const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
-  const { state: stateKelas, mr: mrKelas } = useConcent('kelasStore')
 
   const handleSubmit = (values) => {
     let data = {
       ...values,
-      idDosen: formValue.idDosen,
-      idKelas: formValue.idKelas
+      idDosen: formValue.idDosen
     }
     mr.update(data)
   }
@@ -54,24 +51,10 @@ const FormEdit = ({
     return []
   }) : []
 
-  const getListKelas = stateKelas.list
-  const optionListKelas = getListKelas && getListKelas.length > 0 ? getListKelas.map((item) => {
-    if (item.nama) {
-      return {
-        value: item,
-        label: item.nama
-      }
-    }
-    return []
-  }) : []
-
-  const onGetListDosen = (province) => {
-    mrDosen.get({ q: province, pageSize: 100 })
+  const onGetListDosen = (value) => {
+    mrDosen.get({ q: value, pageSize: 100 })
   }
-
-  const onGetListKelas = (province) => {
-    mrKelas.get({ q: province, pageSize: 100 })
-  }
+  let dosenFilterById = getListDosen.length > 0 && getListDosen.filter(item => item.id === row.idDosen)[0]
 
   const initialValues = {
     ...row,
@@ -79,8 +62,7 @@ const FormEdit = ({
     jurusan: row?.jurusan,
     alamat: row?.alamat,
     kodePos: row?.kodePos,
-    // kelas: row?.kelas.name,
-    // dosen: row?.dosen.name
+    idDosen: row?.idDosen && dosenFilterById.nama,
   }
 
   return (
@@ -98,14 +80,6 @@ const FormEdit = ({
         wrapperCol={{ span: 18 }}
         layout="horizontal"
         onFinish={async (values) => {
-          let newValuesKelas =  optionListKelas
-            .map(item => JSON.parse(item.value))
-            .filter(filtered => filtered.name === values.kelas)
-
-          values.kelas = {
-            id: newValuesKelas[0].id,
-            name: newValuesKelas[0].name
-          }
           setModalVerification({ data: values, active: true })
         }}
         initialValues={initialValues}
@@ -132,7 +106,7 @@ const FormEdit = ({
                 allowClear
               >
                 {optionListDosen.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label}>
+                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
                     {item.label}
                   </AutoCompleteOption>
                 ))}
@@ -142,27 +116,7 @@ const FormEdit = ({
             <ProFormTextArea name="keterangan" label="keterangan" placeholder="Masukkan keterangan" />
           </Col>
           <Col span={12}>
-          <ProForm.Item
-              name="idKelas"
-              label="Kelas"
-              rules={[{ required: true, message: 'Masukkan nama kelas' }]}
-            >
-              <AutoComplete
-                placeholder="Masukkan nama kelas"
-                onSelect={(data) => {
-                  setFormValue({ idKelas: param.datasource.value.id })
-                  onGetListKelas(data)
-                }}
-                filterOption
-                allowClear
-              >
-                {optionListKelas.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label}>
-                    {item.label}
-                  </AutoCompleteOption>
-                ))}
-              </AutoComplete>
-            </ProForm.Item>
+            <ProFormText name="kelas" label="Kelas" placeholder="TIA" rules={[{ required: true, message: 'Masukkan nama kelas' }]} />
             <ProFormDatePicker width="md" name="startDate" label="startDate" placeholder="Masukkan startDate" />
             <ProFormTimePicker width="md" name="startTime" label="startTime" placeholder="Masukkan startTime" />
             <ProFormDatePicker width="md" name="endDate" label="endDate" placeholder="Masukkan endDate" />

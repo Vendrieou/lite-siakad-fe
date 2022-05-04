@@ -15,21 +15,18 @@ const FormCreate = ({
   onCreate
 }) => {
   const [formValue, setFormValue] = useState({
-    idDosen: null,
-    idKelas: null
+    idDosen: null
   })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
   })
   const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
-  const { state: stateKelas, mr: mrKelas } = useConcent('kelasStore')
 
   const handleSubmit = async (values) => {
     let data = {
       ...values,
-      idDosen: formValue.idDosen,
-      idKelas: formValue.idKelas
+      idDosen: formValue.idDosen
     }
     onCreate(data)
   }
@@ -40,42 +37,18 @@ const FormCreate = ({
 
   const getListDosen = stateDosen.list
   const optionListDosen = getListDosen && getListDosen.length > 0 ? getListDosen.map((item) => {
-    if (item.name) {
+    if (item.nama) {
       return {
-        value: JSON.stringify(item),
-        label: item.name
+        value: item,
+        label: item.nama
       }
     }
     return []
   }) : []
 
-  const getListKelas = stateKelas.list
-  const optionListKelas = getListKelas && getListKelas.length > 0 ? getListKelas.map((item) => {
-    if (item.name) {
-      return {
-        value: JSON.stringify(item),
-        label: item.name
-      }
-    }
-    return []
-  }) : []
-
-  const onGetListDosen = (province) => {
-    mrDosen.get({ q: province, pageSize: 100 })
+  const onGetListDosen = (value) => {
+    mrDosen.get({ q: value, pageSize: 100 })
   }
-
-  const onGetListKelas = (province) => {
-    mrKelas.get({ q: province, pageSize: 100 })
-  }
-
-  // const initialValues = {
-  //   nama: 'SMA SWASTA CINTA BUDAYA',
-  //   jurusan: 'IPA',
-  //   alamat: 'jl. AR HAKIM no 10',
-  //   kodePos: '20125',
-  //   cityId: 278,
-  //   provinceId: 278,
-  // }
 
   return (
     <>
@@ -91,21 +64,13 @@ const FormCreate = ({
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 18 }}
         layout="horizontal"
+        scrollToFirstError
         onFinish={async (values) => {
-          let newValuesKelas =  optionListKelas
-          .map(item => JSON.parse(item.value))
-          .filter(filtered => filtered.name === values.kelas)
-          
-          values.kelas = {
-            id: newValuesKelas[0].id,
-            name: newValuesKelas[0].name
-          }
           setModalVerification({ data: values, active: true })
         }}
-        // initialValues={initialValues}
         params={{}}
       >
-           <Row>
+        <Row>
           <Col span={12}>
             <ProFormText width="md" name="kodeMatkul" label="kodeMatkul" placeholder="Masukkan kodeMatkul" />
             <ProFormText width="md" name="nama" label="nama" placeholder="Masukkan nama" />
@@ -117,7 +82,7 @@ const FormCreate = ({
             >
               <AutoComplete
                 placeholder="Masukkan nama dosen"
-                onSelect={(value) => {
+                onSelect={(value, param) => {
                   setFormValue({ idDosen: param.datasource.value.id })
                   onGetListDosen(value)
                 }}
@@ -125,7 +90,7 @@ const FormCreate = ({
                 allowClear
               >
                 {optionListDosen.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label}>
+                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
                     {item.label}
                   </AutoCompleteOption>
                 ))}
@@ -135,27 +100,7 @@ const FormCreate = ({
             <ProFormTextArea name="keterangan" label="keterangan" placeholder="Masukkan keterangan" />
           </Col>
           <Col span={12}>
-          <ProForm.Item
-              name="idKelas"
-              label="Kelas"
-              rules={[{ required: true, message: 'Masukkan nama kelas' }]}
-            >
-              <AutoComplete
-                placeholder="Masukkan nama kelas"
-                onSelect={(data) => {
-                  setFormValue({ idKelas: param.datasource.value.id })
-                  onGetListKelas(data)
-                }}
-                filterOption
-                allowClear
-              >
-                {optionListKelas.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label}>
-                    {item.label}
-                  </AutoCompleteOption>
-                ))}
-              </AutoComplete>
-            </ProForm.Item>
+            <ProFormText name="kelas" label="Kelas" placeholder="TIA" rules={[{ required: true, message: 'Masukkan nama kelas' }]} />
             <ProFormDatePicker width="md" name="startDate" label="startDate" placeholder="Masukkan startDate" />
             <ProFormTimePicker width="md" name="startTime" label="startTime" placeholder="Masukkan startTime" />
             <ProFormDatePicker width="md" name="endDate" label="endDate" placeholder="Masukkan endDate" />
