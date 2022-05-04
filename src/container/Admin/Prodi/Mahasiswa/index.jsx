@@ -180,7 +180,7 @@ const ProdiMahasiswaContainer = () => {
         <ProTable
           headerTitle="List Mahasiswa"
           actionRef={actionRef}
-          rowKey="key"
+          rowKey="id"
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({

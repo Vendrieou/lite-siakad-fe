@@ -161,7 +161,7 @@ const ProdiDosenContainer = () => {
       <ProTable
         headerTitle="List Mahasiswa"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         request={() => {
           return Promise.resolve({
             data: tableListDataSource,
@@ -227,7 +227,7 @@ const ProdiDosenContainer = () => {
             //   }
             // }
           }}
-          rowKey="key"
+          rowKey="id"
           type="form"
           columns={columns}
         />

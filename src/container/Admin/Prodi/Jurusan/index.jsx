@@ -162,7 +162,7 @@ const ProdiJurusanContainer = () => {
         <ProTable
           headerTitle="List Jurusan"
           actionRef={actionRef}
-          rowKey="key"
+          rowKey="id"
           dataSource={list && list.length ? list : []}
           request={(params) => {
             mr.get({
@@ -195,7 +195,7 @@ const ProdiJurusanContainer = () => {
               onSubmit={async (values) => {
                 setModalVerification({ data: values, active: true })
               }}
-              rowKey="key"
+              rowKey="id"
               type="form"
               columns={columns}
             />
