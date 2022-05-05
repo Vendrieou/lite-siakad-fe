@@ -1,18 +1,25 @@
 // import React, { useState, useEffect, useCallback } from 'react'
-import { useState, useEffect, useCallback } from 'react'
-import axios from 'axios'
-import { Modal, AutoComplete } from 'antd'
+import { useState } from 'react'
+import { Form, Modal, AutoComplete, Table, Button } from 'antd'
 import ProForm, {
   ProFormText,
-  ProFormDigit,
+  // ProFormDigit,
   ProFormSelect
 } from '@ant-design/pro-form'
+import { CloseOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
 
 const AutoCompleteOption = AutoComplete.Option
 
 const FormCreate = ({ onCreate }) => {
-  const [selectedUserData, setSelectedUserData] = useState('')
+  const [form] = Form.useForm();
+  const [formValue, setFormValue] = useState({
+    idDosen: null
+  })
+  const [tempForm, setTempForm] = useState({
+    mataKuliah: null
+  })
+  const [listMataKuliah, setMataKuliah] = useState([])
   const [preview, setPreview] = useState({
     image: '',
     title: '',
@@ -23,9 +30,42 @@ const FormCreate = ({ onCreate }) => {
     active: false
   })
 
+
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+    },
+    {
+      title: 'Kurikulum',
+      dataIndex: 'kurikulum',
+    },
+    {
+      title: 'Semester',
+      dataIndex: 'semester',
+    },
+    {
+      title: 'Dosen',
+      dataIndex: ['dosen', 'nama'],
+    },
+    {
+      title: 'Action',
+      key: 'option',
+      valueType: 'option',
+      render: (dom, entity, index) => [
+        <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
+          let value = listMataKuliah.filter((item, idx)=> idx !== index);
+          setMataKuliah(value)
+        }} />
+      ]
+    }
+  ]
+
   const handleSubmit = async (values) => {
     let data = {
-      ...values
+      ...values,
+      idDosen: formValue.idDosen,
+      listMataKuliah: JSON.stringify(listMataKuliah)
     }
     if (onCreate) {
       onCreate(data)
@@ -39,30 +79,38 @@ const FormCreate = ({ onCreate }) => {
     setModalVerification({ active: false })
   }
 
-  const { state: stateUser, mr: mrUser } = useConcent('userStore')
+  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
+  const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
 
-  const optionListUser = stateUser.list && stateUser.list.length > 0 ? stateUser.list.map((item) => {
-    if (item.firstName) {
+  const getListDosen = stateDosen.list
+  const optionListDosen = getListDosen && getListDosen.length > 0 ? getListDosen.map((item) => {
+    if (item.nama) {
       return {
-        value: item.id,
-        label: `${item.firstName} ${item.lastName}`
+        value: item,
+        label: item.nama
       }
     }
     return []
   }) : []
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const onGetUser = useCallback(async (name, cancelToken) => {
-    mrUser.get({ q: name, cancelToken })
-  })
-
-  useEffect(() => {
-    const cancelToken = axios.CancelToken
-    const source = cancelToken.source()
-    onGetUser(null, { cancelToken: source.token })
-    return () => {
-      source.cancel("axios request cancelled")
+  
+  const getListMataKuliah = stateMataKuliah.list
+  const optionListMataKuliah = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
+    if (item.nama) {
+      return {
+        value: item,
+        label: item.nama
+      }
     }
-  }, [onGetUser])
+    return []
+  }) : []
+ 
+  const onGetListDosen = (value) => {
+    mrDosen.get({ q: value, pageSize: 100 })
+  }
+
+  const onGetListMataKuliah = (value) => {
+    mrMataKuliah.get({ q: value, pageSize: 100 })
+  }
 
   return (
     <>
@@ -83,49 +131,43 @@ const FormCreate = ({ onCreate }) => {
         <img alt="preview" style={{ width: '100%' }} src={preview.image} />
       </Modal>
       <ProForm
+        form={form}
         onFinish={async (values) => {
           setModalVerification({ data: values, active: true })
         }}
         scrollToFirstError
         params={{}}
       >
-        <ProFormText width="md" name="id" label="Id" placeholder="" readonly />
-        <ProFormText width="md" name="name" label="Nama" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} />
-        <ProFormDigit width="md" name="semester" label="Semester" min={1} max={8} rules={[{ required: true, message: 'Masukkan semester' }]} />
+        {/* <ProFormText width="md" name="id" label="Id" placeholder="" readonly /> */}
+        <ProFormText width="md" name="kurikulum" label="Kurikulum" placeholder="Masukkan kurikulum" rules={[{ required: true, message: 'Masukkan kurikulum' }]} />
+        {/* <ProFormDigit width="md" name="semester" label="Semester" min={1} max={8} rules={[{ required: true, message: 'Masukkan semester' }]} /> */}
         <ProForm.Item
-          name="dosenWali"
+          name="idDosen"
           label="Dosen Wali"
+          width="md"
           rules={[{ required: true, message: 'Masukkan nama dosen' }]}
         >
           <AutoComplete
-            style={{ width: '100%' }}
             placeholder="Masukkan nama dosen"
-            onSelect={(name, option) => {
-              setSelectedUserData(option.key)
+            onSelect={(value, param) => {
+              setFormValue({ idDosen: param.datasource.value.id })
+              onGetListDosen(value)
             }}
-            onSearch={(name) => onGetUser(name)}
             filterOption
             allowClear
+            onClear={() => onGetListDosen(null)}
           >
-            {optionListUser && optionListUser.length > 0 ?
-              optionListUser.map(item => (
-                <AutoCompleteOption key={item.value} value={item.label}>
-                  {item.label}
-                </AutoCompleteOption>
-              )) : <AutoCompleteOption><span>empty</span></AutoCompleteOption>}
+            {optionListDosen.map(item => (
+              <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
+                {item.label}
+              </AutoCompleteOption>
+            ))}
           </AutoComplete>
         </ProForm.Item>
-        <ProFormDigit
-          readonly
-          width="md"
-          name="userId"
-          label="userId"
-          min={1}
-          fieldProps={{
-            value: selectedUserData
-          }}
-        />
         <ProFormSelect
+          name="status"
+          label="Status"
+          width="md"
           options={[
             {
               value: 'draft',
@@ -145,6 +187,45 @@ const FormCreate = ({ onCreate }) => {
             }
           ]}
         />
+          <div style={{ display: 'grid', 'grid-template-columns': '2fr 60px', alignItems: 'center' }}>
+            <ProForm.Item
+              name="mataKuliah"
+              label="Mata Kuliah"
+            >
+              <AutoComplete
+                placeholder="Masukkan Mata Kuliah"
+                onSelect={(value, param) => {
+                  setTempForm({ ...tempForm, mataKuliah: param.datasource.value })
+                  onGetListMataKuliah(value)
+                }}
+                filterOption
+                allowClear
+                onClear={() => onGetListMataKuliah(null)}
+              >
+                {optionListMataKuliah.map(item => (
+                  <AutoCompleteOption key={item.label} value={item.label} datasource={item}>
+                    {item.label}
+                  </AutoCompleteOption>
+                ))}
+              </AutoComplete>
+            </ProForm.Item>
+            <Button
+              style={{ marginTop: '6px', width: 60 }}
+              type="primary"
+              onClick={() => {
+              form.resetFields(['mataKuliah'])
+              setMataKuliah(listMataKuliah.concat(tempForm.mataKuliah))
+            }}>Add</Button>
+          </div>
+        {/* <pre>{JSON.stringify(listMataKuliah)}</pre> */}
+        <div style={{ overflowX: 'auto', marginBottom: '3em'}}>
+          <Table
+            dataSource={listMataKuliah && listMataKuliah.length > 0 ? listMataKuliah : []}
+            columns={columns}
+            size="small"
+            pagination={false}
+          />
+        </div>
       </ProForm>
     </>
   )

@@ -3,11 +3,12 @@ import {
   apiMatkul
 } from '@/utils/config'
 
-const apiGet = async (params: any) => {
+const apiGet = async (params: any, data: any) => {
   return request({
     url: `${apiMatkul}`,
     method: 'get',
     params,
+    data,
     auth: true
   })
 }

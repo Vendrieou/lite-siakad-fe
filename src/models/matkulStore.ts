@@ -29,11 +29,11 @@ const module = defineModule({
       const data = {
         ...payload,
         q: payload?.q || '',
-        page: payload?.page || 1
+        page: payload?.page || 1,
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
-        const response = await apiGet(data)
+        const response = await apiGet(data, { relationship: 1 })
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE, response)
           return response
@@ -131,11 +131,11 @@ const module = defineModule({
     }
 
   },
-  // lifecycle: {
-  //   mounted: async (dispatch, moduleState) => {
-  //     dispatch(module.reducer.get)
-  //   }
-  // }
+  lifecycle: {
+    mounted: async (dispatch, moduleState) => {
+      dispatch(module.reducer.get)
+    }
+  }
 })
 
 export default module

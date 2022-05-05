@@ -47,8 +47,8 @@ const ProdiKRSContainer = () => {
       hideInSearch: true
     },
     {
-      title: 'Nama',
-      dataIndex: 'name',
+      title: 'Kurikulum',
+      dataIndex: 'kurikulum',
       tip: '',
       formItemProps: {
         rules: [
@@ -59,23 +59,23 @@ const ProdiKRSContainer = () => {
         ]
       }
     },
-    {
-      title: 'Semester',
-      dataIndex: 'semester',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
+    // {
+    //   title: 'Semester',
+    //   dataIndex: 'semester',
+    //   tip: '',
+    //   formItemProps: {
+    //     rules: [
+    //       {
+    //         required: true,
+    //         message: 'Wajib'
+    //       }
+    //     ]
+    //   }
+    // },
     {
       // nama dosen
       title: 'Dosen Wali',
-      dataIndex: 'dosen',
+      dataIndex: ['dosen', 'nama'],
       formItemProps: {
         rules: [
           {
