@@ -7,6 +7,7 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/matkulService'
+import history from '@/utils/history'
 
 const module = defineModule({
   state: {
@@ -133,6 +134,11 @@ const module = defineModule({
   },
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
+      const { pathname } = history.location
+      if (pathname === '/admin/prodi/krs') {
+        dispatch(module.reducer.get, { pageSize: 100 })
+        return
+      }
       dispatch(module.reducer.get)
     }
   }

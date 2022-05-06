@@ -37,8 +37,8 @@ const FormCreate = ({ onCreate }) => {
       dataIndex: 'id',
     },
     {
-      title: 'Kurikulum',
-      dataIndex: 'kurikulum',
+      title: 'nama',
+      dataIndex: 'nama',
     },
     {
       title: 'Semester',
@@ -158,9 +158,7 @@ const FormCreate = ({ onCreate }) => {
             onClear={() => onGetListDosen(null)}
           >
             {optionListDosen.map(item => (
-              <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
-                {item.label}
-              </AutoCompleteOption>
+              <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
             ))}
           </AutoComplete>
         </ProForm.Item>
@@ -196,17 +194,26 @@ const FormCreate = ({ onCreate }) => {
                 placeholder="Masukkan Mata Kuliah"
                 onSelect={(value, param) => {
                   setTempForm({ ...tempForm, mataKuliah: param.datasource.value })
-                  onGetListMataKuliah(value)
+                  // 
                 }}
                 filterOption
                 allowClear
                 onClear={() => onGetListMataKuliah(null)}
               >
-                {optionListMataKuliah.map(item => (
-                  <AutoCompleteOption key={item.label} value={item.label} datasource={item}>
-                    {item.label}
+                {optionListMataKuliah && optionListMataKuliah.length > 0 ? optionListMataKuliah.map(item => {
+                  const {
+                    id,
+                    kelas,
+                    semester,
+                    dosen
+                  } = item.value
+                  let value = `[IDM:${id || ''}-Semester:${semester}-Kelas:${kelas || ''}-Dosen:${dosen.nama || ''}]-${item.label}`
+                  return (
+                  <AutoCompleteOption key={id} value={value} datasource={item}>
+                    {value}
                   </AutoCompleteOption>
-                ))}
+                )
+                }):[]}
               </AutoComplete>
             </ProForm.Item>
             <Button
@@ -220,6 +227,7 @@ const FormCreate = ({ onCreate }) => {
         {/* <pre>{JSON.stringify(listMataKuliah)}</pre> */}
         <div style={{ overflowX: 'auto', marginBottom: '3em'}}>
           <Table
+            rowKey="id"
             dataSource={listMataKuliah && listMataKuliah.length > 0 ? listMataKuliah : []}
             columns={columns}
             size="small"

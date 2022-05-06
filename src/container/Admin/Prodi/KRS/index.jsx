@@ -201,9 +201,10 @@ const ProdiKRSContainer = () => {
 
         {/* create data template KRS tab "list" */}
         <CreateForm
-          maskClosable={false}
           width={800}
           title="Tambah KRS"
+          keyboard={false}
+          maskClosable={false}
           onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
         >
           <FormCreate {...FormCreateProps} />
