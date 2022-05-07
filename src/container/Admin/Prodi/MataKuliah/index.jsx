@@ -38,7 +38,7 @@ const ProdiMataKuliahContainer = () => {
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
     { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
+    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
     { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
     { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
     { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
