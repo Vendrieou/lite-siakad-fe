@@ -50,12 +50,10 @@ const FormCreate = ({ onCreate }) => {
         <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
           // let value = listMataKuliah.filter((item, idx)=> idx !== index);
           // setMataKuliah(value)
-          console.log('index', index)
           // let value = stateMataKuliah.selectionList.filter((item, idx)=> idx !== index);
           let value = stateMataKuliah.selectionList && stateMataKuliah.selectionList.length > 0
             ? stateMataKuliah.selectionList.filter((item, idx) => idx !== index)
             : []
-          console.log('value', value)
           mrMataKuliah.setDeleteSelection(value)
         }} />
       ]
