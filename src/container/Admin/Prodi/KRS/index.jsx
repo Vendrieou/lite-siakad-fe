@@ -23,6 +23,8 @@ const ProdiKRSContainer = () => {
   const [type, setType] = useState('export')
 
   const { mr, state } = useConcent('krsStore')
+  const { mr: mrMataKuliah } = useConcent('matkulStore')
+
   const { list } = state
 
   const showDeleteTemplateConfirm = (entity) => {
@@ -159,7 +161,7 @@ const ProdiKRSContainer = () => {
     setRow,
     row
   }
-  
+
   return (
     <PrivateRoute access={['admin']}>
       <PageContainer
@@ -191,7 +193,7 @@ const ProdiKRSContainer = () => {
               mr.get({
                 q: params.name || '',
                 page: params.current || ''
-              // status: params.status
+                // status: params.status
               })
             }}
             columns={columns}
@@ -205,7 +207,11 @@ const ProdiKRSContainer = () => {
           title="Tambah KRS"
           keyboard={false}
           maskClosable={false}
-          onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
+          onCancel={() => {
+            mrMataKuliah.RESET_ALL()
+            handleModalVisible(false)
+          }}
+          modalVisible={createModalVisible}
         >
           <FormCreate {...FormCreateProps} />
         </CreateForm>

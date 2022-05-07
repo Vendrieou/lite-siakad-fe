@@ -1,6 +1,6 @@
 // import React, { useState, useEffect, useCallback } from 'react'
 import { useState } from 'react'
-import { Form, Modal, AutoComplete, Table, Button } from 'antd'
+import { Form, Modal, AutoComplete, Table, Button, Drawer } from 'antd'
 import ProForm, {
   ProFormText,
   // ProFormDigit,
@@ -8,6 +8,8 @@ import ProForm, {
 } from '@ant-design/pro-form'
 import { CloseOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
+// import CreateForm from 'components/Form/CreateForm'
+import TabSelectionMatkul from './TabSelectionMatkul'
 
 const AutoCompleteOption = AutoComplete.Option
 
@@ -16,10 +18,10 @@ const FormCreate = ({ onCreate }) => {
   const [formValue, setFormValue] = useState({
     idDosen: null
   })
-  const [tempForm, setTempForm] = useState({
-    mataKuliah: null
-  })
-  const [listMataKuliah, setMataKuliah] = useState([])
+  // const [tempForm, setTempForm] = useState({
+  //   mataKuliah: null
+  // })
+  // const [listMataKuliah, setMataKuliah] = useState([])
   const [preview, setPreview] = useState({
     image: '',
     title: '',
@@ -30,32 +32,31 @@ const FormCreate = ({ onCreate }) => {
     active: false
   })
 
+  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
+  const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
+  const { selectionList } = stateMataKuliah
 
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-    },
-    {
-      title: 'nama',
-      dataIndex: 'nama',
-    },
-    {
-      title: 'Semester',
-      dataIndex: 'semester',
-    },
-    {
-      title: 'Dosen',
-      dataIndex: ['dosen', 'nama'],
-    },
+    { key: Math.random(stateMataKuliah.list.length), hideInForm: true, hideInSearch: true, hideInTable: true },
+    { title: 'ID', dataIndex: 'id', },
+    { title: 'nama', dataIndex: 'nama' },
+    { title: 'Semester', dataIndex: 'semester' },
+    { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
     {
       title: 'Action',
       key: 'option',
       valueType: 'option',
       render: (dom, entity, index) => [
         <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
-          let value = listMataKuliah.filter((item, idx)=> idx !== index);
-          setMataKuliah(value)
+          // let value = listMataKuliah.filter((item, idx)=> idx !== index);
+          // setMataKuliah(value)
+          console.log('index', index)
+          // let value = stateMataKuliah.selectionList.filter((item, idx)=> idx !== index);
+          let value = stateMataKuliah.selectionList && stateMataKuliah.selectionList.length > 0
+            ? stateMataKuliah.selectionList.filter((item, idx) => idx !== index)
+            : []
+          console.log('value', value)
+          mrMataKuliah.setDeleteSelection(value)
         }} />
       ]
     }
@@ -65,7 +66,8 @@ const FormCreate = ({ onCreate }) => {
     let data = {
       ...values,
       idDosen: formValue.idDosen,
-      listMataKuliah: JSON.stringify(listMataKuliah)
+      // listMataKuliah: JSON.stringify(listMataKuliah)
+      listMataKuliah: JSON.stringify(stateMataKuliah.selectionList)
     }
     if (onCreate) {
       onCreate(data)
@@ -79,9 +81,6 @@ const FormCreate = ({ onCreate }) => {
     setModalVerification({ active: false })
   }
 
-  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
-  const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
-
   const getListDosen = stateDosen.list
   const optionListDosen = getListDosen && getListDosen.length > 0 ? getListDosen.map((item) => {
     if (item.nama) {
@@ -92,7 +91,7 @@ const FormCreate = ({ onCreate }) => {
     }
     return []
   }) : []
-  
+
   const getListMataKuliah = stateMataKuliah.list
   const optionListMataKuliah = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
     if (item.nama) {
@@ -103,15 +102,19 @@ const FormCreate = ({ onCreate }) => {
     }
     return []
   }) : []
- 
+
   const onGetListDosen = (value) => {
     mrDosen.get({ q: value, pageSize: 100 })
   }
 
-  const onGetListMataKuliah = (value) => {
-    mrMataKuliah.get({ q: value, pageSize: 100 })
-  }
+  // const onGetListMataKuliah = (value) => {
+  //   mrMataKuliah.get({ q: value, pageSize: 100 })
+  // }
 
+  const selectionProps = {
+    stateMataKuliah,
+    mrMataKuliah
+  }
   return (
     <>
       <Modal
@@ -130,6 +133,23 @@ const FormCreate = ({ onCreate }) => {
       >
         <img alt="preview" style={{ width: '100%' }} src={preview.image} />
       </Modal>
+      {/* <pre>{JSON.stringify(selectionList, 2, null)}</pre>
+      <br />
+      <Button onClick={() => mrMataKuliah.setSelection([{name: 'oi'}])}>Set Selection</Button> */}
+      <Drawer
+        title="Menu"
+        placement="right"
+        contentWrapperStyle={{
+          width: '840px'
+        }}
+        // maskClosable={false}
+        // closable={false}
+        // keyboard={false}
+        onClose={() => mrMataKuliah.onVisible(false)}
+        visible={stateMataKuliah.selectionVisible}
+      >
+        <TabSelectionMatkul {...selectionProps} />
+      </Drawer>
       <ProForm
         form={form}
         onFinish={async (values) => {
@@ -185,7 +205,28 @@ const FormCreate = ({ onCreate }) => {
             }
           ]}
         />
-          <div style={{ display: 'grid', 'grid-template-columns': '2fr 60px', alignItems: 'center' }}>
+        <div style={{ display: 'grid', 'grid-template-columns': '.3fr 250px', alignItems: 'center' }}>
+          <p>Mata Kuliah</p>
+          <Button
+            size="small"
+            type="primary"
+            onClick={() => {
+              mrMataKuliah.onVisible(true)
+              mrMataKuliah.get()
+            }}>Add mata kuliah</Button>
+        </div>
+        {/* <pre>{JSON.stringify(listMataKuliah)}</pre> */}
+        <div style={{ overflowX: 'auto', marginBottom: '3em' }}>
+          <Table
+            rowKey="key"
+            // dataSource={listMataKuliah && listMataKuliah.length > 0 ? listMataKuliah : []}
+            dataSource={selectionList && selectionList.length > 0 ? selectionList : []}
+            columns={columns}
+            size="small"
+            pagination={false}
+          />
+        </div>
+        {/* <div style={{ display: 'grid', 'grid-template-columns': '2fr 60px', alignItems: 'center' }}>
             <ProForm.Item
               name="mataKuliah"
               label="Mata Kuliah"
@@ -223,17 +264,8 @@ const FormCreate = ({ onCreate }) => {
               form.resetFields(['mataKuliah'])
               setMataKuliah(listMataKuliah.concat(tempForm.mataKuliah))
             }}>Add</Button>
-          </div>
-        {/* <pre>{JSON.stringify(listMataKuliah)}</pre> */}
-        <div style={{ overflowX: 'auto', marginBottom: '3em'}}>
-          <Table
-            rowKey="id"
-            dataSource={listMataKuliah && listMataKuliah.length > 0 ? listMataKuliah : []}
-            columns={columns}
-            size="small"
-            pagination={false}
-          />
-        </div>
+          </div> */}
+
       </ProForm>
     </>
   )

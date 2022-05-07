@@ -17,15 +17,32 @@ const module = defineModule({
     },
     currentItem: {},
     counter: {},
+    selectionList: [],
     group: [],
     asset: [],
     list: [],
     dataSet: [],
     meta: {},
-    errorMessage: null
+    errorMessage: null,
+    selectionVisible: false
   },
-
   reducer: {
+    setSelection: (payload, moduleState) => {
+      return {
+        selectionList: moduleState.selectionList.concat(payload)
+      }
+    },
+    setDeleteSelection: (payload) => {
+      return {
+        selectionList: payload
+      }
+    },
+    onVisible: (payload, moduleState) => {
+      // || !moduleState.selectionVisible
+      return {
+        selectionVisible: payload
+      }
+    },
     get: async (payload: any, moduleState, actionCtx) => {
       const data = {
         ...payload,
@@ -128,6 +145,23 @@ const module = defineModule({
       return {
         loading: payload?.loading,
         errorMessage: payload?.errorMessage
+      }
+    },
+    RESET_ALL: () => {
+      return {
+        loading: false,
+        filter: {
+          page: 1
+        },
+        currentItem: {},
+        counter: {},
+        selectionList: [],
+        group: [],
+        asset: [],
+        list: [],
+        dataSet: [],
+        meta: {},
+        errorMessage: null
       }
     }
 
