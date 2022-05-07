@@ -17,8 +17,8 @@ const TabSelectionMatkul = ({
       hideInSearch: true
     },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
-    { title: 'sks', dataIndex: 'sks', hideInForm: true, hideInSearch: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'sks', dataIndex: 'sks', hideInForm: true },
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
     { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
@@ -31,7 +31,7 @@ const TabSelectionMatkul = ({
   ]
   const initData = {
     search: {
-      layout: 'vertical',
+      layout: 'horizontal',
       defaultCollapsed: true
     },
     pagination: {
@@ -94,7 +94,12 @@ const TabSelectionMatkul = ({
       //     </Button>
       //   ]}
       dataSource={list && list.length ? list : []}
-      // request={(params) => {  }}
+      request={(params) => {
+        mrMataKuliah.get({
+          q: params.kodeMatkul || params.semester || params.nama,
+          page: params.current
+        })
+      }}
       columns={columns}
       {...initData}
     />
