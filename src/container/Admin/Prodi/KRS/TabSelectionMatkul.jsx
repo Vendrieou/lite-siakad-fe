@@ -21,7 +21,7 @@ const TabSelectionMatkul = ({
     { title: 'sks', dataIndex: 'sks', hideInForm: true },
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true },
     { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
     { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
     { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
@@ -52,6 +52,7 @@ const TabSelectionMatkul = ({
   }
   return (
     <ProTable
+      size="small"
       headerTitle="Select Mata Kuliah"
       rowKey="id"
       rowSelection={{
@@ -96,7 +97,7 @@ const TabSelectionMatkul = ({
       dataSource={list && list.length ? list : []}
       request={(params) => {
         mrMataKuliah.get({
-          q: params.kodeMatkul || params.semester || params.nama,
+          q: params.kodeMatkul || params.semester || params.sks || params.nama,
           page: params.current
         })
       }}

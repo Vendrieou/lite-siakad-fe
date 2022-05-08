@@ -100,6 +100,19 @@ const FormCreate = ({ onCreate }) => {
     }
     return []
   }) : []
+  
+  // get Kurikulum Option list
+  // const getListKurikulum = stateMataKuliah.list
+  // const optionListKurikulum = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
+  //   if (item.nama) {
+  //     return {
+  //       value: item,
+  //       label: item.nama
+  //     }
+  //   }
+  //   return []
+  // }) : []
+
 
   const onGetListDosen = (value) => {
     mrDosen.get({ q: value, pageSize: 100 })
@@ -135,10 +148,10 @@ const FormCreate = ({ onCreate }) => {
       <br />
       <Button onClick={() => mrMataKuliah.setSelection([{name: 'oi'}])}>Set Selection</Button> */}
       <Drawer
-        title="Menu"
+        title="Select Mata Kuliah"
         placement="right"
         contentWrapperStyle={{
-          width: '840px'
+          width: window.innerWidth > 640 ? '1000px' : null
         }}
         // maskClosable={false}
         // closable={false}
@@ -181,6 +194,35 @@ const FormCreate = ({ onCreate }) => {
           </AutoComplete>
         </ProForm.Item>
         <ProFormSelect
+          name="allowedSemester"
+          label="Semester"
+          tooltip="Semester yang Diperbolehkan"
+          mode="multiple"
+          request={async () => [
+            { label: 1, value: 1 },
+            { label: 2, value: 2 },
+            { label: 3, value: 3 },
+            { label: 4, value: 4 },
+            { label: 5, value: 5 },
+            { label: 6, value: 6 },
+            { label: 7, value: 7 },
+            { label: 8, value: 8 }
+          ]}
+          placeholder="Pilih akses semester"
+          rules={[{ required: true, message: 'Masukkan akses semester' }]} 
+        />
+        <ProFormSelect
+          name="jenisKurikulum"
+          label="Jenis Kurikulum"
+          request={async () => [
+            { label: 'Biasa', value: 'Biasa' },
+            { label: 'Minat', value: 'Minat' },
+            { label: 'MBBKM', value: 'MBBKM' },
+          ]}
+          placeholder="Pilih Jenis Kurikulum"
+          rules={[{ required: true, message: 'Masukkan jenis kurikulum' }]}
+        />
+        <ProFormSelect
           name="status"
           label="Status"
           width="md"
@@ -190,16 +232,8 @@ const FormCreate = ({ onCreate }) => {
               label: 'draft'
             },
             {
-              value: 'approvement',
-              label: 'approvement'
-            },
-            {
-              value: 'accepted',
-              label: 'accepted'
-            },
-            {
-              value: 'cancel',
-              label: 'cancel'
+              value: 'published',
+              label: 'published'
             }
           ]}
         />
