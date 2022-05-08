@@ -96,7 +96,7 @@ const App = () => {
               },
               { path: 'settings', element: <AdminLayout><AdminSettingsProfile /></AdminLayout> },
             ]
-          },
+          }
         ]}
       >
         <Outlet /> {/* Start rendering router matches */}

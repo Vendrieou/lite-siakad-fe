@@ -96,6 +96,8 @@ const FormEdit = ({
   }
 
   let sekolahFilterById = getListSekolah.length > 0 && getListSekolah.filter(item => item.id === row.idSekolah)[0]
+  console.log('row',row);
+  console.log('sekolahFilterById',sekolahFilterById);
   const initialValues = {
     ...row,
     // BAG 1
@@ -103,6 +105,7 @@ const FormEdit = ({
     kodeProgramStudi: row?.kodeProgramStudi,
     noIjazah: row?.noIjazah,
     // image: row?.image,
+    jurusan: row?.jurusan,
     nama: row?.nama,
     nim: row?.nim,
     tempat: row?.tempat,
@@ -128,12 +131,12 @@ const FormEdit = ({
     pendidikanOrgTua: row?.pendidikanOrgTua,
     // BAG 3
     // asalSekolah: row?.asalSekolah,
-    idSekolah: row?.idSekolah && sekolahFilterById.nama,
-    jurusan: sekolahFilterById.jurusan,
-    alamat: sekolahFilterById.alamat,
-    kodePosSekolah: sekolahFilterById.kodePos,
-    kota: sekolahFilterById.city?.name,
-    provinsi: sekolahFilterById.province?.name,
+    idSekolah: row?.idSekolah && sekolahFilterById?.nama,
+    jurusanSekolah: sekolahFilterById?.jurusan,
+    alamat: sekolahFilterById?.alamat,
+    kodePosSekolah: sekolahFilterById?.kodePos,
+    kota: sekolahFilterById?.city?.name,
+    provinsi: sekolahFilterById?.province?.name,
     tahunLulus: row?.tahunLulus,
     noSTTB: row?.noSTTB,
     tglSTTB: row?.tglSTTB,
