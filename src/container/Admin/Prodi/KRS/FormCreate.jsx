@@ -37,11 +37,6 @@ const FormCreate = ({ onCreate }) => {
   const { selectionList } = stateMataKuliah
 
   const columns = [
-    { key: Math.random(stateMataKuliah.list.length), hideInForm: true, hideInSearch: true, hideInTable: true },
-    { title: 'ID', dataIndex: 'id', },
-    { title: 'nama', dataIndex: 'nama' },
-    { title: 'Semester', dataIndex: 'semester' },
-    { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
     {
       title: 'Action',
       key: 'option',
@@ -57,13 +52,32 @@ const FormCreate = ({ onCreate }) => {
           mrMataKuliah.setDeleteSelection(value)
         }} />
       ]
-    }
+    },
+    { key: Math.random(stateMataKuliah.list.length), hideInForm: true, hideInSearch: true, hideInTable: true },
+    { title: 'ID', dataIndex: 'id', },
+    // { title: 'nama', dataIndex: 'nama' },
+    // { title: 'Semester', dataIndex: 'semester' },
+    // { title: 'sks', dataIndex: 'sks' },
+    // { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
+    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'sks', dataIndex: 'sks', hideInForm: true },
+    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
+    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true },
+    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
+    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
+    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
+    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
+    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
+    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true }
   ]
 
   const handleSubmit = async (values) => {
     let data = {
       ...values,
       idDosen: formValue.idDosen,
+      allowedSemester: JSON.stringify(values.allowedSemester),
       // listMataKuliah: JSON.stringify(listMataKuliah)
       listMataKuliah: JSON.stringify(stateMataKuliah.selectionList)
     }
@@ -100,7 +114,7 @@ const FormCreate = ({ onCreate }) => {
     }
     return []
   }) : []
-  
+
   // get Kurikulum Option list
   // const getListKurikulum = stateMataKuliah.list
   // const optionListKurikulum = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
@@ -168,6 +182,9 @@ const FormCreate = ({ onCreate }) => {
         }}
         scrollToFirstError
         params={{}}
+        initialValues={{
+          status: 'draft'
+        }}
       >
         {/* <ProFormText width="md" name="id" label="Id" placeholder="" readonly /> */}
         <ProFormText width="md" name="kurikulum" label="Kurikulum" placeholder="Masukkan kurikulum" rules={[{ required: true, message: 'Masukkan kurikulum' }]} />
@@ -193,35 +210,57 @@ const FormCreate = ({ onCreate }) => {
             ))}
           </AutoComplete>
         </ProForm.Item>
-        <ProFormSelect
-          name="allowedSemester"
-          label="Semester"
-          tooltip="Semester yang Diperbolehkan"
-          mode="multiple"
-          request={async () => [
-            { label: 1, value: 1 },
-            { label: 2, value: 2 },
-            { label: 3, value: 3 },
-            { label: 4, value: 4 },
-            { label: 5, value: 5 },
-            { label: 6, value: 6 },
-            { label: 7, value: 7 },
-            { label: 8, value: 8 }
-          ]}
-          placeholder="Pilih akses semester"
-          rules={[{ required: true, message: 'Masukkan akses semester' }]} 
-        />
-        <ProFormSelect
-          name="jenisKurikulum"
-          label="Jenis Kurikulum"
-          request={async () => [
-            { label: 'Biasa', value: 'Biasa' },
-            { label: 'Minat', value: 'Minat' },
-            { label: 'MBBKM', value: 'MBBKM' },
-          ]}
-          placeholder="Pilih Jenis Kurikulum"
-          rules={[{ required: true, message: 'Masukkan jenis kurikulum' }]}
-        />
+        <ProForm.Item noStyle shouldUpdate>
+          {(form) => {
+            return (
+              <ProFormSelect
+                name="allowedSemester"
+                label="Semester"
+                tooltip="Semester yang Diperbolehkan"
+                mode="multiple"
+                request={async () => [
+                  { label: 1, value: 1 },
+                  { label: 2, value: 2 },
+                  { label: 3, value: 3 },
+                  { label: 4, value: 4 },
+                  { label: 5, value: 5 },
+                  { label: 6, value: 6 },
+                  { label: 7, value: 7 },
+                  { label: 8, value: 8 }
+                ]}
+                placeholder="Pilih akses semester"
+                rules={[{
+                  required: form.getFieldValue("jenisKurikulum") === 'MBBKM',
+                  message: 'Masukkan akses semester'
+                }]}
+              />
+            )
+          }}
+        </ProForm.Item>
+        <ProForm.Item noStyle shouldUpdate>
+          {(formRef) => {
+            return (
+              <ProFormSelect
+                name="jenisKurikulum"
+                label="Jenis Kurikulum"
+                request={async () => [
+                  { label: 'Biasa', value: 'Biasa' },
+                  { label: 'Minat', value: 'Minat' },
+                  { label: 'MBBKM', value: 'MBBKM' },
+                ]}
+                placeholder="Pilih Jenis Kurikulum"
+                rules={[{
+                  required: true,
+                  message: 'Masukkan jenis kurikulum'
+                }]}
+                onChange={(value) => {
+                  if (value !== 'MBBKM') {
+                    form.setFieldsValue({ allowedSemester: [] })
+                  }
+                }}
+              />)
+          }}
+        </ProForm.Item>
         <ProFormSelect
           name="status"
           label="Status"
