@@ -1,0 +1,40 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "krs": [
+    {
+      "id": "asd",
+      "idDosen": "asd",
+      "idMataKuliah": "asd",
+      "kodeMatkul": "asd",
+      "idKelas": "asd",
+      "semester": "asd",
+      "sks": "asd",
+      "status": "asd",
+      "kurikulum": "asd",
+      "jurusan": "asd",
+      "ruangan": "asd",
+      "startTime": "asd",
+      "endTime": "asd",
+      "generatedByDosen": "asd",
+      "createdBy": "asd",
+      "updatedBy": "asd",
+      "deletedBy": "asd"
+    }
+  ]
+}
