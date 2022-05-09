@@ -1,0 +1,23 @@
+{ 
+    "krs": [
+        {
+        "id": "asd",
+        "idDosen": "asd",
+        "idMataKuliah": "asd",
+        "kodeMatkul": "asd",
+        "idKelas": "asd",
+        "semester": "asd",
+        "sks": "asd",
+        "status": "asd",
+        "kurikulum": "asd",
+        "jurusan": "asd",
+        "ruangan": "asd",
+        "startTime": "asd",
+        "endTime": "asd",
+        "generatedByDosen": "asd",
+        "createdBy": "asd",
+        "updatedBy": "asd",
+        "deletedBy": "asd"
+        }
+    ]
+}
