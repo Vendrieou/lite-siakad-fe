@@ -1,5 +1,6 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
+import axios from 'axios'
 import {
   apiGet,
   apiGetById,
@@ -14,6 +15,9 @@ const module = defineModule({
     filter: {
       page: 1
     },
+    listCurrentSemester: [],
+    listMBKM: [],
+    listKelasBawah: [],
     currentItem: {},
     counter: {},
     group: [],
@@ -25,6 +29,61 @@ const module = defineModule({
   },
 
   reducer: {
+    getAjuKrs: async (payload: any, moduleState, actionCtx) => {
+      const user = actionCtx.rootState.me
+      const { mahasiswaProfile } = user.currentItem
+      let MIN_KELAS_BAWAH = 2
+      let mahasiswaCurrentSemester = mahasiswaProfile.currentSemester || MIN_KELAS_BAWAH
+
+      // const data = {
+      //   ...payload,
+      //   q: payload?.q || '',
+      //   page: payload?.page || 1
+      // }
+
+      const filter = {
+        currentSemester: {
+          jenisKurikulum: 'Biasa',
+          currentSemester: mahasiswaCurrentSemester
+        },
+        MBKM: {
+          jenisKurikulum: 'MBKM',
+          parentSemester: 1,
+          currentSemester: mahasiswaCurrentSemester
+        },
+        kelasBawah: {
+          currentSemester: mahasiswaCurrentSemester,
+          kelasBawah: 1
+        }
+      }
+
+      const currentSemester = await apiGet(filter.currentSemester)
+      const MBKM = await apiGet(filter.MBKM)
+      const kelasBawah = await apiGet(filter.kelasBawah)
+      try {
+        const response = await axios.all([currentSemester, MBKM, kelasBawah])
+          .then(
+            axios.spread((...responses) => {
+              const currentSemesterResponse = responses[0];
+              const MBKMResponse = responses[1];
+              const kelasBawahResponse = responses[2];
+
+              // use/access the results
+              return {
+                currentSemesterResponse, MBKMResponse, kelasBawahResponse
+              }
+              // console.log(responseOne, responseTwo, responesThree);
+            })
+          )
+
+        if (response) {
+          actionCtx.dispatch(module.reducer.RECEIVE_AJU_KRS, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
     get: async (payload: any, moduleState, actionCtx) => {
       const data = {
         ...payload,
@@ -109,6 +168,16 @@ const module = defineModule({
       return {
         loading: true,
         list: payload?.data,
+        meta: payload?.meta,
+        errorMessage: payload?.errorMessage
+      }
+    },
+    RECEIVE_AJU_KRS: (payload: any) => {
+      return {
+        loading: true,
+        listCurrentSemester: payload?.currentSemesterResponse?.data,
+        listMBKM: payload?.MBKMResponse?.data,
+        listKelasBawah: payload?.kelasBawahResponse?.data,
         meta: payload?.meta,
         errorMessage: payload?.errorMessage
       }
