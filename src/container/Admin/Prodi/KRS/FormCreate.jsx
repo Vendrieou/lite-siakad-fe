@@ -195,6 +195,7 @@ const FormCreate = ({ onCreate }) => {
         scrollToFirstError
         params={{}}
         initialValues={{
+          jenisKurikulum: 'Biasa',
           status: 'draft'
         }}
       >
@@ -240,7 +241,7 @@ const FormCreate = ({ onCreate }) => {
           ]}
           placeholder="Pilih akses semester"
           rules={[{
-            // required: form.getFieldValue("jenisKurikulum") === 'MBBKM',
+            // required: form.getFieldValue("jenisKurikulum") === 'MBKM',
             required: true,
             message: 'Masukkan akses semester'
           }]}
@@ -251,7 +252,7 @@ const FormCreate = ({ onCreate }) => {
           label="Jenis Kurikulum"
           request={async () => [
             { label: 'Biasa', value: 'Biasa' },
-            { label: 'MBBKM', value: 'MBBKM' }
+            { label: 'MBKM', value: 'MBKM' }
             // { label: 'Minat', value: 'Minat' },
           ]}
           placeholder="Pilih Jenis Kurikulum"
@@ -260,7 +261,7 @@ const FormCreate = ({ onCreate }) => {
             message: 'Masukkan jenis kurikulum'
           }]}
           onChange={(value) => {
-            if (value !== 'MBBKM') {
+            if (value !== 'MBKM') {
               form.setFieldsValue({ allowedSemester: [] })
             }
           }}
