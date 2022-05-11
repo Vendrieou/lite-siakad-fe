@@ -16,27 +16,40 @@ export interface Me {
 const history = createBrowserHistory()
 
 const Model = defineModule({
-  state: { address: '', avatar: '', email: '', name: '', position: '' } as Me,
+  state: {
+    address: '',
+    avatar: '',
+    email: '',
+    name: '',
+    position: '',
+    currentItem: {}
+  } as Me,
 
   reducer: {
-    fetchMe: async () => {
+    fetchMe: async (payload) => {
       let role = get('role')
+      const data = {
+        ...payload,
+        role: payload.role
+      }
       try {
-        const response = await queryMe()
-        return response.data
+        const response = await queryMe(data)
+        console.log('response.data', response.data);
+
+        return { currentItem: response.data }
       } catch (error) {
         if (isContainAdminRole(role)) {
           history.push('/admin/login')
-        } 
+        }
         if (await role === 'mahasiswa') {
           history.push('/mahasiswa/login')
         }
         if (await role === 'dosen') {
           history.push('/dosen/login')
-        } 
+        }
       }
     }
-    
+
   }
 })
 
