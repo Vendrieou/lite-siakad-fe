@@ -203,7 +203,7 @@ const ProdiKRSContainer = () => {
 
         {/* create data template KRS tab "list" */}
         <CreateForm
-          width={800}
+          width={1200}
           title="Tambah KRS"
           keyboard={false}
           maskClosable={false}

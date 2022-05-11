@@ -1,20 +1,25 @@
 // import React, { useState, useEffect, useCallback } from 'react'
 import { useState } from 'react'
-import { Form, Modal, AutoComplete, Table, Button, Drawer } from 'antd'
+import { Form, Modal, AutoComplete, /*Table,*/ Button, Drawer } from 'antd'
 import ProForm, {
   ProFormText,
-  // ProFormDigit,
+  ProFormDigit,
   ProFormSelect
 } from '@ant-design/pro-form'
+import { EditableProTable } from '@ant-design/pro-table'
 import { CloseOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
 // import CreateForm from 'components/Form/CreateForm'
 import TabSelectionMatkul from './TabSelectionMatkul'
+import { useId } from 'utils/string'
 
 const AutoCompleteOption = AutoComplete.Option
 
 const FormCreate = ({ onCreate }) => {
   const [form] = Form.useForm();
+  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
+  const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
+  const { selectionList } = stateMataKuliah
   const [formValue, setFormValue] = useState({
     idDosen: null
   })
@@ -32,16 +37,18 @@ const FormCreate = ({ onCreate }) => {
     active: false
   })
 
-  const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
-  const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
-  const { selectionList } = stateMataKuliah
-
+  /*
+    { title: 'nama', dataIndex: 'nama' },
+    { title: 'Semester', dataIndex: 'semester' },
+    { title: 'sks', dataIndex: 'sks' },
+    { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
+  */
   const columns = [
     {
       title: 'Action',
       key: 'option',
       valueType: 'option',
-      render: (dom, entity, index) => [
+      render: (dom, entity, index, action) => [
         <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
           // let value = listMataKuliah.filter((item, idx)=> idx !== index);
           // setMataKuliah(value)
@@ -50,27 +57,28 @@ const FormCreate = ({ onCreate }) => {
             ? stateMataKuliah.selectionList.filter((item, idx) => idx !== index)
             : []
           mrMataKuliah.setDeleteSelection(value)
-        }} />
+        }} />,
+        <Button key="editable" id="edit" type="primary" size="small" onClick={() => {
+          action?.startEditable?.(entity.key)
+        }}>
+          edit
+        </Button>
       ]
     },
-    { key: Math.random(stateMataKuliah.list.length), hideInForm: true, hideInSearch: true, hideInTable: true },
-    { title: 'ID', dataIndex: 'id', },
-    // { title: 'nama', dataIndex: 'nama' },
-    // { title: 'Semester', dataIndex: 'semester' },
-    // { title: 'sks', dataIndex: 'sks' },
-    // { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
+    // { title: 'key', dataIndex: 'key', hideInForm: true, hideInSearch: true, hideInTable: false },
+    // { title: 'ID', dataIndex: 'id', },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
     { title: 'nama', dataIndex: 'nama', hideInForm: true },
     { title: 'sks', dataIndex: 'sks', hideInForm: true },
-    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
     { title: 'semester', dataIndex: 'semester', hideInForm: true },
+    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true, readonly: true },
     { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
-    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
-    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
-    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
-    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
-    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true }
+    // { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
+    // { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
+    // { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
+    // { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
+    // { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true }
   ]
 
   const handleSubmit = async (values) => {
@@ -83,6 +91,7 @@ const FormCreate = ({ onCreate }) => {
     }
     if (onCreate) {
       onCreate(data)
+      mrMataKuliah.RESET_ALL()
     }
   }
 
@@ -104,16 +113,16 @@ const FormCreate = ({ onCreate }) => {
     return []
   }) : []
 
-  const getListMataKuliah = stateMataKuliah.list
-  const optionListMataKuliah = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
-    if (item.nama) {
-      return {
-        value: item,
-        label: item.nama
-      }
-    }
-    return []
-  }) : []
+  // const getListMataKuliah = stateMataKuliah.list
+  // const optionListMataKuliah = getListMataKuliah && getListMataKuliah.length > 0 ? getListMataKuliah.map((item) => {
+  //   if (item.nama) {
+  //     return {
+  //       value: item,
+  //       label: item.nama
+  //     }
+  //   }
+  //   return []
+  // }) : []
 
   // get Kurikulum Option list
   // const getListKurikulum = stateMataKuliah.list
@@ -132,6 +141,9 @@ const FormCreate = ({ onCreate }) => {
     mrDosen.get({ q: value, pageSize: 100 })
   }
 
+  const onChangeTableValue = (value) => {
+    mrMataKuliah.setDeleteSelection(value)
+  }
   // const onGetListMataKuliah = (value) => {
   //   mrMataKuliah.get({ q: value, pageSize: 100 })
   // }
@@ -187,10 +199,10 @@ const FormCreate = ({ onCreate }) => {
         }}
       >
         {/* <ProFormText width="md" name="id" label="Id" placeholder="" readonly /> */}
-        <ProFormText width="md" name="kurikulum" label="Kurikulum" placeholder="Masukkan kurikulum" rules={[{ required: true, message: 'Masukkan kurikulum' }]} />
-        {/* <ProFormDigit width="md" name="semester" label="Semester" min={1} max={8} rules={[{ required: true, message: 'Masukkan semester' }]} /> */}
+        <ProFormText width="md" name="nama" label="Nama" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} />
+        <ProFormDigit width="md" name="totalSks" label="Total Sks" min={1} rules={[{ required: true, message: 'Masukkan total semester' }]} />
         <ProForm.Item
-          name="idDosen"
+          name="idDosenWali"
           label="Dosen Wali"
           width="md"
           rules={[{ required: true, message: 'Masukkan nama dosen' }]}
@@ -210,57 +222,49 @@ const FormCreate = ({ onCreate }) => {
             ))}
           </AutoComplete>
         </ProForm.Item>
-        <ProForm.Item noStyle shouldUpdate>
-          {(form) => {
-            return (
-              <ProFormSelect
-                name="allowedSemester"
-                label="Semester"
-                tooltip="Semester yang Diperbolehkan"
-                mode="multiple"
-                request={async () => [
-                  { label: 1, value: 1 },
-                  { label: 2, value: 2 },
-                  { label: 3, value: 3 },
-                  { label: 4, value: 4 },
-                  { label: 5, value: 5 },
-                  { label: 6, value: 6 },
-                  { label: 7, value: 7 },
-                  { label: 8, value: 8 }
-                ]}
-                placeholder="Pilih akses semester"
-                rules={[{
-                  required: form.getFieldValue("jenisKurikulum") === 'MBBKM',
-                  message: 'Masukkan akses semester'
-                }]}
-              />
-            )
+
+        <ProFormSelect
+          name="semester"
+          label="Semester"
+          tooltip="Semester yang Diperbolehkan"
+          // mode="multiple"
+          request={async () => [
+            { label: 1, value: 1 },
+            { label: 2, value: 2 },
+            { label: 3, value: 3 },
+            { label: 4, value: 4 },
+            { label: 5, value: 5 },
+            { label: 6, value: 6 },
+            { label: 7, value: 7 },
+            { label: 8, value: 8 }
+          ]}
+          placeholder="Pilih akses semester"
+          rules={[{
+            // required: form.getFieldValue("jenisKurikulum") === 'MBBKM',
+            required: true,
+            message: 'Masukkan akses semester'
+          }]}
+        />
+
+        <ProFormSelect
+          name="jenisKurikulum"
+          label="Jenis Kurikulum"
+          request={async () => [
+            { label: 'Biasa', value: 'Biasa' },
+            { label: 'MBBKM', value: 'MBBKM' }
+            // { label: 'Minat', value: 'Minat' },
+          ]}
+          placeholder="Pilih Jenis Kurikulum"
+          rules={[{
+            required: true,
+            message: 'Masukkan jenis kurikulum'
+          }]}
+          onChange={(value) => {
+            if (value !== 'MBBKM') {
+              form.setFieldsValue({ allowedSemester: [] })
+            }
           }}
-        </ProForm.Item>
-        <ProForm.Item noStyle shouldUpdate>
-          {(formRef) => {
-            return (
-              <ProFormSelect
-                name="jenisKurikulum"
-                label="Jenis Kurikulum"
-                request={async () => [
-                  { label: 'Biasa', value: 'Biasa' },
-                  { label: 'Minat', value: 'Minat' },
-                  { label: 'MBBKM', value: 'MBBKM' },
-                ]}
-                placeholder="Pilih Jenis Kurikulum"
-                rules={[{
-                  required: true,
-                  message: 'Masukkan jenis kurikulum'
-                }]}
-                onChange={(value) => {
-                  if (value !== 'MBBKM') {
-                    form.setFieldsValue({ allowedSemester: [] })
-                  }
-                }}
-              />)
-          }}
-        </ProForm.Item>
+        />
         <ProFormSelect
           name="status"
           label="Status"
@@ -288,13 +292,32 @@ const FormCreate = ({ onCreate }) => {
         </div>
         {/* <pre>{JSON.stringify(listMataKuliah)}</pre> */}
         <div style={{ overflowX: 'auto', marginBottom: '3em' }}>
-          <Table
+          {/* <Table */}
+          <EditableProTable
             rowKey="key"
             // dataSource={listMataKuliah && listMataKuliah.length > 0 ? listMataKuliah : []}
-            dataSource={selectionList && selectionList.length > 0 ? selectionList : []}
+            // dataSource={selectionList && selectionList.length > 0 ? selectionList : []}
             columns={columns}
+            value={selectionList && selectionList.length > 0 ? selectionList : []}
+            onChange={(value) => { onChangeTableValue(value) }}
+            // recordCreatorProps={false}
+            recordCreatorProps={{
+              newRecordType: 'key',
+              position: 'top',
+              record: () => ({
+                key: useId(6),
+              }),
+              creatorButtonText: 'Add',
+            }}
             size="small"
             pagination={false}
+            editable={{
+              type: 'multiple',
+              onlyAddOneLineAlertMessage: 'Only add a new line',
+              actionRender: (row, config, defaultDoms) => {
+                return [defaultDoms.delete, defaultDoms.save, defaultDoms.cancel];
+              },
+            }}
           />
         </div>
         {/* <div style={{ display: 'grid', 'grid-template-columns': '2fr 60px', alignItems: 'center' }}>

@@ -8,6 +8,7 @@ import {
   apiDelete
 } from '@/services/matkulService'
 import history from '@/utils/history'
+import { useId } from '@/utils/string'
 
 const module = defineModule({
   state: {
@@ -53,7 +54,9 @@ const module = defineModule({
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGet(data, { relationship: 1 })
         if (response.success) {
-          actionCtx.dispatch(module.reducer.RECEIVE, response)
+          const dataWithKey = response.data.map((item:any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
           return response
         }
       } catch (error) {
