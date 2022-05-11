@@ -71,7 +71,7 @@ const FormCreate = ({ onCreate }) => {
     { title: 'nama', dataIndex: 'nama', hideInForm: true },
     { title: 'sks', dataIndex: 'sks', hideInForm: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'semester', dataIndex: 'semester', hideInForm: true },
+    { title: 'parentSemester', dataIndex: 'parentSemester', hideInForm: true },
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true, readonly: true },
     { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
     // { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
@@ -225,8 +225,8 @@ const FormCreate = ({ onCreate }) => {
         </ProForm.Item>
 
         <ProFormSelect
-          name="semester"
-          label="Semester"
+          name="parentSemester"
+          label="Semester Group"
           tooltip="Semester yang Diperbolehkan"
           // mode="multiple"
           request={async () => [
