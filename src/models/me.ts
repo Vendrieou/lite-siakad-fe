@@ -34,8 +34,6 @@ const Model = defineModule({
       }
       try {
         const response = await queryMe(data)
-        console.log('response.data', response.data);
-
         return { currentItem: response.data }
       } catch (error) {
         if (isContainAdminRole(role)) {
