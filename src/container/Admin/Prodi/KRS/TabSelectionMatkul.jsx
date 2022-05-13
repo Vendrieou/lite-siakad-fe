@@ -97,8 +97,10 @@ const TabSelectionMatkul = ({
       dataSource={list && list.length ? list : []}
       request={(params) => {
         mrMataKuliah.get({
-          q: params.kodeMatkul || params.semester || params.sks || params.nama,
-          page: params.current
+          q: params.kodeMatkul ||params.sks || params.nama,
+          semester: params.semester,
+          page: params.current,
+          pageSize: params.pageSize
         })
       }}
       columns={columns}

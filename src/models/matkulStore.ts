@@ -48,7 +48,9 @@ const module = defineModule({
       const data = {
         ...payload,
         q: payload?.q || '',
+        semester: payload?.semester || '',
         page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
