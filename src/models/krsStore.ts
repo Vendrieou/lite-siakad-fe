@@ -11,6 +11,7 @@ import {
 import {
   apiGetMatkulKelasBawah
 } from '@/services/matkulService'
+import { queryMe } from '@/services/me'
 
 const module = defineModule({
   state: {
@@ -33,8 +34,10 @@ const module = defineModule({
 
   reducer: {
     getAjuKrs: async (payload: any, moduleState, actionCtx) => {
-      const user = actionCtx.rootState.me
-      const { mahasiswaProfile } = user.currentItem
+      // const user = actionCtx.rootState.me
+      // const { mahasiswaProfile } = user.currentItem
+      const meData = await queryMe({ role: payload.role })
+      const { mahasiswaProfile } = meData.data
       let MIN_KELAS_BAWAH = 2
       let mahasiswaCurrentSemester = mahasiswaProfile.currentSemester || MIN_KELAS_BAWAH
 
