@@ -1,5 +1,5 @@
 // import React, { useState, useEffect, useCallback } from 'react'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Form, Modal, AutoComplete, /*Table,*/ Button, Drawer } from 'antd'
 import ProForm, {
   ProFormText,
@@ -11,7 +11,7 @@ import { CloseOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
 // import CreateForm from 'components/Form/CreateForm'
 import TabSelectionMatkul from './TabSelectionMatkul'
-import { useId } from 'utils/string'
+// import { useId } from 'utils/string'
 
 const AutoCompleteOption = AutoComplete.Option
 
@@ -21,6 +21,7 @@ const FormCreate = ({ onCreate }) => {
   const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
   const { selectionList } = stateMataKuliah
   const [formValue, setFormValue] = useState({
+    idDosenWali: null,
     idDosen: null
   })
   // const [tempForm, setTempForm] = useState({
@@ -36,55 +37,17 @@ const FormCreate = ({ onCreate }) => {
     data: {},
     active: false
   })
-
   /*
     { title: 'nama', dataIndex: 'nama' },
     { title: 'Semester', dataIndex: 'semester' },
     { title: 'sks', dataIndex: 'sks' },
     { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
   */
-  const columns = [
-    {
-      title: 'Action',
-      key: 'option',
-      valueType: 'option',
-      render: (dom, entity, index, action) => [
-        <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
-          // let value = listMataKuliah.filter((item, idx)=> idx !== index);
-          // setMataKuliah(value)
-          // let value = stateMataKuliah.selectionList.filter((item, idx)=> idx !== index);
-          let value = stateMataKuliah.selectionList && stateMataKuliah.selectionList.length > 0
-            ? stateMataKuliah.selectionList.filter((item, idx) => idx !== index)
-            : []
-          mrMataKuliah.setDeleteSelection(value)
-        }} />,
-        <Button key="editable" id="edit" type="primary" size="small" onClick={() => {
-          action?.startEditable?.(entity.key)
-        }}>
-          edit
-        </Button>
-      ]
-    },
-    // { title: 'key', dataIndex: 'key', hideInForm: true, hideInSearch: true, hideInTable: false },
-    // { title: 'ID', dataIndex: 'id', },
-    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true },
-    { title: 'sks', dataIndex: 'sks', hideInForm: true },
-    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'parentSemester', dataIndex: 'parentSemester', hideInForm: true },
-    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true, readonly: true },
-    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
-    // { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
-    // { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
-    // { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
-    // { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
-    // { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true }
-  ]
 
   const handleSubmit = async (values) => {
     let data = {
       ...values,
-      idDosen: formValue.idDosen,
+      idDosenWali: formValue.idDosenWali,
       allowedSemester: JSON.stringify(values.allowedSemester),
       // listMataKuliah: JSON.stringify(listMataKuliah)
       listMataKuliah: JSON.stringify(stateMataKuliah.selectionList)
@@ -136,6 +99,69 @@ const FormCreate = ({ onCreate }) => {
   //   return []
   // }) : []
 
+  const columns = [
+    {
+      title: 'Action',
+      key: 'option',
+      valueType: 'option',
+      render: (dom, entity, index, action) => [
+        <Button id="delete" type="primary" icon={<CloseOutlined />} key="2" size="small" onClick={() => {
+          // let value = listMataKuliah.filter((item, idx)=> idx !== index);
+          // setMataKuliah(value)
+          // let value = stateMataKuliah.selectionList.filter((item, idx)=> idx !== index);
+          let value = stateMataKuliah.selectionList && stateMataKuliah.selectionList.length > 0
+            ? stateMataKuliah.selectionList.filter((item, idx) => idx !== index)
+            : []
+          mrMataKuliah.setDeleteSelection(value)
+        }} />,
+        // <Button key="editable" id="edit" type="primary" size="small" onClick={() => {
+        //   action?.startEditable?.(entity.key)
+        // }}>
+        //   edit
+        // </Button>
+      ]
+    },
+    // { title: 'key', dataIndex: 'key', hideInForm: true, hideInSearch: true, hideInTable: false },
+    // { title: 'ID', dataIndex: 'id', },
+    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'sks', dataIndex: 'sks', hideInForm: true },
+    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
+    // { title: 'parentSemester', dataIndex: 'parentSemester', hideInForm: true },
+    {
+      title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true,
+      valueType: 'digit',
+      renderFormItem: () => {
+        return (
+          <ProFormDigit name="idDosen" label="." min={1} placeholder="masukkan id dosen" />
+        )
+      }
+    },
+    {
+      title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true,
+      valueType: 'text',
+      renderFormItem: (schema, config, formRef) => {
+        return (
+          <AutoComplete
+            placeholder="Masukkan nama dosen"
+            onSelect={(value, param) => {
+              // console.log('s', formRef);
+              // console.log('param', param)
+              formRef.setFieldsValue({ idDosen: param.datasource.value.id })
+              onGetListDosen(null)
+            }}
+            filterOption
+            allowClear
+            onClear={() => onGetListDosen(null)}
+          >
+            {optionListDosen.map(item => (
+              <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
+            ))}
+          </AutoComplete>
+        )
+      },
+    },
+  ]
 
   const onGetListDosen = (value) => {
     mrDosen.get({ q: value, pageSize: 100 })
@@ -211,7 +237,7 @@ const FormCreate = ({ onCreate }) => {
           <AutoComplete
             placeholder="Masukkan nama dosen"
             onSelect={(value, param) => {
-              setFormValue({ idDosen: param.datasource.value.id })
+              setFormValue({ idDosenWali: param.datasource.value.id })
               onGetListDosen(value)
             }}
             filterOption
@@ -301,19 +327,20 @@ const FormCreate = ({ onCreate }) => {
             columns={columns}
             value={selectionList && selectionList.length > 0 ? selectionList : []}
             onChange={(value) => { onChangeTableValue(value) }}
-            // recordCreatorProps={false}
-            recordCreatorProps={{
-              newRecordType: 'key',
-              position: 'top',
-              record: () => ({
-                key: useId(6),
-              }),
-              creatorButtonText: 'Add',
-            }}
+            recordCreatorProps={false}
+            // recordCreatorProps={{
+            //   newRecordType: 'key',
+            //   position: 'top',
+            //   record: () => ({
+            //     key: useId(6),
+            //   }),
+            //   creatorButtonText: 'Add',
+            // }}
             size="small"
             pagination={false}
             editable={{
               type: 'multiple',
+              deletePopconfirmMessage: 'delete this line?',
               onlyAddOneLineAlertMessage: 'Only add a new line',
               actionRender: (row, config, defaultDoms) => {
                 return [defaultDoms.delete, defaultDoms.save, defaultDoms.cancel];

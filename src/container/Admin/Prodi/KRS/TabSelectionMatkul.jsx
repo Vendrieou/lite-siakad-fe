@@ -17,11 +17,11 @@ const TabSelectionMatkul = ({
       hideInSearch: true
     },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true, valueType: 'digit' },
     { title: 'nama', dataIndex: 'nama', hideInForm: true },
     { title: 'sks', dataIndex: 'sks', hideInForm: true },
     { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'semester', dataIndex: 'semester', hideInForm: true },
     { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
     { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
     { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },

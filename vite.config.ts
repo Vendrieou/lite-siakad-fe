@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { loadEnv, defineConfig } from 'vite';
+import { loadEnv, defineConfig, splitVendorChunkPlugin } from 'vite';
 import react from '@vitejs/plugin-react';
 // import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
@@ -36,6 +36,7 @@ export default ({ mode }) => {
       'process.env.PROD_APIHOSTIMAGE':JSON.stringify(process.env.PROD_APIHOSTIMAGE),
     },
     plugins: [
+      splitVendorChunkPlugin(),
       // react({
       //   babel: {
       //     plugins: [

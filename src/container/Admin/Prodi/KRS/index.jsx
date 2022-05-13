@@ -4,6 +4,7 @@ import { Space, Tag, Tabs, Button, Modal } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { useConcent } from 'concent'
 import CreateForm from 'components/Form/CreateForm'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import FormCreate from './FormCreate'
@@ -148,7 +149,7 @@ const ProdiKRSContainer = () => {
     console.log('data', data)
     // const response = await mr.create(data)
     // if (response.success) {
-    handleModalVisible(false)
+    // handleModalVisible(false)
     // }
   }
 
