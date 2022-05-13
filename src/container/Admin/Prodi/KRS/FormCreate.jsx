@@ -21,7 +21,7 @@ const FormCreate = ({ onCreate }) => {
   const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
   const { selectionList } = stateMataKuliah
   const [formValue, setFormValue] = useState({
-    idDosenWali: null,
+    idDosenWali: 2,
     idDosen: null
   })
   // const [tempForm, setTempForm] = useState({
@@ -221,6 +221,12 @@ const FormCreate = ({ onCreate }) => {
         scrollToFirstError
         params={{}}
         initialValues={{
+          // helperInit
+          nama: 'Semester',
+          totalSks: 24,
+          idDosenWali: 'Indra',
+          parentSemester: 1,
+
           jenisKurikulum: 'Biasa',
           status: 'draft'
         }}
