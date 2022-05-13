@@ -1,15 +1,17 @@
 // import React, { useState, useRef } from 'react'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Space, Tag, Tabs, Button, Modal } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { useConcent } from 'concent'
+import { useMatch, useNavigate } from '@tanstack/react-location'
 import CreateForm from 'components/Form/CreateForm'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import FormCreate from './FormCreate'
 // import FormCreateTemplateKrs from './FormCreateTemplateKrs'
 // import FormEdit from './FormEdit'
+// import history from 'utils/history'
 import Export from './Export'
 import Ajukrs from './Ajukrs'
 
@@ -17,15 +19,18 @@ const { confirm } = Modal
 
 const ProdiKRSContainer = () => {
   const actionRef = useRef()
-  const [templateKrsModalVisible, handleTemplateKrsModalVisible] = useState(false)
+  const navigate = useNavigate()
+  const { search: { tab } } = useMatch()
+  // const [templateKrsModalVisible, handleTemplateKrsModalVisible] = useState(false)
   const [createModalVisible, handleModalVisible] = useState(false)
   const [row, setRow] = useState(null)
-  const [type, setType] = useState('export')
+  const [type, setType] = useState(tab || 'export')
 
   const { mr, state } = useConcent('krsStore')
   const { mr: mrMataKuliah } = useConcent('matkulStore')
 
   const { list } = state
+
 
   const showDeleteTemplateConfirm = (entity) => {
     confirm({
@@ -148,7 +153,7 @@ const ProdiKRSContainer = () => {
   const onCreate = async (data) => {
     const response = await mr.create(data)
     if (response.success) {
-    handleModalVisible(false)
+      handleModalVisible(false)
     }
   }
 
@@ -165,7 +170,10 @@ const ProdiKRSContainer = () => {
     <PrivateRoute access={['admin']}>
       <PageContainer
         content={(
-          <Tabs defaultActiveKey={type} onChange={setType}>
+          <Tabs defaultActiveKey={type} onChange={(e) => {
+            navigate({ to: `/admin/prodi/krs?tab=${e}` })
+            setType(e)
+          }}>
             <Tabs.TabPane key="export" tab="Export" />
             <Tabs.TabPane key="list" tab="List" />
             <Tabs.TabPane key="ajukrs" tab="List Pengajuan KRS" />
@@ -180,9 +188,9 @@ const ProdiKRSContainer = () => {
             actionRef={actionRef}
             rowKey="id"
             toolBarRender={() => [
-              <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
-                <PlusOutlined /> Add With Template
-              </Button>,
+              // <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
+              //   <PlusOutlined /> Add With Template
+              // </Button>,
               <Button type="primary" onClick={() => handleModalVisible(true)}>
                 <PlusOutlined /> Tambah KRS
               </Button>

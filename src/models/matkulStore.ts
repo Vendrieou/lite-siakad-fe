@@ -48,9 +48,13 @@ const module = defineModule({
       const data = {
         ...payload,
         q: payload?.q || '',
-        semester: payload?.semester || '',
+        semester: payload?.semester,
         page: payload?.page || 1,
         pageSize: payload?.pageSize || 10,
+      }
+      
+      if(data && !data.semester) {
+        delete data.semester
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
