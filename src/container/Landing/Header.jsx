@@ -1,8 +1,9 @@
 // import React, { useState, useEffect } from 'react'
 import { useState, useEffect } from 'react'
 import { Menu, Dropdown, Drawer, Button, Input } from 'antd'
-import { DownOutlined, SearchOutlined, CloseOutlined } from '@ant-design/icons'
+import { DownOutlined, SearchOutlined, CloseOutlined, UserOutlined } from '@ant-design/icons'
 import logoTIME from 'static/logo/logo.webp'
+import history from 'utils/history'
 import styles from './Header.module.less'
 
 const MenuItem = Menu.Item
@@ -14,6 +15,14 @@ const menuProfilDropdown = () => {
       <MenuItem key="Sejarah">Sejarah Singkat</MenuItem>
       <MenuItem key="Visi">Visi, Misi dan Tujuan</MenuItem>
       <MenuItem key="Lambang">Lambang</MenuItem>
+    </Menu>
+  )
+}
+
+const menuLoginDropdown = () => {
+  return (
+    <Menu>
+      <MenuItem style={{ height: '5em', display: 'grid', alignItems: 'center'}} key="Sejarah" onClick={() => history.push('/login')}>Login Mahasiswa / Dosen</MenuItem>
     </Menu>
   )
 }
@@ -30,7 +39,7 @@ const LeftMenu = () => {
     <Menu theme="light" mode={width >= 360 ? 'horizontal' : 'vertical'} defaultSelectedKeys={['2']} selectable={false}>
       <MenuItem key="home">Home</MenuItem>
       <MenuItem key="profil">
-        <Dropdown overlay={menuProfilDropdown}>
+        <Dropdown overlay={menuProfilDropdown} trigger={['click']}>
           <span className="profil" onClick={e => e.preventDefault()}>
             Profil <DownOutlined />
           </span>
@@ -40,6 +49,7 @@ const LeftMenu = () => {
       <MenuItem key="perpustakaan">Perpustakaan</MenuItem>
       <MenuItem key="lowongan">Lowongan Kerja</MenuItem>
       <MenuItem key="hubungi">Hubungi Kami</MenuItem>
+      <MenuItem key="login" className={styles.loginHideMenu} onClick={() => history.push('/login')}>Login</MenuItem>
     </Menu>
   )
 }
@@ -47,18 +57,37 @@ const LeftMenu = () => {
 const RightMenu = () => {
   const [isOpenSearch, setOpenSearch] = useState(false)
   return (
-    <Menu theme="light" selectable={false} style={{ border: 0 }}>
+    // <Menu theme="light" selectable={false} style={{ border: 0 }}>
+    <>
       {isOpenSearch ?
         <MenuItem>
           <CloseOutlined onClick={() => setOpenSearch(!isOpenSearch)} />
-          <InputSearch placeholder="input search loading default" enterButton />
+          <InputSearch autoFocus placeholder="input search loading default" enterButton />
         </MenuItem>
         :
         <MenuItem key="search" onClick={() => setOpenSearch(!isOpenSearch)}>
           <SearchOutlined />
         </MenuItem>
       }
-    </Menu>
+    </>
+    // </Menu>
+  )
+}
+
+const LoginMenu = () => {
+  return (
+    <>
+      <Menu theme="light" selectable={false} style={{ border: 0 }}>
+        <RightMenu />
+        <MenuItem key="profil">
+          <Dropdown overlay={menuLoginDropdown} trigger={['click']}>
+            <span className="profil" onClick={e => e.preventDefault()} style={{ padding: '1em' }}>
+              <UserOutlined />
+            </span>
+          </Dropdown>
+        </MenuItem>
+      </Menu>
+    </>
   )
 }
 
@@ -77,7 +106,7 @@ const HeaderContainer = () => {
               <LeftMenu />
             </div>
             <div className={styles.rightMenu}>
-              <RightMenu />
+              <LoginMenu />
             </div>
             <div className={styles.barsMenu}>
               <Button
@@ -98,7 +127,7 @@ const HeaderContainer = () => {
               visible={visible}
             >
               <LeftMenu />
-              <RightMenu />
+              {/* <LoginMenu /> */}
             </Drawer>
           </div>
         </nav>
