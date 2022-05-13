@@ -8,6 +8,9 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/krsService'
+import {
+  apiGetMatkulKelasBawah
+} from '@/services/matkulService'
 
 const module = defineModule({
   state: {
@@ -59,7 +62,7 @@ const module = defineModule({
 
       const currentSemester = await apiGet(filter.currentSemester)
       const MBKM = await apiGet(filter.MBKM)
-      const kelasBawah = await apiGet(filter.kelasBawah)
+      const kelasBawah = await apiGetMatkulKelasBawah({ mahasiswaId: mahasiswaProfile.id })
       try {
         const response = await axios.all([currentSemester, MBKM, kelasBawah])
           .then(

@@ -146,11 +146,10 @@ const ProdiKRSContainer = () => {
   }
 
   const onCreate = async (data) => {
-    console.log('data', data)
-    // const response = await mr.create(data)
-    // if (response.success) {
-    // handleModalVisible(false)
-    // }
+    const response = await mr.create(data)
+    if (response.success) {
+    handleModalVisible(false)
+    }
   }
 
   const FormCreateProps = {

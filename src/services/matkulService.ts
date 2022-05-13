@@ -13,6 +13,15 @@ const apiGet = async (params: any, data: any) => {
   })
 }
 
+const apiGetMatkulKelasBawah = async (data: any) => {
+  return request({
+    url: `${apiMatkul}/kelas-bawah`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiMatkul}/${id}`,
@@ -49,6 +58,7 @@ const apiDelete = async (id: number) => {
 
 export {
   apiGet,
+  apiGetMatkulKelasBawah,
   apiPost,
   apiGetById,
   apiUpdate,
