@@ -125,9 +125,9 @@ const FormCreate = ({ onCreate }) => {
     // { title: 'ID', dataIndex: 'id', },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
     { title: 'nama', dataIndex: 'nama', hideInForm: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true },
     { title: 'sks', dataIndex: 'sks', hideInForm: true },
     { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    // { title: 'parentSemester', dataIndex: 'parentSemester', hideInForm: true },
     {
       title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true,
       valueType: 'digit',
