@@ -1,8 +1,8 @@
 // import React from 'react'
 import { useEffect } from 'react'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
-// import ProTable from '@ant-design/pro-table'
-import { Card, Space, Button, Table } from 'antd'
+import ProTable from '@ant-design/pro-table'
+import { Form, Card, Space, Button, Table } from 'antd'
 import { useConcent } from 'concent'
 import ProForm, {
   ProFormCheckbox
@@ -39,35 +39,45 @@ const MahasiswaKRS = () => {
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 
-const optionListKelasBawah = listKelasBawah.map((item) => {
-let newLabel = `
-  Kode MK: ${item.kodeMatkul}
-  Mata Kuliah: ${item.nama}
-  SKS: ${item.sks}
-  Semester: ${item.semester}
-  Kelas: ${item.kelas}
-  Nama Dosen: ${item.namaDosen}
-  Status: ${item.status}
-  `
-  item.type = 'kelasBawah'
-  return {
-    label: newLabel,
-    value: item
-  }
-})
+  // const optionListKelasBawah = listKelasBawah.map((item) => {
+  // let newLabel = `
+  //   Kode MK: ${item.kodeMatkul}
+  //   Mata Kuliah: ${item.nama}
+  //   SKS: ${item.sks}
+  //   Semester: ${item.semester}
+  //   Kelas: ${item.kelas}
+  //   Nama Dosen: ${item.namaDosen}
+  //   Status: ${item.status}
+  //   `
+  //   item.type = 'kelasBawah'
+  //   return {
+  //     label: newLabel,
+  //     value: item
+  //   }
+  // })
+
+  const [form] = Form.useForm();
+
 
   return (
     <PrivateRoute access={['mahasiswa']}>
       <Card>
-        <ProForm onFinish={async (values) => { console.log('values', values) }}>
-          <ProFormCheckbox.Group
+        <ProForm
+          form={form}
+          onFinish={async (values) => {
+            console.log('form', form)
+            console.log('values', values)
+          }}
+        >
+          {/* <ProFormCheckbox.Group
             key="id"
             name="kelasBawah"
             layout="vertical"
             label="List Kelas Bawah"
             options={optionListKelasBawah}
-          />
-          {/* <ProTable
+          /> */}
+          <ProTable
+            form={form}
             headerTitle="List Kelas Bawah"
             rowKey="id"
             rowSelection={{
@@ -109,7 +119,7 @@ let newLabel = `
             ]}
             columns={columns}
             {...initData}
-          /> */}
+          />
         </ProForm>
       </Card>
     </PrivateRoute>
