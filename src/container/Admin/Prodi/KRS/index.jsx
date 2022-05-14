@@ -46,52 +46,11 @@ const ProdiKRSContainer = () => {
   }
 
   const columns = [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      hideInTable: true,
-      hideInForm: true,
-      hideInSearch: true
-    },
-    {
-      title: 'Kurikulum',
-      dataIndex: 'kurikulum',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
-    // {
-    //   title: 'Semester',
-    //   dataIndex: 'semester',
-    //   tip: '',
-    //   formItemProps: {
-    //     rules: [
-    //       {
-    //         required: true,
-    //         message: 'Wajib'
-    //       }
-    //     ]
-    //   }
-    // },
-    {
-      // nama dosen
-      title: 'Dosen Wali',
-      dataIndex: ['dosen', 'nama'],
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
+    { title: 'ID', dataIndex: 'id', hideInTable: true, hideInForm: true, hideInSearch: true },
+    { title: 'Nama', dataIndex: 'nama', tip: '' },
+    { title: 'Jenis Kurikulum', dataIndex: 'jenisKurikulum', tip: '', formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
+    { title: 'Semester', dataIndex: 'parentSemester', tip: '', formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
+    { title: 'Dosen Wali', dataIndex: ['dosen', 'nama'], formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
     {
       title: 'Status',
       dataIndex: 'status',
