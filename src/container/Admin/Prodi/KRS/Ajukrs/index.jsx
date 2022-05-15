@@ -1,7 +1,7 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
 import { Space, Tag, Tabs, Button, Modal } from 'antd'
-import { PageContainer } from '@ant-design/pro-layout'
+// import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
@@ -15,7 +15,7 @@ const Ajukrs = () => {
   const [row, setRow] = useState(null)
   // const [type, setType] = useState('export')
 
-  const { mr, state } = useConcent('krsStore')
+  const { mr, state } = useConcent('pengajuanKrsStore')
   const { list } = state
 
   // const showDeleteTemplateConfirm = (entity) => {
@@ -41,7 +41,7 @@ const Ajukrs = () => {
     },
     {
       title: 'NIM',
-      dataIndex: 'name',
+      dataIndex: ['mahasiswaProfile', 'nim'],
       tip: '',
       formItemProps: {
         rules: [
@@ -54,20 +54,7 @@ const Ajukrs = () => {
     },
     {
       title: 'Nama',
-      dataIndex: 'name',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
-    {
-      title: 'Mata Kuliah',
-      dataIndex: 'matKul',
+      dataIndex: ['mahasiswaProfile', 'nama'],
       tip: '',
       formItemProps: {
         rules: [
@@ -92,9 +79,22 @@ const Ajukrs = () => {
       }
     },
     {
-      // nama dosen
-      title: 'Dosen Wali',
-      dataIndex: 'dosen',
+      title: 'Mata Kuliah',
+      dataIndex: 'matKul',
+      tip: '',
+      formItemProps: {
+        rules: [
+          {
+            required: true,
+            message: 'Wajib'
+          }
+        ]
+      }
+    },
+    {
+      title: 'Dosen Mata kuliah',
+      // dataIndex: 'idDosen',
+      dataIndex: ['dosenProfile', 'nama'],
       formItemProps: {
         rules: [
           {
