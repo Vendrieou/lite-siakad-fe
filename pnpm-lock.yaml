@@ -34,6 +34,7 @@ specifiers:
   json-server: ^0.17.0
   less: ^4.1.1
   lodash-chain: ^0.0.4
+  lodash.concat: ^4.5.0
   lodash.groupby: ^4.6.0
   lodash.map: ^4.6.0
   lodash.values: ^4.3.0
@@ -69,6 +70,7 @@ dependencies:
   js-cookie: 2.2.1
   json-server: 0.17.0
   lodash-chain: 0.0.4
+  lodash.concat: 4.5.0
   lodash.groupby: 4.6.0
   lodash.map: 4.6.0
   lodash.values: 4.3.0
@@ -5205,6 +5207,10 @@ packages:
   /lodash-id/0.14.1:
     resolution: {integrity: sha512-ikQPBTiq/d5m6dfKQlFdIXFzvThPi2Be9/AHxktOnDSfSxE1j9ICbBT5Elk1ke7HSTgM38LHTpmJovo9/klnLg==}
     engines: {node: '>= 4'}
+    dev: false
+
+  /lodash.concat/4.5.0:
+    resolution: {integrity: sha1-sFOuAuSoAIWC5yVrnQK9ptA4A5U=}
     dev: false
 
   /lodash.debounce/4.0.8:

@@ -150,9 +150,9 @@ const Ajukrs = () => {
       total: 100000
     },
     options: {
-      reload: () => {
-        mr.get({ page: 1 })
-      },
+      // reload: () => {
+      //   mr.get({ page: 1 })
+      // },
       show: false,
       density: false,
       fullScreen: false,
@@ -161,26 +161,14 @@ const Ajukrs = () => {
   }
   const onCreate = async (data) => {
     console.log('list aju krs', data)
-    // const response = await mr.create(data)
+    // const response = await mr.createBulk(data)
     // if (response?.success) {
-    handleModalVisible(false)
+      // handleModalVisible(false)
     // }
-  }
-
-  const onCreatePencocokan = async (data) => {
-    console.log('list aju krs', data)
-    // const response = await mr.create(data)
-    // if (response?.success) {
-    handleModalVisible(false)
-    // }
-  }
-
-  const FormCreateProps = {
-    onCreate
   }
 
   const FormPencocokanProps = {
-    onCreatePencocokan
+    onCreate
   }
 
   const FormEditProps = {
@@ -200,13 +188,13 @@ const Ajukrs = () => {
           </Button>
         ]}
         dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.nim || params.nama || params.matkul || params.status || params.semester || '',
-            page: params.current || ''
-            // status: params.status
-          })
-        }}
+        // request={(params) => {
+        //   mr.get({
+        //     q: params.nim || params.nama || params.matkul || params.status || params.semester || '',
+        //     page: params.current || ''
+        //     // status: params.status
+        //   })
+        // }}
         columns={columns}
         {...initData}
       />

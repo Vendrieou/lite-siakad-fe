@@ -5,6 +5,7 @@ import ProForm, {
   ProFormSelect
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
+import concat from 'lodash.concat'
 import KRSTemplate from './KRSTemplate'
 // import UploadExcel from './UploadExcel'
 
@@ -31,15 +32,38 @@ const FormCreatePencocokan = ({ onCreate }) => {
 
   const handleSubmit = async (values) => {
     let data = {
-      ...values
+      idDosenWali: values.idDosenWali,
+      idJurusan: values.idJurusan,
+      idMahasiswa: values.idMahasiswa
       // idDosenWali: formValue.idDosenWali,
       // idMahasiswa: formValue.idMahasiswa,
       // idDosen: formValue.idDosen
     }
-    console.log('data', data)
-    // if (onCreate) {
-    //   onCreate(data)
-    // }
+
+    if (
+      values.semester1 && values.semester1.length > 0 ||
+      values.semester2 && values.semester2.length > 0 ||
+      values.semester3 && values.semester3.length > 0 ||
+      values.semester4 && values.semester4.length > 0 ||
+      values.semester5 && values.semester5.length > 0 ||
+      values.semester6 && values.semester6.length > 0 ||
+      values.semester7 && values.semester7.length > 0 ||
+      values.semester8 && values.semester8.length > 0
+    ) {
+      data.listMataKuliah = concat(
+        values.semester1 || [],
+        values.semester2 || [],
+        values.semester3 || [],
+        values.semester4 || [],
+        values.semester5 || [],
+        values.semester6 || [],
+        values.semester7 || [],
+        values.semester8 || []
+      )
+    }
+    if (onCreate) {
+      onCreate(data)
+    }
   }
 
   const handleCancelPreview = () => setPreview(!preview.active)

@@ -38,6 +38,7 @@
     "js-cookie": "^2.2.1",
     "json-server": "^0.17.0",
     "lodash-chain": "^0.0.4",
+    "lodash.concat": "^4.5.0",
     "lodash.groupby": "^4.6.0",
     "lodash.map": "^4.6.0",
     "lodash.values": "^4.3.0",

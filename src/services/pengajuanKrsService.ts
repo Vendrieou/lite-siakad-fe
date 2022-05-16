@@ -29,6 +29,15 @@ const apiPost = async (data: any) => {
   })
 }
 
+const apiPostBulk = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}/krs/pengajuan/bulk`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
 const apiUpdate = async (data: any) => {
   return request({
     url: `${apiPengajuanKrs}/${data.id}`,
@@ -49,6 +58,7 @@ const apiDelete = async (id: number) => {
 export {
   apiGet,
   apiPost,
+  apiPostBulk,
   apiGetById,
   apiUpdate,
   apiDelete

@@ -26,7 +26,153 @@ const module = defineModule({
     counter: {},
     group: [],
     asset: [],
-    list: [],
+    // list: [],
+    list: [
+      {
+        "id": 1,
+        "idDosen": null,
+        "nama": "Semester",
+        "totalSks": 24,
+        "idDosenWali": 2,
+        "parentSemester": 4,
+        "jenisKurikulum": "Biasa",
+        "status": "draft",
+        "listMataKuliah": [
+          {
+            "idKrs": 1,
+            "idDosen": 1,
+            "kelas": "TIE18",
+            "idJurusan": null,
+            "semester": 3,
+            "kodeMatkul": "TI 2639",
+            "nama": "Pengantar TI",
+            "sks": 3,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 2,
+            "kelas": "TIA18",
+            "idJurusan": null,
+            "semester": 3,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TIC18",
+            "idJurusan": null,
+            "semester": 3,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TID18",
+            "idJurusan": null,
+            "semester": 3,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TIA19",
+            "idJurusan": null,
+            "semester": 3,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "idDosen": null,
+        "nama": "Semester",
+        "totalSks": 24,
+        "idDosenWali": 2,
+        "parentSemester": 4,
+        "jenisKurikulum": "Biasa",
+        "status": "draft",
+        "listMataKuliah": [
+          {
+            "idKrs": 1,
+            "idDosen": 1,
+            "kelas": "TIE18",
+            "idJurusan": null,
+            "semester": 4,
+            "kodeMatkul": "TI 2639",
+            "nama": "Pengantar TI",
+            "sks": 4,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 4,
+            "kelas": "TIA18",
+            "idJurusan": null,
+            "semester": 4,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TIC18",
+            "idJurusan": null,
+            "semester": 4,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TID18",
+            "idJurusan": null,
+            "semester": 4,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          },
+          {
+            "idKrs": 1,
+            "idDosen": 3,
+            "kelas": "TIA19",
+            "idJurusan": null,
+            "semester": 4,
+            "kodeMatkul": "TI1234",
+            "nama": "Matematika Diskrit",
+            "sks": 1,
+            "ruangan": null,
+            "generatedByDosen": 1
+          }
+        ]
+      }
+    ],
     dataSet: [],
     meta: {},
     errorMessage: null
@@ -99,11 +245,11 @@ const module = defineModule({
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
-        const response = await apiGet(data)
-        if (response.success) {
-          actionCtx.dispatch(module.reducer.RECEIVE, response)
-          return response
-        }
+        // const response = await apiGet(data)
+        // if (response.success) {
+        //   actionCtx.dispatch(module.reducer.RECEIVE, response)
+        //   return response
+        // }
       } catch (error) {
         message.error(error)
       }

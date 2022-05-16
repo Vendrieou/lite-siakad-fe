@@ -4,6 +4,7 @@ import {
   apiGet,
   apiGetById,
   apiPost,
+  apiPostBulk,
   apiUpdate,
   apiDelete
 } from '@/services/pengajuanKrsService'
@@ -56,6 +57,19 @@ const module = defineModule({
     create: async (payload: any, moduleState, actionCtx) => {
       try {
         const response = await apiPost(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    createBulk: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostBulk(payload)
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
