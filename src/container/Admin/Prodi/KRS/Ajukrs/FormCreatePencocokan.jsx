@@ -1,29 +1,14 @@
 // import React, { useState, useEffect, useCallback } from 'react'
 import { useState } from 'react'
-import { Modal, AutoComplete, Row, Col, Upload } from 'antd'
-import { UploadOutlined } from '@ant-design/icons'
+import { Modal, AutoComplete, Row, Col } from 'antd'
 import ProForm, {
-  ProFormText,
-  ProFormDigit,
   ProFormSelect
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
 import KRSTemplate from './KRSTemplate'
-
-const { Dragger } = Upload
+import UploadExcel from './UploadExcel'
 
 const AutoCompleteOption = AutoComplete.Option
-
-const UploadExcel = ({ ...props }) => {
-  return (
-    <Dragger {...props}>
-      <p className="ant-upload-drag-icon">
-        <UploadOutlined />
-      </p>
-      <p className="ant-upload-text">Click or drag file to this area to upload</p>
-    </Dragger>
-  )
-}
 
 const FormCreatePencocokan = ({ onCreate }) => {
   const [preview, setPreview] = useState({

@@ -34,6 +34,7 @@
     "concent-plugin-loading": "^2.0.4",
     "cross-env": "^7.0.3",
     "dotenv": "^10.0.0",
+    "exceljs": "^4.3.0",
     "js-cookie": "^2.2.1",
     "json-server": "^0.17.0",
     "lodash-chain": "^0.0.4",

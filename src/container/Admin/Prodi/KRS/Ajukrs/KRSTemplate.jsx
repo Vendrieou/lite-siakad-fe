@@ -26,9 +26,9 @@ const ChecboxListMataKuliah = ({ name, list, item }) => {
           <Col>
             <h4>{`Semester ${item.parentSemester}`}</h4>
           </Col>
-          <Col>
+          {/* <Col>
             <h5>{`Total SKS ${item.totalSks}`}</h5>
-          </Col>
+          </Col> */}
         </Row>
       }
       layout='vertical'
