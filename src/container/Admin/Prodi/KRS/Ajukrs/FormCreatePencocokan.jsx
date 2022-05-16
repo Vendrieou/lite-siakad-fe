@@ -6,7 +6,7 @@ import ProForm, {
 } from '@ant-design/pro-form'
 import { useConcent } from 'concent'
 import KRSTemplate from './KRSTemplate'
-import UploadExcel from './UploadExcel'
+// import UploadExcel from './UploadExcel'
 
 const AutoCompleteOption = AutoComplete.Option
 
@@ -20,20 +20,21 @@ const FormCreatePencocokan = ({ onCreate }) => {
     data: {},
     active: false
   })
-  const [formValue, setFormValue] = useState({
-    idDosenWali: null,
-    idMahasiswa: null,
-    idDosen: null
-  })
+  // const [formValue, setFormValue] = useState({
+  //   idDosenWali: null,
+  //   idMahasiswa: null,
+  //   idDosen: null
+  // })
   const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
   const { state: stateMahasiswa, mr: mrMahasiswa } = useConcent('mahasiswaStore')
+  const { state: stateJurusan, mr: mrJurusan } = useConcent('jurusanStore')
 
   const handleSubmit = async (values) => {
     let data = {
-      ...values,
-      idDosenWali: formValue.idDosenWali,
-      idMahasiswa: formValue.idMahasiswa,
-      idDosen: formValue.idDosen
+      ...values
+      // idDosenWali: formValue.idDosenWali,
+      // idMahasiswa: formValue.idMahasiswa,
+      // idDosen: formValue.idDosen
     }
     console.log('data', data)
     // if (onCreate) {
@@ -70,12 +71,27 @@ const FormCreatePencocokan = ({ onCreate }) => {
     return []
   }) : []
 
+  const getListJurusan = stateJurusan.list
+  const optionListJurusan = getListJurusan && getListJurusan.length > 0 ? getListJurusan.map((item) => {
+    if (item.name) {
+      return {
+        value: item,
+        label: item.name
+      }
+    }
+    return []
+  }) : []
+
   const onGetListDosen = (value) => {
     mrDosen.get({ q: value, pageSize: 100 })
   }
 
   const onGetListMahasiswa = (value) => {
     mrMahasiswa.get({ q: value, pageSize: 100 })
+  }
+
+  const onGetListJurusan = (value) => {
+    mrJurusan.get({ q: value, pageSize: 100 })
   }
 
   return (
@@ -120,7 +136,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
           <AutoComplete
             placeholder="Masukkan nama dosen"
             onSelect={(value, param) => {
-              setFormValue({ idDosenWali: param.datasource.value.id })
+              // setFormValue({ ...formValue, idDosenWali: param.datasource.value.id })
               onGetListDosen(value)
             }}
             filterOption
@@ -129,7 +145,29 @@ const FormCreatePencocokan = ({ onCreate }) => {
           >
             {optionListDosen && optionListDosen.length > 0 ?
               optionListDosen.map(item => (
-                <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
+                <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
+              )) : <AutoCompleteOption><span>empty</span></AutoCompleteOption>}
+          </AutoComplete>
+        </ProForm.Item>
+        <ProForm.Item
+          name="idJurusan"
+          label="Jurusan"
+          width="md"
+          rules={[{ required: true, message: 'Masukkan nama jurusan' }]}
+        >
+          <AutoComplete
+            placeholder="Masukkan nama jurusan"
+            onSelect={(value, param) => {
+              // setFormValue({ ...formValue, idJurusan: param.datasource.value.id })
+              onGetListJurusan(value)
+            }}
+            filterOption
+            allowClear
+            onClear={() => onGetListJurusan(null)}
+          >
+            {optionListJurusan && optionListJurusan.length > 0 ?
+              optionListJurusan.map(item => (
+                <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
               )) : <AutoCompleteOption><span>empty</span></AutoCompleteOption>}
           </AutoComplete>
         </ProForm.Item>
@@ -142,7 +180,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
           <AutoComplete
             placeholder="Masukkan nama mahasiswa"
             onSelect={(value, param) => {
-              setFormValue({ idMahasiswa: param.datasource.value.id })
+              // setFormValue({ ...formValue, idMahasiswa: param.datasource.value.id })
               onGetListMahasiswa(value)
             }}
             filterOption
@@ -151,7 +189,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
           >
             {optionListMahasiswa && optionListMahasiswa.length > 0 ?
               optionListMahasiswa.map(item => (
-                <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
+                <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
               )) : <AutoCompleteOption><span>empty</span></AutoCompleteOption>}
           </AutoComplete>
         </ProForm.Item>
@@ -173,9 +211,9 @@ const FormCreatePencocokan = ({ onCreate }) => {
           <Col span={12} style={{ overflowY: 'scroll', height: '50vh' }}>
             <KRSTemplate />
           </Col>
-          <Col span={12}>
+          {/* <Col span={12}>
             <UploadExcel />
-          </Col>
+          </Col> */}
         </Row>
       </ProForm>
     </>
