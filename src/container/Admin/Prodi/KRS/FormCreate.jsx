@@ -20,10 +20,10 @@ const FormCreate = ({ onCreate }) => {
   const { state: stateDosen, mr: mrDosen } = useConcent('dosenStore')
   const { state: stateMataKuliah, mr: mrMataKuliah } = useConcent('matkulStore')
   const { selectionList } = stateMataKuliah
-  const [formValue, setFormValue] = useState({
-    idDosenWali: 2,
-    idDosen: null
-  })
+  // const [formValue, setFormValue] = useState({
+  //   idDosenWali: 2,
+  //   idDosen: null
+  // })
   // const [tempForm, setTempForm] = useState({
   //   mataKuliah: null
   // })
@@ -47,7 +47,7 @@ const FormCreate = ({ onCreate }) => {
   const handleSubmit = async (values) => {
     let data = {
       ...values,
-      idDosenWali: formValue.idDosenWali,
+      // idDosenWali: formValue.idDosenWali,
       allowedSemester: JSON.stringify(values.allowedSemester),
       // listMataKuliah: JSON.stringify(listMataKuliah)
       listMataKuliah: JSON.stringify(stateMataKuliah.selectionList)
@@ -243,7 +243,7 @@ const FormCreate = ({ onCreate }) => {
           <AutoComplete
             placeholder="Masukkan nama dosen"
             onSelect={(value, param) => {
-              setFormValue({ idDosenWali: param.datasource.value.id })
+              // setFormValue({ idDosenWali: param.datasource.value.id })
               onGetListDosen(value)
             }}
             filterOption
@@ -251,7 +251,8 @@ const FormCreate = ({ onCreate }) => {
             onClear={() => onGetListDosen(null)}
           >
             {optionListDosen.map(item => (
-              <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
+              // <AutoCompleteOption key={item.value.id} value={item.label} datasource={item} />
+              <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
             ))}
           </AutoComplete>
         </ProForm.Item>

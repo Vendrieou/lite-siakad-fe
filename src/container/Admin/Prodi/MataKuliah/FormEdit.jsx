@@ -16,9 +16,9 @@ const FormEdit = ({
   setRow,
   row
 }) => {
-  const [formValue, setFormValue] = useState({
-    idDosen: row.idDosen || null
-  })
+  // const [formValue, setFormValue] = useState({
+  //   idDosen: row.idDosen || null
+  // })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
@@ -28,8 +28,8 @@ const FormEdit = ({
 
   const handleSubmit = (values) => {
     let data = {
-      ...values,
-      idDosen: formValue.idDosen
+      ...values
+      // idDosen: formValue.idDosen
     }
     mr.update(data)
   }
@@ -39,7 +39,7 @@ const FormEdit = ({
     setModalVerification(false)
     setRow(undefined)
   }
-  
+
   const getListDosen = stateDosen.list
   const optionListDosen = getListDosen && getListDosen.length > 0 ? getListDosen.map((item) => {
     if (item.nama) {
@@ -99,16 +99,14 @@ const FormEdit = ({
               <AutoComplete
                 placeholder="Masukkan nama dosen"
                 onSelect={(value) => {
-                  setFormValue({ idDosen: param.datasource.value.id })
+                  // setFormValue({ idDosen: param.datasource.value.id })
                   onGetListDosen(value)
                 }}
                 filterOption
                 allowClear
               >
                 {optionListDosen.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
-                    {item.label}
-                  </AutoCompleteOption>
+                  <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
                 ))}
               </AutoComplete>
             </ProForm.Item>

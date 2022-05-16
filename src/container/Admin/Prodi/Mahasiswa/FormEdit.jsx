@@ -18,9 +18,9 @@ const FormEdit = ({
   row
 }) => {
   const [form] = Form.useForm();
-  const [formValue, setFormValue] = useState({
-    idSekolah: null
-  })
+  // const [formValue, setFormValue] = useState({
+  //   idSekolah: null
+  // })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
@@ -30,13 +30,13 @@ const FormEdit = ({
   const { state: stateCity, mr: mrCity } = useConcent('cityStore')
   const { state: stateSekolah } = useConcent('sekolahStore')
 
-// const [preview, setPreview] = useState({
+  // const [preview, setPreview] = useState({
   //   image: '',
   //   title: '',
   //   active: false
   // })
-  
-// const getBase64 = file => {
+
+  // const getBase64 = file => {
   //   return new Promise((resolve, reject) => {
   //     const reader = new FileReader()
   //     reader.readAsDataURL(file)
@@ -96,8 +96,8 @@ const FormEdit = ({
   }
 
   let sekolahFilterById = getListSekolah.length > 0 && getListSekolah.filter(item => item.id === row.idSekolah)[0]
-  console.log('row',row);
-  console.log('sekolahFilterById',sekolahFilterById);
+  console.log('row', row);
+  console.log('sekolahFilterById', sekolahFilterById);
   const initialValues = {
     ...row,
     // BAG 1
@@ -167,7 +167,7 @@ const FormEdit = ({
       provinsi: data.provinsi
     })
   }
-  
+
   return (
     <>
       <Modal
@@ -198,8 +198,8 @@ const FormEdit = ({
           //   name: newValuesCity[0].name
           // }
           const data = {
-            ...values,
-            idSekolah: formValue.idSekolah,
+            ...values
+            // idSekolah: formValue.idSekolah,
           }
           setModalVerification({ data, active: true })
         }}
@@ -290,10 +290,10 @@ const FormEdit = ({
           <div>
             <h3>BAG 3</h3>
             <ProForm.Item
-              width="sm" 
-              name="idSekolah" 
+              width="sm"
+              name="idSekolah"
               label="ASAL SMU/SMK/STM"
-              placeholder="cari sekolah" 
+              placeholder="cari sekolah"
               rules={[{ required: true, message: 'Masukkan sekolah' }]}
             >
               <AutoComplete
@@ -301,16 +301,14 @@ const FormEdit = ({
                 placeholder="Masukkan sekolah"
                 onSelect={(value, param) => {
                   onFillSekolahData(param.datasource.value)
-                  setFormValue({ idSekolah: param.datasource.value.id })
+                  // setFormValue({ idSekolah: param.datasource.value.id })
                 }}
                 filterOption
                 allowClear
                 disabled={optionListSekolah && !optionListSekolah.length}
               >
                 {optionListSekolah.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
-                    {item.label}
-                  </AutoCompleteOption>
+                  <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
                 ))}
               </AutoComplete>
             </ProForm.Item>
@@ -344,7 +342,7 @@ const FormEdit = ({
             <ProForm.Item
               name="kota"
               label="KOTA"
-              // rules={[{ required: true, message: 'Masukkan kota' }]}
+            // rules={[{ required: true, message: 'Masukkan kota' }]}
             >
               <AutoComplete
                 style={{ width: '100%' }}

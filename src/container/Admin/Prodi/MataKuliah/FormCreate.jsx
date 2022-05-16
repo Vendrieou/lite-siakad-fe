@@ -14,9 +14,9 @@ const AutoCompleteOption = AutoComplete.Option
 const FormCreate = ({
   onCreate
 }) => {
-  const [formValue, setFormValue] = useState({
-    idDosen: null
-  })
+  // const [formValue, setFormValue] = useState({
+  //   idDosen: null
+  // })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
@@ -25,8 +25,8 @@ const FormCreate = ({
 
   const handleSubmit = async (values) => {
     let data = {
-      ...values,
-      idDosen: formValue.idDosen
+      ...values
+      // idDosen: formValue.idDosen
     }
     onCreate(data)
   }
@@ -83,16 +83,14 @@ const FormCreate = ({
               <AutoComplete
                 placeholder="Masukkan nama dosen"
                 onSelect={(value, param) => {
-                  setFormValue({ idDosen: param.datasource.value.id })
+                  // setFormValue({ idDosen: param.datasource.value.id })
                   onGetListDosen(value)
                 }}
                 filterOption
                 allowClear
               >
                 {optionListDosen.map(item => (
-                  <AutoCompleteOption key={item.value} value={item.label} datasource={item}>
-                    {item.label}
-                  </AutoCompleteOption>
+                  <AutoCompleteOption key={item.value.id} value={item.value.id} datasource={item}>{item.label}</AutoCompleteOption>
                 ))}
               </AutoComplete>
             </ProForm.Item>
