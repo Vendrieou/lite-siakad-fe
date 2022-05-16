@@ -117,10 +117,15 @@ const FormCreatePencocokan = ({ onCreate }) => {
         }}
         scrollToFirstError
         params={{}}
+        initialValues={{
+          // semester: 1,
+          idDosenWali: 2,
+          idMahasiswa: 1
+        }}
       >
         {/* <ProFormText width="md" name="id" label="Id" placeholder="" readonly /> */}
         {/* <ProFormText width="md" name="name" label="Nama" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} /> */}
-        <ProFormDigit width="md" name="semester" label="Semester" min={1} max={8} rules={[{ required: true, message: 'Masukkan semester' }]} />
+        {/* <ProFormDigit width="md" name="semester" label="Semester" min={1} max={8} rules={[{ required: true, message: 'Masukkan semester' }]} /> */}
         <ProForm.Item
           name="idDosenWali"
           label="Dosen Wali"

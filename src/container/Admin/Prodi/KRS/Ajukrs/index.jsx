@@ -222,7 +222,7 @@ const Ajukrs = () => {
        */}
       <CreateForm
         maskClosable={false}
-        width={840}
+        width={2400}
         title="Pencocokan KRS Mahasiswa Pindahan"
         onCancel={() => handleMhsPindahanKRSModalVisible(false)}
         modalVisible={MhsPindahanKRSModalVisible}
