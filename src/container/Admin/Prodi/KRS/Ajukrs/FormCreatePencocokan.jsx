@@ -185,7 +185,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
           ]}
         />
         <Row>
-          <Col span={12}>
+          <Col span={12} style={{ overflowY: 'scroll', height: '50vh' }}>
             <KRSTemplate />
           </Col>
           <Col span={12}>
