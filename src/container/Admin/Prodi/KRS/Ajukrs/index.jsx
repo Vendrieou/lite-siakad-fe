@@ -56,6 +56,7 @@ const Ajukrs = () => {
       title: 'Nama',
       dataIndex: ['mahasiswaProfile', 'nama'],
       tip: '',
+      hideInSearch: true,
       formItemProps: {
         rules: [
           {
@@ -94,6 +95,7 @@ const Ajukrs = () => {
     {
       title: 'Dosen Mata kuliah',
       // dataIndex: 'idDosen',
+      hideInSearch: true,
       dataIndex: ['dosenProfile', 'nama'],
       formItemProps: {
         rules: [
@@ -200,7 +202,7 @@ const Ajukrs = () => {
         dataSource={list && list.length ? list : []}
         request={(params) => {
           mr.get({
-            q: params.name || '',
+            q: params.nim || params.nama || params.matkul || params.status || params.semester || '',
             page: params.current || ''
             // status: params.status
           })
