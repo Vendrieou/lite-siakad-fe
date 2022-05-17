@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react'
 import { Space, Tag, Button, Modal } from 'antd'
 // import { PageContainer } from '@ant-design/pro-layout'
-import ProTable from '@ant-design/pro-table'
+import { EditableProTable } from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
@@ -12,7 +12,7 @@ const Ajukrs = () => {
   const actionRef = useRef()
   // const [createModalVisible, handleModalVisible] = useState(false)
   const [MhsPindahanKRSModalVisible, handleMhsPindahanKRSModalVisible] = useState(false)
-  const [row, setRow] = useState(null)
+  // const [row, setRow] = useState(null)
   // const [type, setType] = useState('export')
 
   const { mr, state } = useConcent('pengajuanKrsStore')
@@ -42,78 +42,42 @@ const Ajukrs = () => {
     {
       title: 'NIM',
       dataIndex: ['mahasiswaProfile', 'nim'],
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
+      readonly: true,
+      tip: ''
     },
     {
       title: 'Nama',
       dataIndex: ['mahasiswaProfile', 'nama'],
+      readonly: true,
       tip: '',
-      hideInSearch: true,
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
+      hideInSearch: true
     },
     {
       title: 'Semester',
       dataIndex: 'semester',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
+      readonly: true,
+      tip: ''
     },
     {
       title: 'Mata Kuliah',
-      dataIndex: 'matKul',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
+      dataIndex: 'matkul',
+      readonly: true,
+      tip: ''
     },
     {
       title: 'Dosen Mata kuliah',
       // dataIndex: 'idDosen',
+      readonly: true,
       hideInSearch: true,
-      dataIndex: ['dosenProfile', 'nama'],
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
+      dataIndex: ['dosenProfile', 'nama']
     },
     {
       title: 'Status',
       dataIndex: 'status',
       width: 100,
       valueEnum: {
-        draft: { text: 'draft', status: 'draft' },
-        cancel: { text: 'cancel', status: 'cancel' },
-        published: { text: 'published', status: 'published' }
+        Lulus: { text: 'Lulus', status: 'Lulus' },
+        Gagal: { text: 'Gagal', status: 'Gagal' }
       },
       render: (item) => (
         <Space>
@@ -129,11 +93,19 @@ const Ajukrs = () => {
       key: 'option',
       width: 120,
       valueType: 'option',
-      render: (dom, entity) => [
-        <Button type="link" key="1" onClick={() => {
-          setRow(entity)
-          mr.getDetail(entity)
-        }}>edit</Button>
+      render: (dom, entity, index, action) => [
+        <Button
+          key="1"
+          onClick={() => {
+            action?.startEditable(entity.id);
+          }}
+        >
+          Edit
+        </Button>,
+        // <Button type="link" key="1" onClick={() => {
+        //   setRow(entity)
+        //   mr.getDetail(entity)
+        // }}>edit</Button>
       ]
     }
   ]
@@ -150,9 +122,9 @@ const Ajukrs = () => {
       total: 100000
     },
     options: {
-      // reload: () => {
-      //   mr.get({ page: 1 })
-      // },
+      reload: () => {
+        mr.get({ page: 1 })
+      },
       show: false,
       density: false,
       fullScreen: false,
@@ -171,15 +143,21 @@ const Ajukrs = () => {
     onCreate
   }
 
-  const FormEditProps = {
-    setRow,
-    row
+  // const FormEditProps = {
+  //   setRow,
+  //   row
+  // }
+
+  const onChangeTableValue = (value) => {
+    console.log('value', value);
+    // editById
+    // mrMataKuliah.setDeleteSelection(value)
   }
 
   return (
     <>
-      <ProTable
-        headerTitle="List KRS"
+      <EditableProTable
+        headerTitle="List Pengajuan KRS"
         actionRef={actionRef}
         rowKey="id"
         toolBarRender={() => [
@@ -187,14 +165,28 @@ const Ajukrs = () => {
             <PlusOutlined /> Pencocokan KRS Mhs. Pindahan
           </Button>
         ]}
-        dataSource={list && list.length ? list : []}
-        // request={(params) => {
-        //   mr.get({
-        //     q: params.nim || params.nama || params.matkul || params.status || params.semester || '',
-        //     page: params.current || ''
-        //     // status: params.status
-        //   })
-        // }}
+        // dataSource={list && list.length ? list : []}
+        value={list && list.length ? list : []}
+        request={(params) => {
+          let nim = params.mahasiswaProfile && params.mahasiswaProfile.nim
+          mr.get({
+            q: nim || params.nama || params.matkul || params.status || params.semester || '',
+            page: params.current || ''
+            // status: params.status
+          })
+        }}
+        recordCreatorProps={false}
+        editable={{
+          type: 'multiple',
+          deletePopconfirmMessage: 'delete this line?',
+          onlyAddOneLineAlertMessage: 'Only add a new line',
+          actionRender: (row, config, defaultDoms) => {
+            return [defaultDoms.save, defaultDoms.cancel, defaultDoms.delete];
+          },
+          onSave: (rowKey, data, row) => {
+            onChangeTableValue(data)
+          }
+        }}
         columns={columns}
         {...initData}
       />

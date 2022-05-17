@@ -62,7 +62,7 @@ const ProdiKRSContainer = () => {
       },
       render: (item) => (
         <Space>
-          <Tag key={item} color={item === 'published' ? 'success' : 'error'}>
+          <Tag key={item} color={item === 'Lulus' ? 'success' : 'error'}>
             {item}
           </Tag>
         </Space>

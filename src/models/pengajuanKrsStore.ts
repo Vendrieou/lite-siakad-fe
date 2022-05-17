@@ -30,7 +30,8 @@ const module = defineModule({
       const data = {
         ...payload,
         q: payload?.q || '',
-        page: payload?.page || 1
+        page: payload?.page || 1,
+        relationship: 1
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
