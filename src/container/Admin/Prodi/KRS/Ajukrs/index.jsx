@@ -173,7 +173,6 @@ const Ajukrs = () => {
                 }}
                 placeholder="Please select a status"
                 onChange={(value) => {
-                  console.log('value status', value)
                   mr.get({ status: value })
                 }}
               />
