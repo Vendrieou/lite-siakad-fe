@@ -3,6 +3,8 @@ import { useState, useRef } from 'react'
 import { Space, Tag, Button, Modal } from 'antd'
 // import { PageContainer } from '@ant-design/pro-layout'
 import { EditableProTable } from '@ant-design/pro-table'
+import { LightFilter, ProFormSelect } from '@ant-design/pro-form'
+
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
@@ -81,7 +83,7 @@ const Ajukrs = () => {
       },
       render: (item) => (
         <Space>
-          <Tag key={item} color={item === 'published' ? 'success' : 'error'}>
+          <Tag key={item} color={item === 'Lulus' ? 'success' : 'error'}>
             {item}
           </Tag>
         </Space>
@@ -97,7 +99,7 @@ const Ajukrs = () => {
         <Button
           key="1"
           onClick={() => {
-            action?.startEditable(entity.id);
+            action?.startEditable(entity.id)
           }}
         >
           Edit
@@ -111,10 +113,11 @@ const Ajukrs = () => {
   ]
 
   const initData = {
-    search: {
-      layout: 'vertical',
-      defaultCollapsed: true
-    },
+    // search: {
+    //   layout: 'vertical',
+    //   defaultCollapsed: false
+    // },
+    search: false,
     pagination: {
       show: true,
       pageSize: 10,
@@ -149,9 +152,7 @@ const Ajukrs = () => {
   // }
 
   const onChangeTableValue = (value) => {
-    console.log('value', value);
-    // editById
-    // mrMataKuliah.setDeleteSelection(value)
+    mr.update(value)
   }
 
   return (
@@ -160,6 +161,32 @@ const Ajukrs = () => {
         headerTitle="List Pengajuan KRS"
         actionRef={actionRef}
         rowKey="id"
+        toolbar={{
+          filter: (
+            <LightFilter>
+              <ProFormSelect
+                name="status"
+                label="Status"
+                valueEnum={{
+                  Lulus: 'Lulus',
+                  Gagal: 'Gagal',
+                }}
+                placeholder="Please select a status"
+                onChange={(value) => {
+                  console.log('value status', value)
+                  mr.get({ status: value })
+                }}
+              />
+            </LightFilter>
+          ),
+          search: {
+            onSearch: (value) => {
+              mr.get({
+                q: value
+              })
+            },
+          },
+        }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleMhsPindahanKRSModalVisible(true)}>
             <PlusOutlined /> Pencocokan KRS Mhs. Pindahan
@@ -181,7 +208,7 @@ const Ajukrs = () => {
           deletePopconfirmMessage: 'delete this line?',
           onlyAddOneLineAlertMessage: 'Only add a new line',
           actionRender: (row, config, defaultDoms) => {
-            return [defaultDoms.save, defaultDoms.cancel, defaultDoms.delete];
+            return [defaultDoms.save, defaultDoms.cancel, defaultDoms.delete]
           },
           onSave: (rowKey, data, row) => {
             onChangeTableValue(data)
