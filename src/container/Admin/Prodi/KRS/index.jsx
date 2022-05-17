@@ -75,10 +75,10 @@ const ProdiKRSContainer = () => {
       width: 120,
       valueType: 'option',
       render: (dom, entity) => [
-        <Button type="link" key="1" onClick={() => {
-          setRow(entity)
-          mr.getDetail(entity)
-        }}>edit</Button>,
+        // <Button type="link" key="1" onClick={() => {
+        //   setRow(entity)
+        //   mr.getDetail(entity)
+        // }}>edit</Button>,
         <Button type="link" key="2" onClick={() => {
           let page = document.getElementsByClassName("ant-pagination-item-active")
           showDeleteTemplateConfirm({ ...entity, page: page[0].title })
