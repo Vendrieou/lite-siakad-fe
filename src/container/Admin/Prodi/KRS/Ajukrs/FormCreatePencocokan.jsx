@@ -39,7 +39,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
       // idMahasiswa: formValue.idMahasiswa,
       // idDosen: formValue.idDosen
     }
-
+    let templistMataKuliah = []
     if (
       values.semester1 && values.semester1.length > 0 ||
       values.semester2 && values.semester2.length > 0 ||
@@ -50,7 +50,7 @@ const FormCreatePencocokan = ({ onCreate }) => {
       values.semester7 && values.semester7.length > 0 ||
       values.semester8 && values.semester8.length > 0
     ) {
-      data.listMataKuliah = concat(
+      templistMataKuliah = concat(
         values.semester1 || [],
         values.semester2 || [],
         values.semester3 || [],
@@ -61,6 +61,14 @@ const FormCreatePencocokan = ({ onCreate }) => {
         values.semester8 || []
       )
     }
+
+    const listMataKuliah = []
+    for (let i = 0; i < templistMataKuliah.length; i++) {
+      let val = JSON.parse(templistMataKuliah[i])
+      listMataKuliah.push(val)
+    }
+
+    data.listMataKuliah = JSON.stringify(listMataKuliah)
     if (onCreate) {
       onCreate(data)
     }

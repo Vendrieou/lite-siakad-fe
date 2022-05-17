@@ -1,6 +1,6 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
-import { Space, Tag, Tabs, Button, Modal } from 'antd'
+import { Space, Tag, Button, Modal } from 'antd'
 // import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
@@ -160,11 +160,11 @@ const Ajukrs = () => {
     }
   }
   const onCreate = async (data) => {
-    console.log('list aju krs', data)
-    // const response = await mr.createBulk(data)
-    // if (response?.success) {
+    const response = await mr.create(data)
+    if (response?.success) {
+      handleMhsPindahanKRSModalVisible(false)
       // handleModalVisible(false)
-    // }
+    }
   }
 
   const FormPencocokanProps = {

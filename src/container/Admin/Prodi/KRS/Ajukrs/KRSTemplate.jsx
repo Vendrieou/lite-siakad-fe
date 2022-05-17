@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ProFormCheckbox } from '@ant-design/pro-form'
 import { Row, Col } from 'antd'
 import { useConcent } from 'concent'
@@ -38,11 +37,9 @@ const ChecboxListMataKuliah = ({ name, list, item }) => {
 }
 
 const KRSTemplate = () => {
-  const { mr, state } = useConcent('krsStore')
+  const { state } = useConcent('krsStore')
   const { list } = state
-  useEffect(() => {
-    mr.get()
-  }, [])
+
   return (
     <>
       {list && list.length > 0

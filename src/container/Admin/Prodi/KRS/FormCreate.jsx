@@ -233,7 +233,7 @@ const FormCreate = ({ onCreate }) => {
       >
         {/* <ProFormText width="md" name="id" label="Id" placeholder="" readonly /> */}
         <ProFormText width="md" name="nama" label="Nama" placeholder="Masukkan nama" rules={[{ required: true, message: 'Masukkan nama' }]} />
-        <ProFormDigit width="md" name="totalSks" label="Total Sks" min={1} rules={[{ required: true, message: 'Masukkan total semester' }]} />
+        {/* <ProFormDigit width="md" name="totalSks" label="Total Sks" min={1} rules={[{ required: true, message: 'Masukkan total semester' }]} /> */}
         <ProForm.Item
           name="idDosenWali"
           label="Dosen Wali"

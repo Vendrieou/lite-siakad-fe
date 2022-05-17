@@ -26,15 +26,15 @@ const module = defineModule({
     counter: {},
     group: [],
     asset: [],
-    // list: [],
-    list: [
+    list: [],
+    lists: [
       {
         "id": 1,
         "idDosen": null,
         "nama": "Semester",
         "totalSks": 24,
         "idDosenWali": 2,
-        "parentSemester": 4,
+        "parentSemester": 3,
         "jenisKurikulum": "Biasa",
         "status": "draft",
         "listMataKuliah": [
@@ -245,11 +245,11 @@ const module = defineModule({
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
-        // const response = await apiGet(data)
-        // if (response.success) {
-        //   actionCtx.dispatch(module.reducer.RECEIVE, response)
-        //   return response
-        // }
+        const response = await apiGet(data)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
       } catch (error) {
         message.error(error)
       }
@@ -353,11 +353,11 @@ const module = defineModule({
     }
 
   },
-  // lifecycle: {
-  //   mounted: async (dispatch, moduleState) => {
-  //     dispatch(module.reducer.get)
-  //   }
-  // }
+  lifecycle: {
+    mounted: async (dispatch, moduleState) => {
+      dispatch(module.reducer.get)
+    }
+  }
 })
 
 export default module
