@@ -33,6 +33,11 @@ const module = defineModule({
         page: payload?.page || 1,
         relationship: 1
       }
+
+      // report
+      if (payload && payload.idJurusan) { data.idJurusan = payload.idJurusan }
+      if (payload && payload.nim) { data.nim = payload.nim }
+      if (payload && payload.semester) { data.semester = payload.semester }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGet(data)
