@@ -127,7 +127,7 @@ class ComponentToPrint extends React.PureComponent {
                 <Title level={5} style={{ margin: 0 }}>Medan, {dateTimeToFull(new Date())}</Title>
                 <Title level={5} style={{ margin: 0 }}>Dibuat oleh</Title>
                 <Title level={5} style={{ margin: 0 }}>Ketua Program Studi</Title><br /><br /><br /><br /><br /><br />
-                <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaProdi})`}</Title>
+                <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaprodi})`}</Title>
               </div>
               <div>
                 <br />

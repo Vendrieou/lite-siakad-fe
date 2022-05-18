@@ -58,3 +58,22 @@ export const isContainAdminRole = async (role: string | Promise<any>) => {
   }
   return false
 }
+
+export const setIntervalTahunAjaran = (n: number) => {
+  switch (n) {
+    case (1):
+    case (2):
+      return 0
+    case (3):
+    case (4):
+      return 1
+    case (5):
+    case (6):
+      return 2
+    case (7):
+    case (8):
+      return 3
+    default:
+      return 0
+  }
+}

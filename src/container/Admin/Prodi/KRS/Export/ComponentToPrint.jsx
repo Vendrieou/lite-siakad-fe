@@ -93,7 +93,7 @@ class ComponentToPrint extends React.PureComponent {
               <div>
                 <Title level={5} style={{ margin: 0 }}>Diketahui</Title>
                 <Title level={5} style={{ margin: 0 }}>Ka. Prodi</Title><br /><br /><br /><br /><br /><br />
-                <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaProdi})`}</Title>
+                <Title level={5} style={{ margin: 0 }}>{`(${assignData.kaprodi})`}</Title>
               </div>
               <div>
                 <Title level={5} style={{ margin: 0 }}>Disetujui</Title>

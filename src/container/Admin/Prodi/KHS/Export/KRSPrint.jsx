@@ -58,7 +58,7 @@ const KRSPrint = () => {
   ]
 
   const assignData = {
-    kaProdi: 'Robert, M.KOM',
+    kaprodi: 'Robert, M.KOM',
     name: 'VENDRIE YULMAN',
     nim: '1844017',
     kelas: 'TI C 18',

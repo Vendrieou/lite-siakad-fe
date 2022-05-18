@@ -1,7 +1,7 @@
 // import React from 'react'
 import usePrintPdf from 'components/hooks/usePrintPdf'
 import { Button } from 'antd'
-
+import { setIntervalTahunAjaran } from '@/utils/variable'
 import ComponentToPrint from './ComponentToPrint'
 
 const KRSPrint = ({ list, assign }) => {
@@ -29,16 +29,24 @@ const KRSPrint = ({ list, assign }) => {
     semester: list && list.length > 0 && list[0].semester,
     programStudi: list && list.length > 0 && list[0].jurusan && list[0].jurusan.nama,
   }
+  
+  // let currentSemester = 6
+  // let inYear = 2022
+  let currentSemester = assign.currentSemester
+  let inYear = assign.tahunAngkatan
+  let start = inYear + setIntervalTahunAjaran(currentSemester)
+  let end = start + 1
+  let tahunAjaran = `${start}-${end}`
 
   const assignData = {
     name: assign.nama || '',
     nim: assign.nim || '',
     kelas: assign.kelas || '',
-    kaProdi: 'Robert, M.KOM',
+    kaprodi: 'Robert, M.KOM',
     semester: assignList.semester,
-    tahunAjaran: '2021 - 2022',
+    tahunAjaran: tahunAjaran || '',
     programStudi: assignList.programStudi,
-    dosenWali: 'Didik Aryanto'
+    dosenWali: assign.dosenWali
   }
 
   console.log('assign', assign)
@@ -83,7 +91,7 @@ export default KRSPrint
 // ]
 
 // const assignData = {
-//   kaProdi: 'Robert, M.KOM',
+//   kaprodi: 'Robert, M.KOM',
 //   name: 'VENDRIE YULMAN',
 //   nim: '1844017',
 //   kelas: 'TI C 18',
