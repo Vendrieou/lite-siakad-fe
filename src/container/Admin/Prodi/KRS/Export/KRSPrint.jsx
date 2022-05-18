@@ -4,46 +4,44 @@ import { Button } from 'antd'
 
 import ComponentToPrint from './ComponentToPrint'
 
-const KRSPrint = () => {
-  const { 
+const KRSPrint = ({ list, assign }) => {
+  const {
     handlePrint,
     componentRef,
     text,
     loading
   } = usePrintPdf({ documentTitle: 'KRS' })
 
-  const data = [
-    {
-      key: '1',
-      kodeMK: 'TI 2639',
-      matkul: 'PRAKTIKUM STATISTIKA',
-      sks: 1,
-      semester: 6,
-      kelas: 'TI C 18',
-      namaDosen: 'EMMA ROSINTA, S.SI, S.KOM, M.KOM'
-    },
-    {
-      key: '2',
-      kodeMK: 'TI 2639',
-      matkul: 'PRAKTIKUM 3D MODELING',
-      sks: 1,
-      semester: 6,
-      kelas: 'TI C 18',
-      namaDosen: 'JOHANNES TERANG KITA PERANGIN ANGIN'
+  const data = list && list.length > 0 ? list.map(item => {
+
+    const dosenProfile = {
+      gelarDepan: item.dosenProfile && item.dosenProfile.gelarDepan || '',
+      nama: item.dosenProfile && item.dosenProfile.nama || '',
+      gelarBelakang: item.dosenProfile && item.dosenProfile.gelarBelakang || ''
     }
-  ]
+    return ({
+      ...item,
+      namaDosen: `${dosenProfile.gelarDepan} ${dosenProfile.nama} ${dosenProfile.gelarBelakang}`
+    })
+  }) : []
+
+  const assignList = {
+    semester: list && list.length > 0 && list[0].semester,
+    programStudi: list && list.length > 0 && list[0].jurusan && list[0].jurusan.nama,
+  }
 
   const assignData = {
+    name: assign.nama || '',
+    nim: assign.nim || '',
+    kelas: assign.kelas || '',
     kaProdi: 'Robert, M.KOM',
-    name: 'VENDRIE YULMAN',
-    nim: '1844017',
-    kelas: 'TI C 18',
+    semester: assignList.semester,
     tahunAjaran: '2021 - 2022',
-    programStudi: 'TI',
-    semester: '6',
+    programStudi: assignList.programStudi,
     dosenWali: 'Didik Aryanto'
   }
 
+  console.log('assign', assign)
   const PrintProps = {
     data,
     assignData,
@@ -62,3 +60,35 @@ const KRSPrint = () => {
 }
 
 export default KRSPrint
+
+// const data = [
+//   {
+//     key: '1',
+//     kodeMK: 'TI 2639',
+//     matkul: 'PRAKTIKUM STATISTIKA',
+//     sks: 1,
+//     semester: 6,
+//     kelas: 'TI C 18',
+//     namaDosen: 'EMMA ROSINTA, S.SI, S.KOM, M.KOM'
+//   },
+//   {
+//     key: '2',
+//     kodeMK: 'TI 2639',
+//     matkul: 'PRAKTIKUM 3D MODELING',
+//     sks: 1,
+//     semester: 6,
+//     kelas: 'TI C 18',
+//     namaDosen: 'JOHANNES TERANG KITA PERANGIN ANGIN'
+//   }
+// ]
+
+// const assignData = {
+//   kaProdi: 'Robert, M.KOM',
+//   name: 'VENDRIE YULMAN',
+//   nim: '1844017',
+//   kelas: 'TI C 18',
+//   tahunAjaran: '2021 - 2022',
+//   programStudi: 'TI',
+//   semester: '6',
+//   dosenWali: 'Didik Aryanto'
+// }

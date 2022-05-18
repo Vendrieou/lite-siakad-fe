@@ -3,6 +3,7 @@ import { defineModule } from 'concent'
 import {
   apiGet,
   apiGetById,
+  apiGetByNim,
   apiPost,
   apiUpdate,
   apiDelete
@@ -52,7 +53,18 @@ const module = defineModule({
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGetById(payload?.id)
         if (response.success) {
-          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    getDetailByNim: async (payload: any, moduleState, actionCtx) => {
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetByNim(payload?.nim)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
         }
       } catch (error) {
         message.error(error)

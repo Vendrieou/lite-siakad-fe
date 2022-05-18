@@ -20,6 +20,14 @@ const apiGetById = async (id: number) => {
   })
 }
 
+const apiGetByNim = async (nim: number) => {
+  return request({
+    url: `${apiMahasiswa}/nim/${nim}`,
+    method: 'get',
+    auth: true
+  })
+}
+
 const apiPost = async (data: any) => {
   return request({
     url: `${apiMahasiswa}`,
@@ -50,6 +58,7 @@ export {
   apiGet,
   apiPost,
   apiGetById,
+  apiGetByNim,
   apiUpdate,
   apiDelete
 }

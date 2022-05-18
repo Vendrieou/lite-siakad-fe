@@ -11,7 +11,8 @@ import KRSPrint from './KRSPrint'
 const AutoCompleteOption = AutoComplete.Option
 
 const MenuFilter = () => {
-  const { mr } = useConcent('pengajuanKrsStore')
+  const { mr: mrMahasiswa } = useConcent('mahasiswaStore')
+  const { mr, setState } = useConcent('pengajuanKrsStore')
   const { state: stateJurusan, mr: mrJurusan } = useConcent('jurusanStore')
 
   const getListJurusan = stateJurusan.list
@@ -33,9 +34,15 @@ const MenuFilter = () => {
     <Card>
       <ProForm
         // layout="horizontal"
+        // submitter={{ onSubmit: () => { }, onReset: () => { setState({ list: [] }) } }}
+        onReset={() => setState({ list: [] })}
         layout="vertical"
         onFinish={async (value) => {
+          mrMahasiswa.getDetailByNim(value)
           mr.get(value)
+        }}
+        initialValues={{
+          idJurusan: 1, nim: '1844005', semester: 2
         }}
       >
         <ProFormGroup label="Filter">
@@ -64,7 +71,7 @@ const MenuFilter = () => {
           <ProFormText width="sm" name="nim" label="Cari Mahasiswa (NIM)" placeholder="Masukkan NIM" rules={[{ required: true, message: 'Masukkan NIM Mahasiswa' }]} />
           <ProFormSelect
             options={[
-              { value: 'all', label: 'all' },
+              // { value: 'all', label: 'all' },
               { value: 1, label: 1 },
               { value: 2, label: 2 },
               { value: 3, label: 3 },
@@ -78,7 +85,7 @@ const MenuFilter = () => {
             label="Pilih Semester"
             rules={[{ required: true, message: 'Pilih Semester' }]}
           />
-            {/* <ProFormSelect
+          {/* <ProFormSelect
             options={[
               { value: 1, label: 1 },
               { value: 2, label: 2 },
@@ -100,8 +107,10 @@ const MenuFilter = () => {
 }
 
 const Export = ({ isAjuKrs = false }) => {
-  // const { state } = useConcent('pengajuanKrsStore')
-  // const { list }= state
+  const { state: stateMahasiswa } = useConcent('mahasiswaStore')
+  const { state } = useConcent('pengajuanKrsStore')
+  const { list } = state
+  const { currentItem } = stateMahasiswa
 
   const onAjuKrs = () => {
     console.log();
@@ -114,11 +123,10 @@ const Export = ({ isAjuKrs = false }) => {
         <Button type="primary" onClick={() => onAjuKrs()}>Aju KRS</Button>
         : null}
       <br />
-      <KRSPrint />
 
-      {/* {list && list.length > 0 ?
-        <KRSPrint />
-        : null} */}
+      {list && list.length > 0 ?
+        <KRSPrint list={list} assign={currentItem} />
+        : null}
     </>
   )
 }

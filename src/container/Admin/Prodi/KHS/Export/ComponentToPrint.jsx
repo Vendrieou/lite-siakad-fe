@@ -8,8 +8,8 @@ const { Title, Text } = Typography
 const columns = [
   {
     title: 'Kode MK',
-    dataIndex: 'kodeMK',
-    key: 'kodeMk',
+    dataIndex: 'kodeMatkul',
+    key: 'kodeMatkul',
     width: 350
   },
   {
