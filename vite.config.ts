@@ -12,11 +12,11 @@ const projectRootDir = path.resolve(__dirname);
 require('dotenv').config();
 
 export default ({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
-  
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
   return defineConfig({
     base: '/',
-    define:{
+    define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.PORT_HTTP': JSON.stringify(process.env.PORT_HTTP),
       'process.env.PORT_HTTPS': JSON.stringify(process.env.PORT_HTTPS),
@@ -31,9 +31,9 @@ export default ({ mode }) => {
       'process.env.APIVERSIONIMAGE': JSON.stringify(process.env.APIVERSIONIMAGE),
       'process.env.PUBLIC_VAPID_KEY': JSON.stringify(process.env.PUBLIC_VAPID_KEY),
       // PRODUCTION ENV
-      'process.env.PROD_APIHOST':JSON.stringify(process.env.PROD_APIHOST),
-      'process.env.PROD_APIPROTOCOL':JSON.stringify(process.env.PROD_APIPROTOCOL),
-      'process.env.PROD_APIHOSTIMAGE':JSON.stringify(process.env.PROD_APIHOSTIMAGE),
+      'process.env.PROD_APIHOST': JSON.stringify(process.env.PROD_APIHOST),
+      'process.env.PROD_APIPROTOCOL': JSON.stringify(process.env.PROD_APIPROTOCOL),
+      'process.env.PROD_APIHOSTIMAGE': JSON.stringify(process.env.PROD_APIHOSTIMAGE),
     },
     plugins: [
       splitVendorChunkPlugin(),
