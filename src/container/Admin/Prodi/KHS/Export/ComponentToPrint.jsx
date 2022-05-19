@@ -20,8 +20,8 @@ const columns = [
   },
   {
     title: 'KREDIT (K)',
-    dataIndex: 'kredit',
-    key: 'kredit',
+    dataIndex: 'sks',
+    key: 'sks',
     align: 'center',
     width: 400
   },
@@ -37,12 +37,12 @@ const columns = [
     dataIndex: 'kxn',
     key: 'kxn',
     align: 'center',
-    width: 400
+    width: 500
   },
   {
     title: 'KETERANGAN',
-    dataIndex: 'keterangam',
-    key: 'keterangam',
+    dataIndex: 'status',
+    key: 'status',
     width: 600
   }
 ]
@@ -92,6 +92,7 @@ class ComponentToPrint extends React.PureComponent {
           <tr>
             <td colSpan={2}>
               <Table
+                bordered={true}
                 dataSource={data}
                 columns={columns}
                 pagination={false}
@@ -101,7 +102,7 @@ class ComponentToPrint extends React.PureComponent {
                     <Table.Summary.Cell index={0} />
                     <Table.Summary.Cell index={1} />
                     <Table.Summary.Cell index={2} align="center">
-                      <Text className="jumlahKredit">{currentData.map(item => item.kredit).reduce((prev, curr) => prev + curr, 0)}</Text>
+                      <Text className="jumlahKredit">{currentData.map(item => item.sks).reduce((prev, curr) => prev + curr, 0)}</Text>
                     </Table.Summary.Cell>
                     <Table.Summary.Cell index={3} />
                     <Table.Summary.Cell index={4} align="center">
@@ -110,7 +111,7 @@ class ComponentToPrint extends React.PureComponent {
                   </Table.Summary.Row>
                 )}
                 footer={(currentData) => {
-                  let jumlahKxn = currentData.map(item => item.kredit).reduce((prev, curr) => prev + curr, 0)
+                  let jumlahKxn = currentData.map(item => item.sks).reduce((prev, curr) => prev + curr, 0)
                   let jumlahKredit = currentData.map(item => item.kxn).reduce((prev, curr) => prev + curr, 0)
                   let ipValue = jumlahKxn / jumlahKredit
                   return (
