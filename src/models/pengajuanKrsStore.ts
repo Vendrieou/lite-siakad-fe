@@ -2,6 +2,7 @@ import { message } from 'antd'
 import { defineModule } from 'concent'
 import {
   apiGet,
+  apiGetAssign,
   apiGetById,
   apiPost,
   apiPostBulk,
@@ -15,6 +16,7 @@ const module = defineModule({
     filter: {
       page: 1
     },
+    semester: 0,
     currentItem: {},
     counter: {},
     group: [],
@@ -55,6 +57,17 @@ const module = defineModule({
         const response = await apiGetById(payload?.id)
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    getAssign: async (payload: any, moduleState, actionCtx) => {
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetAssign(payload)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
         }
       } catch (error) {
         message.error(error)

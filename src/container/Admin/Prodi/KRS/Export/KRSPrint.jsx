@@ -1,7 +1,7 @@
 // import React from 'react'
 import usePrintPdf from 'components/hooks/usePrintPdf'
 import { Button } from 'antd'
-import { setIntervalTahunAjaran } from '@/utils/variable'
+import { setTahunAjaran } from 'utils/variable'
 import ComponentToPrint from './ComponentToPrint'
 
 const KRSPrint = ({ list, assign }) => {
@@ -13,7 +13,6 @@ const KRSPrint = ({ list, assign }) => {
   } = usePrintPdf({ documentTitle: 'KRS' })
 
   const data = list && list.length > 0 ? list.map(item => {
-
     const dosenProfile = {
       gelarDepan: item.dosenProfile && item.dosenProfile.gelarDepan || '',
       nama: item.dosenProfile && item.dosenProfile.nama || '',
@@ -26,30 +25,20 @@ const KRSPrint = ({ list, assign }) => {
   }) : []
 
   const assignList = {
-    semester: list && list.length > 0 && list[0].semester,
-    programStudi: list && list.length > 0 && list[0].jurusan && list[0].jurusan.nama,
+    semester: list && list.length > 0 && list[0].semester
   }
-  
-  // let currentSemester = 6
-  // let inYear = 2022
-  let currentSemester = assign.currentSemester
-  let inYear = assign.tahunAngkatan
-  let start = inYear + setIntervalTahunAjaran(currentSemester)
-  let end = start + 1
-  let tahunAjaran = `${start}-${end}`
+
 
   const assignData = {
     name: assign.nama || '',
     nim: assign.nim || '',
     kelas: assign.kelas || '',
-    kaprodi: 'Robert, M.KOM',
+    kaprodi: assign.kaprodi || '',
     semester: assignList.semester,
-    tahunAjaran: tahunAjaran || '',
-    programStudi: assignList.programStudi,
+    tahunAjaran: setTahunAjaran(assign),
+    programStudi: assign.programStudi,
     dosenWali: assign.dosenWali
   }
-
-  console.log('assign', assign)
   const PrintProps = {
     data,
     assignData,

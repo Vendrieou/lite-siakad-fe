@@ -12,6 +12,15 @@ const apiGet = async (params: any) => {
   })
 }
 
+const apiGetAssign = async (params: any) => {
+  return request({
+    url: `${apiPengajuanKrs}-assign`,
+    method: 'get',
+    params,
+    auth: true
+  })
+}
+
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiPengajuanKrs}/${id}`,
@@ -57,6 +66,7 @@ const apiDelete = async (id: number) => {
 
 export {
   apiGet,
+  apiGetAssign,
   apiPost,
   apiPostBulk,
   apiGetById,

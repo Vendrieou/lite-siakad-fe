@@ -77,3 +77,17 @@ export const setIntervalTahunAjaran = (n: number) => {
       return 0
   }
 }
+
+export const setTahunAjaran = (assign: { semester: number, tahunAngkatan: number }) => {
+  // let semester = 6
+  // let inYear = 2022
+  let semester = assign.semester
+  let inYear = assign.tahunAngkatan
+  let start = inYear + setIntervalTahunAjaran(semester)
+  let end = start + 1
+  let tahunAjaran = `${start}-${end}`
+  if (tahunAjaran) {
+    return tahunAjaran
+  }
+  return ''
+}

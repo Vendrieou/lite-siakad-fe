@@ -11,7 +11,6 @@ import KRSPrint from './KRSPrint'
 const AutoCompleteOption = AutoComplete.Option
 
 const MenuFilter = () => {
-  const { mr: mrMahasiswa } = useConcent('mahasiswaStore')
   const { mr, setState } = useConcent('pengajuanKrsStore')
   const { state: stateJurusan, mr: mrJurusan } = useConcent('jurusanStore')
 
@@ -38,8 +37,10 @@ const MenuFilter = () => {
         onReset={() => setState({ list: [] })}
         layout="vertical"
         onFinish={async (value) => {
-          mrMahasiswa.getDetailByNim(value)
+          // mrMahasiswa.getDetailByNim(value)
+          mr.getAssign(value)
           mr.get(value)
+          setState({ semester: value.semester || 0 })
         }}
         initialValues={{
           idJurusan: 1, nim: '1844005', semester: 2
@@ -107,12 +108,19 @@ const MenuFilter = () => {
 }
 
 const Export = ({ isAjuKrs = false }) => {
-  const { state: stateMahasiswa } = useConcent('mahasiswaStore')
   const { state } = useConcent('pengajuanKrsStore')
-  const { list } = state
-  const { currentItem } = stateMahasiswa
+  const { list, currentItem, semester } = state
+
+  const KRSPrintProps = {
+    list,
+    assign: {
+      semester,
+      ...currentItem
+    }
+  }
 
   const onAjuKrs = () => {
+    // get setting service status ajuKrs
     console.log();
   }
   return (
@@ -125,7 +133,7 @@ const Export = ({ isAjuKrs = false }) => {
       <br />
 
       {list && list.length > 0 ?
-        <KRSPrint list={list} assign={currentItem} />
+        <KRSPrint {...KRSPrintProps} />
         : null}
     </>
   )
