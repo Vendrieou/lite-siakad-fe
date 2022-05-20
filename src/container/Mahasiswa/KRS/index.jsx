@@ -1,12 +1,9 @@
 // import React from 'react'
-import { useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import ProTable from '@ant-design/pro-table'
-import { Form, Card, Space, Button, Table } from 'antd'
+import { Space, Button, Table } from 'antd'
 import { useConcent } from 'concent'
-import ProForm, {
-  ProFormCheckbox
-} from '@ant-design/pro-form'
 
 const MahasiswaKRS = () => {
   const columns = [
@@ -16,10 +13,11 @@ const MahasiswaKRS = () => {
     { hideInSearch: true, title: 'Semester', dataIndex: 'semester', key: 'semester', align: 'center' },
     { hideInSearch: true, title: 'Kelas', dataIndex: 'kelas', key: 'kelas', width: 250 },
     { hideInSearch: true, title: 'Nama Dosen', dataIndex: 'namaDosen', key: 'namaDosen', width: 1200 },
-    { hideInSearch: true, title: 'Status', dataIndex: 'status', key: 'status', width: 250 }
+    // { hideInSearch: true, title: 'Status', dataIndex: 'status', key: 'status', width: 250 }
   ]
   const initData = {
     search: false,
+    pagination: false,
     options: {
       reload: false,
       show: false,
@@ -39,6 +37,115 @@ const MahasiswaKRS = () => {
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 
+  const [formValue, setFormValue] = useState({
+    currentSemester: [],
+    mbkm: [],
+    kelasBawah: []
+  });
+  const ref = useRef();
+
+  // const [form] = Form.useForm();
+  return (
+    <PrivateRoute access={['mahasiswa']}>
+      <Button
+        style={{
+          position: 'fixed',
+          bottom: 80,
+          right: 80,
+          zIndex: 1
+        }}
+        type="primary" size="large"
+        onClick={() => {
+          console.log('formValue', formValue)
+        }}
+      >
+        Aju KRS
+      </Button>
+      <ProTable
+        size="small"
+        formRef={ref}
+        headerTitle={`List Semester saat ini ${4}`}
+        rowKey="id"
+        rowSelection={{
+          onChange: (value, selectedRows) => {
+            setFormValue({ ...formValue, currentSemester: selectedRows })
+          },
+          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+        }}
+        dataSource={listCurrentSemester && listCurrentSemester.length ? listCurrentSemester : []}
+        tableAlertRender={({ selectedRowKeys }) => {
+          return (
+            <>
+              {formValue.currentSemester && formValue.currentSemester.length > 0 ?
+                <Space size={24}>
+                  <span>{`selected ${selectedRowKeys.length}`}</span>
+                </Space>
+                : null}
+            </>
+          )
+        }}
+        columns={columns}
+        {...initData}
+      />
+      <ProTable
+        size="small"
+        formRef={ref}
+        headerTitle="List Kelas MBKM (Merdeka Belajar)"
+        rowKey="id"
+        rowSelection={{
+          onChange: (value, selectedRows) => {
+            setFormValue({ ...formValue, mbkm: selectedRows })
+          },
+          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+        }}
+        dataSource={listMBKM && listMBKM.length ? listMBKM : []}
+        tableAlertRender={({ selectedRowKeys }) => {
+          return (
+            <>
+              {formValue.mbkm && formValue.mbkm.length > 0 ?
+                <Space size={24}>
+                  <span>{`selected ${selectedRowKeys.length}`}</span>
+                </Space>
+                : null}
+            </>
+          )
+        }}
+        columns={columns}
+        {...initData}
+      />
+      <ProTable
+        size="small"
+        formRef={ref}
+        headerTitle="List Kelas Bawah"
+        rowKey="id"
+        rowSelection={{
+          onChange: (value, selectedRows) => {
+            setFormValue({ ...formValue, kelasBawah: selectedRows })
+          },
+          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+        }}
+        dataSource={listKelasBawah && listKelasBawah.length ? listKelasBawah : []}
+        tableAlertRender={({ selectedRowKeys }) => {
+          return (
+            <>
+              {formValue.kelasBawah && formValue.kelasBawah.length > 0 ?
+                <Space size={24}>
+                  <span>{`selected ${selectedRowKeys.length}`}</span>
+                </Space>
+                : null}
+            </>
+          )
+        }}
+        columns={columns}
+        {...initData}
+      />
+    </PrivateRoute>
+  )
+}
+
+export default MahasiswaKRS
+
+{/*
   // const optionListKelasBawah = listKelasBawah.map((item) => {
   // let newLabel = `
   //   Kode MK: ${item.kodeMatkul}
@@ -55,75 +162,22 @@ const MahasiswaKRS = () => {
   //     value: item
   //   }
   // })
-
-  const [form] = Form.useForm();
-
-
-  return (
-    <PrivateRoute access={['mahasiswa']}>
-      <Card>
-        <ProForm
-          form={form}
-          onFinish={async (values) => {
-            console.log('form', form)
-            console.log('values', values)
-          }}
-        >
-          {/* <ProFormCheckbox.Group
-            key="id"
-            name="kelasBawah"
-            layout="vertical"
-            label="List Kelas Bawah"
-            options={optionListKelasBawah}
-          /> */}
-          <ProTable
-            form={form}
-            headerTitle="List Kelas Bawah"
-            rowKey="id"
-            rowSelection={{
-              selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
-            }}
-            dataSource={listKelasBawah && listKelasBawah.length ? listKelasBawah : []}
-            tableAlertRender={({ selectedRowKeys, selectedRows }) => {
-              // console.log('selectedRowKeys', selectedRowKeys)
-              // console.log('selectedRows', selectedRows)
-              // <pre>{selectedRows && selectedRows.length && JSON.stringify(selectedRows,null,2)}</pre>
-              return (
-                <Space size={24}>
-                  <p>{`selected ${selectedRowKeys.length}`}</p>
-                </Space>
-              )
-            }}
-            tableAlertOptionRender={({ selectedRowKeys, selectedRows }) => {
-              return (
-                <Space size={16}>
-                  <Button type="primary" ghost onClick={() => {
-                    console.log('selectedRows', selectedRows);
-                    // mrMataKuliah.setSelection(selectedRows)
-                    // mrMataKuliah.onVisible(false)
-                  }
-                  }>
-                    Bind to Main Form
-                  </Button>
-                </Space>
-              )
-            }}
-            toolBarRender={(values) => [
-              <Button
-                key="submit"
-                type="primary"
-                onClick={() => { console.log('values', values); }}
-              >
-                Aju KRS
-              </Button>
-            ]}
-            columns={columns}
-            {...initData}
-          />
-        </ProForm>
-      </Card>
-    </PrivateRoute>
-  )
-}
-
-export default MahasiswaKRS
+  // <pre>{selectedRows && selectedRows.length && JSON.stringify(selectedRows,null,2)}</pre>
+  <ProForm
+    onFinish={async (values) => {
+      console.log('ref', ref)
+      console.log('values', values)
+    }}
+  >
+    Current Semester KRS (semester,kelas)
+    MBKM
+    kelas bawah
+    <ProFormCheckbox.Group
+      key="id"
+      name="kelasBawah"
+      layout="vertical"
+      label="List Kelas Bawah"
+      options={optionListKelasBawah}
+    />
+  </ProForm>
+*/}
