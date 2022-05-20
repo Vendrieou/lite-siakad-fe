@@ -9,6 +9,9 @@ import {
   apiDelete
 } from '@/services/krsService'
 import {
+  apiPost as apiAjuKrs
+} from '@/services/pengajuanKrsService'
+import {
   apiGetMatkulKelasBawah
 } from '@/services/matkulService'
 import { queryMe } from '@/services/me'
@@ -212,7 +215,9 @@ const module = defineModule({
 
       const currentSemester = await apiGet(filter.currentSemester)
       const MBKM = await apiGet(filter.MBKM)
-      const kelasBawah = await apiGetMatkulKelasBawah({ mahasiswaId: mahasiswaProfile.id })
+      const kelasBawah = await apiGetMatkulKelasBawah({
+        idMahasiswa: mahasiswaProfile.id
+      })
       try {
         const response = await axios.all([currentSemester, MBKM, kelasBawah])
           .then(
@@ -261,6 +266,19 @@ const module = defineModule({
         const response = await apiGetById(payload?.id)
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    ajuKrs: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiAjuKrs(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.getAjuKrs, { role: 'mahasiswa' })
+          return response
         }
       } catch (error) {
         message.error(error)

@@ -45,6 +45,28 @@ const MahasiswaKRS = () => {
   });
   const ref = useRef();
 
+  const onCreate = () => {
+    const data = {}
+    let templistMataKuliah = []
+    if (
+      formValue.currentSemester && formValue.currentSemester.length > 0 ||
+      formValue.mbkm && formValue.mbkm.length > 0 ||
+      formValue.kelasBawah && formValue.kelasBawah.length > 0
+    ) {
+      templistMataKuliah = concat(
+        formValue.currentSemester || [],
+        formValue.mbkm || [],
+        formValue.kelasBawah || []
+      )
+    }
+    const listMataKuliah = []
+    for (let i = 0; i < templistMataKuliah.length; i++) {
+      let val = JSON.parse(templistMataKuliah[i])
+      listMataKuliah.push(val)
+    }
+    data.listMataKuliah = JSON.stringify(listMataKuliah)
+    mr.ajuKrs(data)
+  }
   // const [form] = Form.useForm();
   return (
     <PrivateRoute access={['mahasiswa']}>
@@ -57,7 +79,7 @@ const MahasiswaKRS = () => {
         }}
         type="primary" size="large"
         onClick={() => {
-          console.log('formValue', formValue)
+          onCreate()
         }}
       >
         Aju KRS
@@ -165,9 +187,9 @@ export default MahasiswaKRS
   // })
   // <pre>{selectedRows && selectedRows.length && JSON.stringify(selectedRows,null,2)}</pre>
   <ProForm
-    onFinish={async (values) => {
+    onFinish={async (formValue) => {
       console.log('ref', ref)
-      console.log('values', values)
+      console.log('formValue', formValue)
     }}
   >
     Current Semester KRS (semester,kelas)
