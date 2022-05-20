@@ -28,6 +28,7 @@ const MahasiswaKRS = () => {
   }
   const { mr, state } = useConcent('krsStore')
   const {
+    mahasiswaCurrentSemester,
     listCurrentSemester,
     listMBKM,
     listKelasBawah
@@ -64,7 +65,7 @@ const MahasiswaKRS = () => {
       <ProTable
         size="small"
         formRef={ref}
-        headerTitle={`List Semester saat ini ${4}`}
+        headerTitle={`List Semester saat ini ${mahasiswaCurrentSemester}`}
         rowKey="id"
         rowSelection={{
           onChange: (value, selectedRows) => {

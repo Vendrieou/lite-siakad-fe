@@ -19,6 +19,7 @@ const module = defineModule({
     filter: {
       page: 1
     },
+    mahasiswaCurrentSemester: 0,
     listCurrentSemester: [],
     listMBKM: [],
     listKelasBawah: [],
@@ -222,7 +223,7 @@ const module = defineModule({
 
               // use/access the results
               return {
-                currentSemesterResponse, MBKMResponse, kelasBawahResponse
+                mahasiswaProfile, currentSemesterResponse, MBKMResponse, kelasBawahResponse
               }
               // console.log(responseOne, responseTwo, responesThree);
             })
@@ -328,6 +329,7 @@ const module = defineModule({
     RECEIVE_AJU_KRS: (payload: any) => {
       return {
         loading: true,
+        mahasiswaCurrentSemester: payload?.mahasiswaProfile?.currentSemester,
         listCurrentSemester: payload?.currentSemesterResponse?.data,
         listMBKM: payload?.MBKMResponse?.data,
         listKelasBawah: payload?.kelasBawahResponse?.data,
