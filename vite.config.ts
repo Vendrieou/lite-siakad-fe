@@ -103,7 +103,8 @@ export default ({ mode }) => {
             'root-entry-name': 'default',
             'primary-color': '#08466D',
             'primary-1': '#e6ecf0',
-            'info-color': '#1890ff'
+            'info-color': '#1890ff',
+            'checkbox-border-width': '0.15em',
           },
           javascriptEnabled: true,
         },

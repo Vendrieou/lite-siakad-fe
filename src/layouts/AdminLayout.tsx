@@ -16,9 +16,9 @@ const AdminLayout = ({ children }) => {
               component: 'pages/Admin/Prodi/Dashboard'
             },
             {
-              name: 'Mahasiswa',
+              name: 'Prodi',
               icon: <LaptopOutlined />,
-              path: '/admin',
+              path: '/admin/dashboard',
               routes: [
                 {
                   path: '/admin/prodi/mata-kuliah',

@@ -18,7 +18,7 @@ const MahasiswaLayout = ({ children }) => {
             {
               name: 'Mahasiswa',
               icon: <LaptopOutlined />,
-              path: '/mahasiswa',
+              path: '/mahasiswa/dashboard',
               routes: [
                 {
                   path: '/mahasiswa/mata-kuliah',

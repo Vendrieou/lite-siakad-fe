@@ -18,7 +18,7 @@ const DosenLayout = ({ children }) => {
             {
               name: 'Dosen',
               icon: <LaptopOutlined />,
-              path: '/dosen',
+              path: '/dosen/dashboard',
               routes: [
                 {
                   path: '/dosen/mata-kuliah',
