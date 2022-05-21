@@ -1,18 +1,17 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
-import { Space, Tag, Tabs, Button, Modal } from 'antd'
+import { Space, Tag, Button } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+// import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
-import FormCreatePencocokan from './FormCreate'
+import FormCreate from './FormCreate'
 
 const MataKuliahDosen = () => {
   const actionRef = useRef()
-  // const [createModalVisible, handleModalVisible] = useState(false)
-  const [MhsPindahanKRSModalVisible, handleMhsPindahanKRSModalVisible] = useState(false)
+  const [createModalVisible, handleModalVisible] = useState(false)
   const [row, setRow] = useState(null)
   // const [type, setType] = useState('export')
 
@@ -122,19 +121,19 @@ const MataKuliahDosen = () => {
         </Space>
       )
     },
-    {
-      title: 'Action',
-      hideInForm: true,
-      key: 'option',
-      width: 120,
-      valueType: 'option',
-      render: (dom, entity) => [
-        <Button type="link" key="1" onClick={() => {
-          setRow(entity)
-          mr.getDetail(entity)
-        }}>edit</Button>
-      ]
-    }
+    // {
+    //   title: 'Action',
+    //   hideInForm: true,
+    //   key: 'option',
+    //   width: 120,
+    //   valueType: 'option',
+    //   render: (dom, entity) => [
+    //     <Button type="link" key="1" onClick={() => {
+    //       setRow(entity)
+    //       mr.getDetail(entity)
+    //     }}>edit</Button>
+    //   ]
+    // }
   ]
 
   const initData = {
@@ -166,68 +165,44 @@ const MataKuliahDosen = () => {
     // }
   }
 
-  const onCreatePencocokan = async (data) => {
-    console.log('list aju krs', data)
-    // const response = await mr.create(data)
-    // if (response?.success) {
-    handleModalVisible(false)
-    // }
-  }
-
   const FormCreateProps = {
     onCreate
   }
 
-  const FormPencocokanProps = {
-    onCreatePencocokan
-  }
-
-  const FormEditProps = {
-    setRow,
-    row
-  }
 
   return (
     <PrivateRoute access={['dosen']}>
-      <ProTable
-        headerTitle="List KRS"
-        actionRef={actionRef}
-        rowKey="id"
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleMhsPindahanKRSModalVisible(true)}>
-            <PlusOutlined /> Pencocokan KRS Mhs. Pindahan
-          </Button>
-        ]}
-        dataSource={list && list.length ? list : []}
-        request={(params) => {
-          mr.get({
-            q: params.name || '',
-            page: params.current || ''
-            // status: params.status
-          })
-        }}
-        columns={columns}
-        {...initData}
-      />
-      {/* <CreateForm
-        maskClosable={false}
-        width={840}
-        title="Pencocokan KRS Mahasiswa Pindahan"
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createPencocokanModalVisible}
-      >
-        <FormCreatePencocokan {...FormCreateProps} />
-      </CreateForm>
-       */}
-      <CreateForm
-        maskClosable={false}
-        width={840}
-        title="Pencocokan KRS Mahasiswa Pindahan"
-        onCancel={() => handleMhsPindahanKRSModalVisible(false)}
-        modalVisible={MhsPindahanKRSModalVisible}
-      >
-        <FormCreatePencocokan {...FormPencocokanProps} />
-      </CreateForm>
+      <PageContainer>
+        <ProTable
+          headerTitle="List Mata Kuliah"
+          actionRef={actionRef}
+          rowKey="id"
+          // toolBarRender={() => [
+          //   <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //     <PlusOutlined /> Tambah
+          //   </Button>
+          // ]}
+          dataSource={list && list.length ? list : []}
+          request={(params) => {
+            mr.get({
+              q: params.name || '',
+              page: params.current || ''
+              // status: params.status
+            })
+          }}
+          columns={columns}
+          {...initData}
+        />
+        <CreateForm
+          maskClosable={false}
+          width={840}
+          title="Pencocokan KRS Mahasiswa Pindahan"
+          onCancel={() => handleModalVisible(false)}
+          modalVisible={createModalVisible}
+        >
+          <FormCreate {...FormCreateProps} />
+        </CreateForm>
+      </PageContainer>
     </PrivateRoute>
   )
 }
