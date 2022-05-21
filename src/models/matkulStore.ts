@@ -4,6 +4,7 @@ import {
   apiGet,
   apiGetById,
   apiPost,
+  apiGetMatkulDashboardDosen,
   apiUpdate,
   apiDelete
 } from '@/services/matkulService'
@@ -59,6 +60,28 @@ const module = defineModule({
       try {
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGet(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item:any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    getMatkulDashboardDosen: async (payload: any, moduleState, actionCtx) => {
+      const data = {
+        ...payload,
+        q: payload?.q || '',
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 100,
+        relationship: 1
+      }
+      
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetMatkulDashboardDosen(data)
         if (response.success) {
           const dataWithKey = response.data.map((item:any) => ({ ...item, key: useId(6) }));
           actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
@@ -178,6 +201,7 @@ const module = defineModule({
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
+      if (pathname === '/dosen/mata-kuliah') return
       if (pathname === '/admin/prodi/krs') {
         dispatch(module.reducer.get, { pageSize: 100 })
         return

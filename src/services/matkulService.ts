@@ -22,6 +22,42 @@ const apiGetMatkulKelasBawah = async (data: any) => {
   })
 }
 
+const apiGetMatkulDashboardDosen = async (data: any) => {
+  return request({
+    url: `${apiMatkul}-dashboard-dosen`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
+const apiGetMatkulDashboardMahasiswa = async (data: any) => {
+  return request({
+    url: `${apiMatkul}-dashboard-mahasiswa`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
+const apiGetMatkulPeserta = async (data: any) => {
+  return request({
+    url: `${apiMatkul}-peserta`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
+const apiGetMatkulPesertaById = async (data: any) => {
+  return request({
+    url: `${apiMatkul}-peserta/${data.id}`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
 const apiGetById = async (id: number) => {
   return request({
     url: `${apiMatkul}/${id}`,
@@ -58,6 +94,10 @@ const apiDelete = async (id: number) => {
 
 export {
   apiGet,
+  apiGetMatkulPeserta,
+  apiGetMatkulPesertaById,
+  apiGetMatkulDashboardDosen,
+  apiGetMatkulDashboardMahasiswa,
   apiGetMatkulKelasBawah,
   apiPost,
   apiGetById,

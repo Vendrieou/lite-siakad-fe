@@ -1,6 +1,6 @@
 // import React, { useState, useRef } from 'react'
 import { useState, useRef } from 'react'
-import { Space, Tag, Button } from 'antd'
+import { Space, Tag } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
 // import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
@@ -12,10 +12,11 @@ import FormCreate from './FormCreate'
 const MataKuliahDosen = () => {
   const actionRef = useRef()
   const [createModalVisible, handleModalVisible] = useState(false)
-  const [row, setRow] = useState(null)
+  // const [row, setRow] = useState(null)
   // const [type, setType] = useState('export')
 
-  const { mr, state } = useConcent('krsStore')
+  const { mr, state } = useConcent('matkulStore')
+  // const { mr, state } = useConcent('krsStore')
   const { list } = state
 
   // const showDeleteTemplateConfirm = (entity) => {
@@ -40,34 +41,8 @@ const MataKuliahDosen = () => {
       hideInSearch: true
     },
     {
-      title: 'NIM',
-      dataIndex: 'name',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
-    {
-      title: 'Nama',
-      dataIndex: 'name',
-      tip: '',
-      formItemProps: {
-        rules: [
-          {
-            required: true,
-            message: 'Wajib'
-          }
-        ]
-      }
-    },
-    {
       title: 'Mata Kuliah',
-      dataIndex: 'matKul',
+      dataIndex: 'nama',
       tip: '',
       formItemProps: {
         rules: [
@@ -94,7 +69,7 @@ const MataKuliahDosen = () => {
     {
       // nama dosen
       title: 'Dosen Wali',
-      dataIndex: 'dosen',
+      dataIndex: ["dosen", "nama"],
       formItemProps: {
         rules: [
           {
@@ -104,23 +79,23 @@ const MataKuliahDosen = () => {
         ]
       }
     },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      width: 100,
-      valueEnum: {
-        draft: { text: 'draft', status: 'draft' },
-        cancel: { text: 'cancel', status: 'cancel' },
-        published: { text: 'published', status: 'published' }
-      },
-      render: (item) => (
-        <Space>
-          <Tag key={item} color={item === 'published' ? 'success' : 'error'}>
-            {item}
-          </Tag>
-        </Space>
-      )
-    },
+    // {
+    //   title: 'Status',
+    //   dataIndex: 'status',
+    //   width: 100,
+    //   valueEnum: {
+    //     draft: { text: 'draft', status: 'draft' },
+    //     cancel: { text: 'cancel', status: 'cancel' },
+    //     published: { text: 'published', status: 'published' }
+    //   },
+    //   render: (item) => (
+    //     <Space>
+    //       <Tag key={item} color={item === 'published' ? 'success' : 'error'}>
+    //         {item}
+    //       </Tag>
+    //     </Space>
+    //   )
+    // },
     // {
     //   title: 'Action',
     //   hideInForm: true,
@@ -149,7 +124,7 @@ const MataKuliahDosen = () => {
     },
     options: {
       reload: () => {
-        mr.get({ page: 1 })
+        mr.getMatkulDashboardDosen({ page: 1 })
       },
       show: false,
       density: false,
@@ -174,6 +149,7 @@ const MataKuliahDosen = () => {
     <PrivateRoute access={['dosen']}>
       <PageContainer>
         <ProTable
+          size="small"
           headerTitle="List Mata Kuliah"
           actionRef={actionRef}
           rowKey="id"
@@ -184,10 +160,9 @@ const MataKuliahDosen = () => {
           // ]}
           dataSource={list && list.length ? list : []}
           request={(params) => {
-            mr.get({
-              q: params.name || '',
+            mr.getMatkulDashboardDosen({
+              q: params.nama || params.semester || '',
               page: params.current || ''
-              // status: params.status
             })
           }}
           columns={columns}
