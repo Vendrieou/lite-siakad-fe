@@ -7,11 +7,13 @@ import ProTable from '@ant-design/pro-table'
 import CreateForm from 'components/Form/CreateForm'
 import { useConcent } from 'concent'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
+import { useNavigate } from '@tanstack/react-location'
 import FormCreate from './FormCreate'
 
 const MataKuliahDosen = () => {
   const actionRef = useRef()
   const [createModalVisible, handleModalVisible] = useState(false)
+  const navigate = useNavigate()
   // const [row, setRow] = useState(null)
   // const [type, setType] = useState('export')
 
@@ -153,6 +155,11 @@ const MataKuliahDosen = () => {
           headerTitle="List Mata Kuliah"
           actionRef={actionRef}
           rowKey="id"
+          onRow={(record) => {
+            return {
+              onClick: () => { navigate({ to: `/dosen/mk/${record.id}` }) }
+            };
+          }}
           // toolBarRender={() => [
           //   <Button type="primary" onClick={() => handleModalVisible(true)}>
           //     <PlusOutlined /> Tambah
