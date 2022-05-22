@@ -11,13 +11,13 @@ import PrivateRoute from 'components/Authorized/PrivateRoute'
 import CreateForm from 'components/Form/CreateForm'
 // import history from 'utils/history'
 import Topik from './Topik'
-// import Tugas from './Tugas'
-// import Presensi from './Presensi'
-// import Mahasiswa from './Mahasiswa'
+import Tugas from './Tugas'
+import Presensi from './Presensi'
+import Mahasiswa from './Mahasiswa'
 
 const Detail = () => {
-  const { params } = useMatch()
-  const [type, setType] = useState('topik')
+  const { params,  search: { tab } } = useMatch()
+  const [type, setType] = useState(tab || 'topik')
   const navigate = useNavigate()
 
   return (
@@ -44,9 +44,9 @@ const Detail = () => {
           onClick={() => navigate({ to: `/dosen/mata-kuliah` })}>
           <ArrowLeftOutlined />Kembali</Button>
         {type === 'topik' && <Topik />}
-        {/* {type === 'tugas' && <Tugas />}
-        {type === 'presensi ' && <Presensi />}
-        {type === 'mahasiswa' && <Mahasiswa />} */}
+        {type === 'tugas' && <Tugas />}
+        {type === 'presensi' && <Presensi />}
+        {type === 'mahasiswa' && <Mahasiswa />}
       </PageContainer>
     </PrivateRoute>
   )

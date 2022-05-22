@@ -53,15 +53,15 @@ const module = defineModule({
         page: payload?.page || 1,
         pageSize: payload?.pageSize || 10,
       }
-      
-      if(data && !data.semester) {
+
+      if (data && !data.semester) {
         delete data.semester
       }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGet(data, { relationship: 1 })
         if (response.success) {
-          const dataWithKey = response.data.map((item:any) => ({ ...item, key: useId(6) }));
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
           actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
           // actionCtx.dispatch(module.reducer.RECEIVE, response)
           return response
@@ -78,12 +78,12 @@ const module = defineModule({
         pageSize: payload?.pageSize || 100,
         relationship: 1
       }
-      
+
       try {
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGetMatkulDashboardDosen(data)
         if (response.success) {
-          const dataWithKey = response.data.map((item:any) => ({ ...item, key: useId(6) }));
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
           actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
           // actionCtx.dispatch(module.reducer.RECEIVE, response)
           return response
@@ -201,7 +201,8 @@ const module = defineModule({
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
-      if (pathname === '/dosen/mata-kuliah') return
+
+      if (pathname === '/dosen/mata-kuliah' || pathname.substring(0, pathname.length - 2) === '/dosen/mk') return null
       if (pathname === '/admin/prodi/krs') {
         dispatch(module.reducer.get, { pageSize: 100 })
         return
