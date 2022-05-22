@@ -9,7 +9,6 @@ import ProLayout from '@ant-design/pro-layout'
 import { HomeOutlined } from '@ant-design/icons'
 // import { history, Link, useLocation } from '@vitjs/runtimes'
 import { useNavigate, Link, useLocation } from '@tanstack/react-location'
-
 import RightContent from '@/container/GlobalHeader/RightContent'
 import GlobalFooter from '@/container/GlobalFooter'
 import { cookieGet } from '@/utils/storage'
@@ -42,7 +41,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         if (typeof token === 'string') {
           if (!token) {
             if (role === 'admin') {
-              navigate({ to:adminLoginPath })
+              navigate({ to: adminLoginPath })
             } else {
               navigate({ to: loginPath })
             }
@@ -50,7 +49,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         }
 
       }}
-      onMenuHeaderClick={() => navigate({ to:'/' })}
+      onMenuHeaderClick={() => navigate({ to: '/' })}
       menuItemRender={(menuItemProps, defaultDom) => {
         if (
           menuItemProps.isUrl ||

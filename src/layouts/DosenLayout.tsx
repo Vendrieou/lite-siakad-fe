@@ -2,9 +2,11 @@
 import { ConfigProvider } from 'antd'
 import { HomeOutlined, LaptopOutlined, SettingOutlined } from '@ant-design/icons'
 import BasicLayout from '@/layouts/BasicLayout'
+import { useMatch } from '@tanstack/react-location'
 import enUSIntl from 'antd/lib/locale/en_US'
 
 const DosenLayout = ({ children }) => {
+  const { params: { id } } = useMatch()
   return (
     <ConfigProvider locale={enUSIntl}>
         <BasicLayout route={{
@@ -24,6 +26,12 @@ const DosenLayout = ({ children }) => {
                   path: '/dosen/mata-kuliah',
                   name: 'Mata Kuliah',
                   component: 'pages/Dosen/MataKuliah',
+                },
+                {
+                  path: '/dosen/mk/:id',
+                  name: 'Mata Kuliah',
+                  component: 'pages/Dosen/MataKuliah',
+                  hideInMenu: true
                 },
                 // {
                 //   path: '/dosen/berita',
