@@ -14,7 +14,7 @@ const Mahasiswa = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { listPeserta: list } = state
   const [row, setRow] = useState()
 
   const columns = [

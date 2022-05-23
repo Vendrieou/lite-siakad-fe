@@ -19,6 +19,7 @@ const module = defineModule({
     },
     currentItem: {},
     counter: {},
+    listPeserta: [],
     selectionList: [],
     group: [],
     asset: [],
@@ -29,6 +30,36 @@ const module = defineModule({
     selectionVisible: false
   },
   reducer: {
+    mountMatkulByTab: (payload: any, moduleState, actionCtx) => {
+      let { search: { tab } } = history.location
+      if (!tab) {
+        tab = 'topik'
+      }
+      switch (tab) {
+        case 'topik':
+          actionCtx.dispatch(module.reducer.getDataTopikMatkul)
+        case 'tugas':
+          actionCtx.dispatch(module.reducer.getDataTugasMatkul)
+        case 'presensi':
+          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+        case 'mahasiswa':
+          actionCtx.dispatch(module.reducer.getDataPesertaMatkul)
+        default:
+          break;
+      }
+    },
+    getDataTopikMatkul: (payload, moduleState) => {
+      console.log('getDataTopikMatkul');
+    },
+    getDataTugasMatkul: (payload, moduleState) => {
+      console.log('getDataTugasMatkul');
+    },
+    getDataPresensiMatkul: (payload, moduleState) => {
+      console.log('getDataPresensiMatkul');
+    },
+    getDataPesertaMatkul: (payload, moduleState) => {
+      console.log('getDataPesertaMatkul');
+    },
     setSelection: (payload, moduleState) => {
       return {
         selectionList: moduleState.selectionList.concat(payload)
@@ -207,6 +238,7 @@ const module = defineModule({
         dispatch(module.reducer.get, { pageSize: 100 })
         return
       }
+      dispatch(module.reducer.mountMatkulByTab)
       dispatch(module.reducer.get)
     }
   }
