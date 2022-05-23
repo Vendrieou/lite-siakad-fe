@@ -5,9 +5,23 @@ import {
   apiGetById,
   apiPost,
   apiGetMatkulDashboardDosen,
+  apiGetDataTopikMatkul,
+  apiPostTopikMatkul,
   apiUpdate,
   apiDelete
 } from '@/services/matkulService'
+// import { 
+//   apiGetDataTugasMatkul,
+//   apiPostTugasMatkul
+// } from '@/services/tugasService'
+// import { 
+//   apiGetDataPresensiMatkul,
+//   apiPostPresensiMatkul
+// } from '@/services/presensiService'
+// import {
+//   apiGetDataPesertaMatkul,
+//   apiPostPesertaMatkul,
+// } from '@/services/pesertaService'
 import history from '@/utils/history'
 import { useId } from '@/utils/string'
 
@@ -19,7 +33,10 @@ const module = defineModule({
     },
     currentItem: {},
     counter: {},
-    listPeserta: [],
+    // listTopik: [],
+    // listPresensi: [],
+    // listMahasiswa: [],
+    // listPeserta: [],
     selectionList: [],
     group: [],
     asset: [],
@@ -39,32 +56,193 @@ const module = defineModule({
       }
       switch (tab) {
         case 'topik':
-          actionCtx.dispatch(module.reducer.getDataTopikMatkul)
+          actionCtx.dispatch(module.reducer.getDataTopikMatkul, payload)
           break
         case 'tugas':
-          actionCtx.dispatch(module.reducer.getDataTugasMatkul)
+          actionCtx.dispatch(module.reducer.getDataTugasMatkul, payload)
           break
         case 'presensi':
-          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          actionCtx.dispatch(module.reducer.getDataPresensiMatkul, payload)
           break
         case 'mahasiswa':
-          actionCtx.dispatch(module.reducer.getDataPesertaMatkul)
+          actionCtx.dispatch(module.reducer.getDataPesertaMatkul, payload)
           break
         default:
           break;
       }
     },
-    getDataTopikMatkul: async (payload, moduleState) => {
+    getDataTopikMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataTopikMatkul');
+      const { pathname } = history.location
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+
+      const data = {
+        ...payload,
+        idMataKuliah,
+        q: payload?.q || '',
+        semester: payload?.semester,
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
+      }
+
+      if (data && !data.semester) {
+        delete data.semester
+      }
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetDataTopikMatkul(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
     },
-    getDataTugasMatkul: async (payload, moduleState) => {
+    getDataTugasMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataTugasMatkul');
+      const { pathname } = history.location
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+      const data = {
+        ...payload,
+        idMataKuliah,
+        q: payload?.q || '',
+        semester: payload?.semester,
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
+      }
+
+      if (data && !data.semester) {
+        delete data.semester
+      }
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetDataTugasMatkul(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
     },
-    getDataPresensiMatkul: async (payload, moduleState) => {
+    getDataPresensiMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataPresensiMatkul');
+      const { pathname } = history.location
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+      const data = {
+        ...payload,
+        idMataKuliah,
+        q: payload?.q || '',
+        semester: payload?.semester,
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
+      }
+
+      if (data && !data.semester) {
+        delete data.semester
+      }
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetDataPresensiMatkul(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
     },
-    getDataPesertaMatkul: async (payload, moduleState) => {
+    getDataPesertaMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataPesertaMatkul');
+      const { pathname } = history.location
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+      const data = {
+        ...payload,
+        idMataKuliah,
+        q: payload?.q || '',
+        semester: payload?.semester,
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
+      }
+
+      if (data && !data.semester) {
+        delete data.semester
+      }
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetDataPesertaMatkul(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE, { data: dataWithKey })
+          // actionCtx.dispatch(module.reducer.RECEIVE, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    postDataTopikMatkul: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostTopikMatkul(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    postDataTugasMatkul: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostTugasMatkul(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    postDataPresensiMatkul: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostPresensiMatkul(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    postDataPesertaMatkul: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostPesertaMatkul(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
     },
     setSelection: (payload, moduleState) => {
       return {
@@ -239,16 +417,12 @@ const module = defineModule({
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
       const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
-      if (routeMk) {
-        dispatch(module.reducer.mountMatkulByTab)
-      // } else {
-      //   if (pathname === '/dosen/mata-kuliah') return null
-      //   if (pathname === '/admin/prodi/krs') {
-      //     dispatch(module.reducer.get, { pageSize: 100 })
-      //     return
-      //   }
-      //   dispatch(module.reducer.get)
+      if (pathname === '/dosen/mata-kuliah' || routeMk) return null
+      if (pathname === '/admin/prodi/krs') {
+        dispatch(module.reducer.get, { pageSize: 100 })
+        return
       }
+      dispatch(module.reducer.get)
     }
   }
 })

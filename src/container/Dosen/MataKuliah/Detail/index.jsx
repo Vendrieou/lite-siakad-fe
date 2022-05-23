@@ -1,14 +1,14 @@
 // import React from 'react'
-import { useState, useRef, useEffect } from 'react'
-import { Space, Tag, Tabs, Button, Modal } from 'antd'
-import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
-import { useConcent } from 'concent'
+import { useState } from 'react'
+import { Tabs, Button, Modal } from 'antd'
+// import ProTable from '@ant-design/pro-table'
+// import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+// import { useConcent } from 'concent'
 import { ArrowLeftOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-layout'
 import { useMatch, useNavigate } from '@tanstack/react-location'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
-import CreateForm from 'components/Form/CreateForm'
+// import CreateForm from 'components/Form/CreateForm'
 // import history from 'utils/history'
 import Topik from './Topik'
 import Tugas from './Tugas'
@@ -44,9 +44,9 @@ const Detail = () => {
           onClick={() => navigate({ to: `/dosen/mata-kuliah` })}>
           <ArrowLeftOutlined />Kembali</Button>
         {type === 'topik' && <Topik />}
-        {/* {type === 'tugas' && <Tugas />}
+        {type === 'tugas' && <Tugas />}
         {type === 'presensi' && <Presensi />}
-        {type === 'mahasiswa' && <Mahasiswa />} */}
+        {type === 'mahasiswa' && <Mahasiswa />}
       </PageContainer>
     </PrivateRoute>
   )

@@ -14,7 +14,7 @@ const Topik = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { listTopik: list } = state
+  const { list } = state
   const [row, setRow] = useState()
 
   const columns = [
@@ -115,7 +115,7 @@ const Topik = () => {
         rowKey="id"
         dataSource={list && list.length ? list : []}
         request={(params) => {
-          mr.get({
+          mr.mountMatkulByTab({
             q: params.kodeMatkul,
             page: params.current
           })
