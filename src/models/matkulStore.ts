@@ -4,24 +4,24 @@ import {
   apiGet,
   apiGetById,
   apiPost,
+  apiUpdate,
+  apiDelete,
   apiGetMatkulDashboardDosen,
   apiGetDataTopikMatkul,
-  apiPostTopikMatkul,
-  apiUpdate,
-  apiDelete
+  apiPostTopikMatkul
 } from '@/services/matkulService'
-// import { 
-//   apiGetDataTugasMatkul,
-//   apiPostTugasMatkul
-// } from '@/services/tugasService'
-// import { 
-//   apiGetDataPresensiMatkul,
-//   apiPostPresensiMatkul
-// } from '@/services/presensiService'
-// import {
-//   apiGetDataPesertaMatkul,
-//   apiPostPesertaMatkul,
-// } from '@/services/pesertaService'
+import { 
+  apiGet as apiGetDataTugasMatkul,
+  apiPost as apiPostTugasMatkul
+} from '@/services/tugasService'
+import { 
+  apiGet as apiGetDataPresensiMatkul,
+  apiPost as apiPostPresensiMatkul
+} from '@/services/presensiService'
+import {
+  apiGet as apiGetDataPesertaMatkul,
+  apiPost as apiPostPesertaMatkul
+} from '@/services/pesertaMatkulService'
 import history from '@/utils/history'
 import { useId } from '@/utils/string'
 

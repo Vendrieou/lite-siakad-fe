@@ -86,14 +86,14 @@ const apiGetMatkulDashboardDosen = async (data: any) => {
 //   })
 // }
 
-// const apiGetMatkulKelasBawah = async (data: any) => {
-//   return request({
-//     url: `${apiMatkul}/kelas-bawah`,
-//     method: 'get',
-//     data,
-//     auth: true
-//   })
-// }
+const apiGetMatkulKelasBawah = async (data: any) => {
+  return request({
+    url: `${apiMatkul}/kelas-bawah`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
 
 // const apiGetMatkulDashboardMahasiswa = async (data: any) => {
 //   return request({
@@ -224,7 +224,7 @@ export {
   // apiGetMatkulPeserta,
   // apiGetMatkulPesertaById,
   // apiGetMatkulDashboardMahasiswa,
-  // apiGetMatkulKelasBawah,
+  apiGetMatkulKelasBawah,
   // apiGetDataTugasMatkul,
   // apiGetDataPresensiMatkul,
   // apiGetDataPesertaMatkul,
