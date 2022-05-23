@@ -44,9 +44,9 @@ const Detail = () => {
           onClick={() => navigate({ to: `/dosen/mata-kuliah` })}>
           <ArrowLeftOutlined />Kembali</Button>
         {type === 'topik' && <Topik />}
-        {type === 'tugas' && <Tugas />}
+        {/* {type === 'tugas' && <Tugas />}
         {type === 'presensi' && <Presensi />}
-        {type === 'mahasiswa' && <Mahasiswa />}
+        {type === 'mahasiswa' && <Mahasiswa />} */}
       </PageContainer>
     </PrivateRoute>
   )

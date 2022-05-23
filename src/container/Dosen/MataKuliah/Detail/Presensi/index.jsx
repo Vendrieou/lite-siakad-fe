@@ -14,7 +14,7 @@ const Presensi = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { listPresensi: list } = state
   const [row, setRow] = useState()
 
   const columns = [

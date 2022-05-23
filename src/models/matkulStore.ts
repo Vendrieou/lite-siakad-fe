@@ -31,33 +31,39 @@ const module = defineModule({
   },
   reducer: {
     mountMatkulByTab: (payload: any, moduleState, actionCtx) => {
-      let { search: { tab } } = history.location
+      let params = new URLSearchParams(document.location.search);
+      let tab = params.get("tab");
+
       if (!tab) {
         tab = 'topik'
       }
       switch (tab) {
         case 'topik':
           actionCtx.dispatch(module.reducer.getDataTopikMatkul)
+          break
         case 'tugas':
           actionCtx.dispatch(module.reducer.getDataTugasMatkul)
+          break
         case 'presensi':
           actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          break
         case 'mahasiswa':
           actionCtx.dispatch(module.reducer.getDataPesertaMatkul)
+          break
         default:
           break;
       }
     },
-    getDataTopikMatkul: (payload, moduleState) => {
+    getDataTopikMatkul: async (payload, moduleState) => {
       console.log('getDataTopikMatkul');
     },
-    getDataTugasMatkul: (payload, moduleState) => {
+    getDataTugasMatkul: async (payload, moduleState) => {
       console.log('getDataTugasMatkul');
     },
-    getDataPresensiMatkul: (payload, moduleState) => {
+    getDataPresensiMatkul: async (payload, moduleState) => {
       console.log('getDataPresensiMatkul');
     },
-    getDataPesertaMatkul: (payload, moduleState) => {
+    getDataPesertaMatkul: async (payload, moduleState) => {
       console.log('getDataPesertaMatkul');
     },
     setSelection: (payload, moduleState) => {
@@ -232,14 +238,17 @@ const module = defineModule({
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
-
-      if (pathname === '/dosen/mata-kuliah' || pathname.substring(0, pathname.length - 2) === '/dosen/mk') return null
-      if (pathname === '/admin/prodi/krs') {
-        dispatch(module.reducer.get, { pageSize: 100 })
-        return
+      const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
+      if (routeMk) {
+        dispatch(module.reducer.mountMatkulByTab)
+      // } else {
+      //   if (pathname === '/dosen/mata-kuliah') return null
+      //   if (pathname === '/admin/prodi/krs') {
+      //     dispatch(module.reducer.get, { pageSize: 100 })
+      //     return
+      //   }
+      //   dispatch(module.reducer.get)
       }
-      dispatch(module.reducer.mountMatkulByTab)
-      dispatch(module.reducer.get)
     }
   }
 })
