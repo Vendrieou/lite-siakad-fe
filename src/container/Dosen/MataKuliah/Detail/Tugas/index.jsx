@@ -14,7 +14,7 @@ const Tugas = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { list, currentItem } = state
   const [row, setRow] = useState()
 
   const columns = [
@@ -110,7 +110,8 @@ const Tugas = () => {
   return (
     <>
       <ProTable
-        headerTitle="List Mata Kuliah"
+         headerTitle={`${currentItem.nama || ''}`}
+        // headerTitle="List Tugas"
         actionRef={actionRef}
         rowKey="id"
         dataSource={list && list.length ? list : []}

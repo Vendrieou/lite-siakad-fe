@@ -14,7 +14,7 @@ const Presensi = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { list, currentItem } = state
   const [row, setRow] = useState()
 
   const columns = [
@@ -25,38 +25,48 @@ const Presensi = () => {
       hideInForm: true,
       hideInSearch: true
     },
-    // { title: 'idKodeAbsensi', dataIndex: 'idKodeAbsensi', hideInForm: true, hideInSearch: true },
-    // { title: 'idMahasiswa', dataIndex: 'idMahasiswa', hideInForm: true, hideInSearch: true },
-    // { title: 'idAbsensi', dataIndex: 'idAbsensi', hideInForm: true, hideInSearch: true },
-    // { title: 'idKonten', dataIndex: 'idKonten', hideInForm: true, hideInSearch: true },
-    // { title: 'idKelas', dataIndex: 'idKelas', hideInForm: true, hideInSearch: true },
-    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
-    { title: 'sks', dataIndex: 'sks', hideInForm: true, hideInSearch: true },
-    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
-    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
-    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
-    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
-    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
-    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
-    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
-    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true },
     {
-      title: 'Action',
-      tableStyle: { textAlign: 'center' },
+      key: 'nim',
+      title: 'NIM',
+      dataIndex: 'nim',
+      tip: '',
+    },
+    {
+      key: 'nama',
+      title: 'Nama Mahasiswa',
+      dataIndex: ["mahasiswaProfile", "nama"],
+      hideInSearch: true,
+      render: (dom, entity) => {
+        return <a onClick={() => setRow(entity)}>{dom}</a>
+      }
+    },
+    {
+      title: 'Kelas',
+      dataIndex: 'kelas',
       hideInForm: true,
-      key: 'option',
-      width: 120,
-      valueType: 'option',
-      render: (dom, entity) => [
-        <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-        <Button type="text" key="2" onClick={() => {
-          let page = document.getElementsByClassName("ant-pagination-item-active")
-          showDeleteConfirm({ ...entity, page: page[0].title })
-        }} danger>delete</Button>
-      ]
+      hideInSearch: true
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      hideInForm: true,
+      hideInSearch: true
     }
+    // {
+    //   title: 'Action',
+    //   tableStyle: { textAlign: 'center' },
+    //   hideInForm: true,
+    //   key: 'option',
+    //   width: 120,
+    //   valueType: 'option',
+    //   render: (dom, entity) => [
+    //     <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
+    //     <Button type="text" key="2" onClick={() => {
+    //       let page = document.getElementsByClassName("ant-pagination-item-active")
+    //       showDeleteConfirm({ ...entity, page: page[0].title })
+    //     }} danger>delete</Button>
+    //   ]
+    // }
   ]
 
   const initData = {
@@ -110,7 +120,8 @@ const Presensi = () => {
   return (
     <>
       <ProTable
-        headerTitle="List Mata Kuliah"
+        headerTitle={`${currentItem.nama || ''}`}
+        // headerTitle="List Presensi"
         actionRef={actionRef}
         rowKey="id"
         dataSource={list && list.length ? list : []}
