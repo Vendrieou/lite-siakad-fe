@@ -62,14 +62,15 @@ const module = defineModule({
           actionCtx.dispatch(module.reducer.getDataTugasMatkul, payload)
           break
         case 'presensi':
-          actionCtx.dispatch(module.reducer.getDataPresensiMatkul, payload)
-          break
         case 'mahasiswa':
           actionCtx.dispatch(module.reducer.getDataPesertaMatkul, payload)
           break
         default:
           break;
       }
+      // case 'presensi':
+      //   actionCtx.dispatch(module.reducer.getDataPresensiMatkul, payload)
+      //   break
     },
     getDataTopikMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataTopikMatkul');

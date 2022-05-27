@@ -59,6 +59,7 @@ const MataKuliahDosen = () => {
       title: 'Semester',
       dataIndex: 'semester',
       tip: '',
+      hideInSearch: true,
       formItemProps: {
         rules: [
           {
@@ -72,6 +73,7 @@ const MataKuliahDosen = () => {
       // nama dosen
       title: 'Dosen Wali',
       dataIndex: ["dosen", "nama"],
+      hideInSearch: true,
       formItemProps: {
         rules: [
           {

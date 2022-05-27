@@ -76,7 +76,7 @@ const Mahasiswa = () => {
     },
     options: {
       reload: () => {
-        mr.get({ page: 1 })
+        mr.mountMatkulByTab({ page: 1 })
       },
       show: false,
       density: false,

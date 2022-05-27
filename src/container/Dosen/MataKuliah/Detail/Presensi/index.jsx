@@ -14,7 +14,7 @@ const Presensi = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list, currentItem } = state
+  const { list } = state
   const [row, setRow] = useState()
 
   const columns = [
@@ -49,9 +49,13 @@ const Presensi = () => {
     {
       title: 'Status',
       dataIndex: 'status',
+      valueEnum: {
+        hadir: { text: 'hadir', status: 'hadir' },
+        absen: { text: 'absen', status: 'absen' }
+      },
       hideInForm: true,
       hideInSearch: true
-    }
+    },
     // {
     //   title: 'Action',
     //   tableStyle: { textAlign: 'center' },
@@ -82,7 +86,7 @@ const Presensi = () => {
     },
     options: {
       reload: () => {
-        mr.get({ page: 1 })
+        mr.mountMatkulByTab({ page: 1 })
       },
       show: false,
       density: false,
@@ -120,8 +124,7 @@ const Presensi = () => {
   return (
     <>
       <ProTable
-        headerTitle={`${currentItem.nama || ''}`}
-        // headerTitle="List Presensi"
+        headerTitle="Mahasiswa"
         actionRef={actionRef}
         rowKey="id"
         dataSource={list && list.length ? list : []}
