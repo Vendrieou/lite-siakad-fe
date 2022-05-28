@@ -3,7 +3,8 @@ import { useState, useRef } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { useMatch, useNavigate } from '@tanstack/react-location'
+import { PlusOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
@@ -11,6 +12,7 @@ import FormEdit from './FormEdit'
 const { confirm } = Modal
 
 const Presensi = () => {
+  const navigate = useNavigate()
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
@@ -25,52 +27,18 @@ const Presensi = () => {
       hideInForm: true,
       hideInSearch: true
     },
-    {
-      key: 'nim',
-      title: 'NIM',
-      dataIndex: 'nim',
-      tip: '',
-    },
-    {
-      key: 'nama',
-      title: 'Nama Mahasiswa',
-      dataIndex: ["mahasiswaProfile", "nama"],
-      hideInSearch: true,
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
-    },
-    {
-      title: 'Kelas',
-      dataIndex: 'kelas',
-      hideInForm: true,
-      hideInSearch: true
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      valueEnum: {
-        hadir: { text: 'hadir', status: 'hadir' },
-        absen: { text: 'absen', status: 'absen' }
-      },
-      hideInForm: true,
-      hideInSearch: true
-    },
-    // {
-    //   title: 'Action',
-    //   tableStyle: { textAlign: 'center' },
-    //   hideInForm: true,
-    //   key: 'option',
-    //   width: 120,
-    //   valueType: 'option',
-    //   render: (dom, entity) => [
-    //     <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-    //     <Button type="text" key="2" onClick={() => {
-    //       let page = document.getElementsByClassName("ant-pagination-item-active")
-    //       showDeleteConfirm({ ...entity, page: page[0].title })
-    //     }} danger>delete</Button>
-    //   ]
-    // }
+    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
+    { title: 'nama', dataIndex: 'nama', hideInForm: true, hideInSearch: true },
+    { title: 'sks', dataIndex: 'sks', hideInForm: true, hideInSearch: true },
+    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
+    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
+    { title: 'semester', dataIndex: 'semester', hideInForm: true, hideInSearch: true },
+    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
+    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
+    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
+    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
+    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
+    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true },
   ]
 
   const initData = {
@@ -124,9 +92,14 @@ const Presensi = () => {
   return (
     <>
       <ProTable
-        headerTitle="Mahasiswa"
+        headerTitle="Presensi"
         actionRef={actionRef}
         rowKey="id"
+        onRow={(record) => {
+          return {
+            onClick: () => { navigate({ to: `/dosen/pr/${record.id}` }) }
+          }
+        }}
         dataSource={list && list.length ? list : []}
         request={(params) => {
           mr.mountMatkulByTab({

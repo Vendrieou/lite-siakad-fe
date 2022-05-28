@@ -4,7 +4,6 @@ import { Tabs, Button, Modal } from 'antd'
 // import ProTable from '@ant-design/pro-table'
 // import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 // import { useConcent } from 'concent'
-import { ArrowLeftOutlined } from '@ant-design/icons'
 import { PageContainer } from '@ant-design/pro-layout'
 import { useMatch, useNavigate } from '@tanstack/react-location'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
@@ -39,10 +38,6 @@ const Detail = () => {
           </>
         )}
       >
-        <Button
-          type="link"
-          onClick={() => navigate({ to: `/dosen/mata-kuliah` })}>
-          <ArrowLeftOutlined />Kembali</Button>
         {type === 'topik' && <Topik />}
         {type === 'tugas' && <Tugas />}
         {type === 'presensi' && <Presensi />}

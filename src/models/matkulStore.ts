@@ -10,11 +10,11 @@ import {
   apiGetDataTopikMatkul,
   apiPostTopikMatkul
 } from '@/services/matkulService'
-import { 
+import {
   apiGet as apiGetDataTugasMatkul,
   apiPost as apiPostTugasMatkul
 } from '@/services/tugasService'
-import { 
+import {
   apiGet as apiGetDataPresensiMatkul,
   apiPost as apiPostPresensiMatkul
 } from '@/services/presensiService'
@@ -55,22 +55,19 @@ const module = defineModule({
         tab = 'topik'
       }
       switch (tab) {
+        case 'presensi':
         case 'topik':
           actionCtx.dispatch(module.reducer.getDataTopikMatkul, payload)
           break
         case 'tugas':
           actionCtx.dispatch(module.reducer.getDataTugasMatkul, payload)
           break
-        case 'presensi':
         case 'mahasiswa':
           actionCtx.dispatch(module.reducer.getDataPesertaMatkul, payload)
           break
         default:
           break;
       }
-      // case 'presensi':
-      //   actionCtx.dispatch(module.reducer.getDataPresensiMatkul, payload)
-      //   break
     },
     getDataTopikMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataTopikMatkul');
@@ -137,16 +134,15 @@ const module = defineModule({
       console.log('getDataPresensiMatkul');
       const { pathname } = history.location
       const listPath = pathname.split('/');
-      let idMataKuliah = listPath[listPath.length - 1]
+      let idKontenMataKuliah = listPath[listPath.length - 1]
       const data = {
         ...payload,
-        idMataKuliah,
+        idKontenMataKuliah,
         q: payload?.q || '',
         semester: payload?.semester,
         page: payload?.page || 1,
         pageSize: payload?.pageSize || 10,
       }
-
       if (data && !data.semester) {
         delete data.semester
       }
@@ -418,6 +414,11 @@ const module = defineModule({
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
       const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
+      const routePr = pathname.substring(0, pathname.length - 2) === '/dosen/pr'
+      if (routePr) {
+        dispatch(module.reducer.getDataPresensiMatkul)
+        return
+      }
       if (pathname === '/dosen/mata-kuliah' || routeMk) return null
       if (pathname === '/admin/prodi/krs') {
         dispatch(module.reducer.get, { pageSize: 100 })

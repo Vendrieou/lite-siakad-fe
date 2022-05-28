@@ -79,13 +79,13 @@ const LoginMenu = () => {
     <>
       <Menu theme="light" selectable={false} style={{ border: 0 }}>
         <RightMenu />
-        <MenuItem key="profil">
+        {/* <MenuItem key="profil">
           <Dropdown overlay={menuLoginDropdown} trigger={['click']}>
             <span className="profil" onClick={e => e.preventDefault()} style={{ padding: '1em' }}>
               <UserOutlined />
             </span>
           </Dropdown>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </>
   )

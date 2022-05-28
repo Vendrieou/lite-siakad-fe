@@ -3,7 +3,8 @@ import { useState, useRef } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined, ExclamationCircleOutlined, ArrowLeftOutlined } from '@ant-design/icons'
+import { useNavigate } from '@tanstack/react-location'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
@@ -11,6 +12,7 @@ import FormEdit from './FormEdit'
 const { confirm } = Modal
 
 const Topik = () => {
+  const navigate = useNavigate()
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
@@ -110,7 +112,15 @@ const Topik = () => {
   return (
     <>
       <ProTable
-        headerTitle="List Mata Kuliah"
+        headerTitle={
+          <>
+            <Button
+              type="link"
+              onClick={() => navigate({ to: `/dosen/mata-kuliah` })}>
+              <ArrowLeftOutlined />Kembali</Button>
+            List Mata Kuliah
+          </>
+        }
         actionRef={actionRef}
         rowKey="id"
         dataSource={list && list.length ? list : []}

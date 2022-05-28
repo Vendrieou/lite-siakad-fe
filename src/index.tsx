@@ -23,10 +23,10 @@ import MahasiswaMataKuliah from '@/container/Mahasiswa/MataKuliah'
 import DosenDashboard from '@/container/Dosen/Dashboard'
 import DosenMataKuliah from '@/container/Dosen/MataKuliah'
 import DosenMataKuliahDetail from '@/container/Dosen/MataKuliah/Detail'
+import DosenMataKuliahPresensiDetail from '@/container/Dosen/MataKuliah/Detail/Presensi/Detail'
 import AdminBerita from '@/container/Admin/Berita'
 import AdminDashboard from '@/container/Admin/Dashboard'
 import AdminLogin from '@/container/Admin/Login'
-
 import AdminProdiMataKuliah from '@/container/Admin/Prodi/MataKuliah'
 import AdminProdiKRS from '@/container/Admin/Prodi/KRS'
 import AdminProdiKHS from '@/container/Admin/Prodi/KHS'
@@ -73,6 +73,7 @@ const App = () => {
               { path: 'dashboard', element: <DosenLayout><DosenDashboard /></DosenLayout> },
               { path: 'mata-kuliah', element: <DosenLayout><DosenMataKuliah /></DosenLayout> },
               { path: 'mk/:id', element: <DosenLayout><DosenMataKuliahDetail /></DosenLayout> },
+              { path: 'pr/:id', element: <DosenLayout><DosenMataKuliahPresensiDetail /></DosenLayout> },
             ]
           },
           { 
