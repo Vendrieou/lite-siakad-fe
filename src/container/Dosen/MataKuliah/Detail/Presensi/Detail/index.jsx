@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { Button } from 'antd'
 import { useConcent } from 'concent'
-import ProTable from '@ant-design/pro-table'
+import { EditableProTable } from '@ant-design/pro-table'
 import { useMatch, useNavigate } from '@tanstack/react-location'
 import { PageContainer } from '@ant-design/pro-layout'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
@@ -26,6 +26,7 @@ const Presensi = () => {
     {
       title: 'ID',
       dataIndex: 'id',
+      readonly: true,
       hideInTable: true,
       hideInForm: true,
       hideInSearch: true
@@ -33,13 +34,15 @@ const Presensi = () => {
     {
       key: 'nim',
       title: 'NIM',
-      dataIndex: 'nim',
+      dataIndex: ['mahasiswaProfile', 'nim'],
+      readonly: true,
       tip: '',
     },
     {
       key: 'nama',
       title: 'Nama Mahasiswa',
-      dataIndex: ["mahasiswaProfile", "nama"],
+      dataIndex: ['mahasiswaProfile', 'nama'],
+      readonly: true,
       hideInSearch: true,
       // render: (dom, entity) => {
       //   return <a onClick={() => setRow(entity)}>{dom}</a>
@@ -61,21 +64,23 @@ const Presensi = () => {
       hideInForm: true,
       hideInSearch: true
     },
-    // {
-    //   title: 'Action',
-    //   tableStyle: { textAlign: 'center' },
-    //   hideInForm: true,
-    //   key: 'option',
-    //   width: 120,
-    //   valueType: 'option',
-    //   render: (dom, entity) => [
-    //     <Button type="link" key="1" onClick={() => setRow(entity)}>edit</Button>,
-    //     <Button type="text" key="2" onClick={() => {
-    //       let page = document.getElementsByClassName("ant-pagination-item-active")
-    //       showDeleteConfirm({ ...entity, page: page[0].title })
-    //     }} danger>delete</Button>
-    //   ]
-    // }
+    {
+      title: 'Action',
+      hideInForm: true,
+      key: 'option',
+      width: 120,
+      valueType: 'option',
+      render: (dom, entity, index, action) => [
+        <Button
+          key="1"
+          onClick={() => {
+            action?.startEditable(entity.id)
+          }}
+        >
+          Edit
+        </Button>
+      ]
+    }
   ]
 
   const initData = {
@@ -126,13 +131,17 @@ const Presensi = () => {
   //   row
   // }
 
+  const onUpdate = (value) => {
+    mr.updateDataPresensiMatkul(value)
+  }
+
   return (
     <>
       <PrivateRoute access={['dosen']}>
         <PageContainer
           title="Presensi Mahasiswa"
         >
-          <ProTable
+          <EditableProTable
             headerTitle={
               <>
                 <Button
@@ -144,23 +153,35 @@ const Presensi = () => {
             }
             actionRef={actionRef}
             rowKey="id"
-            dataSource={list && list.length ? list : []}
-            // request={(params) => {
-            //   mr.mountMatkulByTab({
-            //     q: params.kodeMatkul,
-            //     page: params.current
-            //   })
-            // }}
+            value={list && list.length ? list : []}
             search={{
               labelWidth: 120
             }}
-            // toolBarRender={() => [
-            //   <Button type="primary" onClick={() => handleModalVisible(true)}>
-            //     <PlusOutlined /> Buat Baru
-            //   </Button>
-            // ]}
+            recordCreatorProps={false}
+            editable={{
+              type: 'multiple',
+              deletePopconfirmMessage: 'delete this line?',
+              onlyAddOneLineAlertMessage: 'Only add a new line',
+              actionRender: (row, config, defaultDoms) => {
+                return [defaultDoms.save, defaultDoms.cancel, defaultDoms.delete]
+              },
+              onSave: (rowKey, data, row) => {
+                onUpdate(data)
+              }
+            }}
             columns={columns}
             {...initData}
+          // request={(params) => {
+          //   mr.mountMatkulByTab({
+          //     q: params.kodeMatkul,
+          //     page: params.current
+          //   })
+          // }}
+          // toolBarRender={() => [
+          //   <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //     <PlusOutlined /> Buat Baru
+          //   </Button>
+          // ]}
           />
         </PageContainer>
       </PrivateRoute>

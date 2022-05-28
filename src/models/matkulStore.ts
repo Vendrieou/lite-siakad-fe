@@ -16,6 +16,7 @@ import {
 } from '@/services/tugasService'
 import {
   apiGet as apiGetDataPresensiMatkul,
+  apiUpdate as apiUpdateDataPresensiMatkul,
   apiPost as apiPostPresensiMatkul
 } from '@/services/presensiService'
 import {
@@ -131,7 +132,6 @@ const module = defineModule({
       }
     },
     getDataPresensiMatkul: async (payload, moduleState, actionCtx) => {
-      console.log('getDataPresensiMatkul');
       const { pathname } = history.location
       const listPath = pathname.split('/');
       let idKontenMataKuliah = listPath[listPath.length - 1]
@@ -142,6 +142,7 @@ const module = defineModule({
         semester: payload?.semester,
         page: payload?.page || 1,
         pageSize: payload?.pageSize || 10,
+        relationship: 1
       }
       if (data && !data.semester) {
         delete data.semester
@@ -221,7 +222,7 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
-          actionCtx.dispatch(module.reducer.get)
+          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
           return response
         }
       } catch (error) {
@@ -236,6 +237,19 @@ const module = defineModule({
           actionCtx.dispatch(module.reducer.SUCCESS, response)
           actionCtx.dispatch(module.reducer.get)
           return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    updateDataPresensiMatkul: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiUpdateDataPresensiMatkul(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
