@@ -165,12 +165,12 @@ const ProdiKHSContainer = () => {
         content={(
           <Tabs defaultActiveKey={type} onChange={setType}>
             <Tabs.TabPane key="export" tab="Export" />
-            <Tabs.TabPane key="list" tab="List" />
+            {/* <Tabs.TabPane key="list" tab="List" /> */}
           </Tabs>
         )}
       >
-        {type === 'export' && <Export />}
-        {type === 'list' && (
+        {type === 'export'  && <Export />}
+        {/* {type === 'list' && (
           <ProTable
             headerTitle="List KRS"
             actionRef={actionRef}
@@ -194,7 +194,7 @@ const ProdiKHSContainer = () => {
             columns={columns}
             {...initData}
           />
-        )}
+        )} */}
 
         {/* create data template KRS tab "list" */}
         <CreateForm
