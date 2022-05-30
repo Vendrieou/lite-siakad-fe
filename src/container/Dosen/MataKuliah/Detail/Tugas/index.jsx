@@ -97,12 +97,13 @@ const Tugas = () => {
   // }
 
   const onCreate = async (data) => {
-    const response = await mr.postDataTugasMatkul(data)
+    const response = await mr.postDataNilaiMatkul(data)
     if (response?.success) {
       handleModalVisible(false)
     }
   }
 
+  const FormUploadNilaiProps = { onCreate, currentItem }
   const FormCreateProps = { onCreate }
   const FormEditProps = {
     setRow,
@@ -147,7 +148,7 @@ const Tugas = () => {
           </Button>
         )}
       <CreateForm width={840} title="Upload Nilai" onCancel={() => handleUploadNilaiModal(false)} modalVisible={uploadNilaiModal} keyboard={false} maskClosable={false}>
-        <FormUploadNilai />
+        <FormUploadNilai {...FormUploadNilaiProps} />
       </CreateForm>
 
       <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>

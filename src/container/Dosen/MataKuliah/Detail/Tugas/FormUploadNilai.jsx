@@ -1,14 +1,8 @@
 // import React, { useState } from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Modal, Upload, Button } from 'antd'
 import { UploadOutlined } from '@ant-design/icons'
 import csv from 'csvtojson'
-
-Array.prototype.extend = function (other_array) {
-  /* You should include a test to check whether other_array really is an array */
-  other_array.forEach(function (v) { this.push(v) }, this);
-}
-
 const FormCreate = ({
   onCreate,
   currentItem
@@ -16,12 +10,18 @@ const FormCreate = ({
   // const [formValue, setFormValue] = useState({
   //   idDosen: null
   // })
-  const [csvData, setCsvData] = useState(null)
+  const [csvData, setCsvData] = useState('')
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
   })
   // const { state, mr } = useConcent('nilaiStore')
+  useEffect(() => {
+    Array.prototype.extend = function (other_array) {
+      /* You should include a test to check whether other_array really is an array */
+      other_array.forEach(function (v) { this.push(v) }, this);
+    }
+  }, [])
 
   const handleSubmit = async () => {
     let arr = [];
@@ -29,10 +29,8 @@ const FormCreate = ({
     arr = await csv()
       .fromString(normalCsv)
       .then((res) => {
-        console.log("res", res);
-        return res;
+        return res
       });
-    console.log("arr: ", arr);
 
     let newArrUTS = arr
       .filter((filtered) => filtered.uts)
@@ -41,8 +39,8 @@ const FormCreate = ({
           nim: item.nim,
           value: item.uts,
           type: "uts"
-        };
-      });
+        }
+      })
 
     let newArrUAS = arr
       .filter((filtered) => filtered.uas)
@@ -51,8 +49,8 @@ const FormCreate = ({
           nim: item.nim,
           value: item.uas,
           type: "uas"
-        };
-      });
+        }
+      })
 
     let newArrTugas = arr
       .filter((filtered) => filtered.tugas)
@@ -61,21 +59,19 @@ const FormCreate = ({
           nim: item.nim,
           value: item.tugas,
           type: "tugas"
-        };
-      });
+        }
+      })
     let nilai = [];
-    nilai.extend(newArrUAS);
-    nilai.extend(newArrUTS);
-    nilai.extend(newArrTugas);
+    nilai.extend(newArrUAS)
+    nilai.extend(newArrUTS)
+    nilai.extend(newArrTugas)
+
     let data = {
-      idMataKuliah: currentItem.idMataKuliah,
+      idMataKuliah: currentItem.id,
       idDosen: currentItem.idDosen,
       nilai
-    };
-    console.log("data", data);
-    // console.log('nilai', nilai)
-    // console.log('nilai', nilai.length)
-    // onCreate(data)
+    }
+    onCreate(data)
   };
   const onSave = () => {
     handleSubmit()
@@ -95,6 +91,9 @@ const FormCreate = ({
       <Upload
         multiple={false}
         accept='.csv'
+        onRemove={() => {
+          setCsvData('')
+        }}
         beforeUpload={async (file) => {
           if (file) {
             let fileReader = new FileReader();
@@ -106,9 +105,8 @@ const FormCreate = ({
         }}>
         <Button icon={<UploadOutlined />}>Upload Nilai (csv)</Button>
       </Upload>
-      <Button type="primary" onClick={() => onSave()}>Save</Button>
-      {/* <pre>{JSON.stringify(modalVerification.data, null, 2)}</pre> */}
-      <pre>{JSON.stringify(csvData, null, 2)}</pre>
+      <Button disabled={!csvData.length} type="primary" onClick={() => onSave()}>Save</Button>
+      <pre>{csvData}</pre>
     </>
   )
 }

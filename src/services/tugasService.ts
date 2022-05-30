@@ -1,6 +1,7 @@
 import request from '@/utils/request'
 import {
   apiKontenMatkul,
+  apiMatkul,
   apiTugas
 } from '@/utils/config'
 
@@ -30,6 +31,15 @@ const apiPost = async (data: any) => {
   })
 }
 
+const apiPostNilai = async (data: any) => {
+  return request({
+    url: `${apiMatkul}/tugas`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
 const apiUpdate = async (data: any) => {
   return request({
     url: `${apiTugas}/${data.id}`,
@@ -50,6 +60,7 @@ const apiDelete = async (id: number) => {
 export {
   apiGet,
   apiPost,
+  apiPostNilai,
   apiGetById,
   apiUpdate,
   apiDelete
