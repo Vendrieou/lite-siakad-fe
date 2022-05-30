@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import {
+  apiKontenMatkul,
   apiTugas
 } from '@/utils/config'
 
@@ -22,7 +23,7 @@ const apiGetById = async (id: number) => {
 
 const apiPost = async (data: any) => {
   return request({
-    url: `${apiTugas}`,
+    url: `${apiKontenMatkul}-tugas`,
     method: 'post',
     data,
     auth: true

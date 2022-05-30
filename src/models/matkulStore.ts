@@ -323,7 +323,7 @@ const module = defineModule({
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGetById(payload?.id)
         if (response.success) {
-          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
         }
       } catch (error) {
         message.error(error)
@@ -394,8 +394,6 @@ const module = defineModule({
         loading: payload?.loading,
         meta: payload?.meta,
         currentItem: payload?.data,
-        group: payload?.group,
-        asset: payload?.asset,
         errorMessage: payload?.errorMessage
       }
     },
@@ -429,8 +427,15 @@ const module = defineModule({
       const { pathname } = history.location
       const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
       const routePr = pathname.substring(0, pathname.length - 2) === '/dosen/pr'
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+
       if (routePr) {
         dispatch(module.reducer.getDataPresensiMatkul)
+        return
+      }
+      if (routeMk) {
+        dispatch(module.reducer.getDetail, { id: idMataKuliah })
         return
       }
       if (pathname === '/dosen/mata-kuliah' || routeMk) return null

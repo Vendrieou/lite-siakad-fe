@@ -10,7 +10,8 @@ Array.prototype.extend = function (other_array) {
 }
 
 const FormCreate = ({
-  onCreate
+  onCreate,
+  currentItem
 }) => {
   // const [formValue, setFormValue] = useState({
   //   idDosen: null
@@ -23,57 +24,59 @@ const FormCreate = ({
   // const { state, mr } = useConcent('nilaiStore')
 
   const handleSubmit = async () => {
-    let jsonObj = await csv()
-    .fromString(csvData)
-    .then((res) => {
-      console.log('res', res);
-      return res
-    })
-    console.log('jsonObj: ', jsonObj);
+    let arr = [];
+    let normalCsv = csvData.replace(/;/g, ',')
+    arr = await csv()
+      .fromString(normalCsv)
+      .then((res) => {
+        console.log("res", res);
+        return res;
+      });
+    console.log("arr: ", arr);
 
-    // let arr = []
-    // let newArrUTS = arr
-    //   .filter(filtered => filtered.uts)
-    //   .map(item => {
-    //     return {
-    //       nim: item.nim,
-    //       value: item.uts,
-    //       type: 'uts'
-    //     }
-    //   })
+    let newArrUTS = arr
+      .filter((filtered) => filtered.uts)
+      .map((item) => {
+        return {
+          nim: item.nim,
+          value: item.uts,
+          type: "uts"
+        };
+      });
 
-    // let newArrUAS = arr
-    //   .filter(filtered => filtered.uas)
-    //   .map(item => {
-    //     return {
-    //       nim: item.nim,
-    //       value: item.uas,
-    //       type: 'uas'
-    //     }
-    //   })
+    let newArrUAS = arr
+      .filter((filtered) => filtered.uas)
+      .map((item) => {
+        return {
+          nim: item.nim,
+          value: item.uas,
+          type: "uas"
+        };
+      });
 
-    // let newArrTugas = arr
-    //   .filter(filtered => filtered.tugas)
-    //   .map(item => {
-    //     return {
-    //       nim: item.nim,
-    //       value: item.tugas,
-    //       type: 'tugas'
-    //     }
-    //   })
-    // let nilai = []
-    // nilai.extend(newArrUAS)
-    // nilai.extend(newArrUTS)
-    // nilai.extend(newArrTugas)
-    // let data = {
-    //   idMataKuliah: 'idMataKuliah',
-    //   idDosen: 'idDosen',
-    //   nilai
-    // }
+    let newArrTugas = arr
+      .filter((filtered) => filtered.tugas)
+      .map((item) => {
+        return {
+          nim: item.nim,
+          value: item.tugas,
+          type: "tugas"
+        };
+      });
+    let nilai = [];
+    nilai.extend(newArrUAS);
+    nilai.extend(newArrUTS);
+    nilai.extend(newArrTugas);
+    let data = {
+      idMataKuliah: currentItem.idMataKuliah,
+      idDosen: currentItem.idDosen,
+      nilai
+    };
+    console.log("data", data);
     // console.log('nilai', nilai)
     // console.log('nilai', nilai.length)
     // onCreate(data)
-  }
+  };
   const onSave = () => {
     handleSubmit()
     setModalVerification({ active: false })
@@ -90,6 +93,7 @@ const FormCreate = ({
         <p>Anda akan menyimpan data</p>
       </Modal>
       <Upload
+        multiple={false}
         accept='.csv'
         beforeUpload={async (file) => {
           if (file) {
