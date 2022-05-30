@@ -7,11 +7,13 @@ import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
 import FormEdit from './FormEdit'
+import FormUploadNilai from './FormUploadNilai'
 
 const { confirm } = Modal
 
 const Tugas = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
+  const [uploadNilaiModal, handleUploadNilaiModal] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
   const { list, currentItem } = state
@@ -110,7 +112,7 @@ const Tugas = () => {
   return (
     <>
       <ProTable
-         headerTitle={`${currentItem.nama || ''}`}
+        headerTitle={`${currentItem.nama || ''}`}
         // headerTitle="List Tugas"
         actionRef={actionRef}
         rowKey="id"
@@ -125,13 +127,21 @@ const Tugas = () => {
           labelWidth: 120
         }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
+          <Button type="primary" onClick={() => handleUploadNilaiModal(true)}>
+            <PlusOutlined /> Upload Nilai
           </Button>
+          // <Button type="primary" onClick={() => handleModalVisible(true)}>
+          //   <PlusOutlined /> Buat Baru
+          // </Button>
         ]}
         columns={columns}
         {...initData}
       />
+
+      <CreateForm width={840} title="Upload Nilai" onCancel={() => handleUploadNilaiModal(false)} modalVisible={uploadNilaiModal} keyboard={false} maskClosable={false}>
+        <FormUploadNilai />
+      </CreateForm>
+
       {/* form create data */}
       <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
         <FormCreate {...FormCreateProps} />

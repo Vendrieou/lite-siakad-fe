@@ -84,10 +84,11 @@ const Presensi = () => {
   ]
 
   const initData = {
-    search: {
-      layout: 'vertical',
-      defaultCollapsed: true
-    },
+    // search: {
+    //   layout: 'vertical',
+    //   defaultCollapsed: true
+    // },
+    search: false,
     pagination: {
       show: true,
       pageSize: 10,

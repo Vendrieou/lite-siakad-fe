@@ -9,14 +9,14 @@ import { useMatch, useNavigate } from '@tanstack/react-location'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 // import CreateForm from 'components/Form/CreateForm'
 // import history from 'utils/history'
-import Topik from './Topik'
+// import Topik from './Topik'
 import Tugas from './Tugas'
 import Presensi from './Presensi'
 import Mahasiswa from './Mahasiswa'
 
 const Detail = () => {
   const { params,  search: { tab } } = useMatch()
-  const [type, setType] = useState(tab || 'topik')
+  const [type, setType] = useState(tab || 'presensi')
   const navigate = useNavigate()
 
   return (
@@ -30,17 +30,17 @@ const Detail = () => {
               navigate({ to: `/dosen/mk/${params.id}?tab=${e}` })
               setType(e)
             }}>
-              <Tabs.TabPane key="topik" tab="Topik" />
-              <Tabs.TabPane key="tugas" tab="Tugas" />
+              {/* <Tabs.TabPane key="topik" tab="Topik" /> */}
               <Tabs.TabPane key="presensi" tab="Presensi" />
+              <Tabs.TabPane key="tugas" tab="Tugas" />
               <Tabs.TabPane key="mahasiswa" tab="Mahasiswa" />
             </Tabs>
           </>
         )}
       >
-        {type === 'topik' && <Topik />}
-        {type === 'tugas' && <Tugas />}
+        {/* {type === 'topik' && <Topik />} */}
         {type === 'presensi' && <Presensi />}
+        {type === 'tugas' && <Tugas />}
         {type === 'mahasiswa' && <Mahasiswa />}
       </PageContainer>
     </PrivateRoute>

@@ -129,16 +129,16 @@ const Mahasiswa = () => {
         }}
         toolBarRender={() => [
           <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
+            <PlusOutlined /> Tambah Mahasiswa
           </Button>
         ]}
         columns={columns}
         {...initData}
       />
       {/* form create data */}
-      <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+      {/* <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
         <FormCreate {...FormCreateProps} />
-      </CreateForm>
+      </CreateForm> */}
 
       {/* form edit data */}
       <CreateForm

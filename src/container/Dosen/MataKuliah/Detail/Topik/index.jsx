@@ -133,11 +133,11 @@ const Topik = () => {
         search={{
           labelWidth: 120
         }}
-        toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
-            <PlusOutlined /> Buat Baru
-          </Button>
-        ]}
+        // toolBarRender={() => [
+        //   <Button type="primary" onClick={() => handleModalVisible(true)}>
+        //     <PlusOutlined /> Buat Baru
+        //   </Button>
+        // ]}
         columns={columns}
         {...initData}
       />
