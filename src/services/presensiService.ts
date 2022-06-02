@@ -20,9 +20,10 @@ const apiGetById = async (id: number) => {
   })
 }
 
-const apiExist = async (id: number) => {
+const apiExist = async (data: { id: number, idKontenMataKuliah: number }) => {
   return request({
-    url: `${apiPresensi}-exist/${id}`,
+    url: `${apiPresensi}-exist/${data.id}`,
+    data,
     method: 'get',
     auth: true
   })

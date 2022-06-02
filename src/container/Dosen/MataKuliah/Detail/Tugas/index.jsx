@@ -151,7 +151,7 @@ const Tugas = () => {
         <FormUploadNilai {...FormUploadNilaiProps} />
       </CreateForm>
 
-      <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+      <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} /* </>modalVisible={createModalVisible} */ keyboard={false} maskClosable={false}>
         <FormCreate {...FormCreateProps} />
       </CreateForm>
       <CreateForm

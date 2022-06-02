@@ -72,7 +72,6 @@ const module = defineModule({
       }
     },
     getDataTopikMatkul: async (payload, moduleState, actionCtx) => {
-      console.log('getDataTopikMatkul');
       const { pathname } = history.location
       const listPath = pathname.split('/');
       let idMataKuliah = listPath[listPath.length - 1]
@@ -103,7 +102,6 @@ const module = defineModule({
       }
     },
     getDataTugasMatkul: async (payload, moduleState, actionCtx) => {
-      console.log('getDataTugasMatkul');
       const { pathname } = history.location
       const listPath = pathname.split('/');
       let idMataKuliah = listPath[listPath.length - 1]
@@ -162,7 +160,6 @@ const module = defineModule({
       }
     },
     getDataPesertaMatkul: async (payload, moduleState, actionCtx) => {
-      console.log('getDataPesertaMatkul');
       const { pathname, search } = history.location
       const listPath = pathname.split('/');
       let idMataKuliah = listPath[listPath.length - 1]
@@ -235,6 +232,8 @@ const module = defineModule({
       }
     },
     postDataPresensiMatkul: async (payload: any, moduleState, actionCtx) => {
+      console.log('payload',payload);
+      
       try {
         const response = await apiPostPresensiMatkul(payload)
         if (response.success) {
@@ -352,7 +351,7 @@ const module = defineModule({
     getPresensiExist: async (payload: any, moduleState, actionCtx) => {
       try {
         actionCtx.dispatch(module.reducer.FETCH)
-        const response = await apiPresensiExist(payload?.id)
+        const response = await apiPresensiExist(payload)
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
           return response.data

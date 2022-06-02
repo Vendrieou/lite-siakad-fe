@@ -1,9 +1,9 @@
 // import React, { useState, useRef } from 'react'
 import { useRef } from 'react'
 import { Button } from 'antd'
-import { useConcent } from 'concent'
+import { useConcent,  } from 'concent'
 import { EditableProTable } from '@ant-design/pro-table'
-import { useMatch, useNavigate } from '@tanstack/react-location'
+import { useSearch, useMatch, useNavigate } from '@tanstack/react-location'
 import { PageContainer } from '@ant-design/pro-layout'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import { ArrowLeftOutlined } from '@ant-design/icons'
@@ -16,6 +16,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons'
 const Presensi = () => {
   const navigate = useNavigate()
   const { params } = useMatch()
+  const { idKontenMataKuliah } = useSearch()
   // const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
@@ -135,12 +136,12 @@ const Presensi = () => {
   // }
 
   const onUpdate = async (value) => {
-    let presensiExist = await mr.getPresensiExist(value)
-    if (presensiExist)
+    let presensiExist = await mr.getPresensiExist({ id: value.id, idKontenMataKuliah: idKontenMataKuliah })
+    if (presensiExist) {
       mr.updateDataPresensiMatkul({ id: value.id, status: value.presensi.status })
-    else {
+    } else {
       mr.postDataPresensiMatkul({
-        idKontenMataKuliah: params.id,
+        idKontenMataKuliah:idKontenMataKuliah,
         idMahasiswa: value.idMahasiswa,
         status: value.presensi.status,
         keterangan: value.keterangan
