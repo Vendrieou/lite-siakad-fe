@@ -56,7 +56,8 @@ const Presensi = () => {
     // },
     {
       title: 'Status',
-      dataIndex: 'status',
+      // dataIndex: 'status',
+      dataIndex: ['presensi', 'status'],
       valueEnum: {
         hadir: { text: 'hadir', status: 'hadir' },
         absen: { text: 'absen', status: 'absen' }
@@ -97,7 +98,8 @@ const Presensi = () => {
     },
     options: {
       reload: () => {
-        mr.getDataPresensiMatkul({ page: 1 })
+        // mr.getDataPresensiMatkul({ page: 1 })
+        mr.getDataPesertaMatkul({ relationship: 1 })
       },
       show: false,
       density: false,
@@ -132,8 +134,18 @@ const Presensi = () => {
   //   row
   // }
 
-  const onUpdate = (value) => {
-    mr.updateDataPresensiMatkul(value)
+  const onUpdate = async (value) => {
+    let presensiExist = await mr.getPresensiExist(value)
+    if (presensiExist)
+      mr.updateDataPresensiMatkul({ id: value.id, status: value.presensi.status })
+    else {
+      mr.postDataPresensiMatkul({
+        idKontenMataKuliah: params.id,
+        idMahasiswa: value.idMahasiswa,
+        status: value.presensi.status,
+        keterangan: value.keterangan
+      })
+    }
   }
 
   return (

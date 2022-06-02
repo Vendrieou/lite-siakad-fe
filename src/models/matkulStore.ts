@@ -18,7 +18,8 @@ import {
 import {
   apiGet as apiGetDataPresensiMatkul,
   apiUpdate as apiUpdateDataPresensiMatkul,
-  apiPost as apiPostPresensiMatkul
+  apiPost as apiPostPresensiMatkul,
+  apiExist as apiPresensiExist
 } from '@/services/presensiService'
 import {
   apiGet as apiGetDataPesertaMatkul,
@@ -207,7 +208,7 @@ const module = defineModule({
     postDataNilaiMatkul: async (payload: any, moduleState, actionCtx) => {
       try {
         const response = await postDataNilaiMatkul(payload)
-        if (response.success) { 
+        if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
           actionCtx.dispatch(module.reducer.get)
@@ -236,7 +237,8 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
-          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          // actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          actionCtx.dispatch(module.reducer.getDataPesertaMatkul, { relationship: 1 })
           return response
         }
       } catch (error) {
@@ -261,7 +263,8 @@ const module = defineModule({
         const response = await apiUpdateDataPresensiMatkul(payload)
         if (response.success) {
           message.success(response?.meta?.message)
-          actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          // actionCtx.dispatch(module.reducer.getDataPresensiMatkul)
+          actionCtx.dispatch(module.reducer.getDataPesertaMatkul, { relationship: 1 })
         } else {
           message.error(response?.message)
         }
@@ -339,6 +342,19 @@ const module = defineModule({
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
         }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    getPresensiExist: async (payload: any, moduleState, actionCtx) => {
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiPresensiExist(payload?.id)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
+          return response.data
+        }
+        return response.data
       } catch (error) {
         message.error(error)
       }
@@ -445,7 +461,8 @@ const module = defineModule({
       let idMataKuliah = listPath[listPath.length - 1]
 
       if (routePr) {
-        dispatch(module.reducer.getDataPresensiMatkul)
+        // dispatch(module.reducer.getDataPresensiMatkul)
+        dispatch(module.reducer.getDataPesertaMatkul, { relationship: 1 })
         return
       }
       if (routeMk) {

@@ -20,6 +20,14 @@ const apiGetById = async (id: number) => {
   })
 }
 
+const apiExist = async (id: number) => {
+  return request({
+    url: `${apiPresensi}-exist/${id}`,
+    method: 'get',
+    auth: true
+  })
+}
+
 const apiPost = async (data: any) => {
   return request({
     url: `${apiPresensi}`,
@@ -50,6 +58,7 @@ export {
   apiGet,
   apiPost,
   apiGetById,
+  apiExist,
   apiUpdate,
   apiDelete
 }
