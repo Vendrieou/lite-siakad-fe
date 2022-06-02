@@ -159,7 +159,7 @@ const MataKuliahDosen = () => {
           rowKey="id"
           onRow={(record) => {
             return {
-              onClick: () => { navigate({ to: `/dosen/mk/${record.id}?tab=topik` }) }
+              onClick: () => { navigate({ to: `/dosen/mk/${record.id}?tab=presensi` }) }
             };
           }}
           // toolBarRender={() => [

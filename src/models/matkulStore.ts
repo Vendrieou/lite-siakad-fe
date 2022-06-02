@@ -54,12 +54,11 @@ const module = defineModule({
       let params = new URLSearchParams(document.location.search);
       let tab = params.get("tab");
 
-      if (!tab) {
-        tab = 'topik'
-      }
+      // if (!tab) {
+      //   tab = 'topik'
+      // }
       switch (tab) {
-        case 'presensi':
-        case 'topik':
+        case 'presensi' || 'topik':
           actionCtx.dispatch(module.reducer.getDataTopikMatkul, payload)
           break
         case 'tugas':
@@ -164,12 +163,16 @@ const module = defineModule({
     },
     getDataPesertaMatkul: async (payload, moduleState, actionCtx) => {
       console.log('getDataPesertaMatkul');
-      const { pathname } = history.location
+      const { pathname, search } = history.location
       const listPath = pathname.split('/');
       let idMataKuliah = listPath[listPath.length - 1]
+      let params = new URLSearchParams(search)
+      let idKontenMataKuliah = params.get('idKontenMataKuliah')
+
       const data = {
         ...payload,
         idMataKuliah,
+        idKontenMataKuliah,
         q: payload?.q || '',
         semester: payload?.semester,
         page: payload?.page || 1,

@@ -159,7 +159,8 @@ const Presensi = () => {
               <>
                 <Button
                   type="link"
-                  onClick={() => navigate({ to: `/dosen/mk/${params.id}?tab=presensi` })}>
+                  // onClick={() => navigate({ to: `/dosen/mk/${params.id}?tab=presensi` })}>
+                  onClick={() => history.back()}>
                   <ArrowLeftOutlined />Kembali</Button>
                 Presensi Mahasiswa
               </>

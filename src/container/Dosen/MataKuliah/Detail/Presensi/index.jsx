@@ -16,7 +16,7 @@ const Presensi = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { list, currentItem } = state
   const [row, setRow] = useState()
 
   const columns = [
@@ -97,7 +97,7 @@ const Presensi = () => {
         rowKey="id"
         onRow={(record) => {
           return {
-            onClick: () => { navigate({ to: `/dosen/pr/${record.id}` }) }
+            onClick: () => { navigate({ to: `/dosen/pr/${currentItem.id}?idKontenMataKuliah=${record.id}` }) }
           }
         }}
         dataSource={list && list.length ? list : []}

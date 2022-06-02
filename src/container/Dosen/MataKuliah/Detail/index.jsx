@@ -7,6 +7,7 @@ import { Tabs, Button, Modal } from 'antd'
 import { PageContainer } from '@ant-design/pro-layout'
 import { useMatch, useNavigate } from '@tanstack/react-location'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
+import { useConcent } from 'concent'
 // import CreateForm from 'components/Form/CreateForm'
 // import history from 'utils/history'
 // import Topik from './Topik'
@@ -18,14 +19,16 @@ const Detail = () => {
   const { params,  search: { tab } } = useMatch()
   const [type, setType] = useState(tab || 'presensi')
   const navigate = useNavigate()
+  const { state } = useConcent('matkulStore')
+  const { currentItem } = state
 
   return (
     <PrivateRoute access={['dosen']}>
       <PageContainer
-        title={params.id}
+        title={`${currentItem?.nama}`}
         content={(
           <>
-            {`dosen`}
+            {currentItem?.dosenProfile?.nama}
             <Tabs defaultActiveKey={type} onChange={(e) => {
               navigate({ to: `/dosen/mk/${params.id}?tab=${e}` })
               setType(e)

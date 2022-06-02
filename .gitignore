@@ -8,3 +8,4 @@ dist
 .env
 dist
 !.env.example
+.vscode
