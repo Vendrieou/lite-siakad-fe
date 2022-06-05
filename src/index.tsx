@@ -19,6 +19,7 @@ import MahasiswaDasboard from '@/container/Mahasiswa/Dasboard'
 import MahasiswaRegister from '@/container/Mahasiswa/Register'
 import MahasiswaKHS from '@/container/Mahasiswa/KHS'
 import MahasiswaKRS from '@/container/Mahasiswa/KRS'
+import MahasiswaAjuKRS from '@/container/Mahasiswa/KRS/aju'
 import MahasiswaMataKuliah from '@/container/Mahasiswa/MataKuliah'
 import DosenDashboard from '@/container/Dosen/Dashboard'
 import DosenMataKuliah from '@/container/Dosen/MataKuliah'
@@ -63,6 +64,7 @@ const App = () => {
               { path: 'register', element: <MahasiswaRegister />},
               { path: 'khs', element: <MahasiswaLayout><MahasiswaKHS /></MahasiswaLayout> },
               { path: 'krs', element: <MahasiswaLayout><MahasiswaKRS /></MahasiswaLayout>},
+              { path: 'aju-krs', element: <MahasiswaLayout><MahasiswaAjuKRS /></MahasiswaLayout>},
               { path: 'mata-kuliah', element: <MahasiswaLayout><MahasiswaMataKuliah /></MahasiswaLayout> },
               { path: 'berita', element: <MahasiswaLayout><Berita /></MahasiswaLayout> },
             ]

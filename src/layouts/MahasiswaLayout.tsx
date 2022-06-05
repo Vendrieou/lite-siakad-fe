@@ -35,19 +35,19 @@ const MahasiswaLayout = ({ children }) => {
                   name: 'KHS',
                   component: 'pages/Mahasiswa/KHS',
                 },
-                {
-                  path: '/mahasiswa/berita',
-                  name: 'Berita',
-                  component: 'pages/Berita',
-                }
+                // {
+                //   path: '/mahasiswa/berita',
+                //   name: 'Berita',
+                //   component: 'pages/Berita',
+                // }
               ]
             },
-            {
-              name: 'Settings',
-              icon: <SettingOutlined />,
-              path: '/mahasiswa/settings',
-              // component: 'pages/Mahasiswa/Settings'
-            },
+            // {
+            //   name: 'Settings',
+            //   icon: <SettingOutlined />,
+            //   path: '/mahasiswa/settings',
+            //   // component: 'pages/Mahasiswa/Settings'
+            // },
           ]
         }}
         >
