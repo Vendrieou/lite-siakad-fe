@@ -10,7 +10,7 @@ const MahasiswaKRS = () => {
       <Button
         type="primary" size="large"
         onClick={() => {
-          navigate({ to: '/mahasiwa/aju-krs' })
+          navigate({ to: '/mahasiswa/aju-krs' })
         }}
       >
         Ajukan KRS

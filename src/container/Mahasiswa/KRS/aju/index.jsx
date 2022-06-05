@@ -6,7 +6,7 @@ import { Space, Button, Table } from 'antd'
 import { useConcent } from 'concent'
 
 const MahasiswaAjuKRS = () => {
-  const columns = [
+const columns = [
     { hideInSearch: true, title: 'Kode MK', dataIndex: 'kodeMatkul', key: 'kodeMk', width: 350 },
     { hideInSearch: true, title: 'Mata Kuliah', dataIndex: 'nama', key: 'matkul', width: 600 },
     { hideInSearch: true, title: 'SKS', dataIndex: 'sks', key: 'sks', align: 'center' },
@@ -68,6 +68,7 @@ const MahasiswaAjuKRS = () => {
     mr.ajuKrs(data)
   }
   // const [form] = Form.useForm();
+ 
   return (
     <PrivateRoute access={['mahasiswa']}>
       <Button
