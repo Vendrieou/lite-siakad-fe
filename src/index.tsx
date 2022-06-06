@@ -57,19 +57,19 @@ const App = () => {
         routes={[
           { path: "/", element: <Landing /> },
           { path: '/login', element: <Login /> },
-          { 
-            path: "mahasiswa", 
+          {
+            path: "mahasiswa",
             children: [
               { path: 'dashboard', element: <MahasiswaLayout><MahasiswaDasboard /></MahasiswaLayout> },
-              { path: 'register', element: <MahasiswaRegister />},
+              { path: 'register', element: <MahasiswaRegister /> },
               { path: 'khs', element: <MahasiswaLayout><MahasiswaKHS /></MahasiswaLayout> },
-              { path: 'krs', element: <MahasiswaLayout><MahasiswaKRS /></MahasiswaLayout>},
-              { path: 'aju-krs', element: <MahasiswaLayout><MahasiswaAjuKRS /></MahasiswaLayout>},
+              { path: 'krs', element: <MahasiswaLayout><MahasiswaKRS /></MahasiswaLayout> },
+              { path: 'aju-krs', element: <MahasiswaLayout><MahasiswaAjuKRS /></MahasiswaLayout> },
               { path: 'mata-kuliah', element: <MahasiswaLayout><MahasiswaMataKuliah /></MahasiswaLayout> },
               { path: 'berita', element: <MahasiswaLayout><Berita /></MahasiswaLayout> },
             ]
           },
-          { 
+          {
             path: "dosen",
             children: [
               { path: 'dashboard', element: <DosenLayout><DosenDashboard /></DosenLayout> },
@@ -78,7 +78,7 @@ const App = () => {
               { path: 'pr/:id', element: <DosenLayout><DosenMataKuliahPresensiDetail /></DosenLayout> },
             ]
           },
-          { 
+          {
             path: "admin",
             // element: <AdminLayout />,
             children: [
@@ -86,7 +86,7 @@ const App = () => {
               { path: 'dashboard', element: <AdminLayout><AdminDashboard /></AdminLayout> },
               { path: 'login', element: <AdminLogin /> },
               // { path: 'manageuser', element: <AdminLayout><AdminManageUser /></AdminLayout> },
-              { 
+              {
                 path: 'prodi',
                 children: [
                   { path: 'mata-kuliah', element: <AdminLayout><AdminProdiMataKuliah /></AdminLayout> },

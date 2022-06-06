@@ -1,5 +1,5 @@
 // // import React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Typography, Modal, Card } from 'antd'
 import ProForm, { ProFormText, ProFormSwitch, ProFormSelect } from '@ant-design/pro-form'
 import { PageContainer } from '@ant-design/pro-layout'
@@ -28,8 +28,15 @@ const AdminDashboardContainer = () => {
   const { mr, state } = useConcent('settingStore')
   const { currentItem } = state
 
+  console.log('currentItem', currentItem);
+
+  useEffect(() => {
+    mr.getDetail({ id: 1 })
+  }, [])
+
   const handleSubmit = (values: formValueInterface) => {
     const data = {
+      id: 1,
       ...values
     }
     mr.update(data)
@@ -40,6 +47,9 @@ const AdminDashboardContainer = () => {
     setModalVerification({ active: false })
   }
 
+  if(!(currentItem && currentItem.jenisSemester)) {
+    return <p>loading</p>
+  }
   return (
     <PrivateRoute access={['admin']}>
       <PageContainer>
@@ -52,48 +62,48 @@ const AdminDashboardContainer = () => {
           <p>{`Anda akan menyimpan data Settings?`}</p>
         </Modal>
         <Card>
-        <Title level={3}>Setting KRS</Title>
-        <ProForm
-          onFinish={async (values) => {
-            setModalVerification({ data: values, active: true })
-          }}
-          initialValues={{
-            jenisSemester: currentItem.jenisSemester,
-            puket: currentItem.puket,
-            ajuKrs: currentItem.ajuKrs
-          }}
-          params={{}}
-        >
-          <ProFormSelect
-            options={[
-              {
-                value: 'ganjil',
-                label: 'ganjil'
-              },
-              {
-                value: 'genap',
-                label: 'genap'
-              }
-            ]}
-            width="md"
-            name="jenisSemester"
-            label="Jenis Semester"
-            placeholder="Masukkan "
-          />
-          <ProFormText
-            width="md"
-            name="puket"
-            label="Puket"
-            placeholder="Masukkan nama puket"
-          />
-          <ProFormSwitch
-            width="md"
-            name="ajuKrs"
-            label="Aju KRS"
-            checkedChildren="Enable"
-            unCheckedChildren="Unabled"
-          />
-        </ProForm>
+          <Title level={3}>Setting KRS</Title>
+          <ProForm
+            onFinish={async (values) => {
+              setModalVerification({ data: values, active: true })
+            }}
+            initialValues={{
+              jenisSemester: currentItem?.jenisSemester || '',
+              puket: currentItem?.puket || '',
+              ajuKrs: currentItem?.ajuKrs || false
+            }}
+            params={{}}
+          >
+            <ProFormSelect
+              options={[
+                {
+                  value: 'ganjil',
+                  label: 'ganjil'
+                },
+                {
+                  value: 'genap',
+                  label: 'genap'
+                }
+              ]}
+              width="md"
+              name="jenisSemester"
+              label="Jenis Semester"
+              placeholder="Masukkan "
+            />
+            <ProFormText
+              width="md"
+              name="puket"
+              label="Puket"
+              placeholder="Masukkan nama puket"
+            />
+            <ProFormSwitch
+              width="md"
+              name="ajuKrs"
+              label="Aju KRS"
+              checkedChildren="Enable"
+              unCheckedChildren="Unabled"
+            />
+          </ProForm>
         </Card>
       </PageContainer>
     </PrivateRoute>

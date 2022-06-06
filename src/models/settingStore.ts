@@ -47,7 +47,8 @@ const module = defineModule({
         actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGetById(payload?.id)
         if (response.success) {
-          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
+          return response
         }
       } catch (error) {
         message.error(error)
