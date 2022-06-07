@@ -18,6 +18,7 @@ const AdminLayout = ({ children }) => {
             {
               name: 'Prodi',
               icon: <LaptopOutlined />,
+              path: '/admin/prodi',
               routes: [
                 {
                   path: '/admin/prodi/mata-kuliah',
