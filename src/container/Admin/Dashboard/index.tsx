@@ -28,8 +28,6 @@ const AdminDashboardContainer = () => {
   const { mr, state } = useConcent('settingStore')
   const { currentItem } = state
 
-  console.log('currentItem', currentItem);
-
   useEffect(() => {
     mr.getDetail({ id: 1 })
   }, [])
@@ -47,7 +45,7 @@ const AdminDashboardContainer = () => {
     setModalVerification({ active: false })
   }
 
-  if(!(currentItem && currentItem.jenisSemester)) {
+  if (!(currentItem && currentItem.jenisSemester)) {
     return <p>loading</p>
   }
   return (
@@ -70,7 +68,6 @@ const AdminDashboardContainer = () => {
             initialValues={{
               jenisSemester: currentItem?.jenisSemester || '',
               puket: currentItem?.puket || '',
-              ajuKrs: currentItem?.ajuKrs || false
             }}
             params={{}}
           >
@@ -101,7 +98,10 @@ const AdminDashboardContainer = () => {
               name="ajuKrs"
               label="Aju KRS"
               checkedChildren="Enable"
-              unCheckedChildren="Unabled"
+              unCheckedChildren="Unable"
+              fieldProps={{
+                defaultChecked: Boolean(currentItem?.ajuKrs)
+              }}
             />
           </ProForm>
         </Card>
