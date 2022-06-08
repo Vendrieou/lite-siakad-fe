@@ -57,13 +57,13 @@ const MenuFilter = () => {
           semester: 2
         }}
       >
-        <ProFormGroup label="Filter">
+        <ProFormGroup label="Query">
           <ProForm.Item
             name="idJurusan"
             label="Jurusan"
             width="md"
             rules={[{ required: true, message: 'Masukkan nama jurusan' }]}
-          >
+            >
             <AutoComplete
               placeholder="Masukkan nama jurusan"
               onSelect={(value, param) => {
@@ -71,7 +71,6 @@ const MenuFilter = () => {
                 onGetListJurusan(value)
               }}
               filterOption
-              readonly="readonly"
               allowClear
               onClear={() => onGetListJurusan(null)}
             >
