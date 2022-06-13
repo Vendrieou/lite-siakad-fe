@@ -232,8 +232,8 @@ const module = defineModule({
       }
     },
     postDataPresensiMatkul: async (payload: any, moduleState, actionCtx) => {
-      console.log('payload',payload);
-      
+      console.log('payload', payload);
+
       try {
         const response = await apiPostPresensiMatkul(payload)
         if (response.success) {
@@ -457,21 +457,17 @@ const module = defineModule({
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
       const { pathname } = history.location
-      const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
+      // const routeMk = pathname.substring(0, pathname.length - 2) === '/dosen/mk'
       const routePr = pathname.substring(0, pathname.length - 2) === '/dosen/pr'
       const listPath = pathname.split('/');
       let idMataKuliah = listPath[listPath.length - 1]
-
+      dispatch(module.reducer.getDetail, { id: idMataKuliah })
       if (routePr) {
         // dispatch(module.reducer.getDataPresensiMatkul)
         dispatch(module.reducer.getDataPesertaMatkul, { relationship: 1 })
-        return
+        return null
       }
-      if (routeMk) {
-        dispatch(module.reducer.getDetail, { id: idMataKuliah })
-        return
-      }
-      if (pathname === '/dosen/mata-kuliah' || routeMk) return null
+      if (pathname === '/dosen/mata-kuliah') return null
       if (pathname === '/admin/prodi/krs') {
         dispatch(module.reducer.get, { pageSize: 100 })
         return
