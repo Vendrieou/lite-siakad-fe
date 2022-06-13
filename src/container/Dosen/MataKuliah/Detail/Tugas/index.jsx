@@ -96,7 +96,7 @@ const Tugas = () => {
   // }
 
   const onCreate = async (data) => {
-    const response = await mr.postDataNilaiMatkul(data)
+    const response = await mr.postNilaiBulk(data)
     if (response?.success) {
       handleModalVisible(false)
     }

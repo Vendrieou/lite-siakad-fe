@@ -42,8 +42,8 @@ const FormCreate = ({
         return {
           ...propsBindData,
           nim: item.nim,
-          value: item.uts,
-          type: "uts"
+          nilai: item.uts,
+          jenis: "uts"
         }
       })
 
@@ -53,8 +53,8 @@ const FormCreate = ({
         return {
           ...propsBindData,
           nim: item.nim,
-          value: item.uas,
-          type: "uas"
+          nilai: item.uas,
+          jenis: "uas"
         }
       })
 
@@ -64,8 +64,8 @@ const FormCreate = ({
         return {
           ...propsBindData,
           nim: item.nim,
-          value: item.tugas,
-          type: "tugas"
+          nilai: item.tugas,
+          jenis: "tugas"
         }
       })
     let nilai = [];

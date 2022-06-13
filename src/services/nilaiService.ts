@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 import {
+  apiKontenMatkul,
   apiNilai
 } from '@/utils/config'
 
@@ -29,6 +30,15 @@ const apiPost = async (data: any) => {
   })
 }
 
+const apiPostNilaiBulk = async (data: any) => {
+  return request({
+    url: `${apiKontenMatkul}-nilai-bulk`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
 const apiUpdate = async (data: any) => {
   return request({
     url: `${apiNilai}/${data.id}`,
@@ -50,6 +60,7 @@ export {
   apiGet,
   apiPost,
   apiGetById,
+  apiPostNilaiBulk,
   apiUpdate,
   apiDelete
 }

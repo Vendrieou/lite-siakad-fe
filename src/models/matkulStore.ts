@@ -13,8 +13,11 @@ import {
 import {
   apiGet as apiGetDataTugasMatkul,
   apiPost as apiPostTugasMatkul,
-  apiPostNilaiBulk as postDataNilaiMatkul
+  apiPostTugasBulk
 } from '@/services/tugasService'
+import {
+  apiPostNilaiBulk
+} from '@/services/nilaiService'
 import {
   apiGet as apiGetDataPresensiMatkul,
   apiUpdate as apiUpdateDataPresensiMatkul,
@@ -205,9 +208,22 @@ const module = defineModule({
         message.error(error)
       }
     },
-    postDataNilaiMatkul: async (payload: any, moduleState, actionCtx) => {
+    postNilaiBulk: async (payload: any, moduleState, actionCtx) => {
       try {
-        const response = await postDataNilaiMatkul(payload)
+        const response = await apiPostNilaiBulk(payload)
+        if (response.success) {
+          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          actionCtx.dispatch(module.reducer.get)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    postTugasBulk: async (payload: any, moduleState, actionCtx) => {
+      try {
+        const response = await apiPostTugasBulk(payload)
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
