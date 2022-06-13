@@ -9,6 +9,7 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/pengajuanKrsService'
+import history from '@/utils/history'
 
 const module = defineModule({
   state: {
@@ -166,6 +167,12 @@ const module = defineModule({
   },
   lifecycle: {
     mounted: async (dispatch, moduleState) => {
+      const { pathname } = history.location
+      const routeAdminKrs = pathname === '/admin/prodi/krs'
+      const routeAdminKhs = pathname === '/admin/prodi/khs'
+      const routeMahasiswaKrs = pathname === '/mahasiswa/krs'
+      const routeMahasiswaKhs = pathname === '/mahasiswa/khs'
+      if (routeAdminKrs || routeAdminKhs || routeMahasiswaKrs || routeMahasiswaKhs) return null
       dispatch(module.reducer.get)
     }
   }
