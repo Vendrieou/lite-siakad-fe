@@ -25,6 +25,10 @@ const FormCreate = ({
 
   const handleSubmit = async () => {
     let arr = [];
+    let propsBindData = {
+      idMataKuliah: currentItem.id,
+      idDosen: currentItem.idDosen,
+    }
     let normalCsv = csvData.replace(/;/g, ',')
     arr = await csv()
       .fromString(normalCsv)
@@ -36,6 +40,7 @@ const FormCreate = ({
       .filter((filtered) => filtered.uts)
       .map((item) => {
         return {
+          ...propsBindData,
           nim: item.nim,
           value: item.uts,
           type: "uts"
@@ -46,6 +51,7 @@ const FormCreate = ({
       .filter((filtered) => filtered.uas)
       .map((item) => {
         return {
+          ...propsBindData,
           nim: item.nim,
           value: item.uas,
           type: "uas"
@@ -56,6 +62,7 @@ const FormCreate = ({
       .filter((filtered) => filtered.tugas)
       .map((item) => {
         return {
+          ...propsBindData,
           nim: item.nim,
           value: item.tugas,
           type: "tugas"
@@ -67,8 +74,6 @@ const FormCreate = ({
     nilai.extend(newArrTugas)
 
     let data = {
-      idMataKuliah: currentItem.id,
-      idDosen: currentItem.idDosen,
       nilai
     }
     onCreate(data)

@@ -13,7 +13,7 @@ import {
 import {
   apiGet as apiGetDataTugasMatkul,
   apiPost as apiPostTugasMatkul,
-  apiPostNilai as postDataNilaiMatkul
+  apiPostNilaiBulk as postDataNilaiMatkul
 } from '@/services/tugasService'
 import {
   apiGet as apiGetDataPresensiMatkul,

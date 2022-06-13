@@ -1,5 +1,5 @@
 // import React, { useState, useRef } from 'react'
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 // import ProTable from '@ant-design/pro-table'
@@ -14,7 +14,6 @@ const { confirm } = Modal
 const Tugas = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const [uploadNilaiModal, handleUploadNilaiModal] = useState(false)
-  const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
   const { currentItem } = state
   const [row, setRow] = useState()

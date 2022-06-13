@@ -31,9 +31,9 @@ const apiPost = async (data: any) => {
   })
 }
 
-const apiPostNilai = async (data: any) => {
+const apiPostNilaiBulk = async (data: any) => {
   return request({
-    url: `${apiMatkul}/tugas`,
+    url: `${apiKontenMatkul}-tugas-bulk`,
     method: 'post',
     data,
     auth: true
@@ -60,7 +60,7 @@ const apiDelete = async (id: number) => {
 export {
   apiGet,
   apiPost,
-  apiPostNilai,
+  apiPostNilaiBulk,
   apiGetById,
   apiUpdate,
   apiDelete
