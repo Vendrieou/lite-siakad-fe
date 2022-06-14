@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 // import ProTable from '@ant-design/pro-table'
+import { useMatch } from '@tanstack/react-location'
 import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import CreateForm from 'components/Form/CreateForm'
 import FormCreate from './FormCreate'
@@ -12,12 +13,12 @@ import FormUploadNilai from './FormUploadNilai'
 const { confirm } = Modal
 
 const Tugas = () => {
+  const { params: { id: idMataKuliah } } = useMatch()
   const [createModalVisible, handleModalVisible] = useState(false)
   const [uploadNilaiModal, handleUploadNilaiModal] = useState(false)
   const { state, mr } = useConcent('matkulStore')
   const { currentItem } = state
   const [row, setRow] = useState()
-
   // const columns = [
   //   {
   //     title: 'ID',
@@ -98,6 +99,7 @@ const Tugas = () => {
   const onCreate = async (data) => {
     const response = await mr.postNilaiBulk(data)
     if (response?.success) {
+      mr.update({ id: idMataKuliah, isNilaiSubmitted: 1 })
       handleModalVisible(false)
       handleUploadNilaiModal(false)
     }
