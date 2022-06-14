@@ -77,7 +77,8 @@ const FormCreate = ({
       nilai
     }
     onCreate(data)
-  };
+  }
+
   const onSave = () => {
     handleSubmit()
     setModalVerification({ active: false })
@@ -110,7 +111,7 @@ const FormCreate = ({
         }}>
         <Button icon={<UploadOutlined />}>Upload Nilai (csv)</Button>
       </Upload>
-      <Button disabled={!csvData.length} type="primary" onClick={() => onSave()}>Save</Button>
+      <Button disabled={!csvData.length} type="primary" onClick={() => setModalVerification({ active: true })}>Save</Button>
       <pre>{csvData}</pre>
     </>
   )

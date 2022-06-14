@@ -99,6 +99,7 @@ const Tugas = () => {
     const response = await mr.postNilaiBulk(data)
     if (response?.success) {
       handleModalVisible(false)
+      handleUploadNilaiModal(false)
     }
   }
 
@@ -139,7 +140,7 @@ const Tugas = () => {
       columns={columns}
       {...initData}
     /> */}
-      {currentItem.isTugasSubmitted ?
+      {currentItem.isNilaiSubmitted ?
         <p>Nilai telah Dikirim</p>
         : (
           <Button type="primary" onClick={() => handleUploadNilaiModal(true)}>
