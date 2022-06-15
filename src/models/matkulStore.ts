@@ -171,8 +171,8 @@ const module = defineModule({
 
       const data = {
         ...payload,
-        idMataKuliah,
-        idKontenMataKuliah,
+        idMataKuliah: idMataKuliah || payload.idMataKuliah,
+        idKontenMataKuliah: idKontenMataKuliah || payload.idKontenMataKuliah,
         q: payload?.q || '',
         semester: payload?.semester,
         page: payload?.page || 1,
@@ -396,6 +396,7 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.get)
+          actionCtx.dispatch(module.reducer.getDetail, { id: payload.id })
         } else {
           message.error(response?.message)
         }

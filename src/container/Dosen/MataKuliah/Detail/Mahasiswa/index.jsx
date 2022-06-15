@@ -1,22 +1,33 @@
 // import React, { useState, useRef } from 'react'
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
-import { PlusOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
+import { useMatch } from '@tanstack/react-location'
 import CreateForm from 'components/Form/CreateForm'
-import FormCreate from './FormCreate'
+import FormTambahMahasiswa from './FormTambahMahasiswa'
 import FormEdit from './FormEdit'
 
 const { confirm } = Modal
 
 const Mahasiswa = () => {
+  const { params: { id: idMataKuliah } } = useMatch()
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
   const { list } = state
   const [row, setRow] = useState()
+  const { state: stateMahasiswa, mr: mrMahasiswa } = useConcent('mahasiswaStore')
+  // get peserta matkul 
 
+  useEffect(() => {
+    mrMahasiswa.getDataPesertaMatkul({
+      idMataKuliah,
+      // idKontenMataKuliah
+    })
+  }, [])
+  
   const columns = [
     {
       title: 'ID',
@@ -85,18 +96,18 @@ const Mahasiswa = () => {
     }
   }
 
-  const showDeleteConfirm = (entity) => {
-    confirm({
-      title: 'Are you sure delete this data?',
-      icon: <ExclamationCircleOutlined />,
-      okText: 'Yes',
-      okType: 'danger',
-      cancelText: 'No',
-      onOk: () => {
-        mr.delete(entity)
-      }
-    })
-  }
+  // const showDeleteConfirm = (entity) => {
+  //   confirm({
+  //     title: 'Are you sure delete this data?',
+  //     icon: <ExclamationCircleOutlined />,
+  //     okText: 'Yes',
+  //     okType: 'danger',
+  //     cancelText: 'No',
+  //     onOk: () => {
+  //       mr.delete(entity)
+  //     }
+  //   })
+  // }
 
   const onCreate = async (data) => {
     const response = await mr.create(data)
@@ -105,7 +116,11 @@ const Mahasiswa = () => {
     }
   }
 
-  const FormCreateProps = { onCreate }
+  const FormTambahMahasiswaProps = {
+    stateMahasiswa,
+    mrMahasiswa,
+    onCreate
+  }
   const FormEditProps = {
     setRow,
     row
@@ -136,9 +151,9 @@ const Mahasiswa = () => {
         {...initData}
       />
       {/* form create data */}
-      {/* <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
-        <FormCreate {...FormCreateProps} />
-      </CreateForm> */}
+      <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+        <FormTambahMahasiswa {...FormTambahMahasiswaProps} />
+      </CreateForm>
 
       {/* form edit data */}
       <CreateForm
