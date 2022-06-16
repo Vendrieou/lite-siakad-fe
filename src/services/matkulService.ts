@@ -22,6 +22,16 @@ const apiGetById = async (id: number) => {
   })
 }
 
+const apiGetDataCalonPesertaMatkul = async (params: any, data: any) => {
+  return request({
+    url: `${apiMatkul}-calon-peserta`,
+    method: 'get',
+    params,
+    data,
+    auth: true
+  })
+}
+
 const apiPost = async (data: any) => {
   return request({
     url: `${apiMatkul}`,
@@ -221,6 +231,7 @@ const apiPostTopikMatkul = async (data: any) => {
 
 export {
   apiGet,
+  apiGetDataCalonPesertaMatkul,
   // apiGetMatkulPeserta,
   // apiGetMatkulPesertaById,
   // apiGetMatkulDashboardMahasiswa,

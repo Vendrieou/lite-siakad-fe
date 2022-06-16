@@ -1,5 +1,5 @@
 // import React, { useState, useRef } from 'react'
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Button, Modal } from 'antd'
 import { useConcent } from 'concent'
 import ProTable from '@ant-design/pro-table'
@@ -16,18 +16,9 @@ const Mahasiswa = () => {
   const [createModalVisible, handleModalVisible] = useState(false)
   const actionRef = useRef()
   const { state, mr } = useConcent('matkulStore')
-  const { list } = state
+  const { list, calonList } = state
   const [row, setRow] = useState()
-  const { state: stateMahasiswa, mr: mrMahasiswa } = useConcent('mahasiswaStore')
-  // get peserta matkul 
-
-  useEffect(() => {
-    mrMahasiswa.getDataPesertaMatkul({
-      idMataKuliah,
-      // idKontenMataKuliah
-    })
-  }, [])
-  
+    
   const columns = [
     {
       title: 'ID',
@@ -109,6 +100,13 @@ const Mahasiswa = () => {
   //   })
   // }
 
+  const onGetCalonPesertaMatkul = async (data) => {
+    mr.getDataCalonPesertaMatkul({
+      ...data,
+      idMataKuliah,
+      // idKontenMataKuliah
+    })
+  }
   const onCreate = async (data) => {
     const response = await mr.create(data)
     if (response?.success) {
@@ -117,8 +115,8 @@ const Mahasiswa = () => {
   }
 
   const FormTambahMahasiswaProps = {
-    stateMahasiswa,
-    mrMahasiswa,
+    calonList,
+    onGetCalonPesertaMatkul,
     onCreate
   }
   const FormEditProps = {
@@ -151,7 +149,7 @@ const Mahasiswa = () => {
         {...initData}
       />
       {/* form create data */}
-      <CreateForm width={840} title="Tambah Mata Kuliah" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
+      <CreateForm width={1200} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible} keyboard={false} maskClosable={false}>
         <FormTambahMahasiswa {...FormTambahMahasiswaProps} />
       </CreateForm>
 

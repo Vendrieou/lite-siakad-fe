@@ -1,14 +1,17 @@
 // import React, { useState } from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Space, Modal, Table } from 'antd'
 import ProTable from '@ant-design/pro-table'
-import { useConcent } from 'concent'
 
 const FormTambahMahasiswa = ({
   onCreate,
-  mrMahasiswa,
-  stateMahasiswa
+  calonList,
+  onGetCalonPesertaMatkul
 }) => {
+  useEffect(() => {
+    onGetCalonPesertaMatkul()
+  }, [])
+
   const columns = [
     {
       title: 'ID',
@@ -43,7 +46,7 @@ const FormTambahMahasiswa = ({
     },
     options: {
       reload: () => {
-        mr.get({ page: 1 })
+        onGetCalonPesertaMatkul({ page: 1 })
       },
       show: false,
       density: false,
@@ -58,8 +61,6 @@ const FormTambahMahasiswa = ({
     data: {},
     active: false
   })
-  const { list } = stateMahasiswa
-
   const handleSubmit = async (values) => {
     let data = {
       ...values
@@ -99,7 +100,7 @@ const FormTambahMahasiswa = ({
             </Space>
           )
         }}
-        dataSource={list && list.length ? list : []}
+        dataSource={calonList && calonList.length ? calonList : []}
         request={(params) => {
           mrMataKuliah.get({
             q: params.kodeMatkul || params.sks || params.nama,

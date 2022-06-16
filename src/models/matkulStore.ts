@@ -2,6 +2,7 @@ import { message } from 'antd'
 import { defineModule } from 'concent'
 import {
   apiGet,
+  apiGetDataCalonPesertaMatkul,
   apiGetById,
   apiPost,
   apiUpdate,
@@ -44,8 +45,7 @@ const module = defineModule({
     // listMahasiswa: [],
     // listPeserta: [],
     selectionList: [],
-    group: [],
-    asset: [],
+    calonList: [],
     list: [],
     dataSet: [],
     meta: {},
@@ -331,6 +331,38 @@ const module = defineModule({
         message.error(error)
       }
     },
+    getDataCalonPesertaMatkul: async (payload, moduleState, actionCtx) => {
+      const { pathname, search } = history.location
+      const listPath = pathname.split('/');
+      let idMataKuliah = listPath[listPath.length - 1]
+      let params = new URLSearchParams(search)
+      let idKontenMataKuliah = params.get('idKontenMataKuliah')
+
+      const data = {
+        ...payload,
+        idMataKuliah: idMataKuliah || payload.idMataKuliah,
+        idKontenMataKuliah: idKontenMataKuliah || payload.idKontenMataKuliah,
+        q: payload?.q || '',
+        semester: payload?.semester,
+        page: payload?.page || 1,
+        pageSize: payload?.pageSize || 10,
+      }
+
+      if (data && !data.semester) {
+        delete data.semester
+      }
+      try {
+        actionCtx.dispatch(module.reducer.FETCH)
+        const response = await apiGetDataCalonPesertaMatkul(data, { relationship: 1 })
+        if (response.success) {
+          const dataWithKey = response.data.map((item: any) => ({ ...item, key: useId(6) }));
+          actionCtx.dispatch(module.reducer.RECEIVE_CALON, { data: dataWithKey })
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
     getMatkulDashboardDosen: async (payload: any, moduleState, actionCtx) => {
       const data = {
         ...payload,
@@ -434,6 +466,14 @@ const module = defineModule({
       return {
         loading: true,
         list: payload?.data,
+        meta: payload?.meta,
+        errorMessage: payload?.errorMessage
+      }
+    },
+    RECEIVE_CALON: (payload: any) => {
+      return {
+        loading: true,
+        calonList: payload?.data,
         meta: payload?.meta,
         errorMessage: payload?.errorMessage
       }
