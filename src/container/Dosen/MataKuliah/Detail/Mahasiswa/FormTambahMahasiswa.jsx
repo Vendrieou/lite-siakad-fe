@@ -1,5 +1,5 @@
 // import React, { useState } from 'react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Space, Modal, Table, Button } from 'antd'
 import ProTable from '@ant-design/pro-table'
 
@@ -9,10 +9,6 @@ const FormTambahMahasiswa = ({
   calonList,
   onGetCalonPesertaMatkul
 }) => {
-  useEffect(() => {
-    onGetCalonPesertaMatkul()
-  }, [])
-
   const columns = [
     {
       title: 'ID',
@@ -21,8 +17,8 @@ const FormTambahMahasiswa = ({
       hideInForm: true,
       hideInSearch: true
     },
-    { title: 'Nama Mahasiswa', dataIndex: ['mahasiswaProfile', 'nama'], hideInForm: true },
     { title: 'NIM', dataIndex: ['mahasiswaProfile', 'nim'], hideInForm: true },
+    { title: 'Nama Mahasiswa', dataIndex: ['mahasiswaProfile', 'nama'], hideInForm: true },
   ]
   const initData = {
     // search: {

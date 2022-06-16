@@ -37,17 +37,17 @@ const Mahasiswa = () => {
       key: 'nama',
       title: 'Nama Mahasiswa',
       dataIndex: ["mahasiswaProfile", "nama"],
-      hideInSearch: true,
-      render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>
-      }
-    },
-    {
-      title: 'Kelas',
-      dataIndex: 'kelas',
-      hideInForm: true,
       hideInSearch: true
+      // render: (dom, entity) => {
+      //   return <a onClick={() => setRow(entity)}>{dom}</a>
+      // }
     },
+    // {
+    //   title: 'Kelas',
+    //   dataIndex: 'kelas',
+    //   hideInForm: true,
+    //   hideInSearch: true
+    // },
     // {
     //   title: 'Action',
     //   tableStyle: { textAlign: 'center' },
@@ -155,7 +155,7 @@ const Mahasiswa = () => {
       </CreateForm>
 
       {/* form edit data */}
-      <CreateForm
+      {/* <CreateForm
         width={840}
         title={`Edit Data Mata Kuliah ${row?.nama}`}
         onCancel={() => setRow(undefined)}
@@ -166,7 +166,7 @@ const Mahasiswa = () => {
         {row?.nama && (
           <FormEdit {...FormEditProps} />
         )}
-      </CreateForm>
+      </CreateForm> */}
     </>
   )
 }
