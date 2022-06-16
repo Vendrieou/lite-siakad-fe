@@ -180,7 +180,7 @@ const ProdiKHSContainer = () => {
                 <PlusOutlined /> Add With Template
               </Button>,
               <Button type="primary" onClick={() => handleModalVisible(true)}>
-                <PlusOutlined /> Tambah KRS
+                <PlusOutlined /> Tambah KHS
               </Button>
             ]}
             dataSource={list && list.length ? list : []}
@@ -200,7 +200,7 @@ const ProdiKHSContainer = () => {
         <CreateForm
           maskClosable={false}
           width={800}
-          title="Tambah KRS"
+          title="Tambah KHS"
           onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}
         >
           <FormCreate {...FormCreateProps} />
