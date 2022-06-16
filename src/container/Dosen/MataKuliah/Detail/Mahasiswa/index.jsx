@@ -115,6 +115,7 @@ const Mahasiswa = () => {
   }
 
   const FormTambahMahasiswaProps = {
+    idMataKuliah,
     calonList,
     onGetCalonPesertaMatkul,
     onCreate
@@ -127,7 +128,7 @@ const Mahasiswa = () => {
   return (
     <>
       <ProTable
-        headerTitle="Mahasiswa"
+        headerTitle="Peserta Mata Kuliah"
         actionRef={actionRef}
         rowKey="id"
         dataSource={list && list.length ? list : []}

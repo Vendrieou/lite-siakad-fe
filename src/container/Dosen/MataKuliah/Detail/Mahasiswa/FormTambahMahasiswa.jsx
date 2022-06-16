@@ -1,9 +1,10 @@
 // import React, { useState } from 'react'
 import { useEffect, useState } from 'react'
-import { Space, Modal, Table } from 'antd'
+import { Space, Modal, Table, Button } from 'antd'
 import ProTable from '@ant-design/pro-table'
 
 const FormTambahMahasiswa = ({
+  idMataKuliah,
   onCreate,
   calonList,
   onGetCalonPesertaMatkul
@@ -20,24 +21,15 @@ const FormTambahMahasiswa = ({
       hideInForm: true,
       hideInSearch: true
     },
-    { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
-    { title: 'semester', dataIndex: 'semester', hideInForm: true, valueType: 'digit' },
-    { title: 'nama', dataIndex: 'nama', hideInForm: true },
-    { title: 'sks', dataIndex: 'sks', hideInForm: true },
-    { title: 'idDosen', dataIndex: 'idDosen', hideInForm: true, hideInSearch: true },
-    { title: 'kelas', dataIndex: 'kelas', hideInForm: true, hideInSearch: true },
-    { title: 'dosen', dataIndex: ['dosen', 'nama'], hideInForm: true, hideInSearch: true },
-    { title: 'keterangan', dataIndex: 'keterangan', hideInForm: true, hideInSearch: true },
-    { title: 'startDate', dataIndex: 'startDate', hideInForm: true, hideInSearch: true },
-    { title: 'startTime', dataIndex: 'startTime', hideInForm: true, hideInSearch: true },
-    { title: 'endDate', dataIndex: 'endDate', hideInForm: true, hideInSearch: true },
-    { title: 'endTime', dataIndex: 'endTime', hideInForm: true, hideInSearch: true },
+    { title: 'Nama Mahasiswa', dataIndex: ['mahasiswaProfile', 'nama'], hideInForm: true },
+    { title: 'NIM', dataIndex: ['mahasiswaProfile', 'nim'], hideInForm: true },
   ]
   const initData = {
-    search: {
-      layout: 'horizontal',
-      defaultCollapsed: true
-    },
+    // search: {
+    //   layout: 'horizontal',
+    //   defaultCollapsed: true
+    // },
+    search: false,
     pagination: {
       show: true,
       pageSize: 10,
@@ -55,21 +47,21 @@ const FormTambahMahasiswa = ({
     }
   }
   const [formValue, setFormValue] = useState({
-    value: []
+    mahasiswa: []
   })
   const [modalVerification, setModalVerification] = useState({
     data: {},
     active: false
   })
-  const handleSubmit = async (values) => {
+  const handleSubmit = async () => {
     let data = {
-      ...values
-      // idMataKuliah: mataKuliahData.id
+      mahasiswa: formValue.mahasiswa || [],
+      idMataKuliah
     }
     onCreate(data)
   }
-  const onSave = (data) => {
-    handleSubmit(data)
+  const onSave = () => {
+    handleSubmit()
     setModalVerification({ active: false })
   }
 
@@ -79,7 +71,7 @@ const FormTambahMahasiswa = ({
         title="Simpan"
         visible={modalVerification.active}
         onCancel={() => setModalVerification({ active: false })}
-        onOk={() => onSave(modalVerification.data)}
+        onOk={() => onSave()}
       >
         <p>Anda akan menyimpan data</p>
       </Modal>
@@ -89,7 +81,7 @@ const FormTambahMahasiswa = ({
         rowKey="id"
         rowSelection={{
           onChange: (value, selectedRows) => {
-            setFormValue({ ...formValue, value: selectedRows })
+            setFormValue({ ...formValue, mahasiswa: selectedRows })
           },
           selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
         }}
@@ -100,9 +92,21 @@ const FormTambahMahasiswa = ({
             </Space>
           )
         }}
+        tableAlertOptionRender={({ selectedRowKeys, selectedRows }) => {
+          return (
+            <Space size={16}>
+              <Button type="primary" ghost onClick={() => {
+                setFormValue({ ...formValue, mahasiswa: selectedRows })
+              }}>
+                Tambah Mahasiswa ke Daftar Peserta
+              </Button>
+            </Space>
+          )
+        }}
         dataSource={calonList && calonList.length ? calonList : []}
         request={(params) => {
-          mrMataKuliah.get({
+          onGetCalonPesertaMatkul({
+            idMataKuliah,
             q: params.kodeMatkul || params.sks || params.nama,
             semester: params.semester,
             page: params.current,
