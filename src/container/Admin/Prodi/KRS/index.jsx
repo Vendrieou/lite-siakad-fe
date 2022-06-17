@@ -10,8 +10,8 @@ import CreateForm from 'components/Form/CreateForm'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import FormCreate from './FormCreate'
 // import FormCreateTemplateKrs from './FormCreateTemplateKrs'
-// import FormEdit from './FormEdit'
 // import history from 'utils/history'
+import FormEdit from './FormEdit'
 import Export from './Export'
 import Ajukrs from './Ajukrs'
 
@@ -30,7 +30,6 @@ const ProdiKRSContainer = () => {
   const { mr: mrMataKuliah } = useConcent('matkulStore')
 
   const { list } = state
-
 
   const showDeleteTemplateConfirm = (entity) => {
     confirm({
@@ -75,10 +74,11 @@ const ProdiKRSContainer = () => {
       width: 120,
       valueType: 'option',
       render: (dom, entity) => [
-        // <Button type="link" key="1" onClick={() => {
-        //   setRow(entity)
-        //   mr.getDetail(entity)
-        // }}>edit</Button>,
+        <Button type="link" key="1" onClick={() => {
+          mrMataKuliah.setSelection(entity?.listMataKuliah)
+          setRow(entity)
+          // mr.getDetail(entity)
+        }}>edit</Button>,
         <Button type="link" key="2" onClick={() => {
           let page = document.getElementsByClassName("ant-pagination-item-active")
           showDeleteTemplateConfirm({ ...entity, page: page[0].title })
@@ -116,11 +116,19 @@ const ProdiKRSContainer = () => {
     }
   }
 
+  const onUpdate = async (data) => {
+    const response = await mr.update(data)
+    if (response.success) {
+      handleModalVisible(false)
+    }
+  }
+
   const FormCreateProps = {
     onCreate
   }
 
   const FormEditProps = {
+    onUpdate,
     setRow,
     row
   }
@@ -150,7 +158,10 @@ const ProdiKRSContainer = () => {
               // <Button type="primary" onClick={() => handleTemplateKrsModalVisible(true)}>
               //   <PlusOutlined /> Add With Template
               // </Button>,
-              <Button type="primary" onClick={() => handleModalVisible(true)}>
+              <Button type="primary" onClick={() => {
+                mrMataKuliah.RESET_ALL()
+                handleModalVisible(true)
+              }}>
                 <PlusOutlined /> Tambah KRS
               </Button>
             ]}
@@ -166,7 +177,6 @@ const ProdiKRSContainer = () => {
             {...initData}
           />
         )}
-
         {/* create data template KRS tab "list" */}
         <CreateForm
           width={1200}
@@ -181,7 +191,19 @@ const ProdiKRSContainer = () => {
         >
           <FormCreate {...FormCreateProps} />
         </CreateForm>
-
+        <CreateForm
+          keyboard={false}
+          maskClosable={false}
+          width={840}
+          title={`Edit data KRS ${row?.semester || ''}`}
+          onCancel={() => {
+            mrMataKuliah.RESET_ALL()
+            setRow(undefined)
+          }}
+          modalVisible={!!row}
+        >
+          <FormEdit {...FormEditProps} />
+        </CreateForm>
         {/* create data template KRS tab "list" */}
         {/* <CreateForm
           keyboard={false}
@@ -191,18 +213,6 @@ const ProdiKRSContainer = () => {
           onCancel={() => templateKrsModalVisible(false)} modalVisible={createModalVisible}
         >
           <FormCreateTemplateKrs {...FormCreateProps} />
-        </CreateForm> */}
-
-        {/* edit data template KRS tab "list" */}
-        {/* <CreateForm
-          keyboard={false}
-          maskClosable={false}
-          width={840}
-          title={`Edit data template KRS ${row?.name}`}
-          onCancel={() => setRow(undefined)}
-          modalVisible={!!row}
-        >
-          <FormEdit {...FormEditProps} />
         </CreateForm> */}
       </PageContainer>
     </PrivateRoute>

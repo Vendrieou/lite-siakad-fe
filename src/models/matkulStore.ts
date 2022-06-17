@@ -44,6 +44,7 @@ const module = defineModule({
     // listPresensi: [],
     // listMahasiswa: [],
     // listPeserta: [],
+    removeSelectionList: [],
     selectionList: [],
     calonList: [],
     list: [],
@@ -290,6 +291,11 @@ const module = defineModule({
         message.error(error)
       }
     },
+    removeSelection: (payload, moduleState) => {
+      return {
+        removeSelectionList: moduleState.removeSelectionList.concat(payload)
+      }
+    },
     setSelection: (payload, moduleState) => {
       return {
         selectionList: moduleState.selectionList.concat(payload)
@@ -500,6 +506,7 @@ const module = defineModule({
         },
         currentItem: {},
         counter: {},
+        removeSelectionList: [],
         selectionList: [],
         group: [],
         asset: [],
