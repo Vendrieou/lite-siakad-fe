@@ -52,6 +52,7 @@ const FormEdit = ({
   const handleSubmit = async (values) => {
     let data = {
       ...values,
+      id: row?.id,
       // idDosenWali: formValue.idDosenWali,
       removeSelectionList: JSON.stringify(stateMataKuliah.removeSelectionList),
       allowedSemester: JSON.stringify(values.allowedSemester),
