@@ -16,7 +16,6 @@ import TabSelectionMatkul from './TabSelectionMatkul'
 const AutoCompleteOption = AutoComplete.Option
 
 const FormEdit = ({
-  removeSelectionList,
   onUpdate,
   setRow,
   row
@@ -42,21 +41,13 @@ const FormEdit = ({
     data: {},
     active: false
   })
-  /*
-    { title: 'nama', dataIndex: 'nama' },
-    { title: 'Semester', dataIndex: 'semester' },
-    { title: 'sks', dataIndex: 'sks' },
-    { title: 'Dosen', dataIndex: ['dosen', 'nama'] },
-  */
 
   const handleSubmit = async (values) => {
     let data = {
       ...values,
       id: row?.id,
-      // idDosenWali: formValue.idDosenWali,
       removeSelectionList: JSON.stringify(stateMataKuliah.removeSelectionList),
       allowedSemester: JSON.stringify(values.allowedSemester),
-      // listMataKuliah: JSON.stringify(listMataKuliah)
       listMataKuliah: JSON.stringify(stateMataKuliah.selectionList)
     }
     if (onUpdate) {
@@ -64,6 +55,7 @@ const FormEdit = ({
       setRow(undefined)
       mrMataKuliah.RESET_ALL()
     }
+    console.log('data', data);
   }
 
   const handleCancelPreview = () => setPreview(!preview.active)
