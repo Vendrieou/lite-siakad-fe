@@ -10,9 +10,8 @@ const TabSelectionMatkul = ({
 
   const columns = [
     {
-      title: 'ID',
+      title: 'idMataKuliah',
       dataIndex: 'id',
-      hideInTable: true,
       hideInForm: true,
       hideInSearch: true
     },
@@ -72,13 +71,14 @@ const TabSelectionMatkul = ({
         return (
           <Space size={16}>
             <Button type="primary" ghost onClick={() => {
-              mrMataKuliah.setSelection(selectedRows)
+              let newSelectedRows = selectedRows.map(item => ({ ...item, idMataKuliah: item.id }))
+              mrMataKuliah.setSelection(newSelectedRows)
               mrMataKuliah.onVisible(false)
             }
             }>
               Bind to Main Form
             </Button>
-          </Space>
+          </Space >
         )
       }}
       //   toolBarRender={() => [
@@ -97,7 +97,7 @@ const TabSelectionMatkul = ({
       dataSource={list && list.length ? list : []}
       request={(params) => {
         mrMataKuliah.get({
-          q: params.kodeMatkul ||params.sks || params.nama,
+          q: params.kodeMatkul || params.sks || params.nama,
           semester: params.semester,
           page: params.current,
           pageSize: params.pageSize

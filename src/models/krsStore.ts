@@ -306,6 +306,7 @@ const module = defineModule({
         } else {
           message.error(response?.message)
         }
+        return response
       } catch (error) {
         message.error(error)
       }

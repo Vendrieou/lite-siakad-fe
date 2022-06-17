@@ -55,7 +55,6 @@ const FormEdit = ({
       setRow(undefined)
       mrMataKuliah.RESET_ALL()
     }
-    console.log('data', data);
   }
 
   const handleCancelPreview = () => setPreview(!preview.active)
@@ -124,7 +123,7 @@ const FormEdit = ({
       ]
     },
     // { title: 'key', dataIndex: 'key', hideInForm: true, hideInSearch: true, hideInTable: false },
-    { title: 'ID', dataIndex: 'id', },
+    { title: 'ID', dataIndex: 'id', width: 50 },
     { title: 'Kode Matkul', dataIndex: 'kodeMatkul', hideInForm: true },
     { title: 'nama', dataIndex: 'nama', hideInForm: true },
     { title: 'semester', dataIndex: 'semester', hideInForm: true },
