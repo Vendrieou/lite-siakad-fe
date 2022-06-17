@@ -166,13 +166,13 @@ const ProdiKRSContainer = () => {
               </Button>
             ]}
             dataSource={list && list.length ? list : []}
-            request={(params) => {
-              mr.get({
-                q: params.name || '',
-                page: params.current || ''
-                // status: params.status
-              })
-            }}
+            // request={(params) => {
+            //   mr.get({
+            //     q: params.name || '',
+            //     page: params.current || ''
+            //     // status: params.status
+            //   })
+            // }}
             columns={columns}
             {...initData}
           />
