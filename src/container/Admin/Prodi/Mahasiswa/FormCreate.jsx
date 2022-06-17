@@ -102,6 +102,7 @@ const FormCreate = ({
   const initialValues = {
     prodi: 'TI',
     tahunAkademik: '2018',
+    currentSemester: 1,
     // BAG 1
     tanggalPendaftaran: new Date(), // PickerDate
     kodeProgramStudi: 'TI', // select v
@@ -222,6 +223,28 @@ const FormCreate = ({
           <div>
             <div>
               <ProFormSelect
+                name="currentSemester"
+                label="currentSemester"
+                tooltip="Semester saat ini"
+                // mode="multiple"
+                request={async () => [
+                  { label: 1, value: 1 },
+                  { label: 2, value: 2 },
+                  { label: 3, value: 3 },
+                  { label: 4, value: 4 },
+                  { label: 5, value: 5 },
+                  { label: 6, value: 6 },
+                  { label: 7, value: 7 },
+                  { label: 8, value: 8 }
+                ]}
+                placeholder="Pilih semester"
+                rules={[{
+                  required: true,
+                  message: 'Masukkan semester'
+                }]}
+              />
+
+              <ProFormSelect
                 options={[
                   { value: 'TI', label: 'TEKNOLOGI INFORMASI (TI)' },
                   { value: 'SI', label: 'SISTEM INFORMASI (SI)' }
@@ -305,7 +328,7 @@ const FormCreate = ({
               name="idSekolah"
               label="ASAL SMU/SMK/STM"
               placeholder="cari sekolah"
-              rules={[{ required: true, message: 'Masukkan sekolah' }]}
+              rules={[{ required: false /*was true*/, message: 'Masukkan sekolah' }]}
             >
               <AutoComplete
                 style={{ width: '100%' }}
