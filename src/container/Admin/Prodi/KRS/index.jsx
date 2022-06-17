@@ -49,7 +49,7 @@ const ProdiKRSContainer = () => {
     { title: 'Nama', dataIndex: 'nama', tip: '' },
     { title: 'Jenis Kurikulum', dataIndex: 'jenisKurikulum', tip: '', formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
     { title: 'Semester', dataIndex: 'parentSemester', tip: '', formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
-    { title: 'Dosen Wali', dataIndex: ['dosen', 'nama'], formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
+    { title: 'Dosen Wali', dataIndex: ['dosenProfile', 'nama'], formItemProps: { rules: [{ required: true, message: 'Wajib' }] } },
     {
       title: 'Status',
       dataIndex: 'status',
