@@ -200,15 +200,15 @@ const module = defineModule({
       const filter = {
         currentSemester: {
           jenisKurikulum: 'Biasa',
-          currentSemester: mahasiswaCurrentSemester
+          semester: mahasiswaCurrentSemester
         },
         MBKM: {
           jenisKurikulum: 'MBKM',
-          parentSemester: 1,
-          currentSemester: mahasiswaCurrentSemester
+          semester: mahasiswaCurrentSemester
+          // parentSemester: 1,
         },
         kelasBawah: {
-          currentSemester: mahasiswaCurrentSemester,
+          semester: mahasiswaCurrentSemester,
           kelasBawah: 1
         }
       }
