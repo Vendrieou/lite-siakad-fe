@@ -6,7 +6,16 @@ import { Space, Button, Table } from 'antd'
 import { useConcent } from 'concent'
 
 const MahasiswaAjuKRS = () => {
-const columns = [
+  const columns = [
+    { hideInSearch: true, title: 'Kode MK', dataIndex: 'kodeMatkul', key: 'kodeMk', width: 350 },
+    { hideInSearch: true, title: 'Mata Kuliah', dataIndex: 'nama', key: 'matkul', width: 600 },
+    { hideInSearch: true, title: 'SKS', dataIndex: 'sks', key: 'sks', align: 'center' },
+    { hideInSearch: true, title: 'Semester', dataIndex: 'semester', key: 'semester', align: 'center' },
+    { hideInSearch: true, title: 'Kelas', dataIndex: 'kelas', key: 'kelas', width: 250 },
+    { hideInSearch: true, title: 'Nama Dosen', dataIndex: ['dosen', 'nama'], key: 'namaDosen', width: 1200 },
+    // { hideInSearch: true, title: 'Status', dataIndex: 'status', key: 'status', width: 250 }
+  ]
+  const kelasBawahColumns = [
     { hideInSearch: true, title: 'Kode MK', dataIndex: 'kodeMatkul', key: 'kodeMk', width: 350 },
     { hideInSearch: true, title: 'Mata Kuliah', dataIndex: 'nama', key: 'matkul', width: 600 },
     { hideInSearch: true, title: 'SKS', dataIndex: 'sks', key: 'sks', align: 'center' },
@@ -33,13 +42,16 @@ const columns = [
     listMBKM,
     listKelasBawah
   } = state
+  const { listMataKuliah: nestedListCurrentSemester } = listCurrentSemester && listCurrentSemester.length > 0 ? listCurrentSemester[0] : { listMataKuliah: [] }
+  const { listMataKuliah: nestedListMBKM } = listCu.rrentSemester && listCurrentSemester.length > 0 ? listMBKM[0] : { listMataKuliah: [] }
+
 
   useEffect(() => {
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 
   const [formValue, setFormValue] = useState({
-    currentSemester: [],
+    currentSemester: nestedListCurrentSemester || [],
     mbkm: [],
     kelasBawah: []
   });
@@ -69,7 +81,11 @@ const columns = [
     // mr.ajuKrs(data)
   }
   // const [form] = Form.useForm();
- 
+  const isAbleTosent =
+    formValue.currentSemester && formValue.currentSemester.length > 0 ||
+    formValue.mbkm && formValue.mbkm.length > 0 ||
+    formValue.kelasBawah && formValue.kelasBawah.length > 0
+
   return (
     <PrivateRoute access={['mahasiswa']}>
       <Button
@@ -79,7 +95,9 @@ const columns = [
           right: 80,
           zIndex: 1
         }}
-        type="primary" size="large"
+        disabled={!isAbleTosent}
+        type="primary"
+        size="large"
         onClick={() => {
           onCreate()
         }}
@@ -92,12 +110,13 @@ const columns = [
         headerTitle={`List Semester saat ini ${mahasiswaCurrentSemester}`}
         rowKey="id"
         rowSelection={{
-          onChange: (value, selectedRows) => {
-            setFormValue({ ...formValue, currentSemester: selectedRows })
-          },
-          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+          // onChange: (value, selectedRows) => {
+          //   setFormValue({ ...formValue, currentSemester: selectedRows })
+          // },
+          selectedRowKeys: nestedListCurrentSemester.map(item => item.id),
+          // selections: [Table.SELECTION_ALL]
         }}
-        dataSource={listCurrentSemester && listCurrentSemester.length ? listCurrentSemester : []}
+        dataSource={nestedListCurrentSemester && nestedListCurrentSemester.length ? nestedListCurrentSemester : []}
         tableAlertRender={({ selectedRowKeys }) => {
           return (
             <>
@@ -121,9 +140,9 @@ const columns = [
           onChange: (value, selectedRows) => {
             setFormValue({ ...formValue, mbkm: selectedRows })
           },
-          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+          selections: [Table.SELECTION_ALL]
         }}
-        dataSource={listMBKM && listMBKM.length ? listMBKM : []}
+        dataSource={nestedListMBKM && nestedListMBKM.length ? nestedListMBKM : []}
         tableAlertRender={({ selectedRowKeys }) => {
           return (
             <>
@@ -147,7 +166,7 @@ const columns = [
           onChange: (value, selectedRows) => {
             setFormValue({ ...formValue, kelasBawah: selectedRows })
           },
-          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+          selections: [Table.SELECTION_ALL]
         }}
         dataSource={listKelasBawah && listKelasBawah.length ? listKelasBawah : []}
         tableAlertRender={({ selectedRowKeys }) => {
@@ -161,7 +180,7 @@ const columns = [
             </>
           )
         }}
-        columns={columns}
+        columns={kelasBawahColumns}
         {...initData}
       />
     </PrivateRoute>

@@ -55,7 +55,7 @@ const TabSelectionMatkul = ({
       headerTitle="Select Mata Kuliah"
       rowKey="id"
       rowSelection={{
-        selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+        selections: [Table.SELECTION_ALL]
       }}
       tableAlertRender={({ selectedRowKeys, selectedRows }) => {
         // console.log('selectedRowKeys', selectedRowKeys)

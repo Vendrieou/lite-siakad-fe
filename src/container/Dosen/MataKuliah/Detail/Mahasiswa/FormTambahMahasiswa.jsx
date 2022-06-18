@@ -79,7 +79,7 @@ const FormTambahMahasiswa = ({
           onChange: (value, selectedRows) => {
             setFormValue({ ...formValue, mahasiswa: selectedRows })
           },
-          selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT]
+          selections: [Table.SELECTION_ALL]
         }}
         tableAlertRender={({ selectedRowKeys, selectedRows }) => {
           return (
