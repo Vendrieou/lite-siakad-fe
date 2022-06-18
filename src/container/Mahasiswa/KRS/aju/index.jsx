@@ -53,19 +53,20 @@ const columns = [
       formValue.mbkm && formValue.mbkm.length > 0 ||
       formValue.kelasBawah && formValue.kelasBawah.length > 0
     ) {
-      templistMataKuliah = concat(
+      templistMataKuliah.concat(
         formValue.currentSemester || [],
         formValue.mbkm || [],
         formValue.kelasBawah || []
       )
     }
-    const listMataKuliah = []
-    for (let i = 0; i < templistMataKuliah.length; i++) {
-      let val = JSON.parse(templistMataKuliah[i])
-      listMataKuliah.push(val)
-    }
-    data.listMataKuliah = JSON.stringify(listMataKuliah)
-    mr.ajuKrs(data)
+    console.log('formValue', formValue)
+    // const listMataKuliah = []
+    // for (let i = 0; i < templistMataKuliah.length; i++) {
+    //   let val = JSON.parse(templistMataKuliah[i])
+    //   listMataKuliah.push(val)
+    // }
+    // data.listMataKuliah = JSON.stringify(listMataKuliah)
+    // mr.ajuKrs(data)
   }
   // const [form] = Form.useForm();
  
@@ -83,7 +84,7 @@ const columns = [
           onCreate()
         }}
       >
-        Aju KRS
+        Ajukan KRS
       </Button>
       <ProTable
         size="small"
