@@ -2,8 +2,9 @@
 import { useEffect, useRef, useState } from 'react'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import ProTable from '@ant-design/pro-table'
-import { Space, Button, Table } from 'antd'
+import { Space, Button, Table, message } from 'antd'
 import { useConcent } from 'concent'
+import concat from 'lodash.concat'
 
 const MahasiswaAjuKRS = () => {
   const columns = [
@@ -12,8 +13,7 @@ const MahasiswaAjuKRS = () => {
     { hideInSearch: true, title: 'SKS', dataIndex: 'sks', key: 'sks', align: 'center' },
     { hideInSearch: true, title: 'Semester', dataIndex: 'semester', key: 'semester', align: 'center' },
     { hideInSearch: true, title: 'Kelas', dataIndex: 'kelas', key: 'kelas', width: 250 },
-    { hideInSearch: true, title: 'Nama Dosen', dataIndex: ['dosen', 'nama'], key: 'namaDosen', width: 1200 },
-    // { hideInSearch: true, title: 'Status', dataIndex: 'status', key: 'status', width: 250 }
+    { hideInSearch: true, title: 'Nama Dosen', dataIndex: ['dosen', 'nama'], key: 'namaDosen', width: 1200 }
   ]
   const kelasBawahColumns = [
     { hideInSearch: true, title: 'Kode MK', dataIndex: 'kodeMatkul', key: 'kodeMk', width: 350 },
@@ -21,8 +21,7 @@ const MahasiswaAjuKRS = () => {
     { hideInSearch: true, title: 'SKS', dataIndex: 'sks', key: 'sks', align: 'center' },
     { hideInSearch: true, title: 'Semester', dataIndex: 'semester', key: 'semester', align: 'center' },
     { hideInSearch: true, title: 'Kelas', dataIndex: 'kelas', key: 'kelas', width: 250 },
-    { hideInSearch: true, title: 'Nama Dosen', dataIndex: 'namaDosen', key: 'namaDosen', width: 1200 },
-    // { hideInSearch: true, title: 'Status', dataIndex: 'status', key: 'status', width: 250 }
+    { hideInSearch: true, title: 'Nama Dosen', dataIndex: 'namaDosen', key: 'namaDosen', width: 1200 }
   ]
   const initData = {
     search: false,
@@ -43,15 +42,13 @@ const MahasiswaAjuKRS = () => {
     listKelasBawah
   } = state
   const { listMataKuliah: nestedListCurrentSemester } = listCurrentSemester && listCurrentSemester.length > 0 ? listCurrentSemester[0] : { listMataKuliah: [] }
-  const { listMataKuliah: nestedListMBKM } = listCu.rrentSemester && listCurrentSemester.length > 0 ? listMBKM[0] : { listMataKuliah: [] }
-
+  const { listMataKuliah: nestedListMBKM } = listMBKM && listMBKM.length > 0 ? listMBKM[0] : { listMBKM: [] }
 
   useEffect(() => {
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 
   const [formValue, setFormValue] = useState({
-    currentSemester: nestedListCurrentSemester || [],
     mbkm: [],
     kelasBawah: []
   });
@@ -61,28 +58,22 @@ const MahasiswaAjuKRS = () => {
     const data = {}
     let templistMataKuliah = []
     if (
-      formValue.currentSemester && formValue.currentSemester.length > 0 ||
+      nestedListCurrentSemester && nestedListCurrentSemester.length > 0 ||
       formValue.mbkm && formValue.mbkm.length > 0 ||
       formValue.kelasBawah && formValue.kelasBawah.length > 0
     ) {
-      templistMataKuliah.concat(
-        formValue.currentSemester || [],
+      templistMataKuliah = concat(
+        nestedListCurrentSemester || [],
         formValue.mbkm || [],
         formValue.kelasBawah || []
       )
     }
-    console.log('formValue', formValue)
-    // const listMataKuliah = []
-    // for (let i = 0; i < templistMataKuliah.length; i++) {
-    //   let val = JSON.parse(templistMataKuliah[i])
-    //   listMataKuliah.push(val)
-    // }
-    // data.listMataKuliah = JSON.stringify(listMataKuliah)
-    // mr.ajuKrs(data)
+    if (!(templistMataKuliah && templistMataKuliah.length > 0)) return message.error('Mata Kuliah Belum terseleksi !!!')
+    data.listMataKuliah = JSON.stringify(templistMataKuliah)
+    mr.ajuKrs(data)
   }
-  // const [form] = Form.useForm();
-  const isAbleTosent =
-    formValue.currentSemester && formValue.currentSemester.length > 0 ||
+
+  const isAbleTosent = nestedListCurrentSemester && nestedListCurrentSemester.length > 0 ||
     formValue.mbkm && formValue.mbkm.length > 0 ||
     formValue.kelasBawah && formValue.kelasBawah.length > 0
 
@@ -109,25 +100,7 @@ const MahasiswaAjuKRS = () => {
         formRef={ref}
         headerTitle={`List Semester saat ini ${mahasiswaCurrentSemester}`}
         rowKey="id"
-        rowSelection={{
-          // onChange: (value, selectedRows) => {
-          //   setFormValue({ ...formValue, currentSemester: selectedRows })
-          // },
-          selectedRowKeys: nestedListCurrentSemester.map(item => item.id),
-          // selections: [Table.SELECTION_ALL]
-        }}
         dataSource={nestedListCurrentSemester && nestedListCurrentSemester.length ? nestedListCurrentSemester : []}
-        tableAlertRender={({ selectedRowKeys }) => {
-          return (
-            <>
-              {formValue.currentSemester && formValue.currentSemester.length > 0 ?
-                <Space size={24}>
-                  <span>{`selected ${selectedRowKeys.length}`}</span>
-                </Space>
-                : null}
-            </>
-          )
-        }}
         columns={columns}
         {...initData}
       />
@@ -188,40 +161,3 @@ const MahasiswaAjuKRS = () => {
 }
 
 export default MahasiswaAjuKRS
-
-{/*
-  // const optionListKelasBawah = listKelasBawah.map((item) => {
-  // let newLabel = `
-  //   Kode MK: ${item.kodeMatkul}
-  //   Mata Kuliah: ${item.nama}
-  //   SKS: ${item.sks}
-  //   Semester: ${item.semester}
-  //   Kelas: ${item.kelas}
-  //   Nama Dosen: ${item.namaDosen}
-  //   Status: ${item.status}
-  //   `
-  //   item.type = 'kelasBawah'
-  //   return {
-  //     label: newLabel,
-  //     value: item
-  //   }
-  // })
-  // <pre>{selectedRows && selectedRows.length && JSON.stringify(selectedRows,null,2)}</pre>
-  <ProForm
-    onFinish={async (formValue) => {
-      console.log('ref', ref)
-      console.log('formValue', formValue)
-    }}
-  >
-    Current Semester KRS (semester,kelas)
-    MBKM
-    kelas bawah
-    <ProFormCheckbox.Group
-      key="id"
-      name="kelasBawah"
-      layout="vertical"
-      label="List Kelas Bawah"
-      options={optionListKelasBawah}
-    />
-  </ProForm>
-*/}
