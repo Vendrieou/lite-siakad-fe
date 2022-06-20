@@ -189,6 +189,7 @@ const module = defineModule({
     verifikasiKrs:  async (payload: any, moduleState, actionCtx) => {
       const data = {
         ...payload,
+        nim: payload?.nim,
         semester: payload?.semester,
         idMahasiswa: payload?.idMahasiswa
       }
@@ -288,7 +289,7 @@ const module = defineModule({
       try {
         const response = await apiAjuKrs(payload)
         if (response.success) {
-          actionCtx.dispatch(module.reducer.verifikasiKrs)
+          actionCtx.dispatch(module.reducer.verifikasiKrs, payload)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
           actionCtx.dispatch(module.reducer.getAjuKrs, { role: 'mahasiswa' })
           message.success('Pengajuan KRS Sukses', 1, () => history.push('/mahasiswa/krs'))

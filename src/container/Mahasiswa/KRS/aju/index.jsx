@@ -64,6 +64,8 @@ const MahasiswaAjuKRS = () => {
   const onCreate = () => {
     const data = {
       idMahasiswa: mahasiswaProfile.id,
+      nim: mahasiswaProfile.nim,
+      semester: mahasiswaProfile.currentSemester,
       idDosenWali
     }
     let templistMataKuliah = []
