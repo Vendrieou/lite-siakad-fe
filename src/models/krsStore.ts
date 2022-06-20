@@ -203,29 +203,23 @@ const module = defineModule({
       }
     },
     getAjuKrs: async (payload: any, moduleState, actionCtx) => {
-      // const user = actionCtx.rootState.me
-      // const { mahasiswaProfile } = user.currentItem
       const meData = await queryMe({ role: payload.role })
       const { mahasiswaProfile } = meData.data
       let MIN_KELAS_BAWAH = 2
       let mahasiswaCurrentSemester = mahasiswaProfile.currentSemester || MIN_KELAS_BAWAH
 
-      // const data = {
-      //   ...payload,
-      //   q: payload?.q || '',
-      //   page: payload?.page || 1
-      // }
-
       const filter = {
         currentSemester: {
           jenisKurikulum: 'Biasa',
           parentSemester: mahasiswaCurrentSemester,
-          relationship: 1
+          relationship: 1,
+          idJurusan: mahasiswaProfile.idJurusan
         },
         MBKM: {
           jenisKurikulum: 'MBKM',
           parentSemester: mahasiswaCurrentSemester,
-          relationship: 1
+          relationship: 1,
+          idJurusan: mahasiswaProfile.idJurusan
         },
         kelasBawah: {
           semester: mahasiswaCurrentSemester,
