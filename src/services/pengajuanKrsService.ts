@@ -38,6 +38,15 @@ const apiPost = async (data: any) => {
   })
 }
 
+const apiVerifikasiKrs = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}-verifikasi`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
 const apiPostBulk = async (data: any) => {
   return request({
     url: `${apiPengajuanKrs}/krs/pengajuan/bulk`,
@@ -69,6 +78,7 @@ export {
   apiGetAssign,
   apiPost,
   apiPostBulk,
+  apiVerifikasiKrs,
   apiGetById,
   apiUpdate,
   apiDelete

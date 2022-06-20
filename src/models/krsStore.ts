@@ -9,12 +9,14 @@ import {
   apiDelete
 } from '@/services/krsService'
 import {
-  apiPost as apiAjuKrs
+  apiPost as apiAjuKrs,
+  apiVerifikasiKrs
 } from '@/services/pengajuanKrsService'
 import {
   apiGetMatkulKelasBawah
 } from '@/services/matkulService'
 import { queryMe } from '@/services/me'
+import history from '@/utils/history'
 
 const module = defineModule({
   state: {
@@ -22,6 +24,7 @@ const module = defineModule({
     filter: {
       page: 1
     },
+    mahasiswaProfile: 0,
     mahasiswaCurrentSemester: 0,
     listCurrentSemester: [],
     listMBKM: [],
@@ -183,6 +186,22 @@ const module = defineModule({
   },
 
   reducer: {
+    verifikasiKrs:  async (payload: any, moduleState, actionCtx) => {
+      const data = {
+        ...payload,
+        semester: payload?.semester,
+        idMahasiswa: payload?.idMahasiswa
+      }
+      try {
+        const response = await apiVerifikasiKrs(data)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.SUCCESS, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
     getAjuKrs: async (payload: any, moduleState, actionCtx) => {
       // const user = actionCtx.rootState.me
       // const { mahasiswaProfile } = user.currentItem
@@ -251,7 +270,6 @@ const module = defineModule({
         relationship: 1
       }
       try {
-        actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGet(data)
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE, response)
@@ -263,7 +281,6 @@ const module = defineModule({
     },
     getDetail: async (payload: any, moduleState, actionCtx) => {
       try {
-        actionCtx.dispatch(module.reducer.FETCH)
         const response = await apiGetById(payload?.id)
         if (response.success) {
           actionCtx.dispatch(module.reducer.RECEIVE_ITEM, payload)
@@ -273,12 +290,14 @@ const module = defineModule({
       }
     },
     ajuKrs: async (payload: any, moduleState, actionCtx) => {
+      actionCtx.dispatch(module.reducer.FETCH)
       try {
         const response = await apiAjuKrs(payload)
         if (response.success) {
-          message.success(response?.meta?.message)
+          actionCtx.dispatch(module.reducer.verifikasiKrs)
           actionCtx.dispatch(module.reducer.SUCCESS, response)
           actionCtx.dispatch(module.reducer.getAjuKrs, { role: 'mahasiswa' })
+          message.success('Pengajuan KRS Sukses', 1, () => history.push('/mahasiswa/krs'))
           return response
         }
       } catch (error) {
@@ -340,7 +359,6 @@ const module = defineModule({
     },
     RECEIVE: (payload: any) => {
       return {
-        loading: true,
         list: payload?.data,
         meta: payload?.meta,
         errorMessage: payload?.errorMessage
@@ -348,7 +366,7 @@ const module = defineModule({
     },
     RECEIVE_AJU_KRS: (payload: any) => {
       return {
-        loading: true,
+        mahasiswaProfile: payload?.mahasiswaProfile,
         mahasiswaCurrentSemester: payload?.mahasiswaProfile?.currentSemester,
         listCurrentSemester: payload?.currentSemesterResponse?.data,
         listMBKM: payload?.MBKMResponse?.data,

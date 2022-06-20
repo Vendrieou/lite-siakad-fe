@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from 'react'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import ProTable from '@ant-design/pro-table'
-import { Space, Button, Table, message } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
+import { Space, Button, Table, Spin, message } from 'antd'
 import { useConcent } from 'concent'
 import concat from 'lodash.concat'
 
@@ -36,12 +37,14 @@ const MahasiswaAjuKRS = () => {
   }
   const { mr, state } = useConcent('krsStore')
   const {
+    mahasiswaProfile,
     mahasiswaCurrentSemester,
+    loading,
     listCurrentSemester,
     listMBKM,
     listKelasBawah
   } = state
-  const { listMataKuliah: nestedListCurrentSemester } = listCurrentSemester && listCurrentSemester.length > 0 ? listCurrentSemester[0] : { listMataKuliah: [] }
+  const { idDosenWali, listMataKuliah: nestedListCurrentSemester } = listCurrentSemester && listCurrentSemester.length > 0 ? listCurrentSemester[0] : { listMataKuliah: [] }
   const { listMataKuliah: nestedListMBKM } = listMBKM && listMBKM.length > 0 ? listMBKM[0] : { listMBKM: [] }
 
   useEffect(() => {
@@ -55,7 +58,10 @@ const MahasiswaAjuKRS = () => {
   const ref = useRef();
 
   const onCreate = () => {
-    const data = {}
+    const data = {
+      idMahasiswa: mahasiswaProfile.id,
+      idDosenWali
+    }
     let templistMataKuliah = []
     if (
       nestedListCurrentSemester && nestedListCurrentSemester.length > 0 ||
@@ -70,6 +76,7 @@ const MahasiswaAjuKRS = () => {
     }
     if (!(templistMataKuliah && templistMataKuliah.length > 0)) return message.error('Mata Kuliah Belum terseleksi !!!')
     data.listMataKuliah = JSON.stringify(templistMataKuliah)
+    
     mr.ajuKrs(data)
   }
 
@@ -79,22 +86,38 @@ const MahasiswaAjuKRS = () => {
 
   return (
     <PrivateRoute access={['mahasiswa']}>
-      <Button
-        style={{
-          position: 'fixed',
-          bottom: 80,
-          right: 80,
-          zIndex: 1
-        }}
-        disabled={!isAbleTosent}
-        type="primary"
-        size="large"
-        onClick={() => {
-          onCreate()
-        }}
-      >
-        Ajukan KRS
-      </Button>
+      {loading ? (
+        <Button
+          block
+          style={{
+            position: 'fixed',
+            bottom: 10,
+            left: 0,
+            zIndex: 1
+          }}
+          disabled
+          type="primary"
+          size="large"
+        >
+          <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+        </Button>)
+        : (
+          <Button
+            block
+            style={{
+              position: 'fixed',
+              bottom: 10,
+              left: 0,
+              zIndex: 1
+            }}
+            disabled={!isAbleTosent}
+            type="primary"
+            size="large"
+            onClick={() => onCreate()}
+          >
+            Ajukan KRS
+          </Button>
+        )}
       <ProTable
         size="small"
         formRef={ref}
