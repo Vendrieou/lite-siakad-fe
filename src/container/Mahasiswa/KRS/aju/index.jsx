@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import PrivateRoute from 'components/Authorized/PrivateRoute'
 import ProTable from '@ant-design/pro-table'
 import { LoadingOutlined } from '@ant-design/icons'
-import { Space, Button, Table, Spin, message } from 'antd'
+import { Space, Button, Table, Spin, message, Modal } from 'antd'
 import { useConcent } from 'concent'
 import concat from 'lodash.concat'
 
@@ -51,6 +51,10 @@ const MahasiswaAjuKRS = () => {
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 
+  const [modalVerification, setModalVerification] = useState({
+    data: {},
+    active: false
+  })
   const [formValue, setFormValue] = useState({
     mbkm: [],
     kelasBawah: []
@@ -76,8 +80,8 @@ const MahasiswaAjuKRS = () => {
     }
     if (!(templistMataKuliah && templistMataKuliah.length > 0)) return message.error('Mata Kuliah Belum terseleksi !!!')
     data.listMataKuliah = JSON.stringify(templistMataKuliah)
-    
     mr.ajuKrs(data)
+    setModalVerification({ active: false })
   }
 
   const isAbleTosent = nestedListCurrentSemester && nestedListCurrentSemester.length > 0 ||
@@ -113,11 +117,17 @@ const MahasiswaAjuKRS = () => {
             disabled={!isAbleTosent}
             type="primary"
             size="large"
-            onClick={() => onCreate()}
+            onClick={() => setModalVerification({ active: true })}
           >
             Ajukan KRS
           </Button>
         )}
+      <Modal
+        title="Ajukan KRS"
+        visible={modalVerification.active}
+        onCancel={() => setModalVerification({ active: false })}
+        onOk={() => onCreate()}
+      />
       <ProTable
         size="small"
         formRef={ref}
