@@ -47,9 +47,15 @@ const MahasiswaAjuKRS = () => {
   const { idDosenWali, listMataKuliah: nestedListCurrentSemester } = listCurrentSemester && listCurrentSemester.length > 0 ? listCurrentSemester[0] : { listMataKuliah: [] }
   const { listMataKuliah: nestedListMBKM } = listMBKM && listMBKM.length > 0 ? listMBKM[0] : { listMBKM: [] }
 
-  useEffect(() => {
-    mr.getVerifikasiKrsByIdMahasiswa({ nim: mahasiswaProfile.nim, semester: mahasiswaProfile.currentSemester, idMahasiswa: mahasiswaProfile.id})
-    mr.getAjuKrs({ role: 'mahasiswa' })
+  useEffect(async () => {
+    const data = await mr.getAjuKrs({ role: 'mahasiswa' })
+    if (data?.mahasiswaProfile?.id) {
+      mr.getVerifikasiKrsByIdMahasiswa({
+        nim: data?.mahasiswaProfile?.nim,
+        semester: data?.mahasiswaProfile?.currentSemester,
+        idMahasiswa: data?.mahasiswaProfile?.id
+      })
+    }
   }, [])
 
   const [modalVerification, setModalVerification] = useState({
