@@ -8,18 +8,24 @@ import Export from './Export'
 
 const MahasiswaKRS = () => {
   const { mr, state } = useConcent('settingStore')
+  const { mrKrs, stateKrs } = useConcent('krsStore')
+  const { state: stateMe } = useConcent('me')
+  const { mahasiswaProfile } = stateMe
   const { currentItem } = state
   const navigate = useNavigate()
 
   useEffect(() => {
+    if(mahasiswaProfile.id){
+      console.log(mahasiswaProfile.id)
+      mrKrs.getVerifikasiKrsByIdMahasiswa({ nim: mahasiswaProfile.nim, semester: mahasiswaProfile.currentSemester, idMahasiswa: mahasiswaProfile.id})
+    }
     mr.getDetail({ id: 1 })
   }, [])
-
 
   return (
     <PrivateRoute access={['mahasiswa']}>
       <PageContainer>
-        {currentItem && Boolean(currentItem?.ajuKrs) && (
+        {stateKrs || currentItem && Boolean(currentItem?.ajuKrs) && (
           <>
             <Button
               type="primary" size="large"

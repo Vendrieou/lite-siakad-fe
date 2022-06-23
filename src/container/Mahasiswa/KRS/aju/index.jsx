@@ -48,6 +48,7 @@ const MahasiswaAjuKRS = () => {
   const { listMataKuliah: nestedListMBKM } = listMBKM && listMBKM.length > 0 ? listMBKM[0] : { listMBKM: [] }
 
   useEffect(() => {
+    mr.getVerifikasiKrsByIdMahasiswa({ nim: mahasiswaProfile.nim, semester: mahasiswaProfile.currentSemester, idMahasiswa: mahasiswaProfile.id})
     mr.getAjuKrs({ role: 'mahasiswa' })
   }, [])
 

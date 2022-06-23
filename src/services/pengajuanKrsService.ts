@@ -47,6 +47,15 @@ const apiVerifikasiKrs = async (data: any) => {
   })
 }
 
+const apiGetVerifikasiKrByIdMahasiswa = async (data: { idMahasiswa: number }) => {
+  return request({
+    url: `${apiPengajuanKrs}-verifikasi/${data.idMahasiswa}`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
 const apiPostBulk = async (data: any) => {
   return request({
     url: `${apiPengajuanKrs}/krs/pengajuan/bulk`,
@@ -79,6 +88,7 @@ export {
   apiPost,
   apiPostBulk,
   apiVerifikasiKrs,
+  apiGetVerifikasiKrByIdMahasiswa,
   apiGetById,
   apiUpdate,
   apiDelete

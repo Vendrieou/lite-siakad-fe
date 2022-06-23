@@ -10,7 +10,8 @@ import {
 } from '@/services/krsService'
 import {
   apiPost as apiAjuKrs,
-  apiVerifikasiKrs
+  apiVerifikasiKrs,
+  apiGetVerifikasiKrByIdMahasiswa
 } from '@/services/pengajuanKrsService'
 import {
   apiGetMatkulKelasBawah
@@ -197,6 +198,23 @@ const module = defineModule({
         const response = await apiVerifikasiKrs(data)
         if (response.success) {
           actionCtx.dispatch(module.reducer.SUCCESS, response)
+          return response
+        }
+      } catch (error) {
+        message.error(error)
+      }
+    },
+    getVerifikasiKrsByIdMahasiswa:  async (payload: any, moduleState, actionCtx) => {
+      const data = {
+        ...payload,
+        nim: payload?.nim,
+        semester: payload?.semester,
+        idMahasiswa: payload?.idMahasiswa
+      }
+      try {
+        const response = await apiGetVerifikasiKrByIdMahasiswa(data)
+        if (response.success) {
+          actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
           return response
         }
       } catch (error) {
