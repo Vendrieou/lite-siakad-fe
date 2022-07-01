@@ -46,6 +46,8 @@ const module = defineModule({
               history.push('/dosen/dashboard')
             }
           }
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
