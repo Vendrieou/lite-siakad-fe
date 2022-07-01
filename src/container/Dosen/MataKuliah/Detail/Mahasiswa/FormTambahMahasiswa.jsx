@@ -93,6 +93,7 @@ const FormTambahMahasiswa = ({
             <Space size={16}>
               <Button type="primary" ghost onClick={() => {
                 setFormValue({ ...formValue, mahasiswa: selectedRows })
+                setModalVerification({ active: true })
               }}>
                 Tambah Mahasiswa ke Daftar Peserta
               </Button>
