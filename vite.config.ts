@@ -1,21 +1,22 @@
 import * as path from 'path';
-import { loadEnv, defineConfig } from 'vite';
-import reactRefresh from '@vitejs/plugin-react-refresh';
+import { loadEnv, defineConfig, splitVendorChunkPlugin } from 'vite';
+import react from '@vitejs/plugin-react';
+// import reactRefresh from '@vitejs/plugin-react-refresh';
 import vitePluginImp from 'vite-plugin-imp';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import vitApp from '@vitjs/vit';
-import routes from './config/routes';
+// import vitApp from '@vitjs/vit';
+// import routes from './config/routes';
 
 const projectRootDir = path.resolve(__dirname);
 
 require('dotenv').config();
 
 export default ({ mode }) => {
-  process.env = {...process.env, ...loadEnv(mode, process.cwd())};
-  
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+
   return defineConfig({
     base: '/',
-    define:{
+    define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.PORT_HTTP': JSON.stringify(process.env.PORT_HTTP),
       'process.env.PORT_HTTPS': JSON.stringify(process.env.PORT_HTTPS),
@@ -30,34 +31,52 @@ export default ({ mode }) => {
       'process.env.APIVERSIONIMAGE': JSON.stringify(process.env.APIVERSIONIMAGE),
       'process.env.PUBLIC_VAPID_KEY': JSON.stringify(process.env.PUBLIC_VAPID_KEY),
       // PRODUCTION ENV
-      'process.env.PROD_APIHOST':JSON.stringify(process.env.PROD_APIHOST),
-      'process.env.PROD_APIPROTOCOL':JSON.stringify(process.env.PROD_APIPROTOCOL),
-      'process.env.PROD_APIHOSTIMAGE':JSON.stringify(process.env.PROD_APIHOSTIMAGE),
+      'process.env.PROD_APIHOST': JSON.stringify(process.env.PROD_APIHOST),
+      'process.env.PROD_APIPROTOCOL': JSON.stringify(process.env.PROD_APIPROTOCOL),
+      'process.env.PROD_APIHOSTIMAGE': JSON.stringify(process.env.PROD_APIHOSTIMAGE),
     },
     plugins: [
-      reactRefresh(),
-      // ssr(),
+      splitVendorChunkPlugin(),
+      // react({
+      //   babel: {
+      //     plugins: [
+      //       ['@babel/plugin-proposal-decorators', { legacy: true }],
+      //       ['@babel/plugin-proposal-class-properties', { loose: false }],
+      //       // 'babel-plugin-transform-typescript-metadata',
+      //       // 'babel-plugin-parameter-decorator',
+      //       ['@babel/plugin-transform-react-jsx', { runtime: 'classic' }],
+      //     ]
+      //   },
+      // }),
+      // reactRefresh(),
+      react({
+        jsxRuntime: 'classic',
+      }),
       tsconfigPaths(),
       vitePluginImp({
         libList: [
           {
             libName: 'antd',
             style: (name) => `antd/es/${name}/style`,
-            // style: (name) => `antd/es/${name}/style/index.css`,
           },
         ],
       }),
-      vitApp({
-        routes,
-        dynamicImport: {
-          loading: './components/PageLoading',
-        },
-        exportStatic: {},
-        // mock: { productionEnabled: true },
-      }),
+      // vitApp({
+      //   routes,
+      //   dynamicImport: {},
+      //   // dynamicImport: {
+      //   //   loading: './components/PageLoading',
+      //   // },
+      //   exportStatic: {},
+      //   // mock: { productionEnabled: true },
+      // }),
     ],
     server: {
-      port: Number(process.env.PORT_HTTP)
+      port: 8080,
+      // watch: {
+      //   usePolling: true,
+      //   useFsEvents: true,
+      // }
     },
     resolve: {
       alias: [
@@ -84,23 +103,33 @@ export default ({ mode }) => {
             'root-entry-name': 'default',
             'primary-color': '#08466D',
             'primary-1': '#e6ecf0',
-            'info-color': '#1890ff'
+            'info-color': '#1890ff',
+            'checkbox-border-width': '0.15em',
           },
           javascriptEnabled: true,
         },
       },
     },
-    build: {
-      rollupOptions: {
-        output: {
-          manualChunks: {
-            'lodash-es': ['lodash-es', 'lodash'],
-          },
-        },
-      },
-    },
-    esbuild: {
-      jsxInject: "import * as React from 'react'",
-    },
+    // esbuild: {
+    //   jsxInject: `import * as React from 'react'`,
+    // },
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       manualChunks: {
+    //         'react-venders': ['react', 'react-dom', '@vitjs/runtime'],
+    //       },
+    //     },
+    //   },
+    // },
+    // build: {
+    //   rollupOptions: {
+    //     output: {
+    //       manualChunks: {
+    //         'lodash-es': ['lodash-es', 'lodash'],
+    //       },
+    //     },
+    //   },
+    // },
   })
 }

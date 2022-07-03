@@ -1,5 +1,10 @@
 import { set } from '@/utils/storage'
 
+export const CLIENT_ROLE = [
+  'dosen',
+  'mahasiswa'
+]
+
 export const ADMIN_ROLE = [
   'admin',
   'kaprodi',
@@ -46,10 +51,59 @@ export const SET_DEFAULT_REGIONAL = async (value: { storeId: number; cityName: s
   await set('@regional', regional)
 }
 
-export const isContainAdminRole = (role: string | Promise<any>) => {
+export const isContainAdminRole = async (role: string | Promise<any>) => {
   if (typeof role === 'string') {
     let isVerified = ADMIN_ROLE.filter(filtered => filtered === role)
     return isVerified.length
   }
   return false
+}
+
+export const setIntervalTahunAjaran = (n: number) => {
+  switch (n) {
+    case (1):
+    case (2):
+      return 0
+    case (3):
+    case (4):
+      return 1
+    case (5):
+    case (6):
+      return 2
+    case (7):
+    case (8):
+      return 3
+    default:
+      return 0
+  }
+}
+
+export const setTahunAjaran = (assign: { semester: number, tahunAngkatan: number }) => {
+  // let semester = 6
+  // let inYear = 2022
+  let semester = assign.semester
+  let inYear = assign.tahunAngkatan
+  let start = inYear + setIntervalTahunAjaran(semester)
+  let end = start + 1
+  let tahunAjaran = `${start}-${end}`
+  if (tahunAjaran) {
+    return tahunAjaran
+  }
+  return ''
+}
+
+
+export const setBobotNilai = (n: string) => {
+  switch (n) {
+    case ('A'):
+      return 4
+    case ('B'):
+      return 3
+    case ('C'):
+      return 2
+    case ('D'):
+      return 1
+    default:
+      return 0
+  }
 }

@@ -1,16 +1,17 @@
 import { message } from 'antd'
 import { defineModule } from 'concent'
-import { history } from '@vitjs/runtime'
-import { stringify } from 'querystring'
-
+// import { history } from '@vitjs/runtime'
+// import { stringify } from 'querystring'
 import {
-  // apiLogin,
-  fakeAccountLogin
+  apiLogin
+  // fakeAccountLogin
 } from '@/services/login'
-import { get } from '@/utils/storage'
+// import { get } from '@/utils/storage'
 import { isContainAdminRole } from '@/utils/variable'
-import { loggedin } from '@/layouts/Auth'
-import { cookieSet, cookieRemove, set } from '@/utils/storage'
+// import { loggedin } from '@/layouts/Auth'
+import { cookieRemove, cookieGet, set } from '@/utils/storage'
+import cookie from 'js-cookie'
+import history from '@/utils/history'
 
 const module = defineModule({
   state: {
@@ -20,32 +21,33 @@ const module = defineModule({
   },
 
   reducer: {
-    login: async (payload: any, moduleState, actionCtx) => {
-      let role = get('role')
+    login: async (payload: any, moduleState) => {
+      // let role = get('role')
+      const { role } = payload
       try {
-        // const response = await apiLogin(payload)
-        const response = await fakeAccountLogin(payload)
-        console.log('response',response)
-        
-        actionCtx.dispatch(module.reducer.changeLoginStatus, { status: 'ok', type: 'account', authority: 'admin' })
+        const response = await apiLogin(payload)
+        // const response = await fakeAccountLogin(payload)
+        // actionCtx.dispatch(module.reducer.changeLoginStatus, { status: 'ok', type: 'account', authority: 'admin' })
 
         if (response.success) {
           if (response?.data?.token) {
             set('status', 'ok')
-            loggedin({ token: response?.data?.token, path: '/admin' })
+            // loggedin({ token: response?.data?.token, path: '/admin' })
             message.success('🎉 🎉 🎉  login successful!')
-            cookieSet('role', 'admin')
-
+            cookie.set('token', response?.data?.token, { expires: 1 })
+            cookie.set('role', role)
             moduleState.message = response?.meta?.message
-            if (await isContainAdminRole(role)) {
+
+            if (await isContainAdminRole(role)) { 
               history.push('/admin/dashboard')
-            } else if (await role === 'user') {
+            } else if (role === 'mahasiswa') {
               history.push('/mahasiswa/dashboard')
-            } else if (await role === 'dosen') {
+            } else if (role === 'dosen') {
               history.push('/dosen/dashboard')
             }
-            history.push('/admin/dashboard')
           }
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
@@ -54,15 +56,18 @@ const module = defineModule({
     logout: () => {
       localStorage.removeItem('status')
       cookieRemove('token')
-      cookieRemove('role')
+      const role = cookieGet('role')
       if (window.location.pathname !== '/login') {
-        history.replace({
-          pathname: '/login',
-          search: stringify({
-            redirect: window.location.href
-          })
-        })
+        history.push(role === 'admin' ? '/admin/login' : '/login')
+        // history.push({
+        //   pathname: role === 'admin' ? '/admin/login' : '/login',
+        //   // search: stringify({
+        //   //   redirect: window.location.href,
+        //   //   role
+        //   // })
+        // })
       }
+      // cookieRemove('role')
     },
 
     changeLoginStatus (payload: any) {

@@ -1,17 +1,20 @@
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons'
+// import React from 'react'
+import { LogoutOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar, Menu } from 'antd'
 import { useConcent } from 'concent'
-import { history } from '@vitjs/runtime'
-
+// import { history } from '@vitjs/runtime'
+import { useNavigate } from '@tanstack/react-location'
 import HeaderDropdown from '@/components/HeaderDropdown'
 import EmptyPerson from 'static/assets/empty-state/person.png'
 import styles from './index.module.less'
+import { cookieGet } from '@/utils/storage'
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
 };
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
+  const navigate = useNavigate()
   const { dispatch } = useConcent('login')
   const { state } = useConcent('authStore')
 
@@ -27,14 +30,20 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
       dispatch?.('logout')
       return
     }
-
-    history.push(`/admin/settings/${key}`)
+    let role = cookieGet('role')
+    if (role === 'admin') {
+      navigate({ to: `/admin/${key}` })
+    } else if (role === 'dosen') {
+      navigate({ to: `/dosen/${key}` })
+    } else if (role === 'mahasiswa') {
+      navigate({ to: `/mahasiswa/${key}` })
+    }
   }
 
   const menuHeaderDropdown = (
     <Menu className={styles.menu} selectedKeys={[]} onClick={onMenuClick}>
       {menu && (
-        <Menu.Item key='profile'>
+        <Menu.Item key='settings'>
           <UserOutlined />
           Profile
         </Menu.Item>

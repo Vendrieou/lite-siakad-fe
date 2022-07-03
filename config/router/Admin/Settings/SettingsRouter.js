@@ -7,17 +7,12 @@ const SettingsRouter =
   routes: [
     {
       path: '/admin/settings',
-      redirect: '/admin/settings/profile',
+      redirect: '/admin/settings',
     },// redirect page
     {
-      path: '/admin/settings/profile',
+      path: '/admin/settings',
       name: 'Profile',
       component: 'pages/Admin/Settings/Profile',
-    },
-    {
-      path: '/admin/settings/general',
-      name: 'General',
-      component: 'pages/Admin/Settings/General',
     }
   ]
 }

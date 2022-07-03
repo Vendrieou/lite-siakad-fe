@@ -2,8 +2,10 @@ node_modules
 dist
 .vit
 .DS_Store
+.pnpm-debug.log
 
 # Production
 .env
 dist
 !.env.example
+.vscode

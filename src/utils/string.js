@@ -96,3 +96,24 @@ export const stringFormatter = (value) => {
   }
   return '0'
 }
+
+export const isJsonString = (text) => {
+  // let text = JSON.stringify({ allowedKelas: ['TIC', 'TIB', 'TIC'] })
+  if (/^[\],:{}\s]*$/.test(text.replace(/\\["\\\/bfnrtu]/g, '@').
+    replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
+    replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+    return true
+  }
+  return false
+}
+
+export const useId = (length) => {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() *
+      charactersLength));
+  }
+  return result;
+}

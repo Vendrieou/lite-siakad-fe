@@ -7,6 +7,7 @@ import {
   apiUpdate,
   apiDelete
 } from '@/services/newsCategoryService'
+// @ts-ignore
 import { set, get } from 'utils/storage'
 
 const module = defineModule({
@@ -73,6 +74,8 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.get, payload, { page: 1 })
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
@@ -128,16 +131,16 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState, actionCtx) => {
-      let isListCategory = get('listNewsCategory')
-      if (!isListCategory) {
-        dispatch(module.reducer.get, { page: 1 })
-      } else {
-        dispatch(module.reducer.RECEIVE, { data: JSON.parse(isListCategory) })
-      }
-    }
-  }
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState, actionCtx) => {
+  //     let isListCategory = get('listNewsCategory')
+  //     if (!isListCategory) {
+  //       dispatch(module.reducer.get, { page: 1 })
+  //     } else {
+  //       dispatch(module.reducer.RECEIVE, { data: JSON.parse(isListCategory) })
+  //     }
+  //   }
+  // }
 })
 
 export default module

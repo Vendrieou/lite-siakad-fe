@@ -1,0 +1,40 @@
+ol.m {
+    list-style-type: lower-latin;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: repeat(1);
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1em;
+}
+
+@media (max-width: 1366px) {
+    .container {
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-gap: 5px;
+        padding: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .container {
+        display: grid;
+        grid-template-columns: repeat(1,1fr);
+        grid-gap: 5px;
+        padding: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .actionButton {
+        position: fixed;
+        background-color: white;
+        box-shadow: 0 -6px 16px -8px rgb(0 0 0 / 8%), 0 -9px 28px 0 rgb(0 0 0 / 5%), 0 -12px 48px 16px rgb(0 0 0 / 3%);
+        padding: 8px;
+        right: 0;
+        left: 0;
+        bottom: 0;
+    }
+}

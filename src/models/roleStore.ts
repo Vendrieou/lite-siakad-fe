@@ -73,6 +73,8 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.get)
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
@@ -128,15 +130,15 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState) => {
-      let isListRole = get('listRole')
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState) => {
+  //     let isListRole = get('listRole')
       
-      if(!isListRole || window.location.pathname === '/admin/manage-user/role') {
-        dispatch(module.reducer.get)
-      }
-    }
-  }
+  //     if(!isListRole || window.location.pathname === '/admin/manage-user/role') {
+  //       dispatch(module.reducer.get)
+  //     }
+  //   }
+  // }
 })
 
 export default module

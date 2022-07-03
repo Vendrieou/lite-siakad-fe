@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import React, { useState, useRef } from 'react'
 import { Button, message, Drawer, Modal } from 'antd'
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout'
 import ProTable from '@ant-design/pro-table'
@@ -161,7 +161,7 @@ const ProdiDosenContainer = () => {
       <ProTable
         headerTitle="List Mahasiswa"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         request={() => {
           return Promise.resolve({
             data: tableListDataSource,
@@ -213,7 +213,7 @@ const ProdiDosenContainer = () => {
           </Button>
         </FooterToolbar>
       )}
-      <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} modalVisible={createModalVisible}>
+      <CreateForm width={840} title="Tambah Mahasiswa" onCancel={() => handleModalVisible(false)} keyboard={false} modalVisible={createModalVisible}>
         <ProTable
           onSubmit={async (value) => {
             console.log('value', value)
@@ -227,7 +227,7 @@ const ProdiDosenContainer = () => {
             //   }
             // }
           }}
-          rowKey="key"
+          rowKey="id"
           type="form"
           columns={columns}
         />

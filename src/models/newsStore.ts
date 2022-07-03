@@ -28,6 +28,7 @@ const module = defineModule({
   reducer: {
     get: async (payload: any, moduleState, actionCtx) => {
       const data = {
+        ...payload,
         q: payload.q || '',
         status: payload.status || '',
         page: payload.page || 1
@@ -79,6 +80,8 @@ const module = defineModule({
         if (response.success) {
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.get)
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
@@ -91,6 +94,8 @@ const module = defineModule({
           message.success(response?.meta?.message)
           actionCtx.dispatch(module.reducer.SUCCESS, payload)
           actionCtx.dispatch(module.reducer.get)
+        } else {
+          message.error(response?.message)
         }
       } catch (error) {
         message.error(error)
@@ -134,11 +139,11 @@ const module = defineModule({
     }
 
   },
-  lifecycle: {
-    mounted: async (dispatch, moduleState) => {
-      dispatch(module.reducer.get)
-    }
-  }
+  // lifecycle: {
+  //   mounted: async (dispatch, moduleState) => {
+  //     dispatch(module.reducer.get)
+  //   }
+  // }
 })
 
 export default module

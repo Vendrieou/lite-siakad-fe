@@ -1,7 +1,10 @@
 import axios from 'axios'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
 import { getUserToken } from './storage'
 import config from './config'
+
+const history = createBrowserHistory()
 
 const request = async ({
   fullUrl = false,

@@ -1,0 +1,95 @@
+import request from '@/utils/request'
+import {
+  apiPengajuanKrs
+} from '@/utils/config'
+
+const apiGet = async (params: any) => {
+  return request({
+    url: `${apiPengajuanKrs}`,
+    method: 'get',
+    params,
+    auth: true
+  })
+}
+
+const apiGetAssign = async (params: any) => {
+  return request({
+    url: `${apiPengajuanKrs}-assign`,
+    method: 'get',
+    params,
+    auth: true
+  })
+}
+
+const apiGetById = async (id: number) => {
+  return request({
+    url: `${apiPengajuanKrs}/${id}`,
+    method: 'get',
+    auth: true
+  })
+}
+
+const apiPost = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
+const apiVerifikasiKrs = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}-verifikasi`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
+const apiGetVerifikasiKrByIdMahasiswa = async (data: { idMahasiswa: number }) => {
+  return request({
+    url: `${apiPengajuanKrs}-verifikasi/${data.idMahasiswa}`,
+    method: 'get',
+    data,
+    auth: true
+  })
+}
+
+const apiPostBulk = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}/krs/pengajuan/bulk`,
+    method: 'post',
+    data,
+    auth: true
+  })
+}
+
+const apiUpdate = async (data: any) => {
+  return request({
+    url: `${apiPengajuanKrs}/${data.id}`,
+    method: 'put',
+    data,
+    auth: true
+  })
+}
+
+const apiDelete = async (id: number) => {
+  return request({
+    url: `${apiPengajuanKrs}/${id}`,
+    method: 'delete',
+    auth: true
+  })
+}
+
+export {
+  apiGet,
+  apiGetAssign,
+  apiPost,
+  apiPostBulk,
+  apiVerifikasiKrs,
+  apiGetVerifikasiKrByIdMahasiswa,
+  apiGetById,
+  apiUpdate,
+  apiDelete
+}

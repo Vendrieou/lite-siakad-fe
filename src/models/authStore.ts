@@ -1,13 +1,14 @@
 import { message } from 'antd'
-import { history } from '@vitjs/runtime'
+// import { history } from '@vitjs/runtime'
+import { createBrowserHistory } from '@tanstack/react-location'
+
 import { defineModule } from 'concent'
 import { apiEditProfile, apiChangePassword } from '@/services/auth/profileService'
 import { queryMe } from '@/services/me'
+import { cookieGet } from '@/utils/storage'
 import { uploadImage } from '@/utils/imageUploadAction'
 
-const STATIC_DATA = {
-  currentItem: { name: 'Vendrie', image: 'https://lite-siakad.netlify.app/assets/logoTIME.676d5496.png' }
-}
+const history = createBrowserHistory()
 
 const module = defineModule({
   state: {
@@ -27,13 +28,17 @@ const module = defineModule({
 
   reducer: {
     userData: async (payload: any, moduleState, actionCtx) => {
+      const role = cookieGet('role')
+      const data = {
+        role: payload.role || role
+      }
       try {
         actionCtx.dispatch(module.reducer.FETCH)
-        // const response = await queryMe()
-        // actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
-        // return response.data
-        actionCtx.dispatch(module.reducer.RECEIVE_ITEM, { STATIC_DATA })
-        return STATIC_DATA
+        const response = await queryMe(data)
+        actionCtx.dispatch(module.reducer.RECEIVE_ITEM, response)
+        return response.data
+        // actionCtx.dispatch(module.reducer.RECEIVE_ITEM, { STATIC_DATA })
+        // return STATIC_DATA
       } catch (error) {
         throw error
         // history.push('/admin/login')

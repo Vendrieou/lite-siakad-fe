@@ -12,7 +12,8 @@ const apiGetUser = async (data: any) => {
   return request({
     url: `${apiUser}`,
     method: 'get',
-    data
+    data,
+    auth: true
   })
 }
 
@@ -20,7 +21,8 @@ const apiGetUserAdmin = async (params: any) => {
   return request({
     url: `${apiUser}/admin`,
     method: 'get',
-    params
+    params,
+    auth: true
   })
 }
 
@@ -28,14 +30,16 @@ const apiUpdateUserAdmin = async (data: any) => {
   return request({
     url: `${apiUser}/admin/${data.id}`,
     method: 'put',
-    data
+    data,
+    auth: true
   })
 }
 
 const apiGetUserById = async (id: number) => {
   return request({
     url: `${apiUser}/${id}`,
-    method: 'get'
+    method: 'get',
+    auth: true
   })
 }
 
@@ -43,14 +47,16 @@ const apiUpdateUser = async (data: RoleParamsType) => {
   return request({
     url: `${apiUser}/${data.id}`,
     method: 'put',
-    data
+    data,
+    auth: true
   })
 }
 
 const apiDeleteUser = async (id: number) => {
   return request({
     url: `${apiUser}/${id}`,
-    method: 'delete'
+        method: 'delete',
+    auth: true
   })
 }
 

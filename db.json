@@ -1,0 +1,83 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "krs": {
+    "data": [
+      {
+        "id": 1,
+        "kurikulum": "MBKM",
+        "idDosen": 1,
+        "allowedSemester": "[5,6,7]",
+        "jenisKurikulum": "MBKM",
+        "status": "published",
+        "listMataKuliah": "[{\"id\":1,\"idDosen\":1,\"kodePresensi\":\"\",\"idKelas\":null,\"kelas\":null,\"kodeMatkul\":\"TI 2639\",\"sks\":3,\"semester\":3,\"nama\":\"Pengantar TI\",\"keterangan\":\"keterangan Pengantar TI\",\"startDate\":\"2022-05-03\",\"startTime\":\"19:00:00\",\"endDate\":\"2022-05-28\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":2,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIA\",\"kodeMatkul\":\"TI 2639\",\"sks\":3,\"semester\":2,\"nama\":\"Pengantar TI\",\"keterangan\":\"keterangan Pengantar TI\",\"startDate\":\"2022-05-03\",\"startTime\":\"19:00:00\",\"endDate\":\"2022-05-28\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":3,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIA\",\"kodeMatkul\":\"TI1234\",\"sks\":1,\"semester\":3,\"nama\":\"Matematika Diskrit\",\"keterangan\":\"keterangan\",\"startDate\":\"2022-05-04\",\"startTime\":\"17:14:08\",\"endDate\":\"2022-05-31\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}}]"
+      },
+      {
+        "id": 2,
+        "kurikulum": "Minat",
+        "idDosen": 2,
+        "allowedSemester": "[5]",
+        "jenisKurikulum": "MBKM",
+        "status": "draft",
+        "listMataKuliah": "[{\"id\":4,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI5656\",\"sks\":20,\"semester\":5,\"nama\":\"Frontend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":5,\"idDosen\":2,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI567\",\"sks\":3,\"semester\":5,\"nama\":\"Backend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":4,\"id\":2,\"nip\":\"1005\",\"nidn\":\"2020220\",\"nama\":\"Indra\",\"gelarDepan\":\"Ir\",\"gelarBelakang\":null}}]"
+      },
+      {
+        "id": 3,
+        "kurikulum": "Biasa",
+        "idDosen": 2,
+        "jenisKurikulum": "Biasa",
+        "status": "published",
+        "listMataKuliah": "[{\"id\":4,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI5656\",\"sks\":20,\"semester\":5,\"nama\":\"Frontend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}}]"
+      }
+    ]
+  },
+  "krsd": [
+    {
+      "id": 1,
+      "data": {
+        "kurikulum": "MBKM",
+        "idDosen": 1,
+        "allowedSemester": "[5,6,7]",
+        "jenisKurikulum": "MBKM",
+        "status": "published",
+        "listMataKuliah": "[{\"id\":1,\"idDosen\":1,\"kodePresensi\":\"\",\"idKelas\":null,\"kelas\":null,\"kodeMatkul\":\"TI 2639\",\"sks\":3,\"semester\":3,\"nama\":\"Pengantar TI\",\"keterangan\":\"keterangan Pengantar TI\",\"startDate\":\"2022-05-03\",\"startTime\":\"19:00:00\",\"endDate\":\"2022-05-28\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":2,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIA\",\"kodeMatkul\":\"TI 2639\",\"sks\":3,\"semester\":2,\"nama\":\"Pengantar TI\",\"keterangan\":\"keterangan Pengantar TI\",\"startDate\":\"2022-05-03\",\"startTime\":\"19:00:00\",\"endDate\":\"2022-05-28\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":3,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIA\",\"kodeMatkul\":\"TI1234\",\"sks\":1,\"semester\":3,\"nama\":\"Matematika Diskrit\",\"keterangan\":\"keterangan\",\"startDate\":\"2022-05-04\",\"startTime\":\"17:14:08\",\"endDate\":\"2022-05-31\",\"endTime\":\"21:00:00\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}}]"
+      }
+    },
+    {
+      "id": 2,
+      "data": {
+        "kurikulum": "Backend",
+        "idDosen": 2,
+        "allowedSemester": "[5]",
+        "jenisKurikulum": "MBKM",
+        "status": "draft",
+        "listMataKuliah": "[{\"id\":4,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI5656\",\"sks\":20,\"semester\":5,\"nama\":\"Frontend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}},{\"id\":5,\"idDosen\":2,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI567\",\"sks\":3,\"semester\":5,\"nama\":\"Backend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":4,\"id\":2,\"nip\":\"1005\",\"nidn\":\"2020220\",\"nama\":\"Indra\",\"gelarDepan\":\"Ir\",\"gelarBelakang\":null}}]"
+      }
+    },
+    {
+      "id": 3,
+      "data": {
+        "kurikulum": "asd",
+        "idDosen": 2,
+        "jenisKurikulum": "MBKM",
+        "status": "published",
+        "listMataKuliah": "[{\"id\":4,\"idDosen\":1,\"kodePresensi\":null,\"idKelas\":null,\"kelas\":\"TIC\",\"kodeMatkul\":\"TI5656\",\"sks\":20,\"semester\":5,\"nama\":\"Frontend\",\"keterangan\":null,\"startDate\":\"2022-05-09\",\"startTime\":\"10:52:39\",\"endDate\":\"2023-05-17\",\"endTime\":\"10:52:54\",\"dosen\":{\"userId\":3,\"id\":1,\"nip\":\"1001\",\"nidn\":null,\"nama\":\"Dosen\",\"gelarDepan\":null,\"gelarBelakang\":null}}]"
+      }
+    }
+  ]
+}

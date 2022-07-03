@@ -6,7 +6,26 @@ import { apiAuth } from '@/utils/config'
 export type LoginParamsType = {
   email: string;
   password: string;
-};
+}
+
+export type AdminLoginParamsType = {
+  nama: string;
+  admin: number;
+  role: string;
+  password: string;
+}
+
+export type DosenLoginParamsType = {
+  nip: string;
+  role: string;
+  password: string;
+}
+
+export type MahasiswaLoginParamsType = {
+  nim: string;
+  role: string;
+  password: string;
+}
 
 export async function apiLogin (params: LoginParamsType) {
   return request({
